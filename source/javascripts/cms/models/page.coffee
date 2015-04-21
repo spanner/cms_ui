@@ -1,0 +1,1 @@
+class CMS.Models.Page extends CMS.Model

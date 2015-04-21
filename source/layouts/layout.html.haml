@@ -1,0 +1,13 @@
+%html
+  %head
+    %title
+      CMS UI
+    = stylesheet_link_tag "/stylesheets/cms.css"
+    = yield_content :styles
+
+  %body
+    = yield
+
+    = javascript_include_tag "/javascripts/cms.js"
+    = yield_content :scripts
+

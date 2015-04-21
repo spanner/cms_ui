@@ -1,0 +1,1 @@
+class CMS.Models.Section extends CMS.Model

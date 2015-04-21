@@ -1,0 +1,1 @@
+class CMS.Models.Site extends CMS.Model
