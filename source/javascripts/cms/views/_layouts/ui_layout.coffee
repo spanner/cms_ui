@@ -11,6 +11,7 @@ class CMS.Views.UILayout extends Backbone.Marionette.LayoutView
     @_path = options.path ? ""
     @_router = new CMS.Router
       routes: _.result(this, 'routes')
+    _cms.vent.on "auth.change", @onAuthChange
 
   onAuthChange: =>
     if @model.signedIn()
@@ -31,7 +32,6 @@ class CMS.Views.UILayout extends Backbone.Marionette.LayoutView
     @_page_view.render()
     @_section_view.render()
 
-    _cms.vent.on "auth.change", @onAuthChange
 
   setPath: (path) =>
     @_path = path ? ""

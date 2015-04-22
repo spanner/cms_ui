@@ -11,10 +11,13 @@
 
 
 # ### View Mixins
-SIS.Mixins.Crumbed =
+CMS.Mixins.Crumbed =
   setModel: (model) ->
     @model = model
-    @stickit()
+    if @model
+      @stickit()
+    else
+      @unstickit()
 
 Cocktail.mixins =
-  crumbed: SIS.Mixins.Crumbed
+  crumbed: CMS.Mixins.Crumbed

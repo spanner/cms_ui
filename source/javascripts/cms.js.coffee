@@ -6,12 +6,14 @@
 #= require lib/backbone
 #= require lib/backbone.cocktail
 #= require lib/backbone.marionette
+#= require lib/backbone.stickit
 
 #= require lib/utilities
 
 #= require ./cms/application
 #= require ./cms/router
 #= require ./cms/config
+#= require ./cms/view_mixins
 
 #= require_tree ./templates
 #= require_tree ./cms/models

@@ -8,5 +8,5 @@ class CMS.Model extends Backbone.Model
   build: ->
     #noop here
 
-  populate: =>
-    #
+  populate: ->
+    #noop here

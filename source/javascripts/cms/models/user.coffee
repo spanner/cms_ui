@@ -1,4 +1,5 @@
 class CMS.Models.User extends CMS.Model
+
   readinessCriteria:
     name: "populatedString"
     email: "validEmail"
@@ -6,7 +7,13 @@ class CMS.Models.User extends CMS.Model
   savedAttributes: ['email', 'name', 'password', 'password_confirmation', 'otp_secret', 'otp_attempt']
 
   build: =>
-    #
+    @sites = new CMS.Collections.Sites @get("sites")
+
+  populate: =>
+    unless @get("populated")
+      @fetch().done (data) =>
+        @sites.reset(data.sites)
+        @set 'populated', true
 
   # passwordCheck: =>
   #   url = "#{_sis.config('auth_url')}/users/sign_in.json"
