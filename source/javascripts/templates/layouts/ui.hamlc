@@ -1,7 +1,8 @@
-#control_bar
-  #detail
-  #sites
-  #pages
-  #sections
-  #controls
-#editor
+%div{data: {cms: "control-bar"}}
+  %div{data: {cms: "trail"}}
+    %div{data: {cms: "site-crumb"}}
+    %div{data: {cms: "page-crumb"}}
+    %div{data: {cms: "section-crumb"}}
+    %div{data: {cms: "user-controls"}}
+
+%div{data: {cms: "editor"}}

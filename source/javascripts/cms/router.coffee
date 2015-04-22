@@ -35,9 +35,8 @@ class CMS.Router extends Backbone.Router
     null_marker = params.pop()
     unused_path = params[params.length - 1]
     used_path = whole_path.replace(new RegExp("#{unused_path}$"), "")
-    args = _.map params, (param, i) ->
+    _.map params, (param, i) ->
       if param then decodeURIComponent(param) else null
-    args.concat used_path
 
   # Here we modify exec and _extractParameters to pass through the used path segment.
   execute: (callback, args, name) =>

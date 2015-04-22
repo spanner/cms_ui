@@ -11,3 +11,10 @@
 
 
 # ### View Mixins
+SIS.Mixins.Crumbed =
+  setModel: (model) ->
+    @model = model
+    @stickit()
+
+Cocktail.mixins =
+  crumbed: SIS.Mixins.Crumbed

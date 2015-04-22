@@ -4,11 +4,13 @@
 #= require lib/underscore
 #= require lib/underscore.string
 #= require lib/backbone
+#= require lib/backbone.cocktail
 #= require lib/backbone.marionette
 
 #= require lib/utilities
 
 #= require ./cms/application
+#= require ./cms/router
 #= require ./cms/config
 
 #= require_tree ./templates

@@ -71,7 +71,7 @@ configure :build do
   # set :http_prefix, "/Content/images/"
 end
 
-# require 'rack/rewrite'
-# use Rack::Rewrite do
-#
-# end
+require 'rack/rewrite'
+use Rack::Rewrite do
+  rewrite %r{^\/sites\/.*}, '/index.html'
+end
