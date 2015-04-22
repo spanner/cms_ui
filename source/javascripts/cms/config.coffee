@@ -8,14 +8,8 @@ class CMS.Config
     cookie_name: "cms_prod"
     logging: false
 
-  staging:
-    api_url: "https://api.cms.io/"
-    cookie_domain: ".cms.io"
-    cookie_name: "cms_staging"
-    logging: true
-
   development:
-    api_url: "http://api.cms.dev/"
+    api_url: "http://cms.dev/"
     cookie_domain: ".cms.dev"
     cookie_name: "cms_dev"
     logging: true
@@ -36,4 +30,4 @@ class CMS.Config
      @_settings
 
    get: (key) =>
-    @_settings[key]
+     @_settings[key]
