@@ -1,9 +1,9 @@
 class CMS.Views.SiteCrumb extends Backbone.Marionette.ItemView
-  @mixin "crumbed"
+  @mixin "item"
   template: "sites/crumb"
 
   bindings:
-    "[data-cms='name']": "name"
+    "[data-cms='title']": "title"
 
 class CMS.Views.ListedSite extends Backbone.Marionette.ItemView
   template: "sites/listed"

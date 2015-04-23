@@ -13,8 +13,7 @@ root.CMS = CMS
 
 class CMS.Application extends Backbone.Marionette.Application
   regions:
-    uiRegion: "#ui"
-    editorRegion: "#editor"
+    mainRegion: "[data-cms='index']"
 
   initialize: (options={}) ->
     root._cms = @
@@ -34,7 +33,7 @@ class CMS.Application extends Backbone.Marionette.Application
             @_uiView = new CMS.Views.UILayout
               model: @_session
               path: path
-            @uiRegion.show @_uiView
+            @mainRegion.show @_uiView
 
     Backbone.history.start
       pushState: true

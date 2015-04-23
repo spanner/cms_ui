@@ -1,4 +1,6 @@
 class CMS.Models.User extends CMS.Model
+  url: =>
+    "#{_cms.apiUrl()}users/#{@get("uid")}"
 
   readinessCriteria:
     name: "populatedString"
@@ -8,6 +10,7 @@ class CMS.Models.User extends CMS.Model
 
   build: =>
     @sites = new CMS.Collections.Sites @get("sites")
+    @on "change:sites", (model, data) => @sites.reset data
 
   populate: =>
     unless @get("populated")

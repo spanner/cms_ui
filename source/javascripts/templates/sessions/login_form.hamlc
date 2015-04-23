@@ -1,0 +1,14 @@
+.signin
+  %form
+    %h3
+      Please sign in
+    %fieldset
+      %p
+        %input#email{:name => "email", :type => "email", :required => "required", placeholder: "Email"}
+      %p
+        %input#password{:name => "password", :type => "password", :required => "required", placeholder: "Password"}
+        %a.forgotten{href: "/session/reset"}
+          forgotten password?
+      .form-actions
+        %input{:type => "submit", :value => "&rarr; Sign in"}
+      %p.error

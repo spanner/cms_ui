@@ -167,7 +167,7 @@ class CMS.Models.Session extends Backbone.Model
   # sendAuthenticationHeaders is called on every API call
   #
   sendAuthenticationHeaders: (e, request) =>
-    request.setRequestHeader("X-ClientID", _cms.clientID)
+    # request.setRequestHeader("X-ClientID", _cms.clientID)
     if token = @authToken()
       request.setRequestHeader("Authorization", "Token token=#{token}")
 

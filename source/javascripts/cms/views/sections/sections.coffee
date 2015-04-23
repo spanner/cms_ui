@@ -1,5 +1,5 @@
 class CMS.Views.SectionCrumb extends Backbone.Marionette.ItemView
-  @mixin "crumbed"
+  @mixin "item"
   template: "sections/crumb"
   
   bindings:

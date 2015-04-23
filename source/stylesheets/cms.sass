@@ -3,6 +3,20 @@ $control_height: 36px
 body
   margin: 0
 
+[data-cms="index"]
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+[data-cms="ui"]
+  height: 100%
+  width: 100%
+
+[data-cms="session"], [data-cms="editor"]
+  height: 100%
+  width: 100%
 
 [data-cms="control-bar"]
   position: fixed
@@ -10,8 +24,9 @@ body
   right: 0
   height: $control_height
   background: black
+  color: white
 
-[data-cms="editor"]
+[data-cms="output"]
   position: fixed
   left: 0
   right: 0

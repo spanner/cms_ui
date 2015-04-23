@@ -11,7 +11,9 @@
 
 
 # ### View Mixins
-CMS.Mixins.Crumbed =
+CMS.Mixins.Crumbed = {}
+  
+CMS.Mixins.Item =
   setModel: (model) ->
     @model = model
     if @model
@@ -19,5 +21,20 @@ CMS.Mixins.Crumbed =
     else
       @unstickit()
 
+CMS.Mixins.Parental =
+  showChild: (layout, properties={}) ->
+    if @_child and not @_child.isDestroyed and @_child.constructor is CMS.Views[layout] and properties.path
+      @_child.setPath?(properties.path)
+    else
+      @showNewChild layout, properties
+
+  showNewChild: (layout, properties) ->
+    console.log properties
+    @_child = new CMS.Views[layout](properties)
+    @childRegion.show @_child
+  
+
 Cocktail.mixins =
   crumbed: CMS.Mixins.Crumbed
+  item: CMS.Mixins.Item
+  parental: CMS.Mixins.Parental

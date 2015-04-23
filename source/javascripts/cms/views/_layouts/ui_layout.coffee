@@ -1,58 +1,46 @@
 class CMS.Views.UILayout extends Backbone.Marionette.LayoutView
+  @mixin 'parental'
   template: "layouts/ui"
 
+  regions:
+    childRegion: "[data-cms='ui']"
+
   routes: =>
-    "sites/:site_uid/pages/:page_uid/sections/:section_uid(/)": @setSite
-    "sites/:site_uid/pages/:page_uid(/)": @setSite
-    "sites/:site_uid(/)": @setSite
-    "(/)": @setSite
+    "session/*path": @sessionView
+    "*path": @editorView
 
   initialize: (options) ->
+    @_child = null
     @_path = options.path ? ""
     @_router = new CMS.Router
       routes: _.result(this, 'routes')
-    _cms.vent.on "auth.change", @onAuthChange
-
-  onAuthChange: =>
-    if @model.signedIn()
-      @_user = @model.user
-      @setPath @_path
-    else
-      @sessionView()
 
   onRender: =>
-    @_site_view = new CMS.Views.SiteCrumb
-      el: @$el.find("[data-cms='site-crumb']")
-    @_page_view = new CMS.Views.PageCrumb
-      el: @$el.find("[data-cms='page-crumb']")
-    @_section_view = new CMS.Views.SectionCrumb
-      el: @$el.find("[data-cms='section-crumb']")
+    @populate()
+    _cms.vent.on "auth.change", @populate
 
-    @_site_view.render()
-    @_page_view.render()
-    @_section_view.render()
+  populate: =>
+    @_user = @model.user = new CMS.Models.User
+      uid: "ca0b3bd7-505c-4249-ae15-e1a21388aeaf"
+    @_user.fetch().done () =>
+      @setPath @_path
 
+    # if @model.signedIn()
+    #   @_user = @model.user
+    #   @setPath @_path
+    # else
+    #   @sessionView()
 
   setPath: (path) =>
     @_path = path ? ""
     @_router.handle(@_path)
 
-  setSite: (site_uid,page_uid,section_uid) =>
-    @_site = if site_uid then @_user?.sites.findWhere(uid: site_uid) else null
-    @_site_view.setModel @_site
-
-    @setPage page_uid,section_uid
-
-  setPage: (page_uid,section_uid) =>
-    @_page = if page_uid then @_site?.pages.findWhere(uid: page_uid) else null
-    @_page_view.setModel @_page
-
-    @setSection section_uid      
-
-  setSection: (section_uid) =>
-    @_section = if section_uid then @_page?.sections.findWhere(uid: section_uid) else null
-    @_section_view.setModel @_section    
+  editorView: (path) =>
+    @showChild "EditorLayout",
+      path: path
+      model: @model
 
   sessionView: (path) =>
-    console.log "TODO: login"
-    #
+    @showChild "SessionLayout",
+      path: path
+      model: @model
