@@ -1,5 +1,4 @@
 class CMS.Model extends Backbone.Model
-  idAttribute: "uid"
 
   initialize: (properties, opts={}) ->
     @build()
@@ -10,3 +9,6 @@ class CMS.Model extends Backbone.Model
 
   populate: ->
     #noop here
+
+  isPopulated: =>
+    @get 'populated'

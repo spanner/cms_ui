@@ -25,6 +25,24 @@ body
   height: $control_height
   background: black
   color: white
+  a
+    text-decoration: none
+    cursor: pointer
+  [data-cms="trail"]
+    & > a
+      height: 100%
+      float: left
+      border:
+        right: 1px solid white
+      span
+        margin: 0 10px
+
+[data-cms="lists"]
+  position: fixed
+  top: $control_height + 1
+  & > div
+    float: left
+    margin: 0 10px
 
 [data-cms="output"]
   position: fixed

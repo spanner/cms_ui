@@ -1,8 +1,15 @@
 %div{data: {cms: "control-bar"}}
   %div{data: {cms: "trail"}}
-    %div{data: {cms: "site-crumb"}}
-    %div{data: {cms: "page-crumb"}}
-    %div{data: {cms: "section-crumb"}}
-    %div{data: {cms: "user-controls"}}
+    %a{data: {cms: "site-crumb"}}
+    %a{data: {cms: "page-crumb"}}
+    %a{data: {cms: "section-crumb"}}
+
+  %div{data: {cms: "user-controls"}}
 
 %div{data: {cms: "output"}}
+
+%div{data: {cms: "lists"}}
+  %div{data: {cms: "sites-list"}}
+  %div{data: {cms: "pages-tree"}}
+  %div{data: {cms: "sections-list"}}
+

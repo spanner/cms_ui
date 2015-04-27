@@ -13,13 +13,24 @@
 # ### View Mixins
 CMS.Mixins.Crumbed = {}
   
+
 CMS.Mixins.Item =
   setModel: (model) ->
     @model = model
     if @model
+      unless @model.isPopulated()
+        @model.populate()
       @stickit()
     else
       @unstickit()
+      @render()
+
+
+CMS.Mixins.Collection =
+  setCollection: (collection) ->
+    @collection = collection
+    @render()
+
 
 CMS.Mixins.Parental =
   showChild: (layout, properties={}) ->
@@ -29,12 +40,12 @@ CMS.Mixins.Parental =
       @showNewChild layout, properties
 
   showNewChild: (layout, properties) ->
-    console.log properties
     @_child = new CMS.Views[layout](properties)
     @childRegion.show @_child
-  
+
 
 Cocktail.mixins =
   crumbed: CMS.Mixins.Crumbed
   item: CMS.Mixins.Item
+  collection: CMS.Mixins.Collection
   parental: CMS.Mixins.Parental

@@ -1,1 +1,1 @@
-%a{data: {cms: "title"}}
+%span{data: {cms: "title"}}

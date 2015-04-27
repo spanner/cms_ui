@@ -23,3 +23,12 @@
 
 $ ->
   new CMS.Application()
+
+  $(document).on "click", "a:not([data-bypass])", (e) ->
+    if _cms
+      href = $(@).attr("href")
+      if href isnt "#"
+        prot = @protocol + "//"
+        if href and href.slice(0, prot.length) isnt prot
+          e.preventDefault()
+          _cms.navigate href

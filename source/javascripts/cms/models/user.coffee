@@ -1,4 +1,5 @@
 class CMS.Models.User extends CMS.Model
+  idAttribute: "uid"
   url: =>
     "#{_cms.apiUrl()}users/#{@get("uid")}"
 

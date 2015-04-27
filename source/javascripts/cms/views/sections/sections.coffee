@@ -3,16 +3,16 @@ class CMS.Views.SectionCrumb extends Backbone.Marionette.ItemView
   template: "sections/crumb"
   
   bindings:
-    "[data-cms='name']": "name"
+    "span": "id"
 
 class CMS.Views.ListedSection extends Backbone.Marionette.ItemView
   template: "sections/listed"
 
   bindings:
-    "[data-cms='name']":
-      observe: "name"
+    "[data-cms='title']":
+      observe: "id"
       attributes: [
-        observe: "uid"
+        observe: "id"
         name: "href"
         onGet: "url"
       ]
@@ -20,5 +20,9 @@ class CMS.Views.ListedSection extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
 
+  url: (id) =>
+    "/sites/#{@model.getSite().get("slug")}/pages/#{@model.getPage().get("id")}/sections/#{id}"
+
 class CMS.Views.SectionsList extends Backbone.Marionette.CollectionView
+  @mixin "collection"
   childView: CMS.Views.ListedSection
