@@ -15,23 +15,26 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
 
   onRender: =>
     @_sites_list = new CMS.Views.SitesList
-      el: @$el.find("[data-cms='sites-list']")
+      el: @$el.find(".cms-sites-list")
       collection: @_user.sites
     @_pages_tree = new CMS.Views.PagesTree
-      el: @$el.find("[data-cms='pages-tree']")
+      el: @$el.find(".cms-pages-tree")
     @_sections_list = new CMS.Views.SectionsList
-      el: @$el.find("[data-cms='sections-list']")
+      el: @$el.find(".cms-sections-list")
 
     @_site_crumb = new CMS.Views.SiteCrumb
-      el: @$el.find("[data-cms='site-crumb']")
+      el: @$el.find(".cms-site-crumb")
+    # @_site_crumb.onClick = =>
+    #   console.log "onClick"
+    #   @_sites_list.show()
 
     @_page_crumb = new CMS.Views.PageCrumb
-      el: @$el.find("[data-cms='page-crumb']")
+      el: @$el.find(".cms-page-crumb")
     @_page_view = new CMS.Views.Page
-      el: @$el.find("[data-cms='output']")
+      el: @$el.find(".cms-output")
 
     @_section_crumb = new CMS.Views.SectionCrumb
-      el: @$el.find("[data-cms='section-crumb']")
+      el: @$el.find(".cms-section-crumb")
 
     @_sites_list.render()
     @_pages_tree.render()
@@ -76,10 +79,12 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
 
     if !@_page or @_page?.isPopulated()
       @setSection section_id
+      @_page_view.render()
     else
       @_page.once "change:populated", =>
         @setSection section_id
         @_sections_list.render()
+        @_page_view.render()
 
   setSection: (section_id) =>
     @_section = if section_id then @_page?.sections.findWhere(id: parseInt(section_id,10)) else null

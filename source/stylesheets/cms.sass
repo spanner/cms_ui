@@ -3,22 +3,22 @@ $control_height: 36px
 body
   margin: 0
 
-[data-cms="index"]
+.cms-index
   position: absolute
   top: 0
   right: 0
   bottom: 0
   left: 0
 
-[data-cms="ui"]
+.cms-ui
   height: 100%
   width: 100%
 
-[data-cms="session"], [data-cms="editor"]
+.cms-session, .cms-editor
   height: 100%
   width: 100%
 
-[data-cms="control-bar"]
+.cms-control-bar
   position: fixed
   left: 0
   right: 0
@@ -28,8 +28,9 @@ body
   a
     text-decoration: none
     cursor: pointer
-  [data-cms="trail"]
+  .cms-trail
     & > a
+      width: 100px
       height: 100%
       float: left
       border:
@@ -37,14 +38,21 @@ body
       span
         margin: 0 10px
 
-[data-cms="lists"]
+.cms-lists
   position: fixed
   top: $control_height + 1
   & > div
-    float: left
-    margin: 0 10px
+    position: absolute
+    padding: 3px 10px
+    display: none
+  .cms-sites-list
+    // left: 0
+  .cms-pages-tree
+    left: 100px
+  .cms-sections-list
+    left: 200px
 
-[data-cms="output"]
+.cms-output
   position: fixed
   left: 0
   right: 0
@@ -52,3 +60,21 @@ body
   bottom: 0
   scroll: auto
 
+// Page
+
+header
+  background: #ddd
+  width: 100%
+  height: 96px
+
+main
+  padding: 20px
+  width: 100%
+  box-sizing: border-box
+
+footer
+  background: #ddd
+  width: 100%
+  height: 32px
+
+//

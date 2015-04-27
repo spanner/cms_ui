@@ -5,7 +5,7 @@ class CMS.Views.SessionLayout extends Backbone.Marionette.LayoutView
   tagName: "section"
 
   regions:
-    childRegion: "[data-cms='session']"
+    childRegion: ".cms-session"
 
   onRender: () =>
     unless @model.checking()

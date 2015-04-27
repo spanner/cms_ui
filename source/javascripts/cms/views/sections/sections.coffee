@@ -9,7 +9,7 @@ class CMS.Views.ListedSection extends Backbone.Marionette.ItemView
   template: "sections/listed"
 
   bindings:
-    "[data-cms='title']":
+    ".cms-title":
       observe: "id"
       attributes: [
         observe: "id"

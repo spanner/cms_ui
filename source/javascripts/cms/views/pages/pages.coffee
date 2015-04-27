@@ -11,9 +11,16 @@ class CMS.Views.PageCrumb extends Backbone.Marionette.ItemView
   onClick: =>
     console.log "click"
 
+class CMS.Views.PageSection extends Backbone.Marionette.ItemView
+  template: "sections/section"
+  tagName: "section"
+
+  onRender: =>
+    @stickit()
+
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "pages/page"
-  childView: CMS.Views.Section
+  childView: CMS.Views.PageSection
   childViewContainer: "main"
 
   initialize: ->
@@ -30,7 +37,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 class CMS.Views.PageBranch extends Backbone.Marionette.ItemView
   template: "pages/branch"
   bindings:
-    "[data-cms='title']":
+    ".cms-title":
       observe: "title"
       attributes: [
         observe: "id"

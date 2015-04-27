@@ -1,15 +1,15 @@
-%div{data: {cms: "control-bar"}}
-  %div{data: {cms: "trail"}}
-    %a{data: {cms: "site-crumb"}}
-    %a{data: {cms: "page-crumb"}}
-    %a{data: {cms: "section-crumb"}}
+.cms-control-bar
+  .cms-trail
+    %a.cms-site-crumb.cms-crumb
+    %a.cms-page-crumb.cms-crumb
+    %a.cms-section-crumb.cms-crumb
 
-  %div{data: {cms: "user-controls"}}
+  .cms-user-controls
 
-%div{data: {cms: "output"}}
+.cms-output
 
-%div{data: {cms: "lists"}}
-  %div{data: {cms: "sites-list"}}
-  %div{data: {cms: "pages-tree"}}
-  %div{data: {cms: "sections-list"}}
+.cms-lists
+  .cms-sites-list
+  .cms-pages-tree
+  .cms-sections-list
 

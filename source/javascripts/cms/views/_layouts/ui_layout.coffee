@@ -3,7 +3,7 @@ class CMS.Views.UILayout extends Backbone.Marionette.LayoutView
   template: "layouts/ui"
 
   regions:
-    childRegion: "[data-cms='ui']"
+    childRegion: ".cms-ui"
 
   routes: =>
     "session/*path": @sessionView

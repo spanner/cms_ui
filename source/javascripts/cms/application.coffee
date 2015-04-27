@@ -13,7 +13,7 @@ root.CMS = CMS
 
 class CMS.Application extends Backbone.Marionette.Application
   regions:
-    mainRegion: "[data-cms='index']"
+    mainRegion: ".cms-index"
 
   initialize: (options={}) ->
     root._cms = @

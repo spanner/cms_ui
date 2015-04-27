@@ -49,3 +49,4 @@ Cocktail.mixins =
   item: CMS.Mixins.Item
   collection: CMS.Mixins.Collection
   parental: CMS.Mixins.Parental
+
