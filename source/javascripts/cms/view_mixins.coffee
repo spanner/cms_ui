@@ -18,8 +18,7 @@ CMS.Mixins.Item =
   setModel: (model) ->
     @model = model
     if @model
-      unless @model.isPopulated()
-        @model.populate()
+      @model.populate()
       @stickit()
     else
       @unstickit()
@@ -30,7 +29,6 @@ CMS.Mixins.Collection =
   setCollection: (collection) ->
     @collection = collection
     @render()
-
 
 CMS.Mixins.Parental =
   showChild: (layout, properties={}) ->
@@ -44,9 +42,17 @@ CMS.Mixins.Parental =
     @childRegion.show @_child
 
 
+CMS.Mixins.Toggle =
+  show: ->
+    @$el.show()
+
+  hide: ->
+    @$el.hide()
+
+
 Cocktail.mixins =
   crumbed: CMS.Mixins.Crumbed
   item: CMS.Mixins.Item
   collection: CMS.Mixins.Collection
   parental: CMS.Mixins.Parental
-
+  toggle: CMS.Mixins.Toggle

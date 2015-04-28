@@ -2,14 +2,14 @@ class CMS.Views.PageCrumb extends Backbone.Marionette.ItemView
   @mixin "item"
   template: "pages/crumb"
 
+  events:
+    "click": "onClick"
+
   bindings:
     "span": "title"
 
-  events:
-    "click": 'onClick'
-
   onClick: =>
-    console.log "click"
+    _cms.vent.trigger "toggle_list", "_pages_tree"
 
 class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   template: "sections/section"
@@ -36,6 +36,10 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
 class CMS.Views.PageBranch extends Backbone.Marionette.ItemView
   template: "pages/branch"
+
+  events:
+    "click": "onClick"
+
   bindings:
     ".cms-title":
       observe: "title"
@@ -51,7 +55,10 @@ class CMS.Views.PageBranch extends Backbone.Marionette.ItemView
   url: (id) =>
     "/sites/#{@model.getSite().get "slug"}/pages/#{id}"
 
+  onClick: =>
+    _cms.vent.trigger "hide_list", "_pages_tree"
+
 class CMS.Views.PagesTree extends Backbone.Marionette.CollectionView
-  @mixin "collection"
+  @mixin "collection", "toggle"
   # template: "pages/tree"
   childView: CMS.Views.PageBranch

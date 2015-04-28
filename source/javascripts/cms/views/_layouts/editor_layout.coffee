@@ -14,6 +14,7 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
     @_user = @model.user
 
   onRender: =>
+    
     @_sites_list = new CMS.Views.SitesList
       el: @$el.find(".cms-sites-list")
       collection: @_user.sites
@@ -24,9 +25,6 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
 
     @_site_crumb = new CMS.Views.SiteCrumb
       el: @$el.find(".cms-site-crumb")
-    # @_site_crumb.onClick = =>
-    #   console.log "onClick"
-    #   @_sites_list.show()
 
     @_page_crumb = new CMS.Views.PageCrumb
       el: @$el.find(".cms-page-crumb")
@@ -47,9 +45,24 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
 
     @setPath @_path
 
+    _cms.vent.on "toggle_list", @toggleList
+    _cms.vent.on "hide_list", @hideList
+
   setPath: (path) =>
     @_path = path ? ""
     @_router.handle(@_path)
+
+  toggleList: (list) =>
+    if @[list].$el.css('display') is 'none'
+      @_sites_list.hide()
+      @_pages_tree.hide()
+      @_sections_list.hide()
+      @[list].show()
+    else
+      @[list].hide()
+
+  hideList: (list) =>
+    @[list].hide()
 
   home: =>
     @setSite()
@@ -75,7 +88,7 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
       @_page = @_site.pages.findWhere(path: "/")
     @_page_crumb.setModel @_page
     @_page_view.setModel @_page
-    @_sections_list.setCollection @_page?.sections
+    @_sections_list.setModel @_page
 
     if !@_page or @_page?.isPopulated()
       @setSection section_id
