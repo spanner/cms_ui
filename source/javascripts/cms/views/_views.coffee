@@ -1,7 +1,7 @@
 class CMS.Views.LayoutView extends Backbone.Marionette.LayoutView
-  log: (message) =>
+  log: () =>
     if _cms.logging()
-      console.log "#{@constructor.name} view", message
+      console.log "#{@constructor.name} view", arguments...
 
 
 class CMS.Views.MenuLayout extends CMS.Views.LayoutView
@@ -15,9 +15,9 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
 
-  log: (message) =>
+  log: () =>
     if _cms.logging()
-      console.log "#{@constructor.name} view", message
+      console.log "#{@constructor.name} view", arguments...
 
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView

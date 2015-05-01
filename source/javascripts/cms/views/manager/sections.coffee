@@ -31,12 +31,16 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       ]
 
   onRender: =>
-    @model.whenReady () =>
+    # we definitely have a collection
+    @_sections_list = new CMS.Views.SectionsList
+      el: @$el.find(".menu")
+      collection: @collection
+    @_sections_list.render()
+
+    # but we don't always have a model
+    @model?.whenReady () =>
       @stickit()
-      @_sections_list = new CMS.Views.SectionsList
-        el: @$el.find(".menu")
-      @_pages_tree.render()
-      @_sections_lis = new CMS.Views.SectionsLayout
+      @_sections_layout = new CMS.Views.SectionsLayout
         el: @$el.find("#sections")
         collection: @model.sections
       @_sections_layout.render()
@@ -44,8 +48,8 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
   show: (section) =>
     @log "⇒ show", section
     @model = section
-    @model.whenReady =>
-      @render()
+    @model.load()
+    @render()
 
   newSectionUrl: (page_id) =>
     "/sites/#{@model.getSite().get "slug"}/pages/#{page_id}/sections/new"

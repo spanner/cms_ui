@@ -13,9 +13,7 @@ root.CMS = CMS
 
 class CMS.AppRouter extends Backbone.Marionette.AppRouter
   appRoutes:
-    "sites/:site_slug/pages/:page_id/sections/:section_uid(/)": "siteView"
-    "sites/:site_slug/pages/:page_id(/)": "siteView"
-    "sites/:site_slug(/)": "siteView"
+    "sites/:site_slug(/*path)": "siteView"
     "session/:action": "sessionView"
     "(/)": "homeView"
 
@@ -27,7 +25,8 @@ class CMS.Application extends Backbone.Marionette.Application
     @_ui = new CMS.Views.UILayout
       model: @_session
       el: "#cms"
-    @_router = new CMS.AppRouter(controller: @_ui)
+    @_router = new CMS.AppRouter
+      controller: @_ui
     @_ui.render()
     @_session.load().always () =>
       Backbone.history.start

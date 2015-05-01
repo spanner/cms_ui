@@ -7,9 +7,8 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   onRender: () =>
     @wait()
-    @model.whenReady @unwait
+    @model.whenReady @home
     @model.whenUserReady @goAway
-    @showForm('SessionLoginForm') unless @model.userIsReady()
 
   wait: () =>
     @$el.find('.loading').show()
@@ -19,9 +18,9 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   goAway: () =>
     @unwait()
-    @getRegion('form').clear()
+    @getRegion('form').reset()
     # @getRegion('menu').show(new CMS.Views.SessionMenu)
-    
+
   show: (action) =>
     switch action
       when "reset" then @showForm('SessionResetForm')
@@ -31,7 +30,10 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   showForm: (klass) =>
     klass = CMS.Views[klass]
-    @log "showForm", klass
     view = new klass(model: @model)
     @unwait()
     @getRegion('form').show(view)
+  
+  # the standard name for a default action doesn't fit well here.
+  home: () =>
+    @showForm('SessionLoginForm') unless @model.userIsReady()

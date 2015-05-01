@@ -35,12 +35,10 @@ class CMS.Model extends Backbone.Model
     # @things = new CMS.Collections.Things
 
   load: =>
-    @log "load"
     @fetch().done @loaded
     @_loaded.promise()
   
   loaded: (data) =>
-    @log "loaded"
     @_loaded.resolve(data)
 
   parse: (data) =>
@@ -64,6 +62,6 @@ class CMS.Model extends Backbone.Model
       json = super
     json
 
-  log: (message) =>
+  log: () =>
     if _cms.logging()
-      console.log "#{@constructor.name} model", message
+      console.log "#{@constructor.name} model", arguments...

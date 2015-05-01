@@ -21,26 +21,29 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
   template: "manager/sites"
 
   onRender: =>
-    @model.whenReady () =>
+    # we definitely have a collection
+    @_sites_list = new CMS.Views.SitesMenu
+      el: @$el.find(".menu")
+      collection: @collection
+    @_sites_list.render()
+
+    # but we don't always have a model
+    @model?.whenReady () =>
       @stickit()
-      @_sites_list = new CMS.Views.SitesMenu
-        el: @$el.find(".menu")
-      @_sites_list.render()
       @_pages_layout = new CMS.Views.PagesLayout
         el: @$el.find("#pages")
         collection: @model.pages
       @_pages_layout.render()
 
-  show: (site, page_id, section_uid) =>
-    @log "⇒ show", site, page_id, section_uid
+  show: (site, path="/") =>
+    @log "⇒ show", site, path
     @model = site
-    @model.whenReady =>
-      @render()
-      if page_id and page = @model.pages.find(page_id)
-        @_pages_layout.show(page, section_uid)
-      else
-        @home()
+    @model.load()
+    @render()
+    @setPagePath(path)
+  
+  setPagePath: (path) =>
+    @model?.whenReady =>
+      if page = @model.pages.findWhere(path: path)
+        @_pages_layout.show(page)
 
-  home: () =>
-    # do a default thing
-    @log "home"

@@ -21,24 +21,26 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
 
   onRender: =>
-    @model.whenReady () =>
+    # we definitely have a collection
+    @_pages_tree = new CMS.Views.PagesTree
+      el: @$el.find(".menu")
+      collection: @collection
+    @_pages_tree.render()
+
+    # but we don't always have a model
+    @model?.whenReady () =>
       @stickit()
-      @_pages_tree = new CMS.Views.PagesTree
-        el: @$el.find(".menu")
-      @_pages_tree.render()
       @_sections_layout = new CMS.Views.SectionsLayout
         el: @$el.find("#sections")
         collection: @model.sections
       @_sections_layout.render()
 
-  show: (page, section_uid) =>
-    @log "⇒ show", page, section_uid
+  show: (page) =>
+    @log "⇒ show", page
     @model = page
-    @model.whenReady =>
-      if section_uid and section = @model.sections.findWhere(uid: section_uid)
-        @_sections_layout.show(section)
-      else
-        @home()
+    @model.load()
+    @render()
+    # sections_layout will be controlled by #links
 
   home: () =>
     # do a default thing

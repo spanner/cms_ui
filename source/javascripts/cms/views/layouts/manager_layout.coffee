@@ -8,11 +8,11 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
         collection: @model.sites
       @_sites_layout.render()
 
-  show: (site_slug, page_id, section_uid) =>
-    @log "⇒ show", site_slug, page_id, section_uid
+  show: (site_slug, page_path) =>
     @model.whenReady =>
-      if site_slug and site = @model.sites.findWhere(slug: site_slug)
-        @_sites_layout.show(site, page_id, section_uid)
+      if site_slug
+        if site = @model.sites.findWhere(slug: site_slug)
+          @_sites_layout.show(site, page_path)
       else
         @home()
 

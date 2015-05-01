@@ -17,8 +17,8 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     #   el: @$el.find("#editor")
     # @_editor.render()
 
-  siteView: (site_slug, page_id, section_uid) =>
-    @_manager.show(site_slug, page_id, section_uid)
+  siteView: (site_slug, page_path) =>
+    @_manager.show(site_slug, page_path)
 
   sessionView: (action) =>
     @_barrier.show(action)

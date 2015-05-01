@@ -37,8 +37,10 @@ class CMS.Models.Session extends CMS.Model
     @_loaded.promise()
   
   populate: (data) =>
-    @updateUser(data.user)
+    @log "populate", data
+    @populateUser(data.user)
     @writeCookie()
+    true
 
   getUser: () =>
     @_user
@@ -49,8 +51,10 @@ class CMS.Models.Session extends CMS.Model
   whenUserReady: (fn) =>
     @_user.whenReady(fn)
   
-  updateUser: (attributes) =>
-    @_user.set(attributes)
+  # TODO: find a better way to hook into the readiness mechanism without fetching.
+  populateUser: (data) =>
+    @_user.populate(data)
+    @_user.loaded()
 
   readCookie: () =>
     @set 'token', $.cookie(_cms.config('cookie_name'))
