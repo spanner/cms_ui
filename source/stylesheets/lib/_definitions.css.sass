@@ -1,0 +1,168 @@
+@import fonts
+@import compass/css3
+
+$coolgrey00: #f7f5f3
+$coolgrey0: #f2f0ed
+$coolgrey1: #e2e1dd
+$coolgrey2: #d6d6d4
+$coolgrey3: #cacac8
+$coolgrey4: #bdbdbd
+$coolgrey5: #b3b3b3
+$coolgrey6: #afafaf
+$coolgrey7: #9a9b9d
+$coolgrey8: #8c8d8e
+$coolgrey9: #747679
+$coolgrey10: #616265
+$coolgrey11: #4d4e53
+$black6: #101820
+$rubine: #d1005d
+$green: #74b87a
+$blue: #007BFF
+$orange: #FF8400
+$red: #ed1c24
+$bluegreen: #009999
+
+$dark: $black6
+$mid: $coolgrey8
+$pale: $coolgrey4
+$verypale: $coolgrey1
+$highlight: $orange
+
+$link: $orange
+$hover: $rubine
+$invert: #ff8400
+$error: $red
+
+$warningbg: #fff0f0
+$finishedbg: #e2efdb
+$translucent: rgba(255,255,255,0.6)
+$shadow: rgba(0,0,0,0.6)
+
+=hover
+  &:hover
+    color: $hover
+
+=inverted
+  color: $dark
+  &:hover
+    color: $hover
+
+=glow
+  text-shadow: 0 0 3px white
+
+=spaced
+  letter-spacing: 0.04em
+
+=small
+  font-size: 75%
+
+=pale
+  color: $pale
+
+=shadow
+  +box-shadow(0 3px 12px rgba(16,24,32,0.4))
+
+=pill($color: $pale, $textcolor: white)
+  display: inline-block
+  position: relative
+  outline: none
+  font-size: 12px
+  padding: 8px 10px 6px 10px
+  margin: 0 6px 0 0
+  +border-radius(20px)
+  background-color: $color
+  color: $textcolor
+  a
+    color: $textcolor
+    opacity: 0.8
+    &:hover
+      +glow
+      opacity: 1
+  a.detach
+    margin-left: 5px
+  &:hover
+    background-color: $sislight
+
+=button($color: $mid, $textcolor: white)
+  +light
+  +spaced
+  display: inline-block
+  position: relative
+  outline: none
+  cursor: pointer
+  text-align: center
+  text-decoration: none
+  font-size: 16px
+  padding: 8px 12px 8px 12px
+  line-height: 20px
+  margin: 1px 0 0 0
+  +border-radius(3px)
+  +box-shadow(0 1px 2px rgba(0,0,0,0.6))
+  background-color: $color
+  color: $textcolor
+  border: solid 1px darken($color, 10)
+  +background-image(linear-gradient(lighten($color, 3), $color, darken($color, 10)))
+  &:hover
+    text-decoration: none
+    color: white
+    +background-image(linear-gradient(lighten($color, 5), darken($color, 8)))
+  &:active
+    position: relative
+    top: 1px
+    +box-shadow(0 1px 2px rgba(0,0,0,0.6) inset)
+    +background-image(linear-gradient(darken($color, 10), lighten($color, 3), $color, darken($color, 15)))
+  &.unavailable, &[disabled]
+    border: solid 1px darken($pale, 10)
+    color: lighten($pale, 15)
+    +background-image(linear-gradient($pale, lighten($pale, 3), $pale, darken($pale, 5)))
+    +box-shadow(none)
+    top: 0
+  &.waiting
+    +opacity(0.25)
+
+=icon_link($filename, $offset: 0, $hover_offset: -32px)
+  display: inline-block
+  vertical-align: top
+  min-height: 18px
+  padding-left: 18px
+  line-height: 18px
+  background:
+    position: 0 $offset
+    repeat: no-repeat
+    image: image-url($filename)
+  &:hover
+    color: $hover
+    background-position: 0 $offset + $hover_offset
+    opacity: 1
+  &.working
+    color: $pale
+    background: 
+      position: 0 0
+      image: image-url('spinner.gif')
+
+=form_icon($filename, $offset: 0, $hover_offset: -32px)
+  display: inline-block
+  vertical-align: top
+  overflow: hidden
+  width: 24px
+  height: 24px
+  text-indent: 50px
+  line-height: 50px
+  background:
+    position: 0 $offset
+    repeat: no-repeat
+    image: image-url($filename)
+  &:hover
+    color: $hover
+    background-position: 0 $offset + $hover_offset
+    opacity: 1
+  &.working
+    color: $pale
+    background: 
+      position: 0 0
+      image: image-url('spinner.gif')
+
+
+
+
+

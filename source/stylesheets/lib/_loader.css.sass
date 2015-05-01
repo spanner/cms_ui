@@ -1,0 +1,85 @@
+// excerpted violently from https://github.com/ConnorAtherton/loaders.css
+
+$sis: #1f99ba
+$sislight: #17bed7
+
+$primary-color: #fff !default
+$ball-size: 15px !default
+$margin: 2px !default
+$line-height: 35px !default
+$line-width: 4px !default
+
+=global-bg
+  background-color: $primary-color
+
+=global-animation
+  -webkit-animation-fill-mode: both
+
+=balls
+  +global-bg
+  width: $ball-size
+  height: $ball-size
+  border-radius: 100%
+  margin: $margin
+
+$amount: 400px
+
+@-webkit-keyframes ball-triangle-path-1
+  33%
+    transform: translate($amount / 2, -$amount)
+  66%
+    transform: translate($amount, 0px)
+  100%
+    transform: translate(0px, 0px)
+
+
+@-webkit-keyframes ball-triangle-path-2
+  33%
+    transform: translate($amount / 2, $amount)
+  66%
+    transform: translate(-$amount / 2, $amount)
+  100%
+    transform: translate(0px, 0px)
+
+
+@-webkit-keyframes ball-triangle-path-3
+  33%
+    transform: translate(-$amount, 0px)
+  66%
+    transform: translate(-$amount / 2, -$amount)
+  100%
+    transform: translate(0px, 0px)
+
+=ball-triangle-path($n: 3)
+  $animations: ball-triangle-path-1 ball-triangle-path-2 ball-triangle-path-3
+  @for $i from 1 through $n
+    > div:nth-child(#{$i})
+      -webkit-animation-name: nth($animations, $i)
+      -webkit-animation-delay: 0
+      -webkit-animation-duration: 2s
+      -webkit-animation-timing-function: ease-in-out
+      -webkit-animation-iteration-count: infinite
+
+.ball-triangle-path
+  position: relative
+  +ball-triangle-path
+  transform: translate(-$amount / 2, -$amount / 2)
+  > div
+    +global-animation
+    position: absolute
+    width: 30px
+    height: 30px
+    border-radius: 100%
+    background:
+      color: $dark
+      position: center center
+      repeat: no-repeat
+      image: image-url('sis_white.png')
+    &:nth-of-type(1)
+      top: $amount
+    &:nth-of-type(2)
+      left: $amount / 2
+    &:nth-of-type(3)
+      top: $amount
+      left: $amount
+

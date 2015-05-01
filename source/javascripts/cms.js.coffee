@@ -7,7 +7,6 @@
 #= require lib/backbone.cocktail
 #= require lib/backbone.marionette
 #= require lib/backbone.stickit
-
 #= require lib/utilities
 
 #= require ./cms/application

@@ -20,9 +20,9 @@ class CMS.AppRouter extends Backbone.Marionette.AppRouter
     "(/)": "homeView"
 
 class CMS.Application extends Backbone.Marionette.Application
-  initialize: (options={}) ->
+  initialize: ->
     root._cms = @
-    @_config = new CMS.Config(options.config)
+    @_config = new CMS.Config
     @_session = new CMS.Models.Session
     @_ui = new CMS.Views.UILayout
       model: @_session

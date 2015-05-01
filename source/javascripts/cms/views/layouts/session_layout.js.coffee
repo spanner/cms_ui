@@ -3,6 +3,7 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   regions:
     form: "#form"
+    menu: "#session_menu"
 
   onRender: () =>
     @wait()
@@ -19,6 +20,7 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
   goAway: () =>
     @unwait()
     @getRegion('form').clear()
+    # @getRegion('menu').show(new CMS.Views.SessionMenu)
     
   show: (action) =>
     switch action

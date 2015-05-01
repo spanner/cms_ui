@@ -1,3 +1,27 @@
+class CMS.Views.PageSection extends Backbone.Marionette.ItemView
+  template: "sections/section"
+  tagName: "section"
+
+  onRender: =>
+    @stickit()
+
+class CMS.Views.Page extends Backbone.Marionette.CompositeView
+  template: "pages/page"
+  childView: CMS.Views.PageSection
+  childViewContainer: "main"
+
+  initialize: ->
+    @collection = @model?.sections
+
+  setModel: (model) =>
+    @model = model
+    @collection = @model?.sections
+    if @model
+      @stickit()
+    else
+      @unstickit()
+
+
 class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
 
