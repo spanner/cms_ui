@@ -1,0 +1,29 @@
+.signin
+  %form.password
+    %h3
+      Reset your password
+    %fieldset
+      %p
+        %input#email{:name => "email", :type => "email", :required => "required", :placeholder => "Email"}
+        %a.forgotten{href: "/"}
+          back to sign in
+
+      .buttons
+        %input{:type => "submit", :value => "Send instructions"}
+
+  .confirmation
+    %h3
+      Reset message sent
+
+    %p
+      Thank you. If we recognised
+      %span.email
+      then a message was sent explaining how to reset your password. 
+      Please allow a few minutes for it to arrive, and keep an eye on your spam folder.
+      The message will appear to come from robot@siss.io.
+    %p
+      You can still
+      %a{href: "/"}
+        sign in
+      if you remember the old one.
+

@@ -22,7 +22,16 @@
 #= require_self
 
 $ ->
-  new CMS.Application()
+  _.mixin(_.str.exports())
+  
+  Backbone.Marionette.Renderer.render = (template, data) ->
+    if template?
+      throw("Template '" + template + "' not found!") unless JST[template]
+      JST[template](data)
+    else
+      ""
+
+  window._cms = new CMS.Application()
 
   $(document).on "click", "a:not([data-bypass])", (e) ->
     if _cms
