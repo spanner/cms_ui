@@ -1,7 +1,7 @@
 class CMS.Views.PageBranch extends CMS.Views.ItemView
   template: "pages/branch"
   bindings:
-    "a.title":
+    ".header a":
       observe: "title"
       attributes: [
         observe: "id"

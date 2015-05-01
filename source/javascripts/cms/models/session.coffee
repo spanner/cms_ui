@@ -33,7 +33,7 @@ class CMS.Models.Session extends CMS.Model
     if @get('token')
       @fetch().done @loaded
     else
-      @_loaded.reject()
+      @loaded()
     @_loaded.promise()
   
   populate: (data) =>

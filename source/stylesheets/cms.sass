@@ -27,6 +27,8 @@ h1, h2, h3
   bottom: 0
   left: 0
 
+#spanner
+
 #ui
   height: 100%
   width: 100%
@@ -35,13 +37,33 @@ h1, h2, h3
   height: 100%
   width: 100%
 
+=management
+  box-sizing: border-box
+  display: inline-block
+  float: left
+  vertical-align: top
+  height: $control_height
+  
+
 #manager
   position: fixed
   left: 0
   right: 0
-  min-height: $control_height
+  height: $control_height
   background: $dark
   color: white
+  #manager_menu
+    +management
+    width: $control_height
+    a
+      display: block
+      width: $control_height
+      height: $control_height
+      background:
+        image: image-url('spanner.png')
+        position: top left
+        repeat: no-repeat
+
   a
     color: white
   .cms-trail
@@ -161,13 +183,17 @@ footer
         padding: 0
         a.forgotten, a.lost
           float: right
+          font-size: 0.9rem
           padding-top: 5px
+          color: $mid
+          +hover
         input[type="text"],input[type="email"],input[type="password"]
           padding: 16px
           width: 600px
           font-size: 1.8em
           border: 1px solid $pale
           outline: none
+          +border-radius(4px)
           +light
           background:
             position: right 10px top 10px
@@ -201,11 +227,11 @@ footer
           +light
           +border-radius(3px)
           &:active
-            background-color: white
+            color: $hover
             +box-shadow(inset 0 1px 6px $dark)
           &:disabled
             background-color: white
-            color: lighten($sislight, 5)
+            color: $pale
             box-shadow: none
 
   .status_panel
