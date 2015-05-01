@@ -74,4 +74,5 @@ end
 require 'rack/rewrite'
 use Rack::Rewrite do
   rewrite %r{^\/sites\/.*}, '/index.html'
+  rewrite %r{^\/session\/.*}, '/index.html'
 end

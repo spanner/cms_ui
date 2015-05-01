@@ -13,27 +13,29 @@
 # The session is ready when we have gone through the validation step or decided not to.
 # The user is ready when we have validated the session or created a new one.
 #
-# TODO make sure that we are marked ready when initial checks fail.
-
 class CMS.Models.Session extends CMS.Model
   idAttribute: "token"
   savedAttributes: ['email', 'password', 'otp']
 
-  baseUrl: =>
+  urlRoot: =>
     "#{_cms.apiUrl()}sessions"
 
   initialize: =>
     super
     $(document).ajaxSend @authenticateRequest
-    @_loaded.fail @clear
+    @_loaded.fail @clearCookie
 
   build: () =>
     @readCookie()
-    @_user = new CMS.Model.User
-  
-  clear: () =>
-    
+    @_user = new CMS.Models.User
 
+  load: =>
+    if @get('token')
+      @fetch().done @loaded
+    else
+      @_loaded.reject()
+    @_loaded.promise()
+  
   populate: (data) =>
     @updateUser(data.user)
     @writeCookie()

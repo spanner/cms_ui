@@ -1,6 +1,4 @@
-# The session 
-
-class CMS.Views.SessionLayout extends Backbone.Marionette.LayoutView
+class CMS.Views.SessionLayout extends CMS.Views.LayoutView
   template: 'layouts/session'
 
   regions:
@@ -24,13 +22,14 @@ class CMS.Views.SessionLayout extends Backbone.Marionette.LayoutView
     
   show: (action) =>
     switch action
-    when "reset" then @showForm('SessionResetForm')
-    when "confirm" then @showForm('SessionConfirmationForm')
-    when "reconfirm" then @showForm('SessionReconfirmationForm')
-    when "repassword" then @showForm('SessionPasswordForm')
+      when "reset" then @showForm('SessionResetForm')
+      when "confirm" then @showForm('SessionConfirmationForm')
+      when "reconfirm" then @showForm('SessionReconfirmationForm')
+      when "repassword" then @showForm('SessionPasswordForm')
 
-  showForm: (klass)
+  showForm: (klass) =>
     klass = CMS.Views[klass]
+    @log "showForm", klass
     view = new klass(model: @model)
     @unwait()
     @getRegion('form').show(view)

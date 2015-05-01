@@ -1,1 +1,1 @@
-#= require ./backbone.marionette/backbone.marionette-2.2.0
+#= require ./backbone.marionette/backbone.marionette-2.4.1

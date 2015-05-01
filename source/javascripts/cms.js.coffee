@@ -11,9 +11,8 @@
 #= require lib/utilities
 
 #= require ./cms/application
-#= require ./cms/router
 #= require ./cms/config
-#= require ./cms/view_mixins
+#= require ./cms/mixins
 
 #= require_tree ./templates
 #= require_tree ./cms/models
@@ -31,8 +30,6 @@ $ ->
     else
       ""
 
-  window._cms = new CMS.Application()
-
   $(document).on "click", "a:not([data-bypass])", (e) ->
     if _cms
       href = $(@).attr("href")
@@ -41,3 +38,5 @@ $ ->
         if href and href.slice(0, prot.length) isnt prot
           e.preventDefault()
           _cms.navigate href
+
+  new CMS.Application().start()

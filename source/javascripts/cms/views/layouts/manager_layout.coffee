@@ -1,50 +1,48 @@
-class CMS.Views.ManagerLayout extends Backbone.Marionette.LayoutView
+class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
   template: "layouts/manager"
 
   onRender: =>
-    @_editor = new CMS.Views.EditorLayout
-      el: @$el.find("#editor")
+    @model.whenReady () =>
+      @_editor = new CMS.Views.EditorLayout
+        el: @$el.find("#editor")
 
-    @_sites_list = new CMS.Views.SitesList
-      el: @$el.find(".cms-sites-list")
-      collection: @_user.sites
-    @_pages_tree = new CMS.Views.PagesTree
-      el: @$el.find(".cms-pages-tree")
-    @_sections_list = new CMS.Views.SectionsList
-      el: @$el.find(".cms-sections-list")
-    @_site_crumb = new CMS.Views.SiteCrumb
-      el: @$el.find(".cms-site-crumb")`Ωwa`
-    @_page_crumb = new CMS.Views.PageCrumb
-      el: @$el.find(".cms-page-crumb")
-    @_section_crumb = new CMS.Views.SectionCrumb
-      el: @$el.find(".cms-section-crumb")
+      @_sites_list = new CMS.Views.SitesList
+        el: @$el.find(".cms-sites-list")
+        collection: @_user.sites
+      @_pages_tree = new CMS.Views.PagesTree
+        el: @$el.find(".cms-pages-tree")
+      @_sections_list = new CMS.Views.SectionsList
+        el: @$el.find(".cms-sections-list")
+      @_site_crumb = new CMS.Views.SiteCrumb
+        el: @$el.find(".cms-site-crumb")
+      @_page_crumb = new CMS.Views.PageCrumb
+        el: @$el.find(".cms-page-crumb")
+      @_section_crumb = new CMS.Views.SectionCrumb
+        el: @$el.find(".cms-section-crumb")
 
-
-    @_sites_list.render()
-    @_pages_tree.render()
-    @_sections_list.render()
-    @_site_crumb.render()
-    @_page_crumb.render()
-    @_page_view.render()
-    @_section_crumb.render()
+      @_sites_list.render()
+      @_pages_tree.render()
+      @_sections_list.render()
+      @_site_crumb.render()
+      @_page_crumb.render()
+      @_page_view.render()
+      @_section_crumb.render()
 
 
   show: (site_slug, page_id, section_uid) =>
+    @log "⇒ show", site_slug, page_id, section_uid
     @model.ready().done () =>
-      site = @model.sites.find_where(slug: site_slug)
-      # site needs its own loading_promise
-      site.load().done =>
-        # choose page and section
-        # populate editor
-
-
-
-
-
-
-
-
-
+      @log "user is ready"
+      if site_slug
+        @log "loading site #{site_slug}"
+        site = @model.sites.find_where(slug: site_slug)
+        # site needs its own loading_promise
+        site.load().done =>
+          # get page and section
+          # populate editor
+      else
+        @log "going home"
+        @home()
 
 
 

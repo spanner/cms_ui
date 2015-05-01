@@ -1,4 +1,4 @@
-class CMS.Views.SessionLoginForm extends Backbone.Marionette.ItemView
+class CMS.Views.SessionLoginForm extends CMS.Views.ItemView
   template: 'sessions/login_form'
 
   events:

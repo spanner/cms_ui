@@ -28,17 +28,19 @@ class CMS.Model extends Backbone.Model
     @_loaded.done fn
 
   isReady: =>
-    @_loaded.isResolved()
+    @_loaded.state() is 'resolved'
 
   build: =>
     # usually this is all about associates:
     # @things = new CMS.Collections.Things
 
   load: =>
+    @log "load"
     @fetch().done @loaded
     @_loaded.promise()
   
   loaded: (data) =>
+    @log "loaded"
     @_loaded.resolve(data)
 
   parse: (data) =>
@@ -62,3 +64,6 @@ class CMS.Model extends Backbone.Model
       json = super
     json
 
+  log: (message) =>
+    if _cms.logging()
+      console.log "#{@constructor.name} model", message
