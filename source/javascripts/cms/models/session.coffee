@@ -44,7 +44,11 @@ class CMS.Models.Session extends CMS.Model
 
   getUser: () =>
     @_user
-  
+
+  setUser: (data) =>
+    @populateUser data
+    @writeCookie()
+
   userIsReady: () =>
     @_user.isReady()
 

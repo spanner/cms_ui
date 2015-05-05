@@ -13,12 +13,14 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @_manager.render()
 
     # TODO the editor needs to get its page from somewhere; probably the session user
-    # @_editor = new CMS.Views.EditorLayout
-    #   el: @$el.find("#editor")
-    # @_editor.render()
+    @_editor = new CMS.Views.EditorLayout
+      el: @$el.find("#editor")
+      model: @model.getUser()
+    @_editor.render()
 
   siteView: (site_slug, page_path) =>
     @_manager.show(site_slug, page_path)
+    @_editor.show(site_slug, page_path)
 
   sessionView: (action) =>
     @_barrier.show(action)

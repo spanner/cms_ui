@@ -30,12 +30,19 @@ h1, h2, h3
 #spanner
 
 #ui
+  position: absolute
   height: 100%
   width: 100%
 
-#session, #editor
+#session
   height: 100%
   width: 100%
+
+#editor
+  position: absolute
+  width: 100%
+  bottom: 0
+  top: $control_height
 
 =management
   box-sizing: border-box
@@ -66,45 +73,74 @@ h1, h2, h3
 
   a
     color: white
-  .cms-trail
-    & > a
-      width: 100px
-      height: 100%
-      float: left
+  // .cms-trail
+  //   & > a
+  //     width: 100px
+  //     height: 100%
+  //     float: left
+  //     box-sizing: border-box
+  //     border:
+  //       right: 1px solid white
+  //     span
+  //       margin: 0 10px
+
+  #sites
+    margin: 0 0 0 48px
+    .header
+      height: $control_height
       box-sizing: border-box
-      border:
-        right: 1px solid white
-      span
+      float: left
+      padding: 0 10px
+      border-left: 1px solid white
+      display: table
+      a
+        display: table-cell
+        vertical-align: middle
+    .menu
+      position: absolute
+      display: none
+      top: $control_height
+      background: $dark
+      margin-left: 1px
+      & > div
+        padding: 3px 10px
+    #pages
+      margin: 0 10px
+      float: left
+      #sections
         margin: 0 10px
+        float: left
 
-.cms-lists
-  position: fixed
-  top: $control_height
-  color: white
-  a
-    color: white
-    text-decoration: none
-  & > div
-    position: absolute
-    background: black
-    display: none
-    & > div
-      min-width: 100px
-      padding: 3px 10px
-  .cms-sites-list
-    // left: 0
-  .cms-pages-tree
-    left: 100px
-  .cms-sections-list
-    left: 200px
+#editor
 
-.cms-output
-  position: fixed
-  left: 0
-  right: 0
-  top: $control_height + 1
-  bottom: 0
-  scroll: auto
+// .cms-lists
+//   position: fixed
+//   top: $control_height
+//   color: white
+//   a
+//     color: white
+//     text-decoration: none
+//   & > div
+//     position: absolute
+//     background: black
+//     display: none
+//     & > div
+//       min-width: 100px
+//       padding: 3px 10px
+//   .cms-sites-list
+//     // left: 0
+//   .cms-pages-tree
+//     left: 100px
+//   .cms-sections-list
+//     left: 200px
+//
+// .cms-output
+//   position: fixed
+//   left: 0
+//   right: 0
+//   top: $control_height + 1
+//   bottom: 0
+//   scroll: auto
 
 // Page
 

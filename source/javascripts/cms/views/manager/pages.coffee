@@ -1,16 +1,16 @@
 class CMS.Views.PageBranch extends CMS.Views.ItemView
   template: "pages/branch"
   bindings:
-    ".header a":
+    "a.title":
       observe: "title"
       attributes: [
-        observe: "id"
+        observe: "path"
         name: "href"
         onGet: "pageUrl"
       ]
 
-  pageUrl: (id) =>
-    "/sites/#{@model.getSite().get "slug"}/pages/#{id}"
+  pageUrl: (path) =>
+    "/sites/#{@model.getSite().get "slug"}#{path}"
 
 
 class CMS.Views.PagesTree extends CMS.Views.CollectionView
@@ -19,6 +19,9 @@ class CMS.Views.PagesTree extends CMS.Views.CollectionView
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
+
+  events:
+    "click > .header a.title": "toggleMenu"
 
   onRender: =>
     # we definitely have a collection
@@ -40,8 +43,11 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
     @model = page
     @model.load()
     @render()
+    @_pages_tree.hide()
     # sections_layout will be controlled by #links
 
-  home: () =>
-    # do a default thing
-    @log "home"
+  toggleMenu: =>
+    if @_pages_tree.$el.css('display') isnt 'none'
+      @_pages_tree.hide()
+    else
+      @_pages_tree.show()

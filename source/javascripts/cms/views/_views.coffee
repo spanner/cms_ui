@@ -8,7 +8,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   events:
     "click a.title": "openMenu"
   bindings: 
-    'a.title': "title"
+    '.header a.title': "title"
   
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
