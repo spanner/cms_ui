@@ -20,9 +20,6 @@ class CMS.Views.PagesTree extends CMS.Views.CollectionView
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
 
-  events:
-    "click > .header a.title": "toggleMenu"
-
   onRender: =>
     # we definitely have a collection
     @_pages_tree = new CMS.Views.PagesTree
@@ -38,11 +35,12 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
         collection: @model.sections
       @_sections_layout.render()
 
-  show: (page) =>
+  show: (page,path) =>
     @log "⇒ show", page
     @model = page
-    @model.load()
+    @model.load() unless @model.isReady()
     @render()
+    @setSitePath()
     @_pages_tree.hide()
     # sections_layout will be controlled by #links
 
@@ -51,3 +49,9 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
       @_pages_tree.hide()
     else
       @_pages_tree.show()
+
+  setSitePath: (path) =>
+    @log "path", path
+    @model?.whenReady =>
+      if section = @model.sections.findWhere(id: path)
+        @_sections_layout.show(section)

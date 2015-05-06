@@ -1,3 +1,4 @@
 .header
-  %a.title
+  %a.title choose section
+%a.button.add.add_section add
 .menu

@@ -1,6 +1,7 @@
 class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   template: "sections/section"
   tagName: "section"
+  id: -> "section_#{@model.id}"
 
   onRender: =>
     @stickit()
@@ -18,9 +19,10 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
   show: (page) =>
     @model = page
+    @collection = @model.sections
     @model.whenReady =>
       @collection = @model.sections
-      @render()
+    @render()
 
 class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"

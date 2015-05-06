@@ -18,7 +18,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       model: @model.getUser()
     @_editor.render()
 
-  siteView: (site_slug, page_path) =>
+  siteView: (site_slug, page_path, oth) =>
     @_manager.show(site_slug, page_path)
     @_editor.show(site_slug, page_path)
 

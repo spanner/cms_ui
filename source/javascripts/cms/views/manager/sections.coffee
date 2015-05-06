@@ -1,5 +1,9 @@
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
+
+  events:
+    "focus": "onFocus"
+
   bindings:
     "a.title":
       observe: "id"
@@ -11,24 +15,25 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
   sectionUrl: (id) =>
     #TODO should this be an internal #link?
-    "/sites/#{@model.getSite().get("slug")}/pages/#{@model.getPage().get("id")}/sections/#{id}"
+    "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
 
+  onFocus: =>
+    console.log "focus", @
 
 class CMS.Views.SectionsList extends CMS.Views.CollectionView
   childView: CMS.Views.ListedSection
 
 
 class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
-  template: "manager/pages"
+  template: "manager/sections"
+
+  events:
+    "click a.add_section": "addSection"
+    "click > .header a.title": "toggleMenu" 
 
   bindings:
-    'a.title': "title"
-    "a.add":
-      attributes: [
-        name: "href"
-        observe: "id"
-        onGet: "newSectionUrl"
-      ]
+    'a.title': "id"
+
 
   onRender: =>
     # we definitely have a collection
@@ -37,19 +42,21 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       collection: @collection
     @_sections_list.render()
 
-    # but we don't always have a model
     @model?.whenReady () =>
       @stickit()
-      @_sections_layout = new CMS.Views.SectionsLayout
-        el: @$el.find("#sections")
-        collection: @model.sections
-      @_sections_layout.render()
 
   show: (section) =>
     @log "⇒ show", section
     @model = section
-    @model.load()
+    @model.load() unless @model.isReady()
     @render()
 
-  newSectionUrl: (page_id) =>
-    "/sites/#{@model.getSite().get "slug"}/pages/#{page_id}/sections/new"
+  toggleMenu: =>
+    if @_sections_list.$el.css('display') isnt 'none'
+      @_sections_list.hide()
+    else
+      @_sections_list.show()
+
+  addSection: =>
+    console.log "add section", @collection
+    @collection.add(page_id:@collection.page.id) #TODO change to create when working properly

@@ -6,10 +6,11 @@ class CMS.Views.LayoutView extends Backbone.Marionette.LayoutView
 
 class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   events:
-    "click a.title": "openMenu"
+    "click > .header a.title": "toggleMenu"
+
   bindings: 
     '.header a.title': "title"
-  
+
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
   onRender: =>

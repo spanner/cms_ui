@@ -20,9 +20,6 @@ class CMS.Views.SitesMenu extends CMS.Views.CollectionView
 class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
   template: "manager/sites"
 
-  events:
-    "click > .header a.title": "toggleMenu"
-
   onRender: =>
     # we definitely have a collection
     @_sites_list = new CMS.Views.SitesMenu
@@ -41,7 +38,7 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
   show: (site, path="") =>
     @log "⇒ show", site, path
     @model = site
-    @model.load()
+    @model.load() unless @model.isReady()
     @render()
     @setPagePath(path)
     @_sites_list.hide()
@@ -57,4 +54,3 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
     @model?.whenReady =>
       if page = @model.pages.findWhere(path: "/#{path}")
         @_pages_layout.show(page)
-

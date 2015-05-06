@@ -59,6 +59,10 @@ h1, h2, h3
   height: $control_height
   background: $dark
   color: white
+  .button
+    +button
+    &.add
+      +button($green)
   #manager_menu
     +management
     width: $control_height
@@ -113,62 +117,29 @@ h1, h2, h3
 
 #editor
 
-// .cms-lists
-//   position: fixed
-//   top: $control_height
-//   color: white
-//   a
-//     color: white
-//     text-decoration: none
-//   & > div
-//     position: absolute
-//     background: black
-//     display: none
-//     & > div
-//       min-width: 100px
-//       padding: 3px 10px
-//   .cms-sites-list
-//     // left: 0
-//   .cms-pages-tree
-//     left: 100px
-//   .cms-sections-list
-//     left: 200px
-//
-// .cms-output
-//   position: fixed
-//   left: 0
-//   right: 0
-//   top: $control_height + 1
-//   bottom: 0
-//   scroll: auto
+  header
+    background: #ddd
+    width: 100%
+    height: 96px
+    h1
+      text-align: center
 
-// Page
+  main
+    padding: 20px
+    overflow: hidden
+    section
+      height: 240px
+      width: 240px
+      margin: 10px
+      background: #eee
+      float: left
+      &:target
+        background: $rubine
 
-header
-  background: #ddd
-  width: 100%
-  height: 96px
-  position: relative
-
-main
-  padding: 20px
-  width: 100%
-  box-sizing: border-box
-  position: relative
-  overflow: hidden
-  section
-    position: relative
-    height: 240px
-    width: 240px
-    margin: 12px
-    background: #eee
-    float: left
-
-footer
-  position: relative
-  background: #ddd
-  width: 100%
-  height: 32px
+  footer
+    background: #ddd
+    width: 100%
+    height: 32px
 
 // undigested login stuff 
 
