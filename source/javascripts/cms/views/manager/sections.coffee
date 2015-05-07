@@ -25,6 +25,11 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
   events:
     "click a.title": "select"
+    "click a.delete_section": "deleteSection"
+
+  deleteSection: =>
+    console.log "destroy", @model
+    @model?.destroy()
 
   select: (e) =>
     e.preventDefault() if e
@@ -44,7 +49,6 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   events:
     "click a.add_section": "addSection"
-    "click a.delete_section": "deleteSection"
     "click > .header a.title": "toggleMenu"
 
   bindings:
@@ -63,10 +67,6 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
     @model = section
     @model.load() unless @model.isReady()
     @render()
-
-  deleteSection: =>
-    console.log "destroy", @model
-    @model?.destroy()
 
   toggleMenu: =>
     if @_sections_list.$el.css('display') isnt 'none'
