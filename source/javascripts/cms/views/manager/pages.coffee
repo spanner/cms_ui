@@ -32,6 +32,12 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
       @model = page
       @stickit()
       # @_pages_tree.setModel('page')
+
+      # well this had better get nicer
+      # but by keeping it simple we make it
+      # easy to eg. preview / edit / publish
+      _cms._ui.editPage(page)
+      
       @model.whenReady =>
         @_sections_layout = new CMS.Views.SectionsLayout
           el: @$el.find("#sections")

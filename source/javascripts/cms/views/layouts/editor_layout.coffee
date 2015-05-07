@@ -18,6 +18,7 @@ class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   select: =>
     @model.select()
 
+
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "pages/page"
   childView: CMS.Views.PageSection
@@ -26,23 +27,16 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   bindings:
     "h1": "title"
 
-  show: (page) =>
-    @model = page
-    @model.whenReady =>
-      @collection = @model.sections
-      @render()
-
+  onRender: () =>
+    @stickit()
 
 class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
 
   onRender: =>
-    @_page_view = new CMS.Views.Page
-      el: @$el
-
-  show: (site_slug, page_path="") =>
     @model.whenReady =>
-      if site_slug and site = @model.sites.findWhere(slug: site_slug)
-        site.whenReady =>
-          if page = site.pages.findWhere(path: "/#{page_path}")
-            @_page_view.show(page)
+      @_page_view = new CMS.Views.Page
+        model: @model
+        collection: @model.sections
+        el: @$el.find("#page")
+      @_page_view.render()

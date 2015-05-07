@@ -1,5 +1,7 @@
 .header
   %a.title
     Page...
+  %a.add.add_page
+    \+
 .menu
 #sections
