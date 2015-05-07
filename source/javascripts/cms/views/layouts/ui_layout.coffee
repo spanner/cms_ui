@@ -18,12 +18,18 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       model: @model.getUser()
     @_editor.render()
 
+    @_styler = new CMS.Views.StylerLayout
+      el: @$el.find("#styler")
+      model: @model.getUser()
+
   siteView: (site_slug, page_path, oth) =>
     @_manager.show(site_slug, page_path)
     @_editor.show(site_slug, page_path)
+    @_styler.show(site_slug)
 
   sessionView: (action) =>
     @_barrier.show(action)
-  
-  homeView: () =>
+
+  homeView: =>
     @_manager.home()
+

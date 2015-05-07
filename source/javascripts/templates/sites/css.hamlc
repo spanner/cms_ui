@@ -1,0 +1,5 @@
+%h2
+  %span.title
+  CSS
+
+%textarea.css{placeholder: "Your CSS here..."}

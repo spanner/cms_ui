@@ -36,5 +36,4 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
   
   # the standard name for a default action doesn't fit well here.
   home: () =>
-    console.log "session home"
     @showForm('SessionLoginForm') unless @model.userIsReady()

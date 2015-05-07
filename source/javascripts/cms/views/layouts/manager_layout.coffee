@@ -1,6 +1,9 @@
 class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
   template: "layouts/manager"
 
+  events:
+    "click #manager_menu a": "toggleStyler"
+
   onRender: =>
     @model.whenReady () =>
       @_sites_layout = new CMS.Views.SitesLayout
@@ -19,3 +22,4 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
   home: () =>
     # do a default thing
     @log "home"
+

@@ -40,12 +40,10 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
     if @model = @collection.findWhere(selected: true)
       @log "⇒ show", @model
       @model.load() unless @model.isReady()
-      @render()
+    @render()
 
   deleteSection: =>
-    console.log "destroy", @model
     @model?.destroy()
 
   addSection: =>
-    console.log "add section to page:", @collection.page.get("path")
     @collection.add(page_id:@collection.page.id).select()

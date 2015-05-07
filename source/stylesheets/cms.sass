@@ -38,9 +38,33 @@ h1, h2, h3
   height: 100%
   width: 100%
 
+#styler
+  position: fixed
+  width: 0
+  bottom: 0
+  top: $control_height
+  background: $dark
+  color: $verypale
+  box-sizing: border-box
+  &.open
+    width: 50%
+    & + div
+      width: calc(50% - 1px)
+  .css
+    position: absolute
+    top: 96px
+    bottom: 0
+    width: 100%
+    background-color: inherit
+    color: inherit
+    // border: none
+    overflow-x: hidden
+    overflow-y: auto
+
 #editor
   position: absolute
   width: 100%
+  right: 0
   bottom: 0
   top: $control_height
 
@@ -50,7 +74,6 @@ h1, h2, h3
   float: left
   vertical-align: top
   height: $control_height
-  
 
 #manager
   position: fixed
