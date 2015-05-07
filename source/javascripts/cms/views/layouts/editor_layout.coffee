@@ -1,14 +1,22 @@
 class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   template: "sections/section"
   tagName: "section"
+  id: -> "section_#{@model.id}"
 
-  id: -> 
-    "section_#{@model.id}"
+  events:
+    "click": "select"
+
+  bindings:
+    ":el":
+      classes:
+        selected: "selected"
 
   onRender: =>
     @stickit()
     @$el.append("<h2>##{@id()}</h2>")
 
+  select: =>
+    @model.select()
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "pages/page"
@@ -21,9 +29,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   show: (page) =>
     @model = page
     @model.whenReady =>
-      unless @collection is @model.sections
-        @collection = @model.sections
-        @_initialEvents()
+      @collection = @model.sections
       @render()
 
 

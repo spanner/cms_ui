@@ -1,5 +1,15 @@
-class CMS.Views.ListedSection extends  CMS.Views.ItemView
-  template: "sections/listed"
+# class CMS.Views.ListedSection extends  CMS.Views.ItemView
+#   template: "sections/listed"
+#
+#   events:
+#     "click a.title": "select"
+#
+#   sectionUrl: (id) =>
+#     #TODO should this be an internal #link?
+#     "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
+#
+#   select: =>
+#     console.log "select section", @model
 
   bindings:
     "a.title":
@@ -23,12 +33,14 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   events:
     "click a.add_section": "addSection"
+    "click a.delete_section": "deleteSection"
     "click > .header a.title": "toggleMenu"
 
   bindings:
-    'a.title':
-      observe: "id"
-      onGet: "orNew"
+    'a.title': "pos"
+
+  initialize: ->
+    @collection.on "model:change:selected destroy add", @show
 
   onRender: =>
     @_sections_list = new CMS.Views.SectionsList
@@ -44,6 +56,10 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
     @model.load() unless @model.isReady()
     @render()
 
+  deleteSection: =>
+    console.log "destroy", @model
+    @model?.destroy()
+
   toggleMenu: =>
     if @_sections_list.$el.css('display') isnt 'none'
       @_sections_list.hide()
@@ -51,8 +67,5 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       @_sections_list.show()
 
   addSection: =>
-    @collection.add(page_id: @collection.page.id)
-
-  orNew: (id) =>
-    id || "new"
-    
+    console.log "add section to page:", @collection.page.get("path")
+    @collection.add(page_id:@collection.page.id).select()

@@ -20,7 +20,7 @@ class CMS.Views.PagesTree extends CMS.Views.CollectionView
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
 
-  onRender: (options) =>
+  onRender: =>
     @_pages_tree = new CMS.Views.PagesTree
       el: @$el.find(".menu")
       collection: @collection
