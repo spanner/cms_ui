@@ -1,19 +1,15 @@
-class CMS.Views.ListedSection extends  CMS.Views.ItemView
-  template: "sections/listed"
-
-  bindings:
-    "a.title":
-      observe: "id"
-      attributes: [
-        observe: "id"
-        name: "href"
-        onGet: "sectionUrl"
-      ]
-
-  sectionUrl: (id) =>
-    #TODO should this be an internal #link?
-    "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
-
+# class CMS.Views.ListedSection extends  CMS.Views.ItemView
+#   template: "sections/listed"
+#
+#   events:
+#     "click a.title": "select"
+#
+#   sectionUrl: (id) =>
+#     #TODO should this be an internal #link?
+#     "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
+#
+#   select: =>
+#     console.log "select section", @model
 
 class CMS.Views.SectionsList extends CMS.Views.CollectionView
   childView: CMS.Views.ListedSection
@@ -24,33 +20,32 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   events:
     "click a.add_section": "addSection"
-    "click > .header a.title": "toggleMenu" 
+    "click a.delete_section": "deleteSection"
 
   bindings:
-    'a.title': "id"
+    'a.title': "pos"
+
+  initialize: ->
+    @collection.on "model:change:selected destroy add", @show
 
   onRender: =>
-    # we definitely have a collection
-    @_sections_list = new CMS.Views.SectionsList
-      el: @$el.find(".menu")
-      collection: @collection
-    @_sections_list.render()
-
-    @model?.whenReady () =>
-      @stickit()
-
-  show: (section) =>
-    @log "⇒ show", section
-    @model = section
-    @model.load() unless @model.isReady()
-    @render()
-
-  toggleMenu: =>
-    if @_sections_list.$el.css('display') isnt 'none'
-      @_sections_list.hide()
+    if @model
+      @model.whenReady () =>
+        @$el.find("a.delete_section").show()
+        @stickit()
     else
-      @_sections_list.show()
+      @$el.find("a.delete_section").hide()
+
+  show: =>
+    if @model = @collection.findWhere(selected: true)
+      @log "⇒ show", @model
+      @model.load() unless @model.isReady()
+      @render()
+
+  deleteSection: =>
+    console.log "destroy", @model
+    @model?.destroy()
 
   addSection: =>
     console.log "add section to page:", @collection.page.get("path")
-    @collection.add(page_id:@collection.page.id) #TODO change to create when working properly
+    @collection.add(page_id:@collection.page.id).select()

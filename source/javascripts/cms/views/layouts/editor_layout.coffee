@@ -3,8 +3,19 @@ class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   tagName: "section"
   id: -> "section_#{@model.id}"
 
+  events:
+    "click": "select"
+
+  bindings:
+    ":el":
+      classes:
+        selected: "selected"
+
   onRender: =>
     @stickit()
+
+  select: =>
+    @model.select()
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "pages/page"
@@ -20,7 +31,6 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   show: (page) =>
     @model = page
     @model.whenReady =>
-      console.log "page ready"
       @collection = @model.sections
       @render()
 
@@ -32,7 +42,6 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
       el: @$el
 
   show: (site_slug, page_path="") =>
-    
     @model.whenReady =>
       if site_slug and site = @model.sites.findWhere(slug: site_slug)
         site.whenReady =>

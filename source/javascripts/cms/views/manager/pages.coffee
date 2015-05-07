@@ -40,7 +40,7 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
     @model = page
     @model.load() unless @model.isReady()
     @render()
-    @setSitePath()
+    @setSection()
     @_pages_tree.hide()
     # sections_layout will be controlled by #links
 
@@ -50,8 +50,6 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
     else
       @_pages_tree.show()
 
-  setSitePath: (path) =>
-    @log "path", path
+  setSection: =>
     @model?.whenReady =>
-      if section = @model.sections.findWhere(id: path)
-        @_sections_layout.show(section)
+      @_sections_layout.show()
