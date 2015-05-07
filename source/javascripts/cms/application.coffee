@@ -48,7 +48,12 @@ class CMS.Application extends Backbone.Marionette.Application
     true
 
   navigate: (route, {trigger:trigger,replace:replace}={}) =>
+    console.log "navigate", route
     trigger ?= true
-    Backbone.history.navigate route,
-      trigger: trigger
-      replace: replace
+    hash_link = new RegExp(/^\#/)
+    if hash_link.test(route)
+      window.location.hash = route
+    else
+      Backbone.history.navigate route,
+        trigger: trigger
+        replace: replace
