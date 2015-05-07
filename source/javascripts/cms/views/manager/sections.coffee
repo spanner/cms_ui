@@ -23,11 +23,13 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     else
       "New section"
 
-#   events:
-#     "click a.title": "select"
-#
-#   select: =>
-#     console.log "select section", @model
+  events:
+    "click a.title": "select"
+
+  select: (e) =>
+    e.preventDefault() if e
+    console.log "select section", @model
+    @model.select()
 
   # onRender: =>
   #   @stickit()
