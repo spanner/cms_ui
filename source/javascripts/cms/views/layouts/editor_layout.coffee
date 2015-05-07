@@ -19,10 +19,10 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
   show: (page) =>
     @model = page
-    @collection = @model.sections
     @model.whenReady =>
+      console.log "page ready"
       @collection = @model.sections
-    @render()
+      @render()
 
 class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
@@ -32,6 +32,7 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
       el: @$el
 
   show: (site_slug, page_path="") =>
+    
     @model.whenReady =>
       if site_slug and site = @model.sites.findWhere(slug: site_slug)
         site.whenReady =>

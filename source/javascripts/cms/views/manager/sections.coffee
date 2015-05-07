@@ -1,9 +1,6 @@
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
 
-  events:
-    "focus": "onFocus"
-
   bindings:
     "a.title":
       observe: "id"
@@ -17,8 +14,6 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     #TODO should this be an internal #link?
     "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
 
-  onFocus: =>
-    console.log "focus", @
 
 class CMS.Views.SectionsList extends CMS.Views.CollectionView
   childView: CMS.Views.ListedSection
@@ -33,7 +28,6 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   bindings:
     'a.title': "id"
-
 
   onRender: =>
     # we definitely have a collection
@@ -58,5 +52,5 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       @_sections_list.show()
 
   addSection: =>
-    console.log "add section", @collection
+    console.log "add section to page:", @collection.page.get("path")
     @collection.add(page_id:@collection.page.id) #TODO change to create when working properly
