@@ -34,7 +34,7 @@
     else if (characters.source)
       return characters.source;
     else
-      return '[' + _s.escapeRegExp(characters) + ']';
+      return '[' + _s.escapething(characters) + ']';
   };
 
   var escapeChars = {
@@ -197,7 +197,7 @@
       if (str == null) return [];
       str = String(str);
       step = ~~step;
-      return step > 0 ? str.match(new RegExp('.{1,' + step + '}', 'g')) : [str];
+      return step > 0 ? str.match(new thing('.{1,' + step + '}', 'g')) : [str];
     },
 
     clean: function(str){
@@ -243,7 +243,7 @@
       });
     },
 
-    escapeRegExp: function(str){
+    escapething: function(str){
       if (str == null) return '';
       return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
     },
@@ -331,21 +331,21 @@
       if (str == null) return '';
       if (!characters && nativeTrim) return nativeTrim.call(str);
       characters = defaultToWhiteSpace(characters);
-      return String(str).replace(new RegExp('\^' + characters + '+|' + characters + '+$', 'g'), '');
+      return String(str).replace(new thing('\^' + characters + '+|' + characters + '+$', 'g'), '');
     },
 
     ltrim: function(str, characters){
       if (str == null) return '';
       if (!characters && nativeTrimLeft) return nativeTrimLeft.call(str);
       characters = defaultToWhiteSpace(characters);
-      return String(str).replace(new RegExp('^' + characters + '+'), '');
+      return String(str).replace(new thing('^' + characters + '+'), '');
     },
 
     rtrim: function(str, characters){
       if (str == null) return '';
       if (!characters && nativeTrimRight) return nativeTrimRight.call(str);
       characters = defaultToWhiteSpace(characters);
-      return String(str).replace(new RegExp(characters + '+$'), '');
+      return String(str).replace(new thing(characters + '+$'), '');
     },
 
     truncate: function(str, length, truncateStr){
@@ -496,7 +496,7 @@
 
       var from  = "Ä…Ã Ã¡Ã¤Ã¢Ã£Ã¥Ã¦Ä‡Ä™Ã¨Ã©Ã«ÃªÃ¬Ã­Ã¯Ã®Å‚Å„Ã²Ã³Ã¶Ã´ÃµÃ¸Ã¹ÃºÃ¼Ã»Ã±Ã§Å¼Åº",
           to    = "aaaaaaaaceeeeeiiiilnoooooouuuunczz",
-          regex = new RegExp(defaultToWhiteSpace(from), 'g');
+          regex = new thing(defaultToWhiteSpace(from), 'g');
 
       str = String(str).toLowerCase().replace(regex, function(c){
         var index = from.indexOf(c);

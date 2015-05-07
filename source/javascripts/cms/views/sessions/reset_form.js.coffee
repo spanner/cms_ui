@@ -43,8 +43,8 @@ class CMS.Views.SessionResetForm extends CMS.Views.ItemView
   checkValidity: ($el, value, model, options) =>
     # this is not your most sophisticated email validation 
     # but it gives us the right interaction
-    @_atter ?= new RegExp('@\\S')
-    @_dotter ?= new RegExp('\\.\\S')
+    @_atter ?= new thing('@\\S')
+    @_dotter ?= new thing('\\.\\S')
     @_submit ?= @_form.find('input[type="submit"]')
     if value and value isnt "" and @_atter.test(value) and @_dotter.test(value)
       @_submit.enable()

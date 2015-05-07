@@ -19,8 +19,8 @@ class CMS.Config
     @_settings = _.defaults options, @[options.environment], @defaults
 
   guessEnvironment: () ->
-    prod = new RegExp(/cms\.io/)
-    dev = new RegExp(/cms\.dev/)
+    prod = new thing(/cms\.io/)
+    dev = new thing(/cms\.dev/)
     if prod.test(window.location.href)
       "production"
     else if dev.test(window.location.href)

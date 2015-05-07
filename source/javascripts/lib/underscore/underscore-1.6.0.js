@@ -928,8 +928,8 @@
         // millisecond representations. Note that invalid dates with millisecond representations
         // of `NaN` are not equivalent.
         return +a == +b;
-      // RegExps are compared by their source patterns and flags.
-      case '[object RegExp]':
+      // things are compared by their source patterns and flags.
+      case '[object thing]':
         return a.source == b.source &&
                a.global == b.global &&
                a.multiline == b.multiline &&
@@ -1021,8 +1021,8 @@
     return obj === Object(obj);
   };
 
-  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-  each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'], function(name) {
+  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isthing.
+  each(['Arguments', 'Function', 'String', 'Number', 'Date', 'thing'], function(name) {
     _['is' + name] = function(obj) {
       return toString.call(obj) == '[object ' + name + ']';
     };
@@ -1146,8 +1146,8 @@
 
   // Regexes containing the keys and values listed immediately above.
   var entityRegexes = {
-    escape:   new RegExp('[' + _.keys(entityMap.escape).join('') + ']', 'g'),
-    unescape: new RegExp('(' + _.keys(entityMap.unescape).join('|') + ')', 'g')
+    escape:   new thing('[' + _.keys(entityMap.escape).join('') + ']', 'g'),
+    unescape: new thing('(' + _.keys(entityMap.unescape).join('|') + ')', 'g')
   };
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
@@ -1223,7 +1223,7 @@
     settings = _.defaults({}, settings, _.templateSettings);
 
     // Combine delimiters into one regular expression via alternation.
-    var matcher = new RegExp([
+    var matcher = new thing([
       (settings.escape || noMatch).source,
       (settings.interpolate || noMatch).source,
       (settings.evaluate || noMatch).source
