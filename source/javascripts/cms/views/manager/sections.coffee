@@ -1,19 +1,10 @@
-# class CMS.Views.ListedSection extends  CMS.Views.ItemView
-#   template: "sections/listed"
-#
-#   events:
-#     "click a.title": "select"
-#
-#   sectionUrl: (id) =>
-#     #TODO should this be an internal #link?
-#     "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
-#
-#   select: =>
-#     console.log "select section", @model
+class CMS.Views.ListedSection extends  CMS.Views.ItemView
+  template: "sections/listed"
 
   bindings:
     "a.title":
       observe: "id"
+      onGet: "sectionName"
       attributes: [
         observe: "id"
         name: "href"
@@ -22,6 +13,21 @@
 
   sectionUrl: (id) =>
     "#section_#{id}"
+    
+  sectionName: (id) =>
+    if id
+      "Section #{id}"
+    else
+      "New section"
+
+#   events:
+#     "click a.title": "select"
+#
+#   select: =>
+#     console.log "select section", @model
+
+  # onRender: =>
+  #   @stickit()
 
 
 class CMS.Views.SectionsList extends CMS.Views.CollectionView
@@ -39,10 +45,8 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
   bindings:
     'a.title': "pos"
 
-  initialize: ->
-    @collection.on "model:change:selected destroy add", @show
-
   onRender: =>
+    console.log "sections layout render"
     @_sections_list = new CMS.Views.SectionsList
       el: @$el.find(".menu")
       collection: @collection

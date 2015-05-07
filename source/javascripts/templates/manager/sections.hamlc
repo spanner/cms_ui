@@ -1,5 +1,6 @@
 .header
   %a.title
+    Section...
 .controls
   %a.button.add.add_section add
   %a.button.delete.delete_section remove
