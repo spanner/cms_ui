@@ -72,4 +72,4 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   addSection: =>
     console.log "add section to page:", @collection.page.get("path")
-    @collection.add(page_id:@collection.page.id).select()
+    @collection.create(page_id:@collection.page.id).select()
