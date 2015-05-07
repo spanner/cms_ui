@@ -2,6 +2,9 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
 
   bindings:
+    ":el":
+      classes:
+        selected: "selected"
     "a.title":
       observe: "id"
       onGet: "sectionName"
@@ -46,7 +49,6 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
     'a.title': "pos"
 
   onRender: =>
-    console.log "sections layout render"
     @_sections_list = new CMS.Views.SectionsList
       el: @$el.find(".menu")
       collection: @collection
