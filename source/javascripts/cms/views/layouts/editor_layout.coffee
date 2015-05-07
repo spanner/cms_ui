@@ -1,10 +1,14 @@
 class CMS.Views.PageSection extends Backbone.Marionette.ItemView
   template: "sections/section"
   tagName: "section"
-  id: -> "section_#{@model.id}"
+
+  id: -> 
+    "section_#{@model.id}"
 
   onRender: =>
     @stickit()
+    @$el.append("<h2>##{@id()}</h2>")
+
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "pages/page"
@@ -14,15 +18,14 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   bindings:
     "h1": "title"
 
-  onRender: =>
-    @stickit()
-
   show: (page) =>
     @model = page
     @model.whenReady =>
-      console.log "page ready"
-      @collection = @model.sections
+      unless @collection is @model.sections
+        @collection = @model.sections
+        @_initialEvents()
       @render()
+
 
 class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
@@ -32,7 +35,6 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
       el: @$el
 
   show: (site_slug, page_path="") =>
-    
     @model.whenReady =>
       if site_slug and site = @model.sites.findWhere(slug: site_slug)
         site.whenReady =>

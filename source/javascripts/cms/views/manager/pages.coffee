@@ -20,38 +20,27 @@ class CMS.Views.PagesTree extends CMS.Views.CollectionView
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
 
-  onRender: =>
-    # we definitely have a collection
+  onRender: (options) =>
     @_pages_tree = new CMS.Views.PagesTree
       el: @$el.find(".menu")
       collection: @collection
     @_pages_tree.render()
 
-    # but we don't always have a model
-    @model?.whenReady () =>
+  show: (page_path="") =>
+    console.log "pages show", page_path
+    if page = @collection.findWhere(path: "/#{page_path}")
+      @model = page
       @stickit()
-      @_sections_layout = new CMS.Views.SectionsLayout
-        el: @$el.find("#sections")
-        collection: @model.sections
-      @_sections_layout.render()
-
-  show: (page,path) =>
-    @log "⇒ show", page
-    @model = page
-    @model.load() unless @model.isReady()
-    @render()
-    @setSitePath()
-    @_pages_tree.hide()
-    # sections_layout will be controlled by #links
+      # @_pages_tree.setModel('page')
+      @model.whenReady =>
+        @_sections_layout = new CMS.Views.SectionsLayout
+          el: @$el.find("#sections")
+          collection: @model.sections
+        @_sections_layout.render()
+      @model.load()
 
   toggleMenu: =>
     if @_pages_tree.$el.css('display') isnt 'none'
       @_pages_tree.hide()
     else
       @_pages_tree.show()
-
-  setSitePath: (path) =>
-    @log "path", path
-    @model?.whenReady =>
-      if section = @model.sections.findWhere(id: path)
-        @_sections_layout.show(section)

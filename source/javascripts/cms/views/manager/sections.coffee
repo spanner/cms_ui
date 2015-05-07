@@ -11,8 +11,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
       ]
 
   sectionUrl: (id) =>
-    #TODO should this be an internal #link?
-    "/sites/#{@model.getSite().get("slug")}#{@model.getPage().get("path")}#section_#{id}"
+    "#section_#{id}"
 
 
 class CMS.Views.SectionsList extends CMS.Views.CollectionView
@@ -24,18 +23,18 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   events:
     "click a.add_section": "addSection"
-    "click > .header a.title": "toggleMenu" 
+    "click > .header a.title": "toggleMenu"
 
   bindings:
-    'a.title': "id"
+    'a.title':
+      observe: "id"
+      onGet: "orNew"
 
   onRender: =>
-    # we definitely have a collection
     @_sections_list = new CMS.Views.SectionsList
       el: @$el.find(".menu")
       collection: @collection
     @_sections_list.render()
-
     @model?.whenReady () =>
       @stickit()
 
@@ -52,5 +51,8 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       @_sections_list.show()
 
   addSection: =>
-    console.log "add section to page:", @collection.page.get("path")
-    @collection.add(page_id:@collection.page.id) #TODO change to create when working properly
+    @collection.add(page_id: @collection.page.id)
+
+  orNew: (id) =>
+    id || "new"
+    

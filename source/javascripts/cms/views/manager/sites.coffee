@@ -19,38 +19,31 @@ class CMS.Views.SitesMenu extends CMS.Views.CollectionView
 
 class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
   template: "manager/sites"
+  
+  bindings: 
+    "a.title": "title"
 
-  onRender: =>
-    # we definitely have a collection
+  onRender: (options) =>
     @_sites_list = new CMS.Views.SitesMenu
       el: @$el.find(".menu")
       collection: @collection
     @_sites_list.render()
 
-    # but we don't always have a model
-    @model?.whenReady () =>
+  show: (site_slug, page_path) =>
+    if site = @collection.findWhere(slug: site_slug)
+      @model = site
       @stickit()
-      @_pages_layout = new CMS.Views.PagesLayout
-        el: @$el.find("#pages")
-        collection: @model.pages
-      @_pages_layout.render()
-
-  show: (site, path="") =>
-    @log "⇒ show", site, path
-    @model = site
-    @model.load() unless @model.isReady()
-    @render()
-    @setPagePath(path)
-    @_sites_list.hide()
+      # @_sites_list.setModel('site')
+      @model.whenReady =>
+        @_pages_layout = new CMS.Views.PagesLayout
+          el: @$el.find("#pages")
+          collection: @model.pages
+        @_pages_layout.render()
+        @_pages_layout.show(page_path)
+      @model.load()
 
   toggleMenu: =>
     if @_sites_list.$el.css('display') is 'none'
       @_sites_list.show()
     else
       @_sites_list.hide()
-
-  setPagePath: (path) =>
-    @log "path", path
-    @model?.whenReady =>
-      if page = @model.pages.findWhere(path: "/#{path}")
-        @_pages_layout.show(page)
