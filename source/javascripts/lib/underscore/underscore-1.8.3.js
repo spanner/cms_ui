@@ -1106,8 +1106,8 @@
     if (className !== toString.call(b)) return false;
     switch (className) {
       // Strings, numbers, regular expressions, dates, and booleans are compared by value.
-      case '[object thing]':
-      // things are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+      case '[object RegExp]':
+      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
       case '[object String]':
         // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
         // equivalent to `new String("5")`.
@@ -1214,8 +1214,8 @@
     return type === 'function' || type === 'object' && !!obj;
   };
 
-  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isthing, isError.
-  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'thing', 'Error'], function(name) {
+  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
     _['is' + name] = function(obj) {
       return toString.call(obj) === '[object ' + name + ']';
     };
@@ -1350,11 +1350,11 @@
     };
     // Regexes for identifying a key that needs to be escaped
     var source = '(?:' + _.keys(map).join('|') + ')';
-    var testthing = thing(source);
-    var replacething = thing(source, 'g');
+    var testRegexp = RegExp(source);
+    var replaceRegexp = RegExp(source, 'g');
     return function(string) {
       string = string == null ? '' : '' + string;
-      return testthing.test(string) ? string.replace(replacething, escaper) : string;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
     };
   };
   _.escape = createEscaper(escapeMap);
@@ -1417,7 +1417,7 @@
     settings = _.defaults({}, settings, _.templateSettings);
 
     // Combine delimiters into one regular expression via alternation.
-    var matcher = thing([
+    var matcher = RegExp([
       (settings.escape || noMatch).source,
       (settings.interpolate || noMatch).source,
       (settings.evaluate || noMatch).source
