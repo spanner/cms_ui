@@ -1,0 +1,7 @@
+.admin
+
+%h2.section{contenteditable: "true"}
+
+%aside.section_aside{contenteditable: "true"}
+
+.section_body{contenteditable: "true"}

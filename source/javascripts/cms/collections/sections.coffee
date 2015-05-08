@@ -6,3 +6,6 @@ class CMS.Collections.Sections extends Backbone.Collection
 
   url: =>
     "#{_cms.apiUrl()}sections"
+
+  toJSON: =>
+    m.toJSON() for m in @models

@@ -17,6 +17,12 @@ body
 body, html
   height: 100%
 
+[contenteditable]
+  border: 6px solid white
+  background-color: #eaeaed
+  outline: none
+
+
 h1, h2, h3
   font-weight: normal
 
@@ -26,7 +32,7 @@ h2.label
   margin: 0
   padding: 10px
 
-a.add, a.delete
+a.add, a.delete, a.admin
   display: inline-block
   vertical-align: top
   width: 20px
@@ -48,6 +54,13 @@ a.delete
   &:hover
     background-position: 0 -224px
 
+a.admin
+  background-position: 0 -96px
+  &:hover
+    background-position: 0 -128px
+
+a.button
+  +button($green)
 
 #cms
   position: absolute
@@ -127,6 +140,10 @@ a.delete
     margin-left: 1px
     & > div
       padding: 6px 10px
+      a.title
+        color: $pale
+        &:hover
+          color: white
       a.delete
         margin: 2px 0 0 8px
       &.selected
@@ -137,9 +154,14 @@ a.delete
     #pages
       margin: 0
       float: left
+      #controls
+        float: right
+        a.button
+          margin: 8px 0 0 8px
       #sections
         margin: 0
         float: left
+
 
 #editor
   z-index: 50
@@ -156,9 +178,14 @@ a.delete
     padding: 20px
     overflow: hidden
     section
+      position: relative
       min-height: 120px
       margin: 10px
       border: 1px dotted $verypale
+      a.admin
+        position: absolute
+        top: 10px
+        right: 6px
       &.selected
         border: 1px dotted $green
         h2.label
@@ -167,11 +194,38 @@ a.delete
         border: 1px dotted $rubine
         h2.label
           color: $rubine
+      .section_aside
+        float: right
+        width: 25%
+        min-height: 50px
+        & + .section.body
+          width: 70%
+      .section_body
+        width: 100%
+        min-height: 100px
 
+      
   footer
     background: #ddd
     width: 100%
     height: 32px
+
+
+
+// probably site-specific
+
+main
+  width: 90%
+  max-width: 960px
+  margin: 0 auto
+  section
+    .section_body
+      max-width: 800px
+    .section_aside
+      max-width: 300px
+  
+
+
 
 // undigested login stuff 
 

@@ -1,5 +1,6 @@
 class CMS.Models.Section extends CMS.Model
-  savedAttributes: ["page_id"]
+  @types: ['standard', 'gallery', 'hero', 'bigquote']
+  savedAttributes: ["page_id", "content", "title", "aside", "section_type", "position"]
 
   build: =>
     @on "change:selected", =>

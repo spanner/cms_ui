@@ -9,7 +9,10 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     "click > .header a.title": "toggleMenu"
 
   bindings: 
-    '.header a.title': "title"
+    '.header a.title':
+      observe: "title"
+      updateMethod: "html"
+    
 
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView

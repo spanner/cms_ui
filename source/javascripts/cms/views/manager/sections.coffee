@@ -1,6 +1,10 @@
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
 
+  events:
+    "click a.title": "select"
+    "click a.delete_section": "deleteSection"
+
   bindings:
     ":el":
       classes:
@@ -14,6 +18,17 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
         onGet: "sectionUrl"
       ]
 
+  onRender: () =>
+    @stickit()
+    @model.select() if window.location.hash is @sectionUrl(@model.get('id'))
+
+  deleteSection: =>
+    @model?.destroy()
+
+  select: (e) =>
+    e.preventDefault() if e
+    @model.select()
+
   sectionUrl: (id) =>
     "#section_#{id}"
     
@@ -22,22 +37,6 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
       "Section #{id}"
     else
       "New section"
-
-  events:
-    "click a.title": "select"
-    "click a.delete_section": "deleteSection"
-
-  deleteSection: =>
-    console.log "destroy", @model
-    @model?.destroy()
-
-  select: (e) =>
-    e.preventDefault() if e
-    console.log "select section", @model
-    @model.select()
-
-  # onRender: =>
-  #   @stickit()
 
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
@@ -77,5 +76,3 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
   addSection: =>
     section = @collection.add
       page_id: @collection.page.id
-    section.save().done =>
-      _cms.navigate("#section_#{section.get('id')}")
