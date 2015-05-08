@@ -26,6 +26,29 @@ h2.label
   margin: 0
   padding: 10px
 
+a.add, a.delete
+  display: inline-block
+  vertical-align: top
+  width: 20px
+  height: 20px
+  text-indent: 20px
+  overflow: hidden
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('linksprite.png')
+
+a.add
+  background-position: 0 0
+  &:hover
+    background-position: 0 -32px
+
+a.delete
+  background-position: 0 -192px
+  &:hover
+    background-position: 0 -224px
+
+
 #cms
   position: absolute
   top: 0
@@ -61,10 +84,6 @@ h2.label
   background: $dark
   color: white
   z-index: 100
-  .button
-    +button
-    &.add
-      +button($green)
   #manager_menu
     +management
     width: $control_height
@@ -79,40 +98,47 @@ h2.label
 
   a
     color: white
+  a.add, a.delete
+    opacity: 0.5
+    &:hover
+      opacity: 1
+
+  .header
+    height: $control_height
+    box-sizing: border-box
+    float: left
+    padding: 0 14px
+    border-left: 1px solid white
+    display: table
+    a
+      display: inline-block
+      vertical-align: middle
+    a.title
+      padding: 15px 0
+    a.add
+      margin: 17px 0 0 8px
+      float: right
+      
+  .menu
+    position: absolute
+    display: none
+    top: $control_height
+    background: $dark
+    margin-left: 1px
+    & > div
+      padding: 6px 10px
+      a.delete
+        margin: 2px 0 0 8px
+      &.selected
+        background-color: $green
 
   #sites
     margin: 0 0 0 48px
-    .header
-      height: $control_height
-      box-sizing: border-box
-      float: left
-      padding: 0 10px
-      border-left: 1px solid white
-      display: table
-      a
-        display: table-cell
-        vertical-align: middle
-    .controls
-      height: $control_height
-      box-sizing: border-box
-      float: left
-      padding: 0 10px
-      border-left: 1px solid white
-    .menu
-      position: absolute
-      display: none
-      top: $control_height
-      background: $dark
-      margin-left: 1px
-      & > div
-        padding: 3px 10px
-        &.selected
-          background-color: $green
     #pages
-      margin: 0 10px
+      margin: 0
       float: left
       #sections
-        margin: 0 10px
+        margin: 0
         float: left
 
 #editor

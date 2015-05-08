@@ -57,7 +57,6 @@ class CMS.Models.Session extends CMS.Model
   whenUserReady: (fn) =>
     @_user.whenReady(fn)
   
-  # TODO: find a better way to hook into the readiness mechanism without fetching.
   populateUser: (data) =>
     @_user.populate(data)
     @_user.loaded()
