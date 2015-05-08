@@ -10,4 +10,3 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
   onRender: () =>
     @stickit()
-

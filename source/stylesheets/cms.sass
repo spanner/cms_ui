@@ -21,6 +21,7 @@ body, html
   border: 6px solid white
   background-color: #eaeaed
   outline: none
+  border-radius: 5px
 
 
 h1, h2, h3
@@ -148,7 +149,9 @@ a.button
         margin: 2px 0 0 8px
       &.selected
         background-color: $green
-
+      &.destroyed
+        text-decoration: line-through
+        opacity: 0.4
   #sites
     margin: 0 0 0 48px
     #pages
@@ -194,15 +197,6 @@ a.button
         border: 1px dotted $rubine
         h2.label
           color: $rubine
-      .section_aside
-        float: right
-        width: 25%
-        min-height: 50px
-        & + .section.body
-          width: 70%
-      .section_body
-        width: 100%
-        min-height: 100px
 
       
   footer
@@ -219,7 +213,15 @@ main
   max-width: 960px
   margin: 0 auto
   section
+    .section_aside
+      float: right
+      width: 25%
+      min-height: 50px
+      & + .section.body
+        width: 70%
     .section_body
+      width: 100%
+      min-height: 100px
       max-width: 800px
     .section_aside
       max-width: 300px

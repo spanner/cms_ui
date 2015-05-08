@@ -1,13 +1,13 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['title', 'introduction']
+  savedAttributes: ['title', 'introduction', 'nav', 'nav_heading']
 
   build: =>
     @sections = new CMS.Collections.Sections @get('sections'), page: @
+    @sections.on "add reset remove", @markAsChanged
+    @sections.on "change", @changedIfAnySectionChanged
 
   populate: (data) =>
     @sections.reset(data.sections)
-    @sections.on "add reset remove", @markAsChanged
-    @sections.on "change", @changedIfAnySectionChanged
     @set "changed", false
 
   getSite: =>

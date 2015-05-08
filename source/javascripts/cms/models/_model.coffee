@@ -74,6 +74,13 @@ class CMS.Model extends Backbone.Model
     if _cms.logging()
       console.log "#{@constructor.name} model", arguments...
 
+  isDestroyed: () =>
+    @get('deleted_at')
+    
+  destroyReversibly: () =>
+    unless @get('deleted_at')
+      @set('deleted_at', new Date) 
+      @markAsChanged()
 
   markAsChanged: (e) =>
     @set "changed", true

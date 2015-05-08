@@ -46,4 +46,9 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
     if _cms.logging()
       console.log "#{@constructor.name} view", arguments...
 
+  #onGets
+
+  untrue: (val) =>
+    not val
+    
 
