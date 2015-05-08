@@ -81,7 +81,7 @@ a.button
   height: 100%
   width: 100%
 
-#styler
+#css
   position: fixed
   width: 0
   bottom: 0
@@ -89,6 +89,7 @@ a.button
   background: $dark
   color: $verypale
   box-sizing: border-box
+  overflow: hidden
   &.open
     width: 50%
     & + div
@@ -131,6 +132,8 @@ a.button
   #manager_menu
     +management
     width: $control_height
+    &.open
+      width: 50%
     a
       display: block
       width: $control_height

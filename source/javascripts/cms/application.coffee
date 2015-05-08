@@ -58,3 +58,4 @@ class CMS.Application extends Backbone.Marionette.Application
       Backbone.history.navigate route,
         trigger: trigger
         replace: replace
+

@@ -2,7 +2,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   template: "sites/css"
 
   events:
-    "click a.preview": "previewCSS"
+    "click a.preview.ready": "previewCSS"
     "click a.revert": "revertCSS"
     "click a.save": "saveCSS"
 
@@ -44,8 +44,8 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   saveCSS: =>
     @model.save(css:@model.get("preview_css"))
 
-class CMS.Views.StylerLayout extends Backbone.Marionette.LayoutView
-  template: "layouts/styler"
+class CMS.Views.CSSLayout extends Backbone.Marionette.LayoutView
+  template: "layouts/css"
 
   onRender: =>
     @model.whenReady =>
