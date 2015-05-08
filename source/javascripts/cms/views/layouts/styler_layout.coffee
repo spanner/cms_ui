@@ -18,8 +18,8 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     "span.title": "title"
 
     "a.save":
-      observe: ["preview_css", "css"]
-      visible: (vals) -> vals[0] isnt vals[1]
+      observe: ["temp_css","preview_css", "css"]
+      visible: (vals) -> vals[0] is vals[1] and vals[0] isnt vals[2]
 
     "a.preview":
       observe: ["temp_css", "preview_css"]

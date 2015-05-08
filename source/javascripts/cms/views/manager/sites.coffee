@@ -41,7 +41,7 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
           collection: @model.pages
         @_pages_layout.render()
         @_pages_layout.show(page_path)
-      @model.load()
+      @model.load() unless @model.isReady()
 
   toggleMenu: =>
     if @_sites_list.$el.css('display') is 'none'

@@ -64,7 +64,7 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
           el: @$el.find("#controls")
           model: @model
         @_page_controls.render()
-      @model.load()
+      @model.load() unless @model.isReady()
 
   toggleMenu: =>
     if @_pages_tree.$el.css('display') isnt 'none'
