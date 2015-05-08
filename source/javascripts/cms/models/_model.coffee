@@ -20,12 +20,17 @@ class CMS.Model extends Backbone.Model
     @_loaded = $.Deferred()
     @build()
     @load() if @autoload
+    @on "change", @changedIfSignificant
+    @on "sync", @markAsUnchanged
 
   ready: =>
     @_loaded.promise()
     
   whenReady: (fn) =>
     @_loaded.done fn
+
+  whenFailed: (fn) =>
+    @_loaded.fail fn
 
   isReady: =>
     @_loaded.state() is 'resolved'
@@ -68,3 +73,19 @@ class CMS.Model extends Backbone.Model
   log: () =>
     if _cms.logging()
       console.log "#{@constructor.name} model", arguments...
+
+
+  markAsChanged: (e) =>
+    @set "changed", true
+  
+  markAsUnchanged: () =>
+    @set "changed", false
+  
+  changedIfSignificant: (model, options) =>
+    if options.stickitChange?
+      significant_changes = _.pick @changedAttributes(), @savedAttributes
+      @markAsChanged() unless _.isEmpty(significant_changes)
+
+  saveAndResume: () =>
+    @save().done =>
+      @markAsUnchanged()

@@ -13,7 +13,7 @@ class CMS.Views.ListedSite extends CMS.Views.ItemView
     "/sites/#{slug}"
 
 
-class CMS.Views.SitesMenu extends CMS.Views.CollectionView
+class CMS.Views.SitesMenu extends CMS.Views.MenuView
   childView: CMS.Views.ListedSite
 
 

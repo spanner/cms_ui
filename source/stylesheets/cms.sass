@@ -17,6 +17,12 @@ body
 body, html
   height: 100%
 
+[contenteditable]
+  border: 6px solid white
+  background-color: #eaeaed
+  outline: none
+
+
 h1, h2, h3
   font-weight: normal
 
@@ -25,6 +31,36 @@ h2.label
   font-size: 10px
   margin: 0
   padding: 10px
+
+a.add, a.delete, a.admin
+  display: inline-block
+  vertical-align: top
+  width: 20px
+  height: 20px
+  text-indent: 20px
+  overflow: hidden
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('linksprite.png')
+
+a.add
+  background-position: 0 0
+  &:hover
+    background-position: 0 -32px
+
+a.delete
+  background-position: 0 -192px
+  &:hover
+    background-position: 0 -224px
+
+a.admin
+  background-position: 0 -96px
+  &:hover
+    background-position: 0 -128px
+
+a.button
+  +button($green)
 
 #cms
   position: absolute
@@ -73,7 +109,7 @@ h2.label
   width: 100%
   right: 0
   bottom: 0
-  top: $control_height
+  top: 0
 
 
 =management
@@ -90,10 +126,7 @@ h2.label
   height: $control_height
   background: $dark
   color: white
-  .button
-    +button
-    &.add
-      +button($green)
+  z-index: 100
   #manager_menu
     +management
     width: $control_height
@@ -108,61 +141,96 @@ h2.label
 
   a
     color: white
+  a.add, a.delete
+    opacity: 0.5
+    &:hover
+      opacity: 1
+
+  .header
+    height: $control_height
+    box-sizing: border-box
+    float: left
+    padding: 0 14px
+    border-left: 1px solid white
+    display: table
+    a
+      display: inline-block
+      vertical-align: middle
+    a.title
+      padding: 15px 0
+    a.add
+      margin: 17px 0 0 8px
+      float: right
+
+  .menu
+    position: absolute
+    display: none
+    top: $control_height
+    background: $dark
+    margin-left: 1px
+    & > div
+      padding: 6px 10px
+      a.title
+        color: $pale
+        &:hover
+          color: white
+      a.delete
+        margin: 2px 0 0 8px
+      &.selected
+        background-color: $green
 
   #sites
     margin: 0 0 0 48px
-    .header
-      height: $control_height
-      box-sizing: border-box
-      float: left
-      padding: 0 10px
-      border-left: 1px solid white
-      display: table
-      a
-        display: table-cell
-        vertical-align: middle
-    .controls
-      height: $control_height
-      box-sizing: border-box
-      float: left
-      padding: 0 10px
-      border-left: 1px solid white
-    .menu
-      position: absolute
-      display: none
-      top: $control_height
-      background: $dark
-      margin-left: 1px
-      & > div
-        padding: 3px 10px
-        &.selected
-          background-color: $green
     #pages
-      margin: 0 10px
+      margin: 0
       float: left
+      #controls
+        float: right
+        a.button
+          margin: 8px 0 0 8px
       #sections
-        margin: 0 10px
+        margin: 0
         float: left
 
+
 #editor
-  // should be minimal
-  #page
-    min-height: 100%
+  z-index: 50
+  margin-top: $control_height
 
-    header
-      overflow: hidden
+  header
+    overflow: hidden
 
-    main
-      section
-        background: $verypale
-        &.selected
-          background-color: $green
-          h2.label
-            color: white
-        &:target
-          background-color: $rubine
+  main
+    overflow: hidden
+    section
+      position: relative
+      a.admin
+        position: absolute
+        top: 10px
+        right: 6px
+      &.selected
+        border: 1px dotted $green
+        h2.label
+          color: $green
+      &:target
+        border: 1px dotted $rubine
+        h2.label
+          color: $rubine
 
-    footer
+
+
+// probably site-specific
+
+main
+  width: 90%
+  max-width: 960px
+  margin: 0 auto
+  section
+    .section_body
+      max-width: 800px
+    .section_aside
+      max-width: 300px
+  
 
 
 
@@ -171,6 +239,7 @@ h2.label
 
 
 #session
+  z-index: 60
   #form
     position: relative
     width: 600px

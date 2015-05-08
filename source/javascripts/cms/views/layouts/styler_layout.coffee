@@ -2,9 +2,9 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   template: "sites/css"
 
   events:
-    "click a.preview": "preview"
-    "click a.revert": "revert"
-    "click a.save": "save"
+    "click a.preview": "previewCSS"
+    "click a.revert": "revertCSS"
+    "click a.save": "saveCSS"
 
   bindings:
     ".temp_css":
@@ -18,16 +18,16 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     "span.title": "title"
 
     "a.save":
-      observe: ["temp_css", "css"]
-      visible: (vals) -> vals[0] is vals[1]
+      observe: ["preview_css", "css"]
+      visible: (vals) -> vals[0] isnt vals[1]
 
     "a.preview":
-      observe: ["temp_css", "css"]
+      observe: ["temp_css", "preview_css"]
       visible: (vals) -> vals[0] isnt vals[1]
 
     "a.revert":
-      observe: ["old_css", "css", "temp_css"]
-      visible: (vals) -> vals[0] isnt (vals[1] or vals[2])
+      observe: ["css", "temp_css"]
+      visible: (vals) -> vals[0] isnt vals[1]
 
   onRender: =>
     @stickit()
@@ -35,15 +35,14 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   setCSS: =>
     # set view value to model
 
-  preview: =>
-    @model.applyCSS()
+  previewCSS: =>
+    @model.previewCSS()
 
-  revert: =>
+  revertCSS: =>
     @model.revertCSS()
 
-  save: =>
-    @model.save()
-  
+  saveCSS: =>
+    @model.save(css:@model.get("preview_css"))
 
 class CMS.Views.StylerLayout extends Backbone.Marionette.LayoutView
   template: "layouts/styler"

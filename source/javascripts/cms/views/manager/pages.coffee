@@ -3,6 +3,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   bindings:
     "a.title":
       observe: "title"
+      updateMethod: "html"
       attributes: [
         observe: "path"
         name: "href"
@@ -13,8 +14,24 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
 
-class CMS.Views.PagesTree extends CMS.Views.CollectionView
+class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
+
+
+class CMS.Views.PageControls extends CMS.Views.ItemView
+  template: "manager/page_controls"
+  
+  events:
+    "click a.save": "savePage"
+
+  bindings: 
+    "a.save_page":
+      observe: "changed"
+      visible: true
+
+  savePage: (e) =>
+    e.preventDefault() if e
+    @model.save()
 
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
@@ -27,9 +44,9 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
     @_pages_tree.render()
 
   show: (page_path="") =>
-    console.log "pages show", page_path
     if page = @collection.findWhere(path: "/#{page_path}")
       @model = page
+      $.page = page
       @stickit()
       # @_pages_tree.setModel('page')
 
@@ -43,6 +60,10 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
           el: @$el.find("#sections")
           collection: @model.sections
         @_sections_layout.render()
+        @_page_controls = new CMS.Views.PageControls
+          el: @$el.find("#controls")
+          model: @model
+        @_page_controls.render()
       @model.load()
 
   toggleMenu: =>

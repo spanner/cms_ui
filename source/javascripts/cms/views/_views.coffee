@@ -9,7 +9,33 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     "click > .header a.title": "toggleMenu"
 
   bindings: 
-    '.header a.title': "title"
+    '.header a.title':
+      observe: "title"
+      updateMethod: "html"
+    
+
+
+class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
+  @mixin "collection", "toggle"
+
+  show: () =>
+    @$el.show()
+  
+  hide: () =>
+    @$el.hide()
+
+
+class CMS.Views.MenuView extends CMS.Views.CollectionView
+
+  show: =>
+    @$el.slideDown
+      duration: 400
+      easing: "boing"
+
+  hide: =>
+    @$el.slideUp
+      duration: 400
+      easing: "glide"
 
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
@@ -20,13 +46,4 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
     if _cms.logging()
       console.log "#{@constructor.name} view", arguments...
 
-
-class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
-  @mixin "collection", "toggle"
-
-  show: =>
-    @$el.show()
-
-  hide: =>
-    @$el.hide()
 

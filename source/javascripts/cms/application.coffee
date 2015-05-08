@@ -29,6 +29,7 @@ class CMS.Application extends Backbone.Marionette.Application
       controller: @_ui
     @_ui.render()
     @_session.load().always () =>
+      console.log "Boot!"
       Backbone.history.start
         pushState: true
 

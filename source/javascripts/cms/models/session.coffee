@@ -23,10 +23,9 @@ class CMS.Models.Session extends CMS.Model
   initialize: =>
     super
     $(document).ajaxSend @authenticateRequest
-    console.log "Session init"
     @_loaded.fail () =>
-      console.log "Session dead"
       @clearCookie()
+      @set "token", null
 
   build: () =>
     @readCookie()
@@ -34,11 +33,9 @@ class CMS.Models.Session extends CMS.Model
 
   load: =>
     if @get('token')
-      console.log "Session load"
       super
     else
-      console.log "Session not load"
-      @loaded()
+      @notLoaded()
     @_loaded.promise()
   
   populate: (data) =>
@@ -60,7 +57,6 @@ class CMS.Models.Session extends CMS.Model
   whenUserReady: (fn) =>
     @_user.whenReady(fn)
   
-  # TODO: find a better way to hook into the readiness mechanism without fetching.
   populateUser: (data) =>
     @_user.populate(data)
     @_user.loaded()

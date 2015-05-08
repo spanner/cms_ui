@@ -6,9 +6,11 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
     menu: "#session_menu"
 
   onRender: () =>
+    console.log "session layout render"
     @wait()
     @model.whenReady @home
     @model.whenUserReady @goAway
+    @model.whenFailed @home
 
   wait: () =>
     @$el.find('.loading').show()
@@ -36,4 +38,5 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
   
   # the standard name for a default action doesn't fit well here.
   home: () =>
+    console.log "session home", @model.userIsReady()
     @showForm('SessionLoginForm') unless @model.userIsReady()

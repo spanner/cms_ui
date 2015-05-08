@@ -1,11 +1,12 @@
-%h2
-  %span.title
-  CSS
+/ %h2
+/   %span.title
+/   CSS
 
 %p
   Choose template
   %select.template
 
+%p
   %a.button.preview preview
   %a.button.revert revert
   %a.button.save save
