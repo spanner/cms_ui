@@ -9,6 +9,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     ":el":
       classes:
         selected: "selected"
+        destroyed: "deleted_at"
     "a.title":
       observe: "id"
       onGet: "sectionName"
@@ -23,7 +24,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     @model.select() if window.location.hash is @sectionUrl(@model.get('id'))
 
   deleteSection: =>
-    @model?.destroy()
+    @model?.destroyReversibly()
 
   select: (e) =>
     e.preventDefault() if e

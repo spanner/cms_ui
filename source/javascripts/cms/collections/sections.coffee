@@ -1,7 +1,7 @@
 class CMS.Collections.Sections extends Backbone.Collection
   model: CMS.Models.Section
 
-  initialize: (array,opts) ->
+  initialize: (array, opts) ->
     @page = opts.page
 
   url: =>
@@ -9,3 +9,4 @@ class CMS.Collections.Sections extends Backbone.Collection
 
   toJSON: =>
     m.toJSON() for m in @models
+      

@@ -1,8 +1,8 @@
-class CMS.Views.SectionAdminMenu extends Backbone.Marionette.ItemView
+class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   template: "editor/section_admin_menu"
 
 
-class CMS.Views.Section extends Backbone.Marionette.ItemView
+class CMS.Views.Section extends CMS.Views.ItemView
   template: "editor/section"
   tagName: "section"
 
@@ -11,6 +11,8 @@ class CMS.Views.Section extends Backbone.Marionette.ItemView
 
   bindings:
     ":el":
+      observe: "deleted_at"
+      visible: "untrue"
       classes:
         selected: "selected"
     "h2.section":
@@ -27,7 +29,7 @@ class CMS.Views.Section extends Backbone.Marionette.ItemView
     "section_#{@model.get('id')}"
 
   onRender: =>
-    @stickit()
+    super
     @_admin_menu = new CMS.Views.SectionAdminMenu
       model: @model
       el: @$el.find('.admin')
