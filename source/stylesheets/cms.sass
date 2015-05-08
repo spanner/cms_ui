@@ -61,7 +61,13 @@ a.admin
     background-position: 0 -128px
 
 a.button
-  +button($green)
+  +button
+  &.save
+    +button($green)
+  &.revert
+    +button($pale)
+  &.preview
+    +button($rubine)
 
 #cms
   position: absolute
@@ -81,6 +87,7 @@ a.button
   height: 100%
   width: 100%
 
+
 #css
   position: fixed
   width: 0
@@ -91,9 +98,9 @@ a.button
   box-sizing: border-box
   overflow: hidden
   &.open
-    width: 50%
+    width: 30%
     & + div
-      width: calc(50% - 1px)
+      width: calc(70% - 1px)
   .temp_css
     position: absolute
     top: 96px
@@ -133,7 +140,7 @@ a.button
     +management
     width: $control_height
     &.open
-      width: 50%
+      width: 30%
     a
       display: block
       width: $control_height
