@@ -75,5 +75,7 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
       @_sections_list.show()
 
   addSection: =>
-    console.log "add section to page:", @collection.page.get("path")
-    @collection.create(page_id:@collection.page.id).select()
+    section = @collection.add
+      page_id: @collection.page.id
+    section.save().done =>
+      _cms.navigate("#section_#{section.get('id')}")

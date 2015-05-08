@@ -132,17 +132,17 @@ h2.label
     padding: 20px
     overflow: hidden
     section
-      height: 240px
-      width: 240px
+      min-height: 120px
       margin: 10px
-      background: $verypale
-      float: left
+      border: 1px dotted $verypale
       &.selected
-        background-color: $green
+        border: 1px dotted $green
         h2.label
-          color: white
+          color: $green
       &:target
-        background-color: $rubine
+        border: 1px dotted $rubine
+        h2.label
+          color: $rubine
 
   footer
     background: #ddd
