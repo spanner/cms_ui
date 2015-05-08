@@ -31,7 +31,6 @@ class CMS.Application extends Backbone.Marionette.Application
     @_session.load().always () =>
       Backbone.history.start
         pushState: true
-    @_style = $("head style")
 
   config: (key) =>
     @_config.get(key)
@@ -58,6 +57,3 @@ class CMS.Application extends Backbone.Marionette.Application
       Backbone.history.navigate route,
         trigger: trigger
         replace: replace
-
-  setCSS: (string) ->
-    @_style.text(string)

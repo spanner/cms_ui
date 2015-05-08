@@ -1,22 +1,49 @@
 class CMS.Views.CSS extends Backbone.Marionette.ItemView
   template: "sites/css"
 
+  events:
+    "click a.preview": "preview"
+    "click a.revert": "revert"
+    "click a.save": "save"
+
   bindings:
-    ".css":
-      observe: "css"
-      # updateModel: false
+    ".temp_css":
+      observe: "temp_css"
+    "select.template":
+      observe: "template"
+      selectOptions:
+        collection:
+          default: "Default"
+          spanner: "Spanner"
     "span.title": "title"
 
+    "a.save":
+      observe: ["temp_css", "css"]
+      visible: (vals) -> vals[0] is vals[1]
+
+    "a.preview":
+      observe: ["temp_css", "css"]
+      visible: (vals) -> vals[0] isnt vals[1]
+
+    "a.revert":
+      observe: ["old_css", "css", "temp_css"]
+      visible: (vals) -> vals[0] isnt (vals[1] or vals[2])
+
   onRender: =>
-    @model.on "change:css", (model, val) =>
-      _cms.setCSS val
     @stickit()
 
   setCSS: =>
     # set view value to model
 
-  revertCSS: =>
-    # undo changes in view (using value in model)
+  preview: =>
+    @model.applyCSS()
+
+  revert: =>
+    @model.revertCSS()
+
+  save: =>
+    @model.save()
+  
 
 class CMS.Views.StylerLayout extends Backbone.Marionette.LayoutView
   template: "layouts/styler"

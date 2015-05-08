@@ -2,4 +2,12 @@
   %span.title
   CSS
 
-%textarea.css{placeholder: "Your CSS here..."}
+%p
+  Choose template
+  %select.template
+
+  %a.button.preview preview
+  %a.button.revert revert
+  %a.button.save save
+
+%textarea.temp_css{placeholder: "Your CSS here..."}

@@ -56,14 +56,15 @@ h2.label
     width: 50%
     & + div
       width: calc(50% - 1px)
-  .css
+  .temp_css
     position: absolute
     top: 96px
     bottom: 0
     width: 100%
     background-color: inherit
     color: inherit
-    // border: none
+    resize: none
+    border: none
     overflow-x: hidden
     overflow-y: auto
 
@@ -144,37 +145,28 @@ h2.label
         float: left
 
 #editor
+  // should be minimal
+  #page
+    min-height: 100%
 
-  header
-    background: #ddd
-    width: 100%
-    height: 96px
-    h1
-      text-align: center
+    header
+      overflow: hidden
 
-  main
-    padding: 20px
-    overflow: hidden
-    section
-      height: 240px
-      width: 240px
-      margin: 10px
-      background: $verypale
-      float: left
-      &.selected
-        background-color: $green
-        h2.label
-          color: white
-      &:target
-        background-color: $rubine
+    main
+      section
+        background: $verypale
+        &.selected
+          background-color: $green
+          h2.label
+            color: white
+        &:target
+          background-color: $rubine
 
-  footer
-    background: #ddd
-    width: 100%
-    height: 32px
+    footer
+
+
 
 // undigested login stuff 
-
 
 
 
