@@ -35,14 +35,17 @@ class CMS.Model extends Backbone.Model
     # @things = new CMS.Collections.Things
 
   load: =>
-    @fetch().done @loaded
+    @fetch(error: @notLoaded).done(@loaded)
     @_loaded.promise()
   
   loaded: (data) =>
     @_loaded.resolve(data)
 
+  notLoaded: () =>
+    @_loaded.reject()
+    
   parse: (data) =>
-    # you can modify `data` in populate, 
+    # you can modify `data` in populate,
     # or return false to prevent the usual parse from being called at all.
     super if @populate(data)
 
