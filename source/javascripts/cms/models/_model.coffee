@@ -27,6 +27,9 @@ class CMS.Model extends Backbone.Model
   whenReady: (fn) =>
     @_loaded.done fn
 
+  whenFailed: (fn) =>
+    @_loaded.fail fn
+
   isReady: =>
     @_loaded.state() is 'resolved'
 

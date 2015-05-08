@@ -23,10 +23,9 @@ class CMS.Models.Session extends CMS.Model
   initialize: =>
     super
     $(document).ajaxSend @authenticateRequest
-    console.log "Session init"
     @_loaded.fail () =>
-      console.log "Session dead"
       @clearCookie()
+      @set "token", null
 
   build: () =>
     @readCookie()
@@ -34,11 +33,9 @@ class CMS.Models.Session extends CMS.Model
 
   load: =>
     if @get('token')
-      console.log "Session load"
       super
     else
-      console.log "Session not load"
-      @loaded()
+      @notLoaded()
     @_loaded.promise()
   
   populate: (data) =>
