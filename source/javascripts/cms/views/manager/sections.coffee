@@ -40,7 +40,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   #   @stickit()
 
 
-class CMS.Views.SectionsList extends CMS.Views.CollectionView
+class CMS.Views.SectionsList extends CMS.Views.MenuView
   childView: CMS.Views.ListedSection
 
 

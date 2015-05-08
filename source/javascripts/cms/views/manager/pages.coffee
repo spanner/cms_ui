@@ -13,7 +13,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
 
-class CMS.Views.PagesTree extends CMS.Views.CollectionView
+class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
 
 

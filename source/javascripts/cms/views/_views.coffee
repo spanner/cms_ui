@@ -12,6 +12,29 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     '.header a.title': "title"
 
 
+class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
+  @mixin "collection", "toggle"
+
+  show: () =>
+    @$el.show()
+  
+  hide: () =>
+    @$el.hide()
+
+
+class CMS.Views.MenuView extends CMS.Views.CollectionView
+
+  show: =>
+    @$el.slideDown
+      duration: 400
+      easing: "boing"
+
+  hide: =>
+    @$el.slideUp
+      duration: 400
+      easing: "glide"
+
+
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
@@ -20,13 +43,4 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
     if _cms.logging()
       console.log "#{@constructor.name} view", arguments...
 
-
-class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
-  @mixin "collection", "toggle"
-
-  show: =>
-    @$el.show()
-
-  hide: =>
-    @$el.hide()
 
