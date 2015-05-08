@@ -4,15 +4,12 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   bindings:
     ".css":
       observe: "css"
-      updateModel: false
+      # updateModel: false
     "span.title": "title"
 
-  initialize: ->
-    @model.whenReady =>
-      @collection = @model.sections
-      @render()
-
   onRender: =>
+    @model.on "change:css", (model, val) =>
+      _cms.setCSS val
     @stickit()
 
   setCSS: =>
@@ -24,11 +21,9 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
 class CMS.Views.StylerLayout extends Backbone.Marionette.LayoutView
   template: "layouts/styler"
 
-  show: (site_slug) =>
+  onRender: =>
     @model.whenReady =>
-      if site_slug and site = @model.sites.findWhere(slug: site_slug)
-        site.whenReady =>
-          @_css_view = new CMS.Views.CSS
-            el: @$el
-            model: site
-          @_css_view.render()
+      @_css_view = new CMS.Views.CSS
+        el: @$el
+        model: @model
+      @_css_view.render()

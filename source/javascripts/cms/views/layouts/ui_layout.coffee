@@ -12,24 +12,28 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       model: @model.getUser()
     @_manager.render()
 
-    # TODO the editor needs to get its page from somewhere; probably the session user
+  siteView: (site_slug, page_path, section_id) =>
+    @_manager.show(site_slug, page_path)
+
+
+  # Callback to load the eventually selected page into the editor.
+  #
+  editPage: (page) =>
     @_editor = new CMS.Views.EditorLayout
       el: @$el.find("#editor")
-      model: @model.getUser()
+      model: page
     @_editor.render()
 
+  # Callback to load the eventually selected site into the stylesheet editor.
+  #
+  editSiteStyle: (site) =>
     @_styler = new CMS.Views.StylerLayout
       el: @$el.find("#styler")
-      model: @model.getUser()
-
-  siteView: (site_slug, page_path, oth) =>
-    @_manager.show(site_slug, page_path)
-    @_editor.show(site_slug, page_path)
-    @_styler.show(site_slug)
+      model: site
+    @_styler.render()
 
   sessionView: (action) =>
     @_barrier.show(action)
-
-  homeView: =>
-    @_manager.home()
-
+  
+  homeView: () =>
+    @_manager.show()

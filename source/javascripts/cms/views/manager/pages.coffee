@@ -21,35 +21,32 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
 
   onRender: =>
-    # we definitely have a collection
     @_pages_tree = new CMS.Views.PagesTree
       el: @$el.find(".menu")
       collection: @collection
     @_pages_tree.render()
 
-    # but we don't always have a model
-    @model?.whenReady () =>
+  show: (page_path="") =>
+    console.log "pages show", page_path
+    if page = @collection.findWhere(path: "/#{page_path}")
+      @model = page
       @stickit()
-      @_sections_layout = new CMS.Views.SectionsLayout
-        el: @$el.find("#sections")
-        collection: @model.sections
-      @_sections_layout.render()
+      # @_pages_tree.setModel('page')
 
-  show: (page,path) =>
-    @log "⇒ show", page
-    @model = page
-    @model.load() unless @model.isReady()
-    @render()
-    @setSection()
-    @_pages_tree.hide()
-    # sections_layout will be controlled by #links
+      # well this had better get nicer
+      # but by keeping it simple we make it
+      # easy to eg. preview / edit / publish
+      _cms._ui.editPage(page)
+      
+      @model.whenReady =>
+        @_sections_layout = new CMS.Views.SectionsLayout
+          el: @$el.find("#sections")
+          collection: @model.sections
+        @_sections_layout.render()
+      @model.load()
 
   toggleMenu: =>
     if @_pages_tree.$el.css('display') isnt 'none'
       @_pages_tree.hide()
     else
       @_pages_tree.show()
-
-  setSection: =>
-    @model?.whenReady =>
-      @_sections_layout.show()

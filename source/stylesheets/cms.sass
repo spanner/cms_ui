@@ -20,6 +20,12 @@ body, html
 h1, h2, h3
   font-weight: normal
 
+h2.label
+  color: $mid
+  font-size: 10px
+  margin: 0
+  padding: 10px
+
 #cms
   position: absolute
   top: 0
@@ -67,6 +73,7 @@ h1, h2, h3
   right: 0
   bottom: 0
   top: $control_height
+
 
 =management
   box-sizing: border-box
@@ -127,6 +134,8 @@ h1, h2, h3
       margin-left: 1px
       & > div
         padding: 3px 10px
+        &.selected
+          background-color: $green
     #pages
       margin: 0 10px
       float: left
@@ -153,9 +162,11 @@ h1, h2, h3
       background: $verypale
       float: left
       &.selected
-        background: $pale
+        background-color: $green
+        h2.label
+          color: white
       &:target
-        background: $rubine
+        background-color: $rubine
 
   footer
     background: #ddd
