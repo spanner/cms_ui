@@ -9,7 +9,7 @@ class CMS.Config
     logging: false
 
   development:
-    api_url: "http://api.cms.dev/"#"http://localhost:9292/"#
+    api_url: "http://localhost:9292/"#"http://api.cms.dev/"#
     cookie_domain: ".cms.dev"
     cookie_name: "cms_dev"
     logging: true
@@ -23,7 +23,7 @@ class CMS.Config
     dev = new RegExp(/cms\.dev/)
     if prod.test(window.location.href)
       "production"
-    else if dev.test(window.location.href)
+    else# if dev.test(window.location.href)
       "development"
 
    settings: =>
