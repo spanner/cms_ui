@@ -51,7 +51,7 @@ class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
 class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   @mixin "collection", "toggle"
   childViewContainer: ".menu_items"
-
+  
   showing: =>
     @$el.css('display') isnt 'none'
 

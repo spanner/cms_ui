@@ -4,7 +4,7 @@ class CMS.Models.Page extends CMS.Model
   build: =>
     if @get('path')
       @splitPath()
-    else
+    else if @get('dir')
       @joinPath()
     @on "change:slug", @joinPath
     @on "change:dir", @joinPath

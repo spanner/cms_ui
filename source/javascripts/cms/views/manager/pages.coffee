@@ -8,8 +8,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "click a.save_page": "savePage"
 
   bindings:
-      
-    
     "span.descent":
       observe: "path"
       onGet: "showDescent"
@@ -60,7 +58,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     trail
     
   addPage: (e) =>
-    console.log "addPage below", @model.get('path') 
     e.preventDefault() if e
     $.newpage = @model.collection.add
       dir: @model.get('path')
@@ -68,7 +65,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   savePage: (e) =>
     e.preventDefault() if e
-    @model.save()      
+    @model.save()
 
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
