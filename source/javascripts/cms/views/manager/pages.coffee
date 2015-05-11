@@ -1,5 +1,7 @@
 class CMS.Views.PageBranch extends CMS.Views.ItemView
   template: "pages/branch"
+  tagName: "li"
+  className: "branch"
   bindings:
     "a.title":
       observe: "title"
@@ -16,6 +18,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
+  template: "pages/menu"
 
 
 class CMS.Views.PageControls extends CMS.Views.ItemView
@@ -48,7 +51,6 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
       @model = page
       $.page = page
       @stickit()
-      # @_pages_tree.setModel('page')
 
       # well this had better get nicer
       # but by keeping it simple we make it

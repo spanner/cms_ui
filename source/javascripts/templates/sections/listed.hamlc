@@ -1,2 +1,3 @@
 %a.title
-%a.delete.delete_section x
+%span.controls
+  %a.delete.delete_section x

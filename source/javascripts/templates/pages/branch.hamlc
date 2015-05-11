@@ -1,3 +1,5 @@
 %span.descent
 %a.title
-%a.delete.delete_page x
+%span.controls>
+  %a.add.add_page +
+  %a.delete.delete_page x

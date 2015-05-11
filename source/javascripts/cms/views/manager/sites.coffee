@@ -1,5 +1,8 @@
 class CMS.Views.ListedSite extends CMS.Views.ItemView
   template: "sites/listed"
+  tagName: "li"
+  className: "item"
+
   bindings:
     "a.title":
       observe: "title"
@@ -15,6 +18,7 @@ class CMS.Views.ListedSite extends CMS.Views.ItemView
 
 class CMS.Views.SitesMenu extends CMS.Views.MenuView
   childView: CMS.Views.ListedSite
+  template: "sites/menu"
 
 
 class CMS.Views.SitesLayout extends CMS.Views.MenuLayout

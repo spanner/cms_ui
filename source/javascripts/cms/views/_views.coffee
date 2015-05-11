@@ -25,7 +25,10 @@ class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
     @$el.hide()
 
 
-class CMS.Views.MenuView extends CMS.Views.CollectionView
+class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
+  @mixin "collection", "toggle"
+  childViewContainer: ".menu_items"
+  
 
   show: =>
     @$el.slideDown

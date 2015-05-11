@@ -1,7 +1,5 @@
 .header
   %a.title
     Site...
-  %a.add.add_site
-    \+
 .menu
 #pages

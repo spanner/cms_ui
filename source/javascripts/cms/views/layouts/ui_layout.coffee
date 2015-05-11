@@ -33,10 +33,10 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   # Callback to load the eventually selected site into the stylesheet editor.
   #
   editSiteStyle: (site) =>
-    @_css_layout = new CMS.Views.CSSLayout
-      el: @$el.find("#css")
-      model: site
-    @_css_layout.render()
+    # @_css_layout = new CMS.Views.CSSLayout
+    #   el: @$el.find("#css")
+    #   model: site
+    # @_css_layout.render()
 
   sessionView: (action) =>
     @_barrier.show(action)
