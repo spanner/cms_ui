@@ -1,18 +1,41 @@
 class CMS.Views.LayoutView extends Backbone.Marionette.LayoutView
-  log: () =>
-    if _cms.logging()
-      console.log "#{@constructor.name} view", arguments...
+  @mixin "logging"
 
 
 class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   events:
     "click > .header a.title": "toggleMenu"
 
-  bindings: 
+  bindings:
     '.header a.title':
       observe: "title"
       updateMethod: "html"
-    
+
+  initialize: ->
+    super
+    _cms.vent.on "reset", @close
+
+  onRender: =>
+    if menu_view_class = @getOption('menuView')
+      @_menu_view = new menu_view_class
+        el: @$el.find(".menu")
+        collection: @collection
+      @_menu_view.render()
+
+  toggleMenu: =>
+    if @_menu_view.showing()
+      @close()
+    else
+      @open()
+
+  open: =>
+    _cms.vent.trigger "reset" #nb. closes us too.
+    @$el.find('>.header').addClass('open')
+    @_menu_view.show()
+
+  close: =>
+    @$el.find('>.header').removeClass('open')
+    @_menu_view.hide()
 
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
@@ -28,15 +51,19 @@ class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
 class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   @mixin "collection", "toggle"
   childViewContainer: ".menu_items"
-  
+
+  showing: =>
+    @$el.css('display') isnt 'none'
 
   show: =>
-    @$el.slideDown
+    @$el.stop().slideDown
       duration: 400
       easing: "boing"
+    , =>
+      @$el.css 'height', 'auto'
 
   hide: =>
-    @$el.slideUp
+    @$el.stop().slideUp
       duration: 400
       easing: "glide"
 

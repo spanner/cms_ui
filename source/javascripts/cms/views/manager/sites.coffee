@@ -17,21 +17,16 @@ class CMS.Views.ListedSite extends CMS.Views.ItemView
 
 
 class CMS.Views.SitesMenu extends CMS.Views.MenuView
-  childView: CMS.Views.ListedSite
   template: "sites/menu"
+  childView: CMS.Views.ListedSite
 
 
 class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
   template: "manager/sites"
+  menuView: CMS.Views.SitesMenu
   
   bindings: 
     "a.title": "title"
-
-  onRender: (options) =>
-    @_sites_list = new CMS.Views.SitesMenu
-      el: @$el.find(".menu")
-      collection: @collection
-    @_sites_list.render()
 
   show: (site_slug, page_path) =>
     if site = @collection.findWhere(slug: site_slug)
@@ -47,8 +42,3 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
         @_pages_layout.show(page_path)
       @model.load() unless @model.isReady()
 
-  toggleMenu: =>
-    if @_sites_list.$el.css('display') is 'none'
-      @_sites_list.show()
-    else
-      @_sites_list.hide()

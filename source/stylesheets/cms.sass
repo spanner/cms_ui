@@ -179,7 +179,7 @@ a.button
     background-color: $bg
     box-sizing: border-box
     float: left
-    padding: 0 6px
+    padding: 0 12px 0 5px
     a
       display: inline-block
       vertical-align: middle
@@ -189,29 +189,43 @@ a.button
         &:before
           content: "\025B8"
           font-family: sans-serif
-          margin-right: 12px
-    a.add
-      margin: 10px 0 0 6px
-      float: right
-
+          margin-right: 8px
+    &:hover
+      background-color: $warm
+    &.open
+      background-color: $warm
+      a.title.arrowed
+        &:before
+          content: "\025BE"
+          font-family: sans-serif
+          margin-right: 8px
   .menu
     position: absolute
     display: none
-    top: $control_height - 1px
-    background-color: $bg
+    top: $control_height
+    background-color: $warm
     min-width: 140px
     width: auto
     +box-shadow(0 3px 3px rgba(0,0,0,0.4))
     ul.menu_items
       list-style: none
       padding: 0
+      margin: 0
       li
         padding: 6px 6px 6px 12px
+        opacity: 0.8
+        &:hover
+          background-color: darken($warm, 20)
+          opacity: 1
         a.title
           color: white
-          opacity: 0.8
-          &:hover
-            opacity: 1
+        span.d, span.a
+          display: inline-block
+          vertical-align: middle
+          float: left
+          min-width: 6px
+          margin-right: 5px
+          height: 20px
         span.controls
           float: right
           margin-right: 3px

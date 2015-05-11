@@ -1,6 +1,6 @@
-.menu
 .header
   %a.title.arrowed
     Page...
+.menu
 #sections
 #controls
