@@ -7,6 +7,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "click a.delete_page": "deletePage"
     "click a.add_page": "addPage"
     "click a.save_page": "savePage"
+    "keydown span.slug": "catchControlKeys"
 
   bindings:
     "span.descent":
@@ -40,6 +41,10 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         name: "class"
         onGet: "liClass"
       ]
+
+  onRender: () =>
+    super
+    @$el.find('span.slug').focus() if @model.isNew()
 
   pageUrl: (path) =>
     "/sites/#{@model.getSite().get "slug"}#{path}"
@@ -75,7 +80,11 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     else
       if confirm("You really want to remove the whole #{@model.get('title')} page?")
         @model.destroy()
-      
+  
+  catchControlKeys: (e) =>
+    switch e.keyCode
+      when 13 then @savePage(e)
+      when 27 then @deletePage(e)
 
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
@@ -87,7 +96,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   template: "manager/page_controls"
   
   events:
-    "click a.save": "savePage"
+    "click a.save_page": "savePage"
 
   bindings: 
     "a.save_page":
