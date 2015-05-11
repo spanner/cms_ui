@@ -1,6 +1,7 @@
 @import lib/definitions
 @import lib/fonts
 @import lib/loader
+@import lib/prism
 
 $control_height: 36px
 
@@ -17,7 +18,7 @@ body
 body, html
   height: 100%
 
-[contenteditable]
+#editor [contenteditable]
   border: 6px solid white
   background-color: #eaeaed
   outline: none
@@ -87,30 +88,52 @@ a.button
   width: 100%
 
 
-#css
+#site_editor
   position: fixed
   width: 0
   bottom: 0
   top: $control_height
   background: $dark
-  color: $verypale
-  box-sizing: border-box
+  color: $mid
   overflow: hidden
   &.open
     width: 30%
     & + div
       width: calc(70% - 1px)
-  .temp_css
+  nav
+    width: 100%
+    display: table
+    a
+      display: table-cell
+      text-align: center
+      line-height: 2em
+      background: $coolgrey11
+      &:hover
+        color: $mid
+        background: $coolgrey1
+      &.current
+        color: $verypale
+        background: $coolgrey9
+  #style,#script,#config
+    display: none
     position: absolute
+    width: 100%
+    box-sizing: border-box
+    padding: 5px
     top: 96px
     bottom: 0
-    width: 100%
-    background-color: inherit
-    color: inherit
-    resize: none
-    border: none
-    overflow-x: hidden
     overflow-y: auto
+    overflow-x: hidden
+    &.current
+      display: block
+  .temp_css
+    min-height: 256px
+    margin: 0
+
+#main
+  position: absolute
+  right: 0
+  width: 100%
 
 =management
   box-sizing: border-box
@@ -202,7 +225,8 @@ a.button
           opacity: 0.4
   #sites
     position: relative
-    margin: 0 0 0 $control_height+2px
+    margin: 0// 0 0 $control_height+2px
+    float: left
     #pages
       position: relative
       margin: 0

@@ -2,7 +2,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   template: "layouts/ui"
 
   events:
-    "click #manager_menu a": "toggleStyler"
+    "click #manager_menu a": "toggleSiteEditor"
 
   onRender: =>
     @_barrier = new CMS.Views.SessionLayout
@@ -15,7 +15,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       model: @model.getUser()
     @_manager.render()
 
-    @_css_el = @$el.find("#css")
+    @_css_el = @$el.find("#site_editor")
     @_toggle_el = @$el.find("#manager_menu")
 
   siteView: (site_slug, page_path, section_id) =>
@@ -32,11 +32,11 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
 
   # Callback to load the eventually selected site into the stylesheet editor.
   #
-  editSiteStyle: (site) =>
-    # @_css_layout = new CMS.Views.CSSLayout
-    #   el: @$el.find("#css")
-    #   model: site
-    # @_css_layout.render()
+  editSite: (site) =>
+    @_site_editor_layout = new CMS.Views.SiteEditorLayout
+      el: @$el.find("#site_editor")
+      model: site
+    @_site_editor_layout.render()
 
   sessionView: (action) =>
     @_barrier.show(action)
@@ -44,7 +44,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   homeView: () =>
     @_manager.show()
 
-  toggleStyler: =>
+  toggleSiteEditor: =>
     if @_toggle_el.hasClass("open")
       @_toggle_el.removeClass("open")
       @_css_el.removeClass("open")

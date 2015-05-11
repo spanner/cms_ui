@@ -1,14 +1,11 @@
-/ %h2
-/   %span.title
-/   CSS
-
 %p
-  Choose template
-  %select.template
+  %label{for: "template"} Template
+  %select.template#template
 
 %p
   %a.button.preview preview
   %a.button.revert revert
   %a.button.save save
 
-%textarea.temp_css{placeholder: "Your CSS here..."}
+%span Custom CSS
+%pre.temp_css{contenteditable: true, placeholder: "Your CSS here..."}
