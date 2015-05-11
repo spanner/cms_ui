@@ -1,6 +1,4 @@
 .header
-  %a.title
+  %a.title.arrowed
     Section...
-  %a.add.add_section
-    \+
 .menu

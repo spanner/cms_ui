@@ -2,7 +2,7 @@
 @import lib/fonts
 @import lib/loader
 
-$control_height: 48px
+$control_height: 36px
 
 a
   cursor: pointer
@@ -22,7 +22,6 @@ body, html
   background-color: #eaeaed
   outline: none
   border-radius: 5px
-
 
 h1, h2, h3
   font-weight: normal
@@ -125,9 +124,10 @@ a.button
   left: 0
   right: 0
   height: $control_height
-  background: $dark
+  background: $bg
   color: white
   z-index: 100
+  font-size: 0.9em
   #manager_menu
     +management
     width: $control_height
@@ -138,8 +138,8 @@ a.button
       width: $control_height
       height: $control_height
       background:
-        image: image-url('spanner.png')
-        position: top left
+        image: image-url('spanner.svg')
+        position: center center
         repeat: no-repeat
 
   a
@@ -150,50 +150,75 @@ a.button
       opacity: 1
 
   .header
+    position: relative
+    display: inline-block
     height: $control_height
+    background-color: $bg
     box-sizing: border-box
     float: left
-    padding: 0 14px
-    border-left: 1px solid white
-    display: table
+    padding: 0 6px
     a
       display: inline-block
       vertical-align: middle
     a.title
-      padding: 15px 0
+      padding: 10px 0
+      &.arrowed
+        &:before
+          content: "\025B8"
+          font-family: sans-serif
+          margin-right: 12px
     a.add
-      margin: 17px 0 0 8px
+      margin: 10px 0 0 6px
       float: right
 
   .menu
     position: absolute
     display: none
-    top: $control_height
-    background: $dark
-    margin-left: 1px
-    & > div
-      padding: 6px 10px
-      a.title
-        color: $pale
-        &:hover
+    top: $control_height - 1px
+    background-color: $bg
+    min-width: 140px
+    width: auto
+    +box-shadow(0 3px 3px rgba(0,0,0,0.4))
+    ul.menu_items
+      list-style: none
+      padding: 0
+      li
+        padding: 6px 6px 6px 12px
+        a.title
           color: white
-      a.delete
-        margin: 2px 0 0 8px
-      &.selected
-        background-color: $green
-      &.destroyed
-        text-decoration: line-through
-        opacity: 0.4
+          opacity: 0.8
+          &:hover
+            opacity: 1
+        span.controls
+          float: right
+          margin-right: 3px
+          display: none
+          a
+            margin: 0
+        &.selected
+          background-color: $green
+        &.destroyed
+          text-decoration: line-through
+          opacity: 0.4
   #sites
-    margin: 0 0 0 48px
+    position: relative
+    margin: 0 0 0 $control_height+2px
     #pages
+      position: relative
       margin: 0
       float: left
       #controls
+        position: relative
         float: right
-        a.button
-          margin: 8px 0 0 8px
+        a.save
+          display: inline-block
+          margin: 0 0 0 8px
+          padding: 10px
+          box-sizing: border-box
+          height: $control_height
+          background-color: $green
       #sections
+        position: relative
         margin: 0
         float: left
 

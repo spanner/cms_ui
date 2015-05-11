@@ -1,8 +1,6 @@
-.header
-  %a.title
-    Page...
-  %a.add.add_page
-    \+
 .menu
+.header
+  %a.title.arrowed
+    Page...
 #sections
 #controls

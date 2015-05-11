@@ -1,5 +1,7 @@
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
+  tagName: "li"
+  className: "item"
 
   events:
     "click a.title": "select"
@@ -42,6 +44,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   childView: CMS.Views.ListedSection
+  template: "sections/menu"
 
 
 class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
