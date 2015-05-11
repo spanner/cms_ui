@@ -2,33 +2,74 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   template: "pages/branch"
   tagName: "li"
   className: "branch"
+    
+  events:
+    "click a.add_page": "addPage"
+    "click a.save_page": "savePage"
+
   bindings:
+      
+    
     "span.descent":
       observe: "path"
       onGet: "showDescent"
       updateMethod: "html"
+    "a.add_page":
+      observe: "id"
+      visible: true
+      visibleFn: "visibleAsInlineBlock"
+    "a.save_page":
+      observe: "id"
+      visible: "untrue"
+      visibleFn: "visibleAsInlineBlock"
+    "span.slug":
+      observe: "slug"
     "a.title":
-      observe: "title"
-      updateMethod: "html"
+      observe: ["dir", "slug"]
+      onGet: "pageSlug"
       attributes: [
-        observe: "path"
         name: "href"
+        observe: "path"
         onGet: "pageUrl"
+      ,
+        name: "title"
+        observe: "title"
+      ]
+    ":el":
+      attributes: [
+        observe: "id"
+        name: "class"
+        onGet: "liClass"
       ]
 
   pageUrl: (path) =>
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
+  pageSlug: ([dir, slug]=[]) =>
+    slug or "home"
+
+  liClass: (id) =>
+    if id then "branch" else "branch new"
+    
   showDescent: (path) =>
     depth = (path.match(/\//g) || []).length
     trail = ''
     if depth > 0
       trail += '<span class="d"></span>' for [1..depth]
-    if depth > 1
       trail += '<span class="a">↳</span>'
     trail
-
     
+  addPage: (e) =>
+    console.log "addPage below", @model.get('path') 
+    e.preventDefault() if e
+    $.newpage = @model.collection.add
+      dir: @model.get('path')
+    @model.collection.sort()
+
+  savePage: (e) =>
+    e.preventDefault() if e
+    @model.save()      
+
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch

@@ -32,7 +32,7 @@ h2.label
   margin: 0
   padding: 10px
 
-a.add, a.delete, a.admin
+a.add, a.delete, a.admin, a.save
   display: inline-block
   vertical-align: top
   width: 20px
@@ -59,8 +59,12 @@ a.admin
   &:hover
     background-position: 0 -128px
 
+a.save
+  background-position: 0 -288px
+  &:hover
+    background-position: 0 -320px
+
 a.button
-  +button
   &.save
     +button($green)
   &.revert
@@ -144,7 +148,7 @@ a.button
 
   a
     color: white
-  a.add, a.delete
+  a.add, a.delete, a.save
     opacity: 0.5
     &:hover
       opacity: 1
@@ -181,7 +185,6 @@ a.button
     display: none
     top: $control_height
     background-color: $warm
-    min-width: 140px
     width: auto
     +box-shadow(0 3px 3px rgba(0,0,0,0.4))
     ul.menu_items
@@ -191,24 +194,42 @@ a.button
       li
         padding: 6px 6px 6px 12px
         opacity: 0.8
+        clear: left
         &:hover
           background-color: darken($warm, 20)
           opacity: 1
+          .controls
+            display: inline-block
         a.title
           color: white
+        span.slug
+          display: none
+        span[contenteditable]
+          background-color: white
+          color: $dark
+          border: 0
+          min-width: 100px
+          padding: 3px
         span.d, span.a
           display: inline-block
           vertical-align: middle
           float: left
-          min-width: 6px
-          margin-right: 5px
+          min-width: 16px
+          margin-right: 4px
           height: 20px
+          &:first-child
+            min-width: 0
         span.controls
           float: right
           margin-right: 3px
           display: none
           a
             margin: 0
+        &.new
+          a.title
+            display: none
+          span.controls, span.slug
+            display: inline-block
         &.selected
           background-color: $green
         &.destroyed
@@ -217,14 +238,21 @@ a.button
   #sites
     position: relative
     margin: 0 0 0 $control_height+2px
+    .menu
+      min-width: 120px
     #pages
       position: relative
       margin: 0
       float: left
+      .menu
+        min-width: 300px
+      #sections
+        .menu
+          min-width: 300px
       #controls
         position: relative
         float: right
-        a.save
+        a.save_page
           display: inline-block
           margin: 0 0 0 8px
           padding: 10px
