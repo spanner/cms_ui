@@ -3,6 +3,10 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   tagName: "li"
   className: "branch"
   bindings:
+    "span.descent":
+      observe: "path"
+      onGet: "showDescent"
+      updateMethod: "html"
     "a.title":
       observe: "title"
       updateMethod: "html"
@@ -15,6 +19,16 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   pageUrl: (path) =>
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
+  showDescent: (path) =>
+    depth = (path.match(/\//g) || []).length
+    trail = ''
+    if depth > 0
+      trail += '<span class="d"></span>' for [1..depth]
+    if depth > 1
+      trail += '<span class="a">↳</span>'
+    trail
+
+    
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
@@ -35,6 +49,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   savePage: (e) =>
     e.preventDefault() if e
     @model.save()
+    _cms.vent.trigger('reset')
 
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
