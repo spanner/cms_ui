@@ -4,6 +4,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   className: "branch"
     
   events:
+    "click a.delete_page": "deletePage"
     "click a.add_page": "addPage"
     "click a.save_page": "savePage"
 
@@ -66,6 +67,15 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   savePage: (e) =>
     e.preventDefault() if e
     @model.save()
+  
+  deletePage: (e) =>
+    e.preventDefault() if e
+    if @model.isNew()
+      @model.destroy()
+    else
+      if confirm("You really want to remove the whole #{@model.get('title')} page?")
+        @model.destroy()
+      
 
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView

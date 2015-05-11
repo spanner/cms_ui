@@ -192,6 +192,7 @@ a.button
       padding: 0
       margin: 0
       li
+        position: relative
         padding: 6px 6px 6px 12px
         opacity: 0.8
         clear: left
@@ -202,6 +203,7 @@ a.button
             display: inline-block
         a.title
           color: white
+          margin-right: 40px
         span.slug
           display: none
         span[contenteditable]
@@ -210,6 +212,7 @@ a.button
           border: 0
           min-width: 100px
           padding: 3px
+          margin-right: 40px
         span.d, span.a
           display: inline-block
           vertical-align: middle
@@ -220,8 +223,9 @@ a.button
           &:first-child
             min-width: 0
         span.controls
-          float: right
-          margin-right: 3px
+          position: absolute
+          top: 6px
+          right: 6px
           display: none
           a
             margin: 0
@@ -245,7 +249,7 @@ a.button
       margin: 0
       float: left
       .menu
-        min-width: 300px
+        min-width: 200px
       #sections
         .menu
           min-width: 300px
