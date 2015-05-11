@@ -156,7 +156,7 @@ a.button
     background-color: $bg
     box-sizing: border-box
     float: left
-    padding: 0 6px
+    padding: 0 10px 0 6px
     a
       display: inline-block
       vertical-align: middle
@@ -167,6 +167,15 @@ a.button
           content: "\025B8"
           font-family: sans-serif
           margin-right: 12px
+    &:hover
+      background-color: $warm
+    &.open
+      background-color: $warm
+      a.title.arrowed
+        &:before
+          content: "\025BE"
+          font-family: sans-serif
+          margin-right: 12px
     a.add
       margin: 10px 0 0 6px
       float: right
@@ -175,7 +184,7 @@ a.button
     position: absolute
     display: none
     top: $control_height - 1px
-    background-color: $bg
+    background-color: $warm
     min-width: 140px
     width: auto
     +box-shadow(0 3px 3px rgba(0,0,0,0.4))

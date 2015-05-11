@@ -43,12 +43,13 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
-  childView: CMS.Views.ListedSection
   template: "sections/menu"
+  childView: CMS.Views.ListedSection
 
 
 class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
   template: "manager/sections"
+  menuView: CMS.Views.SectionsList
 
   events:
     "click a.add_section": "addSection"
@@ -58,24 +59,9 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
     'a.title': "pos"
 
   onRender: =>
-    @_sections_list = new CMS.Views.SectionsList
-      el: @$el.find(".menu")
-      collection: @collection
-    @_sections_list.render()
+    super
     @model?.whenReady () =>
       @stickit()
-
-  show: (section) =>
-    @log "⇒ show", section
-    @model = section
-    @model.load() unless @model.isReady()
-    @render()
-
-  toggleMenu: =>
-    if @_sections_list.$el.css('display') isnt 'none'
-      @_sections_list.hide()
-    else
-      @_sections_list.show()
 
   addSection: =>
     section = @collection.add

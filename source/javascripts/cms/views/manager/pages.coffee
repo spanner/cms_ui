@@ -39,12 +39,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
-
-  onRender: =>
-    @_pages_tree = new CMS.Views.PagesTree
-      el: @$el.find(".menu")
-      collection: @collection
-    @_pages_tree.render()
+  menuView: CMS.Views.PagesTree
 
   show: (page_path="") =>
     if page = @collection.findWhere(path: "/#{page_path}")
@@ -67,9 +62,3 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
           model: @model
         @_page_controls.render()
       @model.load() unless @model.isReady()
-
-  toggleMenu: =>
-    if @_pages_tree.$el.css('display') isnt 'none'
-      @_pages_tree.hide()
-    else
-      @_pages_tree.show()
