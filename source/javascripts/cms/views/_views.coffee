@@ -59,6 +59,8 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
     @$el.stop().slideDown
       duration: 400
       easing: "boing"
+    , =>
+      @$el.css 'height', 'auto'
 
   hide: =>
     @$el.stop().slideUp
