@@ -29,7 +29,6 @@ class CMS.Application extends Backbone.Marionette.Application
       controller: @_ui
     @_ui.render()
     @_session.load().always () =>
-      console.log "Boot!"
       Backbone.history.start
         pushState: true
 
@@ -49,7 +48,6 @@ class CMS.Application extends Backbone.Marionette.Application
     true
 
   navigate: (route, {trigger:trigger,replace:replace}={}) =>
-    console.log "navigate", route
     trigger ?= true
     hash_link = new RegExp(/^\#/)
     if hash_link.test(route)
