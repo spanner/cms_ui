@@ -1,5 +1,23 @@
 class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   template: "editor/section_admin_menu"
+  
+  onRender: () =>
+    menu = @$el.find('.section_menu')
+    for type in CMS.Models.Section.types
+      do (type) =>
+        cssclass = "section_type #{type}"
+        cssclass += " selected" if type is @model.get('section_type')
+        cssclass += " selected" if type is "default" and not @model.get('section_type')
+        a = $("<a class=\"#{cssclass}\"></a>")
+        a.appendTo(menu)
+        a.click (e) =>
+          e?.preventDefault()
+          @setType(type)
+  
+  setType: (type) =>
+    console.log "setType", type
+    @model.set 'section_type', type
+    @render()
 
 
 class CMS.Views.Section extends CMS.Views.ItemView
@@ -15,6 +33,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
       visible: "untrue"
       classes:
         selected: "selected"
+        destroyed: "destroyed"
     "h2.section":
       observe: "title"
       updateMethod: "html"
