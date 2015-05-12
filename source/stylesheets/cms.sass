@@ -33,7 +33,7 @@ h2.label
   margin: 0
   padding: 10px
 
-a.add, a.delete, a.admin, a.save
+a.add, a.delete, a.menu, a.save
   display: inline-block
   vertical-align: top
   width: 20px
@@ -55,15 +55,67 @@ a.delete
   &:hover
     background-position: 0 -224px
 
-a.admin
-  background-position: 0 -96px
+a.menu
+  background-position: 0 -384px
   &:hover
-    background-position: 0 -128px
+    background-position: 0 -416px
 
 a.save
   background-position: 0 -288px
   &:hover
     background-position: 0 -320px
+
+a.section_type
+  width: 32px
+  height: 32px
+  display: inline-block
+  vertical-align: top
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('sectionsprite.png')
+  &.default
+    background-position: 0 0
+    &.selected
+      background-position: -32px 0
+    &:hover
+      background-position: -64px 0
+  &.twocol
+    background-position: 0 -32px
+    &.selected
+      background-position: -32px -32px
+    &:hover
+      background-position: -64px -32px
+  &.bigtext
+    background-position: 0 -64px
+    &.selected
+      background-position: -32px -64px
+    &:hover
+      background-position: -64px -64px
+  &.hero
+    background-position: 0 -96px
+    &.selected
+      background-position: -32px -96px
+    &:hover
+      background-position: -64px -96px
+  &.bigquote
+    background-position: 0 -128px
+    &.selected
+      background-position: -32px -128px
+    &:hover
+      background-position: -64px -128px
+  &.carousel
+    background-position: 0 -160px
+    &.selected
+      background-position: -32px -160px
+    &:hover
+      background-position: -64px -160px
+  &.video
+    background-position: 0 -192px
+    &.selected
+      background-position: -32px -192px
+    &:hover
+      background-position: -64px -192px
 
 a.button
   &.save
@@ -328,21 +380,26 @@ a.button
     overflow: hidden
 
   main
-    overflow: hidden
     section
       position: relative
-      a.admin
+      .admin
         position: absolute
         top: 10px
-        right: 6px
-      &.selected
-        border: 1px dotted $green
-        h2.label
-          color: $green
-      &:target
-        border: 1px dotted $rubine
-        h2.label
-          color: $rubine
+        right: -52px
+        a.menu
+          position: relative
+          background-color: white
+          border-radius: 3px
+          +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+        div.menu
+          position: relative
+          margin-top: -3px
+          background-color: white
+          border-radius: 3px
+          +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+          width: 85px
+          a.section_type
+            margin: 4px
 
 
 
