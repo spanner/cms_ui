@@ -9,8 +9,8 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       updateMethod: "html"
 
   onRender: () =>
-    @_site_styles = new CMS.Views.SiteStyles
+    @_site_meta = new CMS.Views.SiteMeta
       model: @model.getSite()
-      el: @$el.find("#styles")
-    @_site_styles.render()
+      el: @$el.find("#meta")
+    @_site_meta.render()
     @stickit()

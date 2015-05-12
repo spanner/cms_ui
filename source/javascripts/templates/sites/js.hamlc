@@ -1,0 +1,7 @@
+%p.controls
+
+%p
+  %a.button.run run
+
+%span Custom JS
+%pre.js{contenteditable: true, placeholder: "Your javascript here..."}

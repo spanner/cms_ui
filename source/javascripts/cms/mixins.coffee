@@ -12,7 +12,13 @@
 
 # ### View Mixins
 CMS.Mixins.Crumbed = {}
-  
+
+
+CMS.Mixins.Text =
+  paste: (e) ->
+    e.preventDefault()
+    document.execCommand("insertHTML", false, e.originalEvent.clipboardData.getData("text/plain"))
+    
 
 CMS.Mixins.Item =
   setModel: (model) ->
@@ -63,3 +69,4 @@ Cocktail.mixins =
   parental: CMS.Mixins.Parental
   toggle: CMS.Mixins.Toggle
   logging: CMS.Mixins.Logging
+  text: CMS.Mixins.Text
