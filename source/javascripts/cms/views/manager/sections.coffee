@@ -13,8 +13,9 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
         selected: "selected"
         destroyed: "deleted_at"
     "a.title":
-      observe: "id"
+      observe: "title"
       onGet: "sectionName"
+      updateMethod: "html"
       attributes: [
         observe: "id"
         name: "href"
@@ -35,11 +36,11 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   sectionUrl: (id) =>
     "#section_#{id}"
     
-  sectionName: (id) =>
-    if id
-      "Section #{id}"
-    else
-      "New section"
+  sectionName: (title) =>
+    label = title || "New section"
+    if label.length > 38
+      label = label.substr(0,36) + "..."
+    label
 
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
