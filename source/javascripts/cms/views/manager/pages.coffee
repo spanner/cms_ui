@@ -36,6 +36,9 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         observe: "title"
       ]
     ":el":
+      classes:
+        selected: "selected"
+        destroyed: "deleted_at"
       attributes: [
         observe: "id"
         name: "class"
@@ -44,7 +47,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   onRender: () =>
     super
-    @$el.find('span.slug').focus() if @model.isNew()
+    @$el.find('span.slug').get(0).focus() if @model.isNew()
 
   pageUrl: (path) =>
     "/sites/#{@model.getSite().get "slug"}#{path}"
@@ -56,12 +59,15 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     if id then "branch" else "branch new"
     
   showDescent: (path) =>
-    depth = (path.match(/\//g) || []).length
-    trail = ''
-    if depth > 0
-      trail += '<span class="d"></span>' for [1..depth]
-      trail += '<span class="a">↳</span>'
-    trail
+    if path is "/"
+      ""
+    else
+      depth = (path.match(/\//g) || []).length
+      trail = ''
+      if depth > 0
+        trail += '<span class="d"></span>' for [1..depth]
+        trail += '<span class="a">↳</span>'
+      trail
     
   addPage: (e) =>
     e.preventDefault() if e
@@ -123,7 +129,8 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
       # but by keeping it simple we make it
       # easy to eg. preview / edit / publish
       _cms._ui.editPage(page)
-      
+      @model.select()
+
       @model.whenReady =>
         @_sections_layout = new CMS.Views.SectionsLayout
           el: @$el.find("#sections")

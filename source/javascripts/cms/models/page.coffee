@@ -8,6 +8,7 @@ class CMS.Models.Page extends CMS.Model
       @joinPath()
     @on "change:slug", @joinPath
     @on "change:dir", @joinPath
+    @on "sync", @splitPath
     @sections = new CMS.Collections.Sections @get('sections'), page: @
     @sections.on "add reset remove", @markAsChanged
     @sections.on "change", @changedIfAnySectionChanged
@@ -18,12 +19,17 @@ class CMS.Models.Page extends CMS.Model
     @sections.reset(data.sections)
     @set "changed", false
     
+  select: =>
+    unless @get("selected")
+      @collection.findWhere(selected:true)?.set selected:false
+      @set selected: true
+
   splitPath: =>
     if path = @get('path')
       parts = path.split(/\/+/g)
       @set "slug", parts.pop()
       @set "dir", parts.join("/")
-
+    
   joinPath: (model, value, options) =>
     @set 'path', [@get('dir'), @get('slug')].join('/'), options
 

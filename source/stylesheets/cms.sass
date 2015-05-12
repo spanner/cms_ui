@@ -128,10 +128,11 @@ a.button
   left: 0
   right: 0
   height: $control_height
-  background: $bg
-  color: white
+  background: $menu_bg
+  color: $menu_text
   z-index: 100
   font-size: 0.9em
+  +box-shadow(0 2px 5px rgba(0,0,0,0.4))
   #manager_menu
     +management
     width: $control_height
@@ -147,9 +148,9 @@ a.button
         repeat: no-repeat
 
   a
-    color: white
+    color: $mid
   a.add, a.delete, a.save
-    opacity: 0.5
+    opacity: 0.75
     &:hover
       opacity: 1
 
@@ -157,7 +158,7 @@ a.button
     position: relative
     display: inline-block
     height: $control_height
-    background-color: none
+    background-color: $menu_bg
     box-sizing: border-box
     float: left
     padding: 0 12px 0 5px
@@ -166,6 +167,7 @@ a.button
       vertical-align: middle
     a.title
       padding: 10px 0
+      color: $menu_text
       &.arrowed
         &:before
           content: "\025B8"
@@ -175,9 +177,13 @@ a.button
           font-family: sans-serif
           margin-right: 8px
     &:hover
-      background-color: $warm
+      background-color: $menu_hover_bg
+      a
+        color: $menu_hover_text
     &.open
-      background-color: $warm
+      background-color: $menu_up_bg
+      a
+        color: $menu_up_text
       a.title.arrowed
         &:before
           content: "\025BE"
@@ -186,11 +192,10 @@ a.button
   .menu
     position: absolute
     display: none
-    top: $control_height - 4px
-    background-color: $warm
+    top: $control_height
+    background-color: $menu_up_bg
     width: auto
     +box-shadow(0 4px 5px rgba(0,0,0,0.4))
-    padding-top: 8px
     ul.menu_items
       list-style: none
       padding: 0
@@ -201,12 +206,15 @@ a.button
         opacity: 0.8
         clear: left
         &:hover
-          background-color: darken($warm, 20)
+          background-color: $menu_hover_bg
           opacity: 1
+          a, span.a
+            color: $menu_hover_text
           .controls
             display: inline-block
+        a
+          color: $menu_up_text
         a.title
-          color: white
           margin-right: 40px
         span[contenteditable]
           display: inline-block
@@ -225,22 +233,32 @@ a.button
           min-width: 16px
           margin-right: 4px
           height: 16px
+          color: $menu_up_text
           &:first-child
             min-width: 0
         span.controls
           position: absolute
-          top: 8px
+          top: 7px
           right: 6px
           display: none
           a
             margin: 0
         &.new
+          background-color: $warm
+          color: $menu_hover_text
           a.title
             display: none
           span.controls, span.slug
             display: inline-block
         &.selected
           background-color: $green
+          color: white
+          a, span.a
+            color: white
+          &:hover
+            background-color: darken($green, 10)
+            a, span.a
+              color: white
         &.destroyed
           text-decoration: line-through
           opacity: 0.4
@@ -268,6 +286,7 @@ a.button
           box-sizing: border-box
           height: $control_height
           background-color: $green
+          color: white
       #sections
         position: relative
         margin: 0
