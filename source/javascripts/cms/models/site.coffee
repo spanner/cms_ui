@@ -3,7 +3,7 @@ class CMS.Models.Site extends CMS.Model
   defaults:
     template: 'default'
 
-  savedAttributes: ["css"]
+  savedAttributes: ["css","title"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @
@@ -26,3 +26,9 @@ class CMS.Models.Site extends CMS.Model
 
   previewCSS: =>
     @set preview_css: @get("temp_css")
+
+  compileCSS: =>
+    if @get("css_preprocessor") is "sass"
+      
+    else
+      #

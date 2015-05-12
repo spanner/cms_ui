@@ -1,5 +1,5 @@
-#background
-
-#manager
-#editor
+#site_editor
+#main
+  #manager
+  #editor
 #session

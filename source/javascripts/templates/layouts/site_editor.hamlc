@@ -1,0 +1,11 @@
+%h2
+  %span.title
+
+%nav
+  %a.style.current Styles
+  %a.script Scripts
+  %a.config Config
+
+%div#style.current
+%div#script
+%div#config
