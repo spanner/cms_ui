@@ -7,19 +7,58 @@ header
   h1
     text-align: center
 
-main
-  width: 90%
-  max-width: 960px
-  margin: 0 auto
-  section
-    .section_aside
-      float: right
-      width: 25%
-      min-height: 50px
-      & + .section.body
-        width: 70%
-    .section_body
-      min-height: 100px
-      max-width: 800px
-    .section_aside
-      max-width: 300px
+#editor
+  main
+    width: 90%
+    max-width: 960px
+    margin: 0 auto
+    section
+      margin: 20px 0
+      .wrapper
+        h2.section
+          font-size: 2em
+        &.default
+          .section_image
+            display: none
+          .section_aside
+            float: right
+            width: 25%
+            min-height: 50px
+            & + .section.body
+              width: 70%
+          .section_body
+            min-height: 100px
+            max-width: 800px
+          .section_aside
+            max-width: 300px
+            margin: 0 0 20px 20px
+        &.twocol
+          .section_image
+            display: none
+          .section_body, .section_aside
+            display: inline-block
+            vertical-align: top
+            min-height: 100px
+            width: 460px
+          .section_aside
+            float: right
+        &.hero
+          .section_body, .section_aside
+            display: none
+          .section_image
+            display: block
+            width: 950px
+            border: 5px solid white
+            height: auto
+            min-height: 480px
+            background-color: $pale
+          h2.section
+            position: absolute
+            bottom: 20px
+            left: 20px
+            margin: 0
+            color: white
+            min-width: 100px
+            padding: 10px
+            &[contenteditable]
+              border: none

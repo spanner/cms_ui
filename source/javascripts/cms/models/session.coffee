@@ -39,7 +39,6 @@ class CMS.Models.Session extends CMS.Model
     @_loaded.promise()
   
   populate: (data) =>
-    @log "populate", data
     @populateUser(data.user)
     @writeCookie()
     true
