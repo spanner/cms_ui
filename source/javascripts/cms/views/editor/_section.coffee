@@ -8,7 +8,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
     "change:section_type": "setSelection"
   
   onRender: () =>
-    @_menu = @$el.find('.section_menu')
+    @_menu = @$el.find('.menu')
     for type in CMS.Models.Section.types
       do (type) =>
         a = $("<a class=\"section_type #{type}\"></a>").appendTo(@_menu)

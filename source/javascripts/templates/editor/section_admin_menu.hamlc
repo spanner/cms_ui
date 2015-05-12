@@ -1,2 +1,3 @@
 %a.menu
-.menu.section_menu
+.menu
+  .section_types
