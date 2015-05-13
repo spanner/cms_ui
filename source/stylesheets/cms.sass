@@ -119,13 +119,6 @@ a.section_type
     &:hover
       background-position: -64px -192px
 
-a.button
-  &.save
-    +button($green)
-  &.revert
-    +button($pale)
-  &.preview
-    +button($rubine)
 
 #cms
   position: absolute
@@ -134,12 +127,12 @@ a.button
   bottom: 0
   left: 0
 
-#spanner
 
 #ui
   position: absolute
   height: 100%
   width: 100%
+
 
 #session
   height: 100%
@@ -187,6 +180,11 @@ a.button
     overflow-x: hidden
     &.current
       display: block
+    a.button
+      &.revert
+        +button($red)
+      &.preview
+        +button($rubine)
   .temp_css
     min-height: 256px
     margin: 0

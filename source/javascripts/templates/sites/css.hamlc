@@ -1,11 +1,10 @@
 %p
-  %label{for: "template"} Template
+  %label{for: "template"} Scheme
   %select.template#template
 
-%p
+%span
+  Custom CSS
   %a.button.preview preview
   %a.button.revert revert
-  %a.button.save save
 
-%label{for: "temp_css"} Custom CSS
 %textarea#temp_css

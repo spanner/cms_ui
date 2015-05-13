@@ -32,7 +32,6 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
     if site = @collection.findWhere(slug: site_slug)
       @model = site
       @stickit()
-      # @_sites_list.setModel('site')
       _cms._ui.editSite(site)
       @model.whenReady =>
         @_pages_layout = new CMS.Views.PagesLayout
