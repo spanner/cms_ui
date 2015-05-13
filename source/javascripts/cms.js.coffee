@@ -9,6 +9,7 @@
 #= require lib/backbone.stickit
 #= require lib/utilities
 #= require lib/prism
+#= require lib/medium
 
 #= require ./cms/application
 #= require ./cms/config

@@ -2,6 +2,7 @@
 @import lib/fonts
 @import lib/loader
 @import lib/prism
+@import lib/medium
 
 $control_height: 36px
 
@@ -202,12 +203,12 @@ a.button
   position: fixed
   left: 0
   right: 0
-  height: $control_height
   background: $menu_bg
   color: $menu_text
   z-index: 100
   font-size: 0.9em
   +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+
   #manager_menu
     +management
     width: $control_height
@@ -369,10 +370,17 @@ a.button
         margin: 0
         float: left
 
+  #rte
+    position: absolute
+    top: 3px
+    right: 100px
+    min-width: 400px
+
 
 #editor
   z-index: 50
   margin-top: $control_height
+
   header
     overflow: hidden
 

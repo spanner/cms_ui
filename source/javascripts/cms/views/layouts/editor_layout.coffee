@@ -8,3 +8,5 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
         collection: @model.sections
         el: @$el.find("#page")
       @_page_view.render()
+      
+      

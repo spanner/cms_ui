@@ -3,8 +3,8 @@
 .wrapper
   .section_image
 
-  %h2.section{contenteditable: "true"}
+  %h2.section.editable
 
-  %aside.section_aside{contenteditable: "true"}
+  %aside.section_aside.editable
 
-  .section_body{contenteditable: "true"}
+  .section_body.editable

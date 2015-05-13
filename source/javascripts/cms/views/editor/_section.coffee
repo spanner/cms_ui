@@ -31,13 +31,13 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
       @openMenu()
 
   openMenu: () =>
+    $('.menu').not(@_menu).removeClass('open')
     @_menu.addClass('open')
     $(document).bind "click", @closeMenu
     
   closeMenu: () =>
     $(document).unbind "click", @closeMenu
     @_menu.removeClass('open')
-  
 
   setType: (type) =>
     @model.set 'section_type', type,
@@ -83,7 +83,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
       model: @model
       el: @$el.find('.admin')
     @_admin_menu.render()
-
+  
   wrapperClass: (section_type) =>
     section_type ?= 'default'
     "wrapper #{section_type}"
@@ -101,5 +101,5 @@ class CMS.Views.Section extends CMS.Views.ItemView
     @$el.removeClass CMS.Models.Section.types.join(' ')
     @$el.addClass type
 
-    
-    
+
+
