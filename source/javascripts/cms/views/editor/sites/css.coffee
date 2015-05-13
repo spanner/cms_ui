@@ -31,7 +31,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     @_textarea = @$el.find("textarea")
     @editor = CodeMirror.fromTextArea @_textarea[0],
       mode: "css"
-      theme: "3024-night"
+      theme: "spanner"
       showCursorWhenSelecting: true
       lineNumbers: true
     @editor.on "change", =>
