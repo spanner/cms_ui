@@ -8,5 +8,9 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
         collection: @model.sections
         el: @$el.find("#page")
       @_page_view.render()
-      
+
+      @_toolbar = new MediumEditor '.editable',
+        elementsContainer: $("#rte").get(0)
+        fixedToolbar: true
+        updateOnEmptySelection: true      
       
