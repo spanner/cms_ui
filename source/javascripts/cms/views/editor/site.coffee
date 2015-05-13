@@ -1,9 +1,6 @@
 class CMS.Views.SiteMeta extends Backbone.Marionette.ItemView
   template: "sites/meta"
 
-  modelEvents:
-    "run_script": "runScript"
-
   bindings:
     "style#custom": "preview_css"
     "script#custom": "js"
@@ -17,5 +14,3 @@ class CMS.Views.SiteMeta extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
 
-  runScript: =>
-    console.log @$el.find("script")

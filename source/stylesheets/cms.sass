@@ -5,6 +5,7 @@
 @import lib/codemirror/3024-night
 
 $control_height: 36px
+$left_width: 30%
 
 a
   cursor: pointer
@@ -153,8 +154,11 @@ a.button
   background: $dark
   color: $mid
   overflow: hidden
+  transition: width 0.5s ease-out
+  & + div
+    transition: width 0.5s ease-out
   &.open
-    width: 30%
+    width: $left_width
     & + div
       width: calc(70% - 1px)
   nav
@@ -215,8 +219,9 @@ a.button
   #manager_menu
     +management
     width: $control_height
+    transition: width 0.5s ease-out
     &.open
-      width: 30%
+      width: $left_width
     a
       display: block
       width: $control_height

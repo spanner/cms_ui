@@ -5,7 +5,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   events:
     "click a.preview": "previewCSS"
     "click a.revert": "revertCSS"
-    "click a.save": "saveCSS"
+    "click a.save": "save"
     "paste .temp_css": "paste"
 
   bindings:
@@ -34,7 +34,9 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
       theme: "3024-night"
       showCursorWhenSelecting: true
       lineNumbers: true
-    @editor.on "change", => @_textarea.val @editor.getValue()
+    @editor.on "change", =>
+      @_textarea.val @editor.getValue()
+      @_textarea.trigger "change"
 
   previewCSS: =>
     @model.previewCSS()
@@ -43,5 +45,5 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     @model.revertCSS()
     @editor.setValue @_textarea.val()
 
-  saveCSS: =>
+  save: =>
     @model.save(css:@model.get("preview_css"))
