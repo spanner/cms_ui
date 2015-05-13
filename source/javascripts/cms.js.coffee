@@ -8,6 +8,7 @@
 #= require lib/backbone.marionette
 #= require lib/backbone.stickit
 #= require lib/utilities
+#=   require lib/codemirror
 
 #= require ./cms/application
 #= require ./cms/config

@@ -7,5 +7,5 @@
   %a.button.revert revert
   %a.button.save save
 
-%span Custom CSS
-%pre.temp_css{contenteditable: true, placeholder: "Your CSS here..."}
+%label{for: "temp_css"} Custom CSS
+%textarea#temp_css

@@ -9,7 +9,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     "paste .temp_css": "paste"
 
   bindings:
-    ".temp_css": "temp_css"
+    "#temp_css": "temp_css"
     "select.template":
       observe: "template"
       selectOptions:
@@ -28,15 +28,20 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
-
-  setCSS: =>
-    # set view value to model
+    @_textarea = @$el.find("textarea")
+    @editor = CodeMirror.fromTextArea @_textarea[0],
+      mode: "css"
+      theme: "3024-night"
+      showCursorWhenSelecting: true
+      lineNumbers: true
+    @editor.on "change", => @_textarea.val @editor.getValue()
 
   previewCSS: =>
     @model.previewCSS()
 
   revertCSS: =>
     @model.revertCSS()
+    @editor.setValue @_textarea.val()
 
   saveCSS: =>
     @model.save(css:@model.get("preview_css"))
