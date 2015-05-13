@@ -1,8 +1,9 @@
-class CMS.Views.SiteStyles extends Backbone.Marionette.ItemView
-  template: "sites/styles"
+class CMS.Views.SiteMeta extends Backbone.Marionette.ItemView
+  template: "sites/meta"
 
   bindings:
     "style#custom": "preview_css"
+    "script#custom": "js"
     "link#template":
       attributes: [
         name: "href"        
@@ -12,3 +13,4 @@ class CMS.Views.SiteStyles extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
+

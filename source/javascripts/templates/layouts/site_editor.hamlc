@@ -1,11 +1,13 @@
-%h2
-  %span.title
+/ %h2
+/   %span.title
 
 %nav
   %a.style.current Styles
   %a.script Scripts
+  %a.assets Assets
   %a.config Config
 
 %div#style.current
 %div#script
+%div#assets
 %div#config

@@ -1,10 +1,11 @@
 @import lib/definitions
 @import lib/fonts
 @import lib/loader
-@import lib/prism
+@import lib/codemirror
 @import lib/medium
 
 $control_height: 36px
+$left_width: 30%
 
 a
   cursor: pointer
@@ -153,8 +154,11 @@ a.button
   background: $dark
   color: $mid
   overflow: hidden
+  transition: width 0.5s ease-out
+  & + div
+    transition: width 0.5s ease-out
   &.open
-    width: 30%
+    width: $left_width
     & + div
       width: calc(70% - 1px)
   nav
@@ -177,7 +181,7 @@ a.button
     width: 100%
     box-sizing: border-box
     padding: 5px
-    top: 96px
+    top: 32px
     bottom: 0
     overflow-y: auto
     overflow-x: hidden
@@ -186,6 +190,9 @@ a.button
   .temp_css
     min-height: 256px
     margin: 0
+    background: rgba(100,100,100,0.2)
+    border-left: 1px solid white
+    padding: 10px
 
 #main
   position: absolute
@@ -212,8 +219,9 @@ a.button
   #manager_menu
     +management
     width: $control_height
+    transition: width 0.5s ease-out
     &.open
-      width: 30%
+      width: $left_width
     a
       display: block
       width: $control_height
