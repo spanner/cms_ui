@@ -11,7 +11,8 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     textarea: "textarea"
 
   bindings:
-    "#temp_css": "temp_css"
+    "#sass":""
+    "#temp_css": "pre_processed_style"
     "select.template":
       observe: "template"
       selectOptions:
@@ -22,12 +23,12 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     #   attributes: [
     #     observe: ["temp_css","preview_css", "css"]
     #     visible: (vals) -> vals[0] is vals[1] and vals[0] isnt vals[2]
-    "a.preview":
-      attributes: [
-        observe: ["temp_css", "preview_css"]
-        onGet: (vals) -> "unavailable" if vals[0] is vals[1]
-        name: "class"
-      ]
+    # "a.preview":
+    #   attributes: [
+    #     observe: ["temp_css", "preview_css"]
+    #     onGet: (vals) -> "unavailable" if vals[0] is vals[1]
+    #     name: "class"
+    #   ]
     "a.revert":
       attributes: [
         observe: ["css", "temp_css"]
@@ -38,16 +39,25 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
     @editor = CodeMirror.fromTextArea @ui.textarea[0],
-      mode: "css"
+      mode: "sass"
       theme: "spanner"
       showCursorWhenSelecting: true
       lineNumbers: true
+      tabSize: 2
     @editor.on "change", =>
       @ui.textarea.val @editor.getValue()
       @ui.textarea.trigger "change"
 
   previewCSS: =>
-    @model.previewCSS()
+    type ||= "sass"
+    $.ajax("#{_cms.apiUrl()}compile_css",
+      type: "PUT"
+      data:
+        type: type
+        pre_processed: @model.get("pre_processed_style")
+    ).done (data) =>
+      @model.set preview_css: data?.css
+      # @model.previewCSS()
 
   revertCSS: =>
     @model.revertCSS()
