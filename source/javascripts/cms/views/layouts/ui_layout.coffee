@@ -46,7 +46,6 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @_manager.show()
 
   toggleSiteEditor: =>
-    console.log @ui
     if @ui.toggle.hasClass("open")
       @ui.toggle.removeClass("open")
       @ui.site.removeClass("open")

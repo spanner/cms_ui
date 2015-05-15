@@ -6,9 +6,11 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     "click a.preview:not(.unavailable)": "previewCSS"
     "click a.revert:not(.unavailable)": "revertCSS"
     "paste .temp_css": "paste"
+    "show": "show"
 
   ui:
-    textarea: "textarea"
+    textarea: "textarea#temp_css"
+    header_area: "textarea#header"
 
   bindings:
     "#temp_css": "temp_css"
@@ -18,6 +20,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
         collection:
           default: "Default"
           spanner: "Spanner"
+
     "style": "preview_css"
     "link":
       attributes: [
@@ -25,12 +28,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
         observe: "template"
         onGet: (name) -> "/stylesheets/templates/#{name}.css" if name
       ]
-    # "a.preview":
-    #   attributes: [
-    #     observe: ["temp_css", "preview_css"]
-    #     onGet: (vals) -> "unavailable" if vals[0] is vals[1]
-    #     name: "class"
-    #   ]
+
     "a.revert":
       attributes: [
         observe: ["css", "temp_css"]
@@ -40,29 +38,32 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
-    @editor = CodeMirror.fromTextArea @ui.textarea[0],
-      mode: @model.get("css_preprocessor")
-      theme: "spanner"
-      showCursorWhenSelecting: true
-      lineNumbers: true
-      tabSize: 2
-      extraKeys:
-        "Cmd-Enter": @previewCSS
+    @show() # this happens too soon. editor won't populate while hidden
 
-    @model.on "change:css_preprocessor", (model, value) ->
-      @editor.setOption mode: value
+  show: =>
+    unless @editor
+      @editor = CodeMirror.fromTextArea @ui.textarea[0],
+        mode: @model.get("css_preprocessor")
+        theme: "spanner"
+        showCursorWhenSelecting: true
+        lineNumbers: true
+        tabSize: 2
+        extraKeys:
+          "Cmd-Enter": @previewCSS
 
-    @editor.on "change", =>
-      @ui.textarea.val @editor.getValue()
-      @ui.textarea.trigger "change"
-    console.log @model
+      @model.on "change:css_preprocessor", (model, value) ->
+        @editor.setOption mode: value
+
+      @editor.on "change", =>
+        @ui.textarea.val @editor.getValue()
+        @ui.textarea.trigger "change"
 
   previewCSS: =>
     @model.compileCSS()
 
   revertCSS: =>
     @model.revertCSS()
-    @editor.setValue @ui.textarea.val()
+    @editor?.setValue @ui.textarea.val()
 
   save: =>
     @model.save(css:@model.get("preview_css"))

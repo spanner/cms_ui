@@ -38,7 +38,7 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
   tagName: 'footer'
-  
+
   onRender: () =>
     @model.whenReady =>
       @$el.html @model.get('footer')

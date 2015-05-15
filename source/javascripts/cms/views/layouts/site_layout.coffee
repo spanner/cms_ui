@@ -30,3 +30,4 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     unless el.hasClass("current")
       @$el.find(".current").removeClass("current")
       @$el.find(".#{tab},##{tab}").addClass("current")
+      @$el.find("##{tab}").trigger("show")

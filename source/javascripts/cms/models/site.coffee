@@ -19,10 +19,9 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages.reset @pages.findWhere(nav: true)
 
   populateCSS: =>
-    @set
-      temp_css: @get("css")
-      preview_css: @get("css")
-    
+    @set temp_css: @get("css")
+    @compileCSS()
+
   revertCSS: =>
     @populateCSS()
 

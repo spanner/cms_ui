@@ -1,7 +1,8 @@
 @import lib/definitions
 @import lib/fonts
 @import lib/loader
-@import lib/codemirror
+@import lib/codemirror/codemirror
+@import lib/codemirror/spanner
 @import lib/medium
 
 $control_height: 36px
@@ -185,12 +186,6 @@ a.section_type
         +button($red)
       &.preview
         +button($rubine)
-  .temp_css
-    min-height: 256px
-    margin: 0
-    background: rgba(100,100,100,0.2)
-    border-left: 1px solid white
-    padding: 10px
 
 #main
   position: absolute
