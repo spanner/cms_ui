@@ -9,6 +9,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
 
   onRender: =>
     @stickit()
+    $.site = @model
     @model.whenReady =>
       @_css_view = new CMS.Views.CSS
         el: @$el.find("#style")

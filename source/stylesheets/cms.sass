@@ -318,16 +318,16 @@ a.section_type
         span.controls
           position: absolute
           top: 0
-          right: -52px
+          right: -54px
           width: 44px
           height: 34px
           padding-left: 2px
-          padding-right: 6px
+          padding-right: 8px
           background-color: $menu_hover_bg
           +border-right-radius(20px)
           display: none
           a
-            margin: 9px 0 0 0
+            margin: 10px 0 0 0
         &:hover
           background-color: $menu_hover_bg
           opacity: 1
@@ -364,50 +364,51 @@ a.section_type
           text-decoration: line-through
           opacity: 0.4
   #sites
-    position: relative
     margin: 0
     float: left
     .menu
-      min-width: 120px
+      min-width: 200px
     #pages
-      position: relative
       margin: 0
       float: left
-      .menu
-        min-width: 200px
       #sections
         .menu
-          min-width: 300px
           ul.menu_items
             li
               span.controls
-                right: -32px
+                right: -34px
                 width: 24px
-      #controls
-        position: relative
-        float: right
-        a.save_page, a.publish_page
-          display: inline-block
-          margin: 0
-          padding: 8px
-          box-sizing: border-box
-          height: $control_height
-          color: white
-        a.save_page
-          background-color: $green
-        a.publish_page
-          background-color: $warm
       #sections
         position: relative
         margin: 0
         float: left
 
   #rte
-    position: absolute
+    position: relative
+    float: left
     top: 3px
-    right: 100px
+    margin-left: 100px
     min-width: 400px
 
+  #controls
+    position: absolute
+    right: 0
+    top: 0
+    #site_controls, #page_controls
+      display: inline-block
+      vertical-align: top
+    a.save_page, a.publish_page, a.save_site, a.publish_site
+      display: inline-block
+      margin: 0
+      padding: 8px
+      box-sizing: border-box
+      height: $control_height
+      color: white
+    a.save_page, a.save_site
+      background-color: $green
+    a.publish_page, a.publish_site
+      background-color: $warm
+  
 
 #editor
   z-index: 50

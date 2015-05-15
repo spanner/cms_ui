@@ -18,3 +18,4 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
         collection: @model.sites
       @_sites_layout.render()
       @_sites_layout.show(site_slug, page_path)
+

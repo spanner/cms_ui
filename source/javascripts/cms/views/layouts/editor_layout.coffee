@@ -2,9 +2,10 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
 
   onRender: =>
+    @_toolbar?.destroy()
     @model.whenReady =>
       # TODO: site-meta view drops in here?
-      
+
       @_header_view = new CMS.Views.Header
         model: @model.getSite()
         el: @$el.find("header")
@@ -25,4 +26,4 @@ class CMS.Views.EditorLayout extends Backbone.Marionette.LayoutView
         elementsContainer: $("#rte").get(0)
         fixedToolbar: true
         updateOnEmptySelection: true
-      
+

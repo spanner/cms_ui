@@ -20,8 +20,8 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       visible: "thisAndNotThat"
       visibleFn: "visibleAsInlineBlock"
     "a.save_page":
-      observe: ["id", "changed"]
-      visible: "thisAndThat"
+      observe: ["changed", "id"]
+      visible: "thisOrNotThat"
       visibleFn: "visibleAsInlineBlock"
     "span.slug":
       observe: "slug"
@@ -126,7 +126,6 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   savePage: (e) =>
     e?.preventDefault()
     @model.save()
-    _cms.vent.trigger('reset')
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
     not changed and (not published_at or updated_at > published_at)
@@ -146,7 +145,6 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   show: (page_path="") =>
     if page = @collection.findWhere(path: "/#{page_path}")
       @model = page
-      $.page = page
       @stickit()
 
       # well this had better get nicer
@@ -154,15 +152,15 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
       # easy to eg. preview / edit / publish
       _cms._ui.editPage(page)
       @model.select()
+      @model.load() unless @model.isReady()
 
       @model.whenReady =>
+        @_page_controls = new CMS.Views.PageControls
+          el: $("#page_controls")
+          model: @model
+        @_page_controls.render()
         @_sections_layout = new CMS.Views.SectionsLayout
           el: @$el.find("#sections")
           collection: @model.sections
         @_sections_layout.render()
-        @_page_controls = new CMS.Views.PageControls
-          el: @$el.find("#controls")
-          model: @model
-        @_page_controls.render()
-      @model.load() unless @model.isReady()
 

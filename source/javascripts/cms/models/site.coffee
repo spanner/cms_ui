@@ -2,32 +2,29 @@ class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
   defaults:
     template: 'default'
-
-  savedAttributes: ["css","title"]
+  savedAttributes: ["css", "title", "header", "footer"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
+    @on "change:css", @populateCSS
     @on "change:nav", @populateNavigation
-    @set
-      temp_css: @get("css")
-      preview_css: @get("css")
-    @on "sync", =>
-      @set
-        preview_css: @get("css")
-        temp_css: @get("css")
 
   populate: (data) =>
     @pages.reset(data.pages)
     @populateNavigation()
+    true
   
   populateNavigation: () =>
     @nav_pages.reset @pages.findWhere(nav: true)
 
-  revertCSS: =>
+  populateCSS: =>
     @set
       temp_css: @get("css")
       preview_css: @get("css")
+    
+  revertCSS: =>
+    @populateCSS()
 
   previewCSS: =>
     @set preview_css: @get("temp_css")
