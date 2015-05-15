@@ -16,12 +16,12 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       onGet: "showDescent"
       updateMethod: "html"
     "a.add_page":
-      observe: "id"
-      visible: true
+      observe: ["id", "changed"]
+      visible: "thisAndNotThat"
       visibleFn: "visibleAsInlineBlock"
     "a.save_page":
-      observe: "id"
-      visible: "untrue"
+      observe: ["id", "changed"]
+      visible: "thisAndThat"
       visibleFn: "visibleAsInlineBlock"
     "span.slug":
       observe: "slug"
@@ -43,6 +43,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       classes:
         selected: "selected"
         destroyed: "deleted_at"
+        changed: "changed"
       attributes: [
         observe: "id"
         name: "class"
@@ -128,7 +129,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     _cms.vent.trigger('reset')
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
-    not published_at or (updated_at > published_at) and not changed
+    not changed and (not published_at or updated_at > published_at)
     
   publishPage: (e) =>
     e?.preventDefault()

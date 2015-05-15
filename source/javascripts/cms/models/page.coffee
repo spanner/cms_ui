@@ -47,7 +47,6 @@ class CMS.Models.Page extends CMS.Model
       @set "changed", true
 
   toJSON: () =>
-    console.log "Page#toJSON"
     json = super
     json.sections = @sections.toJSON()
     # json.rendered_main = @renderMain()

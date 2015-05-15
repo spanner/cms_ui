@@ -90,6 +90,15 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
     else
       $el.hide()
 
+  #visibility controls
+  
+  thisAndThat: ([value, other_value]=[]) =>
+    console.log "thisAndThat", value, other_value, value and other_value
+    value and other_value
+
+  thisAndNotThat: ([value, other_value]=[]) =>
+    value and not other_value
+
   #onGets
 
   untrue: (val) =>

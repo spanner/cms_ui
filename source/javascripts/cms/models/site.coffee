@@ -39,7 +39,6 @@ class CMS.Models.Site extends CMS.Model
       #
 
   toJSON: () =>
-    console.log "Site#toJSON"
     json = super
     json.rendered_header = @renderHeader()
     json.rendered_footer = @renderFooter()

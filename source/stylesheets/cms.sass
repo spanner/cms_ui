@@ -336,6 +336,9 @@ a.section_type
           .controls
             display: block
             background-color: $menu_hover_bg
+        &.changed
+          a.title
+            color: $warm
         &.new
           background-color: $warm
           color: $menu_hover_text
@@ -375,6 +378,11 @@ a.section_type
       #sections
         .menu
           min-width: 300px
+          ul.menu_items
+            li
+              span.controls
+                right: -32px
+                width: 24px
       #controls
         position: relative
         float: right
