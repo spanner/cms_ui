@@ -3,8 +3,10 @@
   %select.template#template
 
 %span
-  Custom CSS
+  SASS
   %a.button.preview preview
   %a.button.revert revert
 
 %textarea#temp_css
+%style
+%link{type: "text/css", rel: "stylesheet"}
