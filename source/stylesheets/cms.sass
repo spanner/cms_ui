@@ -275,7 +275,7 @@ a.section_type
     top: $control_height
     background-color: $menu_up_bg
     width: auto
-    +box-shadow(0 4px 5px rgba(0,0,0,0.4))
+    +box-shadow(1px 4px 5px rgba(0,0,0,0.4))
     ul.menu_items
       list-style: none
       padding: 0
@@ -285,17 +285,14 @@ a.section_type
         padding: 6px 6px 6px 12px
         opacity: 0.8
         clear: left
-        &:hover
-          background-color: $menu_hover_bg
-          opacity: 1
-          a, span.a
-            color: $menu_hover_text
-          .controls
-            display: inline-block
         a
           color: $menu_up_text
         a.title
-          margin-right: 40px
+          margin-right: 10px
+        a.nav
+          color: $verypale
+          &.selected
+            color: $menu_selected_bg
         span[contenteditable]
           display: inline-block
           vertical-align: middle
@@ -308,6 +305,7 @@ a.section_type
           border-radius: 5px
         span.slug
           display: none
+          padding: 0
         span.d, span.a
           display: inline-block
           vertical-align: middle
@@ -319,27 +317,46 @@ a.section_type
             min-width: 0
         span.controls
           position: absolute
-          top: 7px
-          right: 6px
+          top: 0
+          right: -52px
+          width: 44px
+          height: 34px
+          padding-left: 2px
+          padding-right: 6px
+          background-color: $menu_hover_bg
+          +border-right-radius(20px)
           display: none
           a
-            margin: 0
+            margin: 9px 0 0 0
+        &:hover
+          background-color: $menu_hover_bg
+          opacity: 1
+          a, span.a
+            color: $menu_hover_text
+          .controls
+            display: block
+            background-color: $menu_hover_bg
         &.new
           background-color: $warm
           color: $menu_hover_text
           a.title
             display: none
-          span.controls, span.slug
+          span.controls
+            display: block
+            background-color: $menu_new_bg
+          span.slug
             display: inline-block
         &.selected
-          background-color: $green
+          background-color: $menu_selected_bg
           color: white
           a, span.a
             color: white
           &:hover
-            background-color: darken($green, 10)
+            background-color: $menu_selected_bg
             a, span.a
               color: white
+          span.controls
+            background-color: $menu_selected_bg
         &.destroyed
           text-decoration: line-through
           opacity: 0.4

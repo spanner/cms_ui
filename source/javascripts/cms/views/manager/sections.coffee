@@ -30,7 +30,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     @model?.destroyReversibly()
 
   select: (e) =>
-    e.preventDefault() if e
+    e?.preventDefault()
     @model.select()
 
   sectionUrl: (id) =>

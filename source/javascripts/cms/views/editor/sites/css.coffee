@@ -49,7 +49,7 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
       @ui.textarea.trigger "change"
 
   previewCSS: =>
-    type ||= "sass"
+    type = "sass"
     $.ajax("#{_cms.apiUrl()}compile_css",
       type: "PUT"
       data:

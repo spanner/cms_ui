@@ -1,5 +1,6 @@
 %span.descent
 %a.title
+%a.nav ⚑
 %span.slug{contenteditable: "true"}
 %span.controls>
   %a.save.save_page √

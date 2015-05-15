@@ -7,6 +7,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "click a.delete_page": "deletePage"
     "click a.add_page": "addPage"
     "click a.save_page": "savePage"
+    "click a.nav": "toggleNav"
     "keydown span.slug": "catchControlKeys"
 
   bindings:
@@ -35,6 +36,9 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         name: "title"
         observe: "title"
       ]
+    "a.nav":
+      classes:
+        selected: "nav"
     ":el":
       classes:
         selected: "selected"
@@ -68,19 +72,23 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         trail += '<span class="d"></span>' for [1..depth]
         trail += '<span class="a">↳</span>'
       trail
-    
+
+  toggleNav: (e) =>
+    e?.preventDefault()
+    @model.set "nav", not @model.get("nav")
+
   addPage: (e) =>
-    e.preventDefault() if e
+    e?.preventDefault()
     $.newpage = @model.collection.add
       dir: @model.get('path')
     @model.collection.sort()
 
   savePage: (e) =>
-    e.preventDefault() if e
+    e?.preventDefault()
     @model.save()
   
   deletePage: (e) =>
-    e.preventDefault() if e
+    e?.preventDefault()
     if @model.isNew()
       @model.destroy()
     else
@@ -91,6 +99,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     switch e.keyCode
       when 13 then @savePage(e)
       when 27 then @deletePage(e)
+
 
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
