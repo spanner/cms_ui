@@ -8,3 +8,5 @@
   %a.button.revert revert
 
 %textarea#temp_css
+%style
+%link{type: "text/css", rel: "stylesheet"}

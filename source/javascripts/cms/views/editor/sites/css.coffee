@@ -19,10 +19,13 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
         collection:
           default: "Default"
           spanner: "Spanner"
-    # "a.save":
-    #   attributes: [
-    #     observe: ["temp_css","preview_css", "css"]
-    #     visible: (vals) -> vals[0] is vals[1] and vals[0] isnt vals[2]
+    "style": "preview_css"
+    "link":
+      attributes: [
+        name: "href"
+        observe: "template"
+        onGet: (name) -> "/stylesheets/templates/#{name}.css" if name
+      ]
     # "a.preview":
     #   attributes: [
     #     observe: ["temp_css", "preview_css"]
