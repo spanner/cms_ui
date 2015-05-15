@@ -3,7 +3,7 @@
   %select.template#template
 
 %span
-  Custom CSS
+  SASS
   %a.button.preview preview
   %a.button.revert revert
 

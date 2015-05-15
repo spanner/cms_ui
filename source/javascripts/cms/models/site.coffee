@@ -2,7 +2,7 @@ class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
   defaults:
     template: 'default'
-  savedAttributes: ["css", "title", "header", "footer"]
+  savedAttributes: ["css", "title", "header", "footer", "css_preprocessor"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @
@@ -30,10 +30,16 @@ class CMS.Models.Site extends CMS.Model
     @set preview_css: @get("temp_css")
 
   compileCSS: =>
-    if @get("css_preprocessor") is "sass"
-      
+    if @get("css_preprocessor") is "css"
+      @set preview_css: @get("temp_css")
     else
-      #
+      $.ajax("#{_cms.apiUrl()}compile_css",
+        type: "PUT"
+        data:
+          css: @get("temp_css")
+          css_preprocessor: @get("css_preprocessor")
+      ).done (data) =>
+        @set preview_css: data?.css
 
   toJSON: () =>
     json = super
