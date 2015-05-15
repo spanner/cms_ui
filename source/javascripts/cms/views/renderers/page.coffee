@@ -47,7 +47,6 @@ class CMS.Views.MainRenderer extends Backbone.Marionette.CompositeView
 
   onRender: () =>
     @stickit()
-    #todo: remove empty elements?
 
 
 class CMS.Views.HeadRenderer extends Backbone.Marionette.ItemView

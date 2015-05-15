@@ -13,6 +13,8 @@
 # 6 save
 #
 class CMS.Model extends Backbone.Model
+  @mixin 'logging'
+  
   autoload: false
   savedAttributes: []
 
@@ -40,12 +42,10 @@ class CMS.Model extends Backbone.Model
     # @things = new CMS.Collections.Things
 
   load: =>
-    @log "load"
     @fetch(error: @notLoaded).done(@loaded)
     @_loaded.promise()
   
   loaded: (data) =>
-    @log "loaded"
     @_loaded.resolve(data)
 
   notLoaded: () =>
@@ -58,7 +58,14 @@ class CMS.Model extends Backbone.Model
 
   populate: (data) =>
     # @things.reset(data.things)
+    @populateDates(data)
     true
+
+  populateDates: (data) =>
+    for col in ["updated_at", "published_at", "deleted_at"]
+      if string = data[col]
+        @set col, new Date(string)
+        delete data[col]
 
   reload: ->
     @_loaded = $.Deferred()
@@ -71,10 +78,6 @@ class CMS.Model extends Backbone.Model
     else
       json = super
     json
-
-  log: () =>
-    if _cms.logging()
-      console.log "#{@constructor.name} model", arguments...
 
   isDestroyed: () =>
     @get('deleted_at')

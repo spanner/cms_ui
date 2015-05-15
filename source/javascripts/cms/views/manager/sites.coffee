@@ -63,7 +63,6 @@ class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
       @model.load() unless @model.isReady()
 
       @model.whenReady =>
-        console.log "now we ready", @model.attributes
         # @_site_controls = new CMS.Views.SiteControls
         #   model: @model
         #   el: $("#site_controls")

@@ -16,7 +16,9 @@ class CMS.Models.Page extends CMS.Model
   # when a page is created it is given a stem to which a slug must be added to get the full path.
 
   populate: (data) =>
+    console.log "page.populate"
     @sections.reset(data.sections)
+    @populateDates(data)
     @set "changed", false
     true
 
@@ -46,14 +48,28 @@ class CMS.Models.Page extends CMS.Model
   changedIfAnySectionChanged: (e) =>
     if @sections.findWhere(changed: true)
       @set "changed", true
-
+  
   toJSON: () =>
     json = super
     json.sections = @sections.toJSON()
-    # json.rendered_main = @renderMain()
-    # json.rendered_head = @renderHead()
     json
 
+  # Publish is a specialized save.
+  #
+  publish: () =>
+    $.ajax
+      url: @url() + "/publish"
+      data:
+        rendered_head: @renderHead()
+        rendered_main: @renderMain()
+      method: "PUT"
+      success: @published
+      error: @failedToPublish
+  
+  published: (response) =>
+    console.log "published", response
+    @set(response)
+    
   renderHead: () =>
     renderer = new CMS.Views.HeadRenderer
       model: @
@@ -63,6 +79,7 @@ class CMS.Models.Page extends CMS.Model
   renderMain: () =>
     renderer = new CMS.Views.MainRenderer
       model: @
+      collection: @sections
     renderer.render()
     renderer.$el.get(0).outerHTML
 

@@ -76,7 +76,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   toggleNav: (e) =>
     e?.preventDefault()
-    @model.set "nav", not @model.get("nav")
+    @model.set "nav", not @model.get("nav"), stickitChange: true
 
   addPage: (e) =>
     e?.preventDefault()
@@ -132,10 +132,8 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     
   publishPage: (e) =>
     e?.preventDefault()
-    published = new CMS.Views.PublishedPage
-      model: @model
-    published.render()
-    debugger
+    console.log "Pubslih!"
+    @model.publish()
 
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
@@ -145,6 +143,7 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
   show: (page_path="") =>
     if page = @collection.findWhere(path: "/#{page_path}")
       @model = page
+      $.page = page
       @stickit()
 
       # well this had better get nicer
