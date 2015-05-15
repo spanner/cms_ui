@@ -361,14 +361,17 @@ a.section_type
       #controls
         position: relative
         float: right
-        a.save_page
+        a.save_page, a.publish_page
           display: inline-block
-          margin: 0 0 0 8px
+          margin: 0
           padding: 8px
           box-sizing: border-box
           height: $control_height
-          background-color: $green
           color: white
+        a.save_page
+          background-color: $green
+        a.publish_page
+          background-color: $warm
       #sections
         position: relative
         margin: 0

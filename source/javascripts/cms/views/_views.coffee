@@ -94,5 +94,7 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
 
   untrue: (val) =>
     not val
-    
+  
+  thisOrThat: ([value, other_value]=[]) =>
+    value or other_value
 

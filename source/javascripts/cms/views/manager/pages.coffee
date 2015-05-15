@@ -103,16 +103,30 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   
   events:
     "click a.save_page": "savePage"
+    "click a.publish_page": "publishPage"
 
   bindings: 
     "a.save_page":
       observe: "changed"
       visible: true
+    "a.publish_page":
+      observe: ["changed", "published_at", "updated_at"]
+      visible: "ifPublishable"
 
   savePage: (e) =>
-    e.preventDefault() if e
+    e?.preventDefault()
     @model.save()
     _cms.vent.trigger('reset')
+
+  ifPublishable: ([changed, published_at, updated_at]=[]) =>
+    not published_at or (updated_at > published_at) and not changed
+    
+  publishPage: (e) =>
+    e?.preventDefault()
+    published = new CMS.Views.PublishedPage
+      model: @model
+    published.render()
+    debugger
 
 
 class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
@@ -141,3 +155,4 @@ class CMS.Views.PagesLayout extends CMS.Views.MenuLayout
           model: @model
         @_page_controls.render()
       @model.load() unless @model.isReady()
+

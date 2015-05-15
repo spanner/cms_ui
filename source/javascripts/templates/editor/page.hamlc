@@ -1,6 +1,4 @@
-#meta{style: "display:none;"}
-%header
-  %h1{contenteditable: "true"}
-  %nav
 %main
-%footer
+  %h1{contenteditable: "true"}
+  #standfirst{contenteditable: "true"}
+  #sections
