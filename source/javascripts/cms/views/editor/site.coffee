@@ -27,7 +27,6 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
   
   onRender: () =>
     @model.whenReady =>
-      console.log "header.ready", @model.attributes
       @$el.html @model.get('header')
       @_nav = new CMS.Views.Navigation
         collection: @model.nav_pages
