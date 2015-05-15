@@ -92,8 +92,10 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
 
   #visibility controls
   
+  thisOrNotThat: ([value, other_value]=[]) =>
+    value or not other_value
+
   thisAndThat: ([value, other_value]=[]) =>
-    console.log "thisAndThat", value, other_value, value and other_value
     value and other_value
 
   thisAndNotThat: ([value, other_value]=[]) =>

@@ -43,11 +43,13 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
   tagName: 'header'
   
   onRender: () =>
-    @$el.html @model.get('header')
-    @_nav = new CMS.Views.Navigation
-      collection: @model.nav_pages
-      el: @$el.find('nav')
-    @_nav.render()
+    @model.whenReady =>
+      console.log "header.ready", @model.attributes
+      @$el.html @model.get('header')
+      @_nav = new CMS.Views.Navigation
+        collection: @model.nav_pages
+        el: @$el.find('nav')
+      @_nav.render()
 
 
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
@@ -55,9 +57,10 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
   tagName: 'footer'
   
   onRender: () =>
-    @$el.html @model.get('footer')
-    @_nav = new CMS.Views.Navigation
-      collection: @model.nav_pages
-      el: @$el.find('nav')
-    @_nav.render()
+    @model.whenReady =>
+      @$el.html @model.get('footer')
+      @_nav = new CMS.Views.Navigation
+        collection: @model.nav_pages
+        el: @$el.find('nav')
+      @_nav.render()
 

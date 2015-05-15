@@ -18,7 +18,8 @@ class CMS.Models.Page extends CMS.Model
   populate: (data) =>
     @sections.reset(data.sections)
     @set "changed", false
-    
+    true
+
   select: =>
     unless @get("selected")
       @collection.findWhere(selected:true)?.set selected:false

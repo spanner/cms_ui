@@ -35,11 +35,11 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
   sectionUrl: (id) =>
     "#section_#{id}"
-    
+
   sectionName: (title) =>
     label = title || "New section"
     if label.length > 38
-      label = label.substr(0,36) + "..."
+      label = label.substr(0, 36) + "..."
     label
 
 
@@ -61,8 +61,7 @@ class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
 
   onRender: =>
     super
-    @model?.whenReady () =>
-      @stickit()
+    # @stickit()
 
   addSection: =>
     section = @collection.add
