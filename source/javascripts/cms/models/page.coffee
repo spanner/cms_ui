@@ -1,8 +1,8 @@
 class CMS.Models.Page extends CMS.Model
   savedAttributes: ['title', 'introduction', 'nav', 'nav_heading', 'path', 'site_id']
 
-  defaults:
-    nav: true
+  # defaults:
+  #   nav: true
 
   build: =>
     if @get('path')
@@ -11,6 +11,7 @@ class CMS.Models.Page extends CMS.Model
       @joinPath()
     @on "change:slug", @joinPath
     @on "change:dir", @joinPath
+    @on "change:nav", @updateNav
     @on "sync", @splitPath
     @sections = new CMS.Collections.Sections @get('sections'), page: @
     @sections.on "add reset remove", @markAsChanged
@@ -29,7 +30,7 @@ class CMS.Models.Page extends CMS.Model
       parts = path.split(/\/+/g)
       @set "slug", parts.pop()
       @set "dir", parts.join("/")
-    
+
   joinPath: (model, value, options) =>
     @set 'path', [@get('dir'), @get('slug')].join('/'), options
 
@@ -38,6 +39,9 @@ class CMS.Models.Page extends CMS.Model
     
   childPages: =>
     @collection.findWhere(dir: @get('path'))
+
+  updateNav: =>
+    @getSite()?.populateNavigation()
 
   getSite: =>
     @collection.site
