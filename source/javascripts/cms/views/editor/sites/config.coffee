@@ -12,7 +12,9 @@ class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
+    _.delay @show, 2
 
+  show: =>
     unless @header_editor
       @header_editor = CodeMirror.fromTextArea @ui.header_area[0],
         mode: "markdown"

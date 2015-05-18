@@ -31,7 +31,9 @@ class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
-    console.log "CSS.show"
+    _.delay @show, 2
+
+  show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
         mode: @model.get("css_preprocessor")
