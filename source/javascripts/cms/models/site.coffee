@@ -40,11 +40,21 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         @set preview_css: data?.css
 
-  toJSON: () =>
-    json = super
-    json.rendered_header = @renderHeader()
-    json.rendered_footer = @renderFooter()
-    json
+  # Publish is a specialized save.
+  #
+  publish: () =>
+    $.ajax
+      url: @url() + "/publish"
+      data:
+        rendered_header: @renderHeader()
+        rendered_footer: @renderFooter()
+      method: "PUT"
+      success: @published
+      error: @failedToPublish
+
+  published: (response) =>
+    console.log "published site", response
+    @set(response)
 
   renderHeader: () =>
     renderer = new CMS.Views.HeaderRenderer
