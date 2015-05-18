@@ -16,16 +16,10 @@ class CMS.Models.Page extends CMS.Model
   # when a page is created it is given a stem to which a slug must be added to get the full path.
 
   populate: (data) =>
-    console.log "page.populate"
     @sections.reset(data.sections)
     @populateDates(data)
     @set "changed", false
     true
-
-  select: =>
-    unless @get("selected")
-      @collection.findWhere(selected:true)?.set selected:false
-      @set selected: true
 
   splitPath: =>
     if path = @get('path')

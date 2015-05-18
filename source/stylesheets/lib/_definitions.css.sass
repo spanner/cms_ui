@@ -42,20 +42,24 @@ $finishedbg: #e2efdb
 $translucent: rgba(255,255,255,0.6)
 $shadow: rgba(0,0,0,0.6)
 
-$warmish: rgba(255,69,57,0.8)
+$warmish: rgba(255,69,57,0.6)
 $greenish: rgba(116,184,122,0.8)
 $greyish: rgba(189,189,189,0.8)
 
-$menu_bg: white
+$menu_bg: $coolgrey00
 $menu_text: $coolgrey9
 $menu_up_bg: white
 $menu_up_text: $coolgrey11
-$menu_hover_bg: $greyish
-$menu_hover_text: white
+$menu_hover_bg: $coolgrey00
+$menu_hover_text: $warm
 $menu_new_bg: $warmish
 $menu_new_text: white
 $menu_selected_bg: $greenish
 $menu_selected_text: white
+
+$shelf_bg: #525e69
+$shelf_head_bg: #3c444b
+$shelf_text: white
 
 =hover
   &:hover
@@ -182,6 +186,12 @@ $menu_selected_text: white
       position: 0 0
       image: image-url('spinner.gif')
 
+=management
+  box-sizing: border-box
+  display: inline-block
+  float: left
+  vertical-align: top
+  height: $control_height
 
 
 

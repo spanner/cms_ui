@@ -55,7 +55,6 @@ class CMS.Views.CSS extends Backbone.Marionette.ItemView
     @editor.on "change", =>
       @ui.textarea.val @editor.getValue()
       @ui.textarea.trigger "change"
-    console.log @model
 
   previewCSS: =>
     @model.compileCSS()

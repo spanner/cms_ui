@@ -1,11 +1,12 @@
 / %h2
 /   %span.title
 
-%nav
-  %a.style.current Styles
-  %a.script Scripts
-  %a.assets Assets
-  %a.config Config
+#site_tabs
+  %a.tab.current{data: {tab: "style"}} Styles
+  %a.tab{data: {tab: "script"}} Scripts
+  %a.tab{data: {tab: "assets"}} Assets
+  %a.tab{data: {tab: "config"}} Config
+  #site_controls
 
 %div#style.current
 %div#script

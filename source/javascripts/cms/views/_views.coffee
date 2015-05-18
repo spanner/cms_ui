@@ -14,28 +14,40 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   initialize: ->
     super
     _cms.vent.on "reset", @close
+    @collection.on "change:selected", @setModel
 
   onRender: =>
+    console.log "menu render", @
     if menu_view_class = @getOption('menuView')
       @_menu_view = new menu_view_class
         el: @$el.find(".menu")
         collection: @collection
       @_menu_view.render()
+    @setModel()
 
   toggleMenu: =>
-    if @_menu_view.showing()
+    if @showing()
       @close()
     else
       @open()
 
+  showing: =>
+    @_menu_view.showing()
+
   open: =>
-    _cms.vent.trigger "reset" #nb. closes us too.
-    @$el.find('>.header').addClass('open')
-    @_menu_view.show()
+    if @_menu_view?
+      _cms.vent.trigger "reset" #nb. closes us too.
+      @$el.find('>.header').addClass('open')
+      @_menu_view.show()
 
   close: =>
-    @$el.find('>.header').removeClass('open')
-    @_menu_view.hide()
+    if @_menu_view?
+      @$el.find('>.header').removeClass('open')
+      @_menu_view.hide()
+    
+  setModel: =>
+    @model = @collection.findWhere(selected: true)
+    @stickit() if @model
 
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView

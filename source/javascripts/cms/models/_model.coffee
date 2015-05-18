@@ -54,7 +54,7 @@ class CMS.Model extends Backbone.Model
   parse: (data) =>
     # you can modify `data` in populate,
     # or return false to prevent the usual parse from being called at all.
-    super if @populate(data)
+    super if data and @populate(data)
 
   populate: (data) =>
     # @things.reset(data.things)
@@ -66,6 +66,11 @@ class CMS.Model extends Backbone.Model
       if string = data[col]
         @set col, new Date(string)
         delete data[col]
+
+  select: =>
+    unless @get("selected")
+      @collection?.findWhere(selected:true)?.set selected:false
+      @set selected: true
 
   reload: ->
     @_loaded = $.Deferred()

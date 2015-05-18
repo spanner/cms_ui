@@ -1,7 +1,5 @@
-#manager_menu
-  %a
-#sites
+#site_manager
+#pages_manager
+#sections_manager
 #rte
-#controls
-  #site_controls
-  #page_controls
+#page_controls

@@ -1,5 +1,8 @@
-#site_editor
+#shelf
+  #configuration
+
 #main
   #manager
   #editor
-#session
+
+#session_barrier

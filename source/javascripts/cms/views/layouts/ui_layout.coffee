@@ -1,55 +1,64 @@
 class CMS.Views.UILayout extends CMS.Views.LayoutView
   template: "layouts/ui"
 
-  events:
-    "click #manager_menu a": "toggleSiteEditor"
+  regions:
+    configuration: '#configuration'
+    manager: '#manager'
+    editor: '#editor'
+    session: '#session_barrier'
+    user: '#user_settings'
 
-  ui:
-    site: "#site_editor"
+  #todo: user menu inc logout and preferences
 
   onRender: =>
+    # barrier comes up by default and shows a waiting state. It only remains
+    # visible if there is no session yet, or it we route to a management view.
     @_barrier = new CMS.Views.SessionLayout
-      el: @$el.find('#session')
       model: @model
+      el: @$el.find('#session_barrier')
     @_barrier.render()
-
-    @_manager = new CMS.Views.ManagerLayout
-      el: @$el.find('#manager')
-      model: @model.getUser()
-    @_manager.render()
-
-    @ui.toggle = @_manager.$el.find("#manager_menu")
-
-  siteView: (site_slug, page_path, section_id) =>
-    @_manager.show(site_slug, page_path)
-
-  # Callback to load the eventually selected page into the editor.
-  #
-  editPage: (page) =>
-    @_editor = new CMS.Views.EditorLayout
-      el: @$el.find("#editor")
-      model: page
-    @_editor.render()
-
-  # Callback to load the eventually selected site into the stylesheet editor.
-  #
-  editSite: (site) =>
-    @_site_editor_layout = new CMS.Views.SiteEditorLayout
-      el: @$el.find("#site_editor")
-      model: site
-    @_site_editor_layout.render()
 
   sessionView: (action) =>
     @_barrier.show(action)
   
   homeView: () =>
-    @_manager.show()
+    @siteView()
 
-  toggleSiteEditor: =>
-    console.log @ui
-    if @ui.toggle.hasClass("open")
-      @ui.toggle.removeClass("open")
-      @ui.site.removeClass("open")
-    else
-      @ui.toggle.addClass("open")
-      @ui.site.addClass("open")
+  siteView: (site_slug, page_path) =>
+    console.log "siteView", site_slug, page_path
+    @model.whenReady () =>
+      user = @model.getUser()
+      @setUser(user)
+      user.load()
+      user.whenReady () =>
+        if site = user.sites.findWhere(slug: site_slug)
+          @setSite(site)
+          site.load()
+          site.whenReady () =>
+            if page = site.pages.findWhere(path: "/#{page_path}")
+              @setPage(page)
+              page.load()
+
+  setUser: (user) =>
+    # we have user object with sites collection
+    #TODO init user/session menu
+    console.log "setUser", user
+    @_manager = new CMS.Views.ManagerLayout
+      model: user
+    @getRegion('manager').show @_manager
+
+  setSite: (site) =>
+    # we have site object with pages collection
+    console.log "setSite", site
+    @_manager.setSite(site)
+    @_configurator = new CMS.Views.SiteEditorLayout
+      model: site
+    @getRegion('configuration').show @_configurator
+
+  setPage: (page) =>
+    # we have page object with sections collection
+    console.log "setPage", page
+    @_manager.setPage(page)
+    @_editor = new CMS.Views.PageEditorLayout
+      model: page
+    @getRegion('editor').show @_editor

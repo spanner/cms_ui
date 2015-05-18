@@ -1,76 +1,31 @@
-class CMS.Views.ListedSite extends CMS.Views.ItemView
-  template: "sites/listed"
-  tagName: "li"
-  className: "item"
-
+class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
+  template: "manager/site"
+  
   bindings:
-    "a.title":
+    '.header a.title':
       observe: "title"
+      updateMethod: "html"
       attributes: [
-        observe: "slug"
-        name: "href"
-        onGet: "siteUrl"
+        name: "class"
+        observe: ["changed", "published_at", "updated_at"]
+        onGet: "siteStatus"
       ]
 
-  siteUrl: (slug) =>
-    "/sites/#{slug}"
+  showing: =>
+    showing = $('#ui').hasClass('shelved')
+    showing
 
+  open: =>
+    $('#ui').addClass('shelved')
 
-class CMS.Views.SitesMenu extends CMS.Views.MenuView
-  template: "sites/menu"
-  childView: CMS.Views.ListedSite
+  close: =>
+    $('#ui').removeClass('shelved')
 
-
-class CMS.Views.SiteControls extends CMS.Views.ItemView
-  template: "manager/site_controls"
-  
-  events:
-    "click a.save_site": "saveSite"
-    "click a.publish_site": "publishSite"
-
-  bindings: 
-    "a.save_site":
-      observe: "changed"
-      visible: true
-    "a.publish_site":
-      observe: ["changed", "published_at", "updated_at"]
-      visible: "ifPublishable"
-
-  saveSite: (e) =>
-    e?.preventDefault()
-    @model.save()
-
-  ifPublishable: ([changed, published_at, updated_at]=[]) =>
-    not changed and (not published_at or updated_at > published_at)
-    
-  publishSite: (e) =>
-    e?.preventDefault()
-    console.log "pubslih!"
-
-
-class CMS.Views.SitesLayout extends CMS.Views.MenuLayout
-  template: "manager/sites"
-  menuView: CMS.Views.SitesMenu
-  bindings: 
-    "a.title": "title"
-
-  show: (site_slug, page_path) =>
-    if site = @collection.findWhere(slug: site_slug)
-      @model = site
-      @stickit()
-      _cms._ui.editSite(site)
+  siteStatus: ([changed, published_at, updated_at]=[]) =>
+    if changed
+      "site title save_me"
+    else if (updated_at > published_at)
+      "site title "
+    else
+      "site title publish_me"
       
-      @model.load() unless @model.isReady()
-
-      @model.whenReady =>
-        # @_site_controls = new CMS.Views.SiteControls
-        #   model: @model
-        #   el: $("#site_controls")
-        # @_site_controls.render()
-        @_pages_layout = new CMS.Views.PagesLayout
-          el: @$el.find("#pages")
-          collection: @model.pages
-        @_pages_layout.render()
-        @_pages_layout.show(page_path)
-
-

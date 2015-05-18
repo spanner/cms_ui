@@ -5,7 +5,7 @@
 @import lib/medium
 
 $control_height: 36px
-$left_width: 30%
+$left_width: 480px
 
 a
   cursor: pointer
@@ -14,17 +14,13 @@ a
 body
   +book
   color: $dark
-  margin: 0
   line-height: 1.6
 
 body, html
+  margin: 0
+  padding: 0
+  width: 100%
   height: 100%
-
-#editor [contenteditable]
-  border: 6px solid white
-  background-color: #eaeaed
-  outline: none
-  border-radius: 5px
 
 h1, h2, h3
   font-weight: normal
@@ -120,338 +116,332 @@ a.section_type
       background-position: -64px -192px
 
 
-#cms
-  position: absolute
+#ui
+  position: relative
   top: 0
   right: 0
   bottom: 0
   left: 0
-
-
-#ui
-  position: absolute
-  height: 100%
-  width: 100%
-
-
+  border-top: 1px solid $menu_bg
+  transition: left 0.5s ease
+  &.shelved
+    left: $left_width
+    #main
+      #manager
+        left: $left_width
+    #shelf
+      #site_tabs
+        left: 0
+    
 #session
   height: 100%
   width: 100%
 
-
-#site_editor
-  position: fixed
-  width: 0
+#shelf
+  position: absolute
+  top: 0
+  right: auto
   bottom: 0
-  top: $control_height
-  background: $dark
-  color: $mid
+  height: 100%
+  left: -$left_width
+  width: $left_width
+  background-color: $shelf_bg
+  color: $shelf_text
+  margin-top: 0
   overflow: hidden
-  transition: width 0.5s ease-out
-  & + div
-    transition: width 0.5s ease-out
-  &.open
+  z-index: 10
+  +box-shadow(inset -4px 0 8px rgba(0,0,0,0.9))
+  #site_tabs
+    position: fixed
+    top: 0
+    left: -$left_width
     width: $left_width
-    & + div
-      width: calc(70% - 1px)
-  nav
-    width: 100%
-    display: table
-    a
-      display: table-cell
-      text-align: center
-      line-height: 2em
-      background: $coolgrey11
-      &:hover
-        color: $mid
-        background: $coolgrey1
+    right: 0
+    background: $shelf_head_bg
+    color: $menu_text
+    z-index: 100
+    height: $control_height
+    overflow: hidden
+    transition: left 0.5s ease
+    a.tab
+      display: inline-block
+      padding: 6px 10px
+      color: $shelf_text
       &.current
-        color: $verypale
-        background: $coolgrey9
-  #style,#script,#config
-    display: none
-    position: absolute
-    width: 100%
-    box-sizing: border-box
-    padding: 5px
-    top: 32px
-    bottom: 0
-    overflow-y: auto
-    overflow-x: hidden
-    &.current
-      display: block
-    a.button
-      &.revert
-        +button($red)
-      &.preview
-        +button($rubine)
-  .temp_css
-    min-height: 256px
-    margin: 0
-    background: rgba(100,100,100,0.2)
-    border-left: 1px solid white
-    padding: 10px
+        background-color: $shelf_bg
+  #site_controls
+    a
+      +box-shadow(inset -4px 0 8px rgba(0,0,0,0.4))
+      padding-bottom: 40px
+  #configuration
+    #style, #script, #config
+      display: none
+      position: absolute
+      width: 100%
+      box-sizing: border-box
+      padding: 5px
+      top: 32px
+      bottom: 0
+      overflow-y: auto
+      overflow-x: hidden
+      &.current
+        display: block
+      a.button
+        &.revert
+          +button($red)
+        &.preview
+          +button($rubine)
+    .temp_css
+      min-height: 256px
+      margin: 0
+      background: rgba(100,100,100,0.2)
+      border-left: 1px solid white
+      padding: 10px
 
 #main
-  position: absolute
-  right: 0
-  width: 100%
+  z-index: 20
+  #editor
+    z-index: 50
+    margin-top: $control_height
+    padding: 20px
+    [contenteditable]
+      border: 6px solid white
+      background-color: #eaeaed
+      outline: none
+      border-radius: 5px
 
-=management
-  box-sizing: border-box
-  display: inline-block
-  float: left
-  vertical-align: top
-  height: $control_height
+    header
+      overflow: hidden
 
-#manager
-  position: fixed
-  left: 0
-  right: 0
-  background: $menu_bg
-  color: $menu_text
-  z-index: 100
-  font-size: 0.9em
-  +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-
-  #manager_menu
-    +management
-    width: $control_height
-    transition: width 0.5s ease-out
-    &.open
-      width: $left_width
-    a
-      display: block
-      width: $control_height
-      height: $control_height
-      background:
-        image: image-url('spanner.svg')
-        position: center center
-        repeat: no-repeat
-
-  a
-    color: $mid
-  a.add, a.delete, a.save
-    opacity: 0.75
-    &:hover
-      opacity: 1
-
-  .header
-    position: relative
-    display: inline-block
-    height: $control_height
-    background-color: $menu_bg
-    box-sizing: border-box
-    float: left
-    padding: 0 12px 0 5px
-    a
-      display: inline-block
-      vertical-align: middle
-    a.title
-      padding: 8px 0 0 0
-      color: $menu_text
-      &.arrowed
-        &:before
-          content: "\025B8"
-          width: 8px
-          font-family: sans-serif
-          margin-right: 8px
-    &:hover
-      background-color: $menu_hover_bg
-      a
-        color: $menu_hover_text
-    &.open
-      background-color: $menu_up_bg
-      a
-        color: $menu_up_text
-      a.title.arrowed
-        &:before
-          content: "\025BE"
-          font-family: sans-serif
-          margin-right: 8px
-  .menu
-    position: absolute
-    display: none
-    top: $control_height
-    background-color: $menu_up_bg
-    width: auto
-    +box-shadow(1px 4px 5px rgba(0,0,0,0.4))
-    ul.menu_items
-      list-style: none
-      padding: 0
-      margin: 0
-      li
+    main
+      section
         position: relative
-        padding: 6px 6px 6px 12px
-        opacity: 0.8
-        clear: left
-        a
-          color: $menu_up_text
-        a.title
-          margin-right: 10px
-        a.nav
-          color: $verypale
-          &.selected
-            color: $menu_selected_bg
-        span[contenteditable]
-          display: inline-block
-          vertical-align: middle
-          background-color: white
-          color: $dark
-          border: 0
-          min-width: 40px
-          padding: 3px
-          margin-right: 40px
-          border-radius: 5px
-        span.slug
-          display: none
-          padding: 0
-        span.d, span.a
-          display: inline-block
-          vertical-align: middle
-          min-width: 16px
-          margin-right: 4px
-          height: 16px
-          color: $menu_up_text
-          &:first-child
-            min-width: 0
-        span.controls
+        .admin
           position: absolute
-          top: 0
+          top: 10px
           right: -54px
-          width: 44px
-          height: 34px
-          padding-left: 2px
-          padding-right: 8px
-          background-color: $menu_hover_bg
-          +border-right-radius(20px)
-          display: none
-          a
-            margin: 10px 0 0 0
-        &:hover
-          background-color: $menu_hover_bg
-          opacity: 1
-          a, span.a
-            color: $menu_hover_text
-          .controls
-            display: block
-            background-color: $menu_hover_bg
-        &.changed
-          a.title
-            color: $warm
-        &.new
-          background-color: $warm
-          color: $menu_hover_text
-          a.title
-            display: none
-          span.controls
-            display: block
-            background-color: $menu_new_bg
-          span.slug
-            display: inline-block
-        &.selected
-          background-color: $menu_selected_bg
-          color: white
-          a, span.a
-            color: white
-          &:hover
-            background-color: $menu_selected_bg
-            a, span.a
-              color: white
-          span.controls
-            background-color: $menu_selected_bg
-        &.destroyed
-          text-decoration: line-through
-          opacity: 0.4
-  #sites
-    margin: 0
-    float: left
-    .menu
-      min-width: 200px
-    #pages
+          width: 85px
+          a.menu
+            position: relative
+            background-color: white
+            border-radius: 3px
+          div.menu
+            position: relative
+            overflow: hidden
+            margin-top: -3px
+            background-color: white
+            border-radius: 3px
+            +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+            width: 85px
+            height: 0
+            transition: height 0.5s ease
+            &.open
+              height: 120px
+            a.section_type
+              margin: 4px
+
+  #manager
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    background: $menu_bg
+    color: $menu_text
+    z-index: 100
+    height: $control_height + 2px
+    transition: left 0.5s ease
+    #site_manager
+      position: relative
       margin: 0
       float: left
-      #sections
-        .menu
-          ul.menu_items
-            li
-              span.controls
-                right: -34px
-                width: 24px
-      #sections
-        position: relative
-        margin: 0
-        float: left
-
-  #rte
-    position: relative
-    float: left
-    top: 3px
-    margin-left: 100px
-    min-width: 400px
-
-  #controls
-    position: absolute
-    right: 0
-    top: 0
-    #site_controls, #page_controls
-      display: inline-block
-      vertical-align: top
-    a.save_page, a.publish_page, a.save_site, a.publish_site
-      display: inline-block
+    #pages_manager
       margin: 0
-      padding: 8px
-      box-sizing: border-box
-      height: $control_height
-      color: white
-    a.save_page, a.save_site
-      background-color: $green
-    a.publish_page, a.publish_site
-      background-color: $warm
-  
-
-#editor
-  z-index: 50
-  margin-top: $control_height
-
-  header
-    overflow: hidden
-
-  main
-    section
+      float: left
+    #sections_manager
       position: relative
-      .admin
-        position: absolute
-        top: 10px
-        right: -54px
-        width: 85px
-        a.menu
-          position: relative
-          background-color: white
-          border-radius: 3px
-          +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-        div.menu
-          position: relative
-          overflow: hidden
-          margin-top: -3px
-          background-color: white
-          border-radius: 3px
-          +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-          width: 85px
-          height: 0
-          transition: height 0.5s ease
-          &.open
-            height: 120px
-          a.section_type
-            margin: 4px
+      margin: 0
+      float: left
+
+    #rte
+      position: absolute
+      right: 200px
+      top: 0
+      min-width: 300px
 
 
+    // general purpose menu setup
+    
+    .header
+      position: relative
+      display: inline-block
+      height: $control_height
+      background-color: $menu_bg
+      box-sizing: border-box
+      float: left
+      padding: 0 12px 0 5px
+      margin-right: 5px
+      a
+        display: inline-block
+        vertical-align: middle
+      a.title
+        padding: 6px 0 0 0
+        color: $menu_text
+        &.site
+          padding: 6px 0 6px $control_height
+          height: $control_height
+          font-weight: bold
+          box-sizing: border-box
+          background:
+            image: image-url('spanner.svg')
+            position: 0 0
+            repeat: no-repeat
+          &.save_me, &.publish_me
+            background-image: image-url('spanner_up.svg')
+            color: $warm
+        &.arrowed
+          &:before
+            content: "\025B8"
+            width: 8px
+            font-family: sans-serif
+            margin-right: 8px
+      &:hover
+        background-color: $menu_hover_bg
+        a
+          color: $menu_hover_text
+      &.open
+        background-color: $menu_up_bg
+        +box-shadow(0 4px 6px rgba(0,0,0,0.4))
+        a
+          color: $menu_up_text
+        a.title.arrowed
+          &:before
+            content: "\025BE"
+            font-family: sans-serif
+            margin-right: 8px
+    .menu
+      position: absolute
+      display: none
+      top: $control_height
+      background-color: $menu_up_bg
+      width: auto
+      +box-shadow(0 4px 6px rgba(0,0,0,0.4))
+      ul.menu_items
+        list-style: none
+        padding: 0
+        margin: 0
+        li
+          position: relative
+          padding: 6px 6px 6px 12px
+          clear: left
+          a
+            color: $menu_up_text
+            white-space: nowrap
+          a.title
+          a.nav
+            color: $verypale
+            margin-left: 4px
+            &.selected
+              color: $menu_selected_bg
+          span[contenteditable]
+            display: inline-block
+            vertical-align: middle
+            background-color: white
+            color: $dark
+            border: 0
+            min-width: 40px
+            padding: 3px
+            margin-right: 40px
+            border-radius: 5px
+          span.slug
+            display: none
+            padding: 0
+          span.d, span.a
+            display: inline-block
+            vertical-align: middle
+            min-width: 16px
+            margin-right: 4px
+            height: 16px
+            color: $menu_up_text
+            &:first-child
+              min-width: 0
+          span.controls
+            position: absolute
+            top: 0
+            right: -54px
+            width: 45px
+            height: 34px
+            padding-left: 2px
+            padding-right: 8px
+            background-color: $menu_hover_bg
+            +border-right-radius(20px)
+            display: none
+            a
+              margin: 10px 0 0 0
+          &:hover
+            background-color: $menu_hover_bg
+            a, span.a
+              color: $menu_hover_text
+            .controls
+              display: block
+              background-color: $menu_hover_bg
+          &.changed
+            a.title
+              color: $warm
+          &.new
+            background-color: $warmish
+            color: $menu_hover_text
+            a.title
+              display: none
+            span.controls
+              display: block
+              background-color: $menu_new_bg
+            span.slug
+              display: inline-block
+          &.selected
+            background-color: $menu_selected_bg
+            color: white
+            a, span.a
+              color: white
+            &:hover
+              background-color: $menu_selected_bg
+              a, span.a
+                color: white
+            span.controls
+              background-color: $menu_selected_bg
+          &.destroyed
+            text-decoration: line-through
+            opacity: 0.4
+
+
+#page_controls, #site_controls
+  position: absolute
+  right: 0
+  top: 0
+
+#page_controls, #site_controls
+  a.save_page, a.publish_page, a.save_site, a.publish_site
+    display: inline-block
+    margin: 0
+    padding: 6px 10px
+    box-sizing: border-box
+    height: $control_height
+    color: white
+  a.save_page, a.save_site
+    background-color: $greenish
+    &:hover
+      background-color: $green
+      +glow
+  a.publish_page, a.publish_site
+    background-color: $warmish
+    &:hover
+      background-color: $warm
+      +glow
 
 // undigested login stuff
 
 
 
-#session
+#session_barrier
   z-index: 60
   #form
     position: relative
@@ -552,3 +542,4 @@ a.section_type
     a.sign_out
       color: $pale
       +small
+

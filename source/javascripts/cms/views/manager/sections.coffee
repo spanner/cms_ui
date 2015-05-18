@@ -29,6 +29,10 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   deleteSection: =>
     @model?.destroyReversibly()
 
+  addSection: =>
+    @model.collection.add
+      page_id: @collection.page.id
+
   select: (e) =>
     e?.preventDefault()
     @model.select()
@@ -48,21 +52,6 @@ class CMS.Views.SectionsList extends CMS.Views.MenuView
   childView: CMS.Views.ListedSection
 
 
-class CMS.Views.SectionsLayout extends CMS.Views.MenuLayout
+class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
   template: "manager/sections"
   menuView: CMS.Views.SectionsList
-
-  events:
-    "click a.add_section": "addSection"
-    "click > .header a.title": "toggleMenu"
-
-  bindings:
-    'a.title': "pos"
-
-  onRender: =>
-    super
-    # @stickit()
-
-  addSection: =>
-    section = @collection.add
-      page_id: @collection.page.id

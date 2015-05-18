@@ -12,8 +12,3 @@ class CMS.Models.Section extends CMS.Model
 
   getSite: =>
     @getPage()?.getSite()
-
-  select: =>
-    unless @get("selected")
-      @collection.findWhere(selected:true)?.set selected:false
-      @set selected: true

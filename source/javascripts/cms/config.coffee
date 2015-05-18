@@ -9,7 +9,7 @@ class CMS.Config
     logging: false
 
   development:
-    api_url: "http://localhost:9292/"#"http://api.cms.dev/"#
+    api_url: "http://api.cms.dev/"#"http://localhost:9292/"#
     cookie_domain: ".cms.dev"
     cookie_name: "cms_dev"
     logging: true
