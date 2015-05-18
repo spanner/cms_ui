@@ -33,7 +33,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       user.whenReady () =>
         if site = user.sites.findWhere(slug: site_slug)
           @setSite(site)
-          site.load()
+          site.load() unless site.isReady()
           site.whenReady () =>
             if page = site.pages.findWhere(path: "/#{page_path}")
               @setPage(page)

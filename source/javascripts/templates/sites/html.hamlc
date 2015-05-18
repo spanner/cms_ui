@@ -1,4 +1,6 @@
 %p.controls
 
-%p
-  HTML...
+Header
+%textarea#header
+Footer
+%textarea#footer

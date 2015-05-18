@@ -57,6 +57,7 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
   onRender: () =>
     @model.whenReady =>
       @$el.html @model.get('header')
+      console.debug "pages", @model.nav_pages, @model
       @_nav = new CMS.Views.Navigation
         collection: @model.nav_pages
         el: @$el.find('nav')
@@ -93,6 +94,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
         observe: "template"
         onGet: "templateStylesheetLink"
       ]
+    "style": "preview_css"
 
   onRender: =>
     @getRegion('controls').show new CMS.Views.SiteControls
@@ -114,13 +116,11 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
       when 'assets' then CMS.Views.SiteAssets
       when 'config' then CMS.Views.SiteConfig
       else CMS.Views.SiteHtml
+    console.log "showTab", tab, tab_view_class
     @$el.find('.current').removeClass('current')
     $el.addClass('current')
-    tab_view = new tab_view_class
+    @getRegion('tab').show new tab_view_class
       model: @model
-    @getRegion('tab').show(tab_view)
-    $.tv = tab_view
-    
 
   templateStylesheetLink: (template_name) => 
     if template_name

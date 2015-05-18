@@ -1,6 +1,9 @@
 class CMS.Models.Page extends CMS.Model
   savedAttributes: ['title', 'introduction', 'nav', 'nav_heading', 'path', 'site_id']
 
+  defaults:
+    nav: true
+
   build: =>
     if @get('path')
       @splitPath()
