@@ -40,7 +40,7 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         @set preview_css: data?.css
 
-  # Publish is a specialized save.
+  # Publish is a specialized form of save.
   #
   publish: () =>
     $.ajax

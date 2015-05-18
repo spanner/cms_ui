@@ -1,3 +1,5 @@
+%span.confirmation
+  hi
 %a.save_site
   Save
 %a.publish_site

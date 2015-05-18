@@ -114,6 +114,9 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     "click a.save_page": "savePage"
     "click a.publish_page": "publishPage"
 
+  ui:
+    confirmation: "span.confirmation"
+
   bindings: 
     "a.save_page":
       observe: "changed"
@@ -126,14 +129,19 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
 
   savePage: (e) =>
     e?.preventDefault()
-    @model.save()
+    @model.save().done () =>
+      @confirm "saved"
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
     not changed and (not published_at or updated_at > published_at)
     
   publishPage: (e) =>
     e?.preventDefault()
-    @model.publish()
+    @model.publish().done () =>
+      @confirm "published"
+  
+  confirm: (message) =>
+    @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
 
 
 class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
