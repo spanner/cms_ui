@@ -8,7 +8,7 @@ class CMS.Models.Site extends CMS.Model
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
     @on "change:css", @populateCSS
-    @on "change:nav", @populateNavigation
+    @pages.on "change:nav", @populateNavigation
 
   populate: (data) =>
     @pages.reset(data.pages)
