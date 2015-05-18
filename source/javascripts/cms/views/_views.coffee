@@ -81,6 +81,7 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
 
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
+
   onRender: =>
     @stickit()
 
@@ -112,6 +113,11 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
 
   thisAndNotThat: ([value, other_value]=[]) =>
     value and not other_value
+  
+  notTheSame: ([value, other_value]=[]) =>
+    console.log "notTheSame?", value, other_value
+    value isnt other_value
+
 
   #onGets
 

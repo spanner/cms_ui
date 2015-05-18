@@ -1,10 +1,10 @@
-class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
+class CMS.Views.SiteCSS extends CMS.Views.ItemView
   @mixin 'text'
   template: "sites/css"
 
   events:
-    "click a.preview:not(.unavailable)": "previewCSS"
-    "click a.revert:not(.unavailable)": "revertCSS"
+    "click a.preview": "previewCSS"
+    "click a.revert": "revertCSS"
     "paste .temp_css": "paste"
 
   ui:
@@ -13,6 +13,8 @@ class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
 
   bindings:
     "#temp_css": "temp_css"
+    "style": "preview_css"
+
     "select.template":
       observe: "template"
       selectOptions:
@@ -20,14 +22,15 @@ class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
           default: "Default"
           spanner: "Spanner"
 
-    "style": "preview_css"
-
     "a.revert":
-      attributes: [
-        observe: ["css", "temp_css"]
-        onGet: (vals) -> "unavailable" if vals[0] is vals[1]
-        name: "class"
-      ]
+      observe: ["css", "temp_css"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
+
+    "a.preview":
+      observe: ["preview_css", "temp_css"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
 
   onRender: =>
     @stickit()
@@ -36,20 +39,22 @@ class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
   show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
-        mode: @model.get("css_preprocessor")
+        mode: @model.get("css_preprocessor") ? 'sass'
         theme: "spanner"
         showCursorWhenSelecting: true
         lineNumbers: true
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewCSS
-
+      
+      $.editor = @editor
+      
       @model.on "change:css_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
-        @ui.textarea.trigger "change"
+        @ui.textarea.trigger "input"
 
   previewCSS: =>
     @model.compileCSS()
@@ -59,4 +64,4 @@ class CMS.Views.SiteCSS extends Backbone.Marionette.ItemView
     @editor?.setValue @ui.textarea.val()
 
   save: =>
-    @model.save(css:@model.get("preview_css"))
+    @model.save(css: @model.get("preview_css"))

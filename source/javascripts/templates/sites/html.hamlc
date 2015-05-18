@@ -1,4 +1,7 @@
-%p.controls
+%label
+  Header
+%textarea#header
 
-%p
-  HTML...
+%label
+  Footer
+%textarea#footer

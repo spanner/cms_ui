@@ -2,7 +2,7 @@ class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
   defaults:
     template: 'default'
-  savedAttributes: ["css", "title", "header", "footer", "css_preprocessor"]
+  savedAttributes: ["css", "title", "domain", "header", "footer", "css_preprocessor", "js_preprocessor"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @

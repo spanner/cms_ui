@@ -1,4 +1,9 @@
-Header
-%textarea#header
-Footer
-%textarea#footer
+%p.large
+  %label
+    Site title
+  %input.title
+
+%p
+  %label
+    domains
+  %input.domain

@@ -1,4 +1,4 @@
-%p.controls
+%label{for: "js"}
+  Javascript
 
-%label{for: "js"}  Custom JS
 %textarea#js
