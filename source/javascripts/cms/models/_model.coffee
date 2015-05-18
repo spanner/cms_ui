@@ -106,3 +106,7 @@ class CMS.Model extends Backbone.Model
   saveAndResume: () =>
     @save().done =>
       @markAsUnchanged()
+
+  touch: () =>
+    @set 'updated_at', new Date(), 
+      stickitChange: true

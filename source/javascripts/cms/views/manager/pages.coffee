@@ -76,7 +76,8 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   toggleNav: (e) =>
     e?.preventDefault()
-    @model.set "nav", not @model.get("nav"), stickitChange: true
+    @model.save
+      nav: not @model.get("nav")
 
   addPage: (e) =>
     e?.preventDefault()

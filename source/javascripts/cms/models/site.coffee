@@ -12,11 +12,13 @@ class CMS.Models.Site extends CMS.Model
 
   populate: (data) =>
     @pages.reset(data.pages)
+    @populateDates(data)
     @populateNavigation()
     true
   
-  populateNavigation: () =>
-    @nav_pages.reset @pages.where(nav: true)
+  populateNavigation: (e) =>
+    @nav_pages.reset(@pages.where(nav: true))
+    @touch() if e
 
   populateCSS: =>
     @set temp_css: @get("css")
