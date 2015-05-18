@@ -8,15 +8,17 @@ class CMS.Models.Site extends CMS.Model
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
     @on "change:css", @populateCSS
-    @on "change:nav", @populateNavigation
+    @pages.on "change:nav", @populateNavigation
 
   populate: (data) =>
     @pages.reset(data.pages)
+    @populateDates(data)
     @populateNavigation()
     true
   
-  populateNavigation: () =>
-    @nav_pages.reset @pages.where(nav: true)
+  populateNavigation: (e) =>
+    @nav_pages.reset(@pages.where(nav: true))
+    @touch() if e
 
   populateCSS: =>
     @set temp_css: @get("css")
@@ -40,7 +42,7 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         @set preview_css: data?.css
 
-  # Publish is a specialized save.
+  # Publish is a specialized form of save.
   #
   publish: () =>
     $.ajax

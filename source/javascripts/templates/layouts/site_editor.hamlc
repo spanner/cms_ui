@@ -2,11 +2,11 @@
 %style
 
 #site_tabs
-  %a.tab.current{data: {tab: "html"}} Page parts
+  %a.tab.current{data: {tab: "html"}} Parts
   %a.tab{data: {tab: "css"}} CSS
   %a.tab{data: {tab: "js"}} JS
   %a.tab{data: {tab: "assets"}} Assets
-  %a.tab{data: {tab: "config"}} Configuration
+  %a.tab{data: {tab: "config"}} Config
   #site_controls
 
 #tab

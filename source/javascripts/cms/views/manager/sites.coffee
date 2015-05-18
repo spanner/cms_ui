@@ -26,7 +26,7 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
     if changed
       "site title save_me"
     else if (updated_at > published_at)
-      "site title "
-    else
       "site title publish_me"
+    else
+      "site title"
       

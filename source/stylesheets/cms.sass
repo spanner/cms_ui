@@ -124,7 +124,7 @@ a.section_type
 
 
 #ui
-  position: absolute
+  position: relative
   top: 0
   right: 0
   bottom: 0
@@ -328,8 +328,11 @@ a.section_type
             image: image-url('spanner.svg')
             position: 0 0
             repeat: no-repeat
-          &.save_me, &.publish_me
-            background-image: image-url('spanner_up.svg')
+          &.save_me
+            background-image: image-url('spanner_green.svg')
+            color: $green
+          &.publish_me
+            background-image: image-url('spanner_warm.svg')
             color: $warm
         &.arrowed
           &:before
@@ -453,7 +456,7 @@ a.section_type
   top: 0
 
 #page_controls, #site_controls
-  a.save_page, a.publish_page, a.save_site, a.publish_site
+  a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation
     display: inline-block
     margin: 0
     padding: 6px 10px
@@ -471,6 +474,9 @@ a.section_type
     &:hover
       background-color: $warm
       +glow
+  span.confirmation
+    color: $green
+    display: none
 
 // undigested login stuff
 

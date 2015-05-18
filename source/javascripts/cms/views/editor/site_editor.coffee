@@ -5,6 +5,9 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
     "click a.save_site": "saveSite"
     "click a.publish_site": "publishSite"
 
+  ui:
+    confirmation: "span.confirmation"
+
   bindings: 
     "a.save_site":
       observe: "changed"
@@ -16,15 +19,21 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
+    console.log "ifPublishable", changed, published_at, updated_at
     not changed and (not published_at or updated_at > published_at)
 
   saveSite: (e) =>
     e?.preventDefault()
-    @model.save()
+    @model.save().done () =>
+      @confirm "saved"
 
   publishSite: (e) =>
     e?.preventDefault()
-    @model.publish()
+    @model.publish().done () =>
+      @confirm "published"
+  
+  confirm: (message) =>
+    @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
 
 
 class CMS.Views.NavLink extends CMS.Views.ItemView
