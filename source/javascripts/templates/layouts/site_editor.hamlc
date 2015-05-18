@@ -1,14 +1,11 @@
-/ %h2
-/   %span.title
+%link{type: "text/css", rel: "stylesheet"}
 
 #site_tabs
-  %a.tab.current{data: {tab: "style"}} Styles
-  %a.tab{data: {tab: "script"}} Scripts
+  %a.tab.current{data: {tab: "html"}} Html
+  %a.tab{data: {tab: "css"}} CSS
+  %a.tab{data: {tab: "js"}} JS
   %a.tab{data: {tab: "assets"}} Assets
-  %a.tab{data: {tab: "config"}} Config
+  %a.tab{data: {tab: "config"}} Configuration
   #site_controls
 
-%div#style.current
-%div#script
-%div#assets
-%div#config
+#tab

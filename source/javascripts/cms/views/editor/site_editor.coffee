@@ -66,7 +66,7 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
   tagName: 'footer'
-  
+
   onRender: () =>
     @model.whenReady =>
       @$el.html @model.get('footer')
@@ -78,10 +78,8 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
 
 class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/site_editor"
-  regions: 
-    "css": "#style"
-    "js": "#script"
-    "config": "#config"
+  regions:
+    "tab": "#tab"
     "controls": "#site_controls"
 
   events:
@@ -89,32 +87,39 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
 
   bindings:
     "span.title": "title"
+    "link":
+      attributes: [
+        name: "href"
+        observe: "template"
+        onGet: "templateStylesheetLink"
+      ]
 
   onRender: =>
-    @stickit()
-    $.site = @model
+    @getRegion('controls').show new CMS.Views.SiteControls
+      model: @model
     @model.whenReady =>
-      @_css_view = new CMS.Views.CSS
-        model: @model
-      @getRegion('css').show(@_css_view)
-
-      @_js_view = new CMS.Views.JS
-        model: @model
-      @getRegion('js').show(@_js_view)
-
-      @_config_view = new CMS.Views.SiteConfig
-        model: @model
-      @getRegion('config').show(@_config_view)
-
-      @_site_controls = new CMS.Views.SiteControls
-        model: @model
-      @getRegion('controls').show(@_site_controls)
+      @stickit()
+      @showTab()
 
   showTab: (e) =>
-    $el = $(e.currentTarget)
-    tab = $el.data("tab")
-    console.log 'showTab', tab, @$el.find("##{tab}")
-    unless $el.hasClass("current")
-      @$el.find(".current").removeClass("current")
-      @$el.find("##{tab}").addClass("current")
-      $el.addClass("current")
+    if e
+      $el = $(e.currentTarget)
+      tab = $el.data("tab") ? 'config'
+    else
+      $el = @$el.find('a[data-tab="html"]')
+      tab = 'html'
+    tab_view_class = switch tab
+      when 'css' then CMS.Views.SiteCSS
+      when 'js' then CMS.Views.SiteJS
+      when 'assets' then CMS.Views.SiteAssets
+      when 'config' then CMS.Views.SiteConfig
+      else CMS.Views.SiteHtml
+    console.log "showTab", tab, tab_view_class
+    @$el.find('.current').removeClass('current')
+    $el.addClass('current')
+    @getRegion('tab').show new tab_view_class
+      model: @model
+
+  templateStylesheetLink: (template_name) => 
+    if template_name
+      "/stylesheets/templates/#{template_name}.css"

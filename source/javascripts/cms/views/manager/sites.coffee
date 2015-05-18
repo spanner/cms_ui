@@ -16,6 +16,7 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
     showing
 
   open: =>
+    _cms.vent.trigger "reset" #nb. closes us too.
     $('#ui').addClass('shelved')
 
   close: =>
