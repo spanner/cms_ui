@@ -2,7 +2,7 @@ class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
   defaults:
     template: 'default'
-  savedAttributes: ["css", "title", "header", "footer", "css_preprocessor"]
+  savedAttributes: ["css", "title", "domain", "header", "footer", "css_preprocessor", "js_preprocessor"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @
@@ -40,11 +40,20 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         @set preview_css: data?.css
 
-  toJSON: () =>
-    json = super
-    json.rendered_header = @renderHeader()
-    json.rendered_footer = @renderFooter()
-    json
+  # Publish is a specialized save.
+  #
+  publish: () =>
+    $.ajax
+      url: @url() + "/publish"
+      data:
+        rendered_header: @renderHeader()
+        rendered_footer: @renderFooter()
+      method: "PUT"
+      success: @published
+      error: @failedToPublish
+
+  published: (response) =>
+    @set(response)
 
   renderHeader: () =>
     renderer = new CMS.Views.HeaderRenderer

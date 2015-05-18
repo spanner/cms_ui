@@ -1,2 +1,9 @@
+%p.large
+  %label
+    Site title
+  %input.title
+
 %p
-  Config
+  %label
+    domains
+  %input.domain

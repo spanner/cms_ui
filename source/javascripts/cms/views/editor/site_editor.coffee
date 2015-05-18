@@ -2,8 +2,8 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
   template: "manager/site_controls"
 
   events:
-    "click a.save_page": "savePage"
-    "click a.publish_page": "publishPage"
+    "click a.save_site": "saveSite"
+    "click a.publish_site": "publishSite"
 
   bindings: 
     "a.save_site":
@@ -15,14 +15,14 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
       visible: "ifPublishable"
       visibleFn: "visibleAsInlineBlock"
 
-  savePage: (e) =>
-    e?.preventDefault()
-    @model.save()
-
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
     not changed and (not published_at or updated_at > published_at)
 
-  publishPage: (e) =>
+  saveSite: (e) =>
+    e?.preventDefault()
+    @model.save()
+
+  publishSite: (e) =>
     e?.preventDefault()
     @model.publish()
 
@@ -124,11 +124,13 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
       when 'assets' then CMS.Views.SiteAssets
       when 'config' then CMS.Views.SiteConfig
       else CMS.Views.SiteHtml
-    console.log "showTab", tab, tab_view_class
     @$el.find('.current').removeClass('current')
     $el.addClass('current')
-    @getRegion('tab').show new tab_view_class
+    tab_view = new tab_view_class
       model: @model
+    @getRegion('tab').show(tab_view)
+    $.tv = tab_view
+    
 
   templateStylesheetLink: (template_name) => 
     if template_name

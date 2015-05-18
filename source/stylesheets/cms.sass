@@ -32,6 +32,9 @@ h2.label
   margin: 0
   padding: 10px
 
+input
+  +book
+  
 a.add, a.delete, a.menu, a.save
   display: inline-block
   vertical-align: top
@@ -170,6 +173,7 @@ a.section_type
     overflow: hidden
     transition: left 0.5s ease
     a.tab
+      +light
       display: inline-block
       padding: 6px 10px
       color: $shelf_text
@@ -188,19 +192,44 @@ a.section_type
       width: $left_width
       height: 100%
       box-sizing: border-box
-      padding: 40px 20px
+      padding-top: $control_height
       overflow-y: auto
       overflow-x: hidden
+      transition: left 0.5s ease
+      label
+        display: block
+        padding: 16px 10px 6px 10px
+        font-weight: bold
+      select
+        margin: 16px 10px 6px 10px
       textarea
         width: 100%
         clear: both
-      a.button
-        float: right
-        margin: 0 5px 5px 0
-        &.revert
-          +button($red)
-        &.preview
-          +button($rubine)
+      input
+        width: 100%
+        clear: both
+        border: none
+        background-color: $shelf_head_bg
+        color: $shelf_text
+        padding: 18px 10px
+        box-sizing: border-box
+        outline: false
+        +light
+        &.title
+          font-size: 2rem
+        &.domain
+          font-size: 1rem
+      p.buttons
+        margin-top: -32px
+        a.button
+          display: inline-block
+          &.revert
+            +button($mid)
+            float: left
+            z-index: 10
+          &.preview
+            +button($green)
+            float: right
 
 #main
   z-index: 20
@@ -287,6 +316,7 @@ a.section_type
         display: inline-block
         vertical-align: middle
       a.title
+        +light
         padding: 6px 0 0 0
         color: $menu_text
         &.site
@@ -339,6 +369,7 @@ a.section_type
           a
             color: $menu_up_text
             white-space: nowrap
+            +light
           a.title
           a.nav
             color: $verypale
@@ -429,6 +460,7 @@ a.section_type
     box-sizing: border-box
     height: $control_height
     color: white
+    +light
   a.save_page, a.save_site
     background-color: $greenish
     &:hover

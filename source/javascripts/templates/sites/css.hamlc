@@ -1,11 +1,13 @@
 %p
-  %label{for: "template"} Scheme
+  %label{for: "template"} Base layout
   %select.template#template
 
-%span
+%label.css_preprocessor{for: "temp_css"}
   SASS
-  %a.button.preview preview
-  %a.button.revert revert
 
 %textarea#temp_css
 %style
+
+%p.buttons<
+  %a.button.revert ◂ revert
+  %a.button.preview preview ▸

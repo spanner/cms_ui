@@ -17,7 +17,6 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     @collection.on "change:selected", @setModel
 
   onRender: =>
-    console.log "menu render", @
     if menu_view_class = @getOption('menuView')
       @_menu_view = new menu_view_class
         el: @$el.find(".menu")
@@ -81,6 +80,7 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
 
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
+
   onRender: =>
     @stickit()
 
@@ -112,6 +112,10 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
 
   thisAndNotThat: ([value, other_value]=[]) =>
     value and not other_value
+  
+  notTheSame: ([value, other_value]=[]) =>
+    value isnt other_value
+
 
   #onGets
 
