@@ -31,7 +31,8 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       console.log "session ready"
       user = @model.getUser()
       @setUser(user)
-      user.load()
+      # debugger
+      # user.load()
       user.whenReady () =>
         if site = user.sites.findWhere(slug: site_slug)
           @setSite(site)

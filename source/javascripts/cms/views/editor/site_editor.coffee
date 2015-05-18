@@ -63,27 +63,36 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
   template: false
   tagName: 'header'
   
+  modelEvents:
+    "change:header": "renderNav"
+
   onRender: () =>
-    @model.whenReady =>
-      @$el.html @model.get('header')
-      @_nav = new CMS.Views.Navigation
-        collection: @model.nav_pages
-        el: @$el.find('nav')
-      @_nav.render()
+    @model.whenReady @renderNav
+
+  renderNav: =>
+    @$el.html @model.get('header')
+    @_nav = new CMS.Views.Navigation
+      collection: @model.nav_pages
+      el: @$el.find('nav')
+    @_nav.render()
 
 
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
   tagName: 'footer'
 
-  onRender: () =>
-    @model.whenReady =>
-      @$el.html @model.get('footer')
-      @_nav = new CMS.Views.Navigation
-        collection: @model.nav_pages
-        el: @$el.find('nav')
-      @_nav.render()
+  modelEvents:
+    "change:footer": "renderNav"
 
+  onRender: () =>
+    @model.whenReady @renderNav
+
+  renderNav: =>
+    @$el.html @model.get('footer')
+    @_nav = new CMS.Views.Navigation
+      collection: @model.nav_pages
+      el: @$el.find('nav')
+    @_nav.render()
 
 class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/site_editor"
@@ -102,6 +111,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
         observe: "template"
         onGet: "templateStylesheetLink"
       ]
+    "style": "preview_css"
 
   onRender: =>
     @getRegion('controls').show new CMS.Views.SiteControls

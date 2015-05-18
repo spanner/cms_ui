@@ -2,6 +2,10 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
   @mixin 'text'
   template: "sites/html"
 
+  events:
+    "click a.preview.header": "previewHeader"
+    "click a.preview.footer": "previewFooter"
+
   bindings:
     "#header": "header"
     "#footer": "footer"
@@ -15,24 +19,28 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
     _.delay @show, 2
 
   show: =>
-    unless @header_editor
-      @header_editor = CodeMirror.fromTextArea @ui.header_area[0],
-        mode: "markdown"
-        theme: "spanner"
-        lineNumbers: true
-        showCursorWhenSelecting: true
-        tabSize: 2
-      @header_editor.on "change", =>
-        @ui.header_area.val @header_editor.getValue()
-        @ui.header_area.trigger "change"
+    @header_editor ?= CodeMirror.fromTextArea @ui.header_area[0],
+      mode: "markdown"
+      theme: "spanner"
+      lineNumbers: true
+      showCursorWhenSelecting: true
+      tabSize: 2
+      extraKeys:
+        "Cmd-Enter": @previewHeader
 
-    unless @footer_editor
-      @footer_editor = CodeMirror.fromTextArea @ui.footer_area[0],
-        mode: "markdown"
-        theme: "spanner"
-        lineNumbers: true
-        showCursorWhenSelecting: true
-        tabSize: 2
-      @footer_editor.on "change", =>
-        @ui.footer_area.val @footer_editor.getValue()
-        @ui.footer_area.trigger "change"
+    @footer_editor ?= CodeMirror.fromTextArea @ui.footer_area[0],
+      mode: "markdown"
+      theme: "spanner"
+      lineNumbers: true
+      showCursorWhenSelecting: true
+      tabSize: 2
+      extraKeys:
+        "Cmd-Enter": @previewFooter
+
+  previewHeader: =>
+    @ui.header_area.val @header_editor.getValue()
+    @ui.header_area.trigger "change"
+
+  previewFooter: =>
+    @ui.footer_area.val @footer_editor.getValue()
+    @ui.footer_area.trigger "change"
