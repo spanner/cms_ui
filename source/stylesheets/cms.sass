@@ -121,7 +121,7 @@ a.section_type
 
 
 #ui
-  position: absolute
+  position: relative
   top: 0
   right: 0
   bottom: 0
@@ -325,8 +325,11 @@ a.section_type
             image: image-url('spanner.svg')
             position: 0 0
             repeat: no-repeat
-          &.save_me, &.publish_me
-            background-image: image-url('spanner_up.svg')
+          &.save_me
+            background-image: image-url('spanner_green.svg')
+            color: $green
+          &.publish_me
+            background-image: image-url('spanner_warm.svg')
             color: $warm
         &.arrowed
           &:before
