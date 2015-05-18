@@ -188,7 +188,12 @@ a.section_type
       padding: 40px 20px
       overflow-y: auto
       overflow-x: hidden
+      textarea
+        width: 100%
+        clear: both
       a.button
+        float: right
+        margin: 0 5px 5px 0
         &.revert
           +button($red)
         &.preview
@@ -257,7 +262,6 @@ a.section_type
       position: relative
       margin: 0
       float: left
-
     #rte
       position: absolute
       right: 200px

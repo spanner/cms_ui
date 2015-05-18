@@ -114,11 +114,13 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
       when 'assets' then CMS.Views.SiteAssets
       when 'config' then CMS.Views.SiteConfig
       else CMS.Views.SiteHtml
-    console.log "showTab", tab, tab_view_class
     @$el.find('.current').removeClass('current')
     $el.addClass('current')
-    @getRegion('tab').show new tab_view_class
+    tab_view = new tab_view_class
       model: @model
+    @getRegion('tab').show(tab_view)
+    $.tv = tab_view
+    
 
   templateStylesheetLink: (template_name) => 
     if template_name

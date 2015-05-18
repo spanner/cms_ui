@@ -13,8 +13,6 @@ class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
   onRender: =>
     @stickit()
 
-  show: =>
-    console.log "SiteConfig.show"
     unless @header_editor
       @header_editor = CodeMirror.fromTextArea @ui.header_area[0],
         mode: "markdown"
@@ -25,6 +23,7 @@ class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
       @header_editor.on "change", =>
         @ui.header_area.val @header_editor.getValue()
         @ui.header_area.trigger "change"
+
     unless @footer_editor
       @footer_editor = CodeMirror.fromTextArea @ui.footer_area[0],
         mode: "markdown"
