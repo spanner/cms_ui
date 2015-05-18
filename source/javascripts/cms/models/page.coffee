@@ -1,6 +1,9 @@
 class CMS.Models.Page extends CMS.Model
   savedAttributes: ['title', 'introduction', 'nav', 'nav_heading', 'path', 'site_id']
 
+  defaults:
+    nav: true
+
   build: =>
     if @get('path')
       @splitPath()
@@ -61,7 +64,6 @@ class CMS.Models.Page extends CMS.Model
       error: @failedToPublish
   
   published: (response) =>
-    console.log "published", response
     @set(response)
     
   renderHead: () =>

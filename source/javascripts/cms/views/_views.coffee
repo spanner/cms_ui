@@ -17,7 +17,6 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     @collection.on "change:selected", @setModel
 
   onRender: =>
-    console.log "menu render", @
     if menu_view_class = @getOption('menuView')
       @_menu_view = new menu_view_class
         el: @$el.find(".menu")
@@ -115,7 +114,6 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
     value and not other_value
   
   notTheSame: ([value, other_value]=[]) =>
-    console.log "notTheSame?", value, other_value
     value isnt other_value
 
 

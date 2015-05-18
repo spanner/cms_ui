@@ -25,7 +25,6 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @siteView()
 
   siteView: (site_slug, page_path) =>
-    console.log "siteView", site_slug, page_path
     @model.whenReady () =>
       user = @model.getUser()
       @setUser(user)
@@ -33,7 +32,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       user.whenReady () =>
         if site = user.sites.findWhere(slug: site_slug)
           @setSite(site)
-          site.load()
+          site.load() unless site.isReady()
           site.whenReady () =>
             if page = site.pages.findWhere(path: "/#{page_path}")
               @setPage(page)
@@ -42,14 +41,12 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   setUser: (user) =>
     # we have user object with sites collection
     #TODO init user/session menu
-    console.log "setUser", user
     @_manager = new CMS.Views.ManagerLayout
       model: user
     @getRegion('manager').show @_manager
 
   setSite: (site) =>
     # we have site object with pages collection
-    console.log "setSite", site
     @_manager.setSite(site)
     @_configurator = new CMS.Views.SiteEditorLayout
       model: site
@@ -57,7 +54,6 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
 
   setPage: (page) =>
     # we have page object with sections collection
-    console.log "setPage", page
     @_manager.setPage(page)
     @_editor = new CMS.Views.PageEditorLayout
       model: page

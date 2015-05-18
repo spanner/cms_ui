@@ -16,7 +16,7 @@ class CMS.Models.Site extends CMS.Model
     true
   
   populateNavigation: () =>
-    @nav_pages.reset @pages.findWhere(nav: true)
+    @nav_pages.reset @pages.where(nav: true)
 
   populateCSS: =>
     @set temp_css: @get("css")
@@ -53,7 +53,6 @@ class CMS.Models.Site extends CMS.Model
       error: @failedToPublish
 
   published: (response) =>
-    console.log "published site", response
     @set(response)
 
   renderHeader: () =>

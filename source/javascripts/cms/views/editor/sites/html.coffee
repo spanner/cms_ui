@@ -1,4 +1,5 @@
 class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
+  @mixin 'text'
   template: "sites/html"
 
   bindings:

@@ -1,4 +1,5 @@
 %link{type: "text/css", rel: "stylesheet"}
+%style
 
 #site_tabs
   %a.tab.current{data: {tab: "html"}} Page parts
