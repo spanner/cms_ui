@@ -15,13 +15,6 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
     "#temp_css": "temp_css"
     "style": "preview_css"
 
-    "select.template":
-      observe: "template"
-      selectOptions:
-        collection:
-          default: "Default"
-          spanner: "Spanner"
-
     "a.revert":
       observe: ["css", "temp_css"]
       visible: "notTheSame"

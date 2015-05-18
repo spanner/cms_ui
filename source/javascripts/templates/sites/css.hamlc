@@ -1,7 +1,3 @@
-%p
-  %label{for: "template"} Base layout
-  %select.template#template
-
 %label.css_preprocessor{for: "temp_css"}
   SASS
 

@@ -17,6 +17,7 @@ class CMS.Models.User extends CMS.Model
     @sites = new CMS.Collections.Sites @get("sites")
 
   populate: (data) =>
+    console.log "user.populate", data
     @sites.reset(data.sites)
 
   readCookie: () =>

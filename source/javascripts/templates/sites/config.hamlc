@@ -7,3 +7,7 @@
   %label
     domains
   %input.domain
+
+%p
+  %label{for: "template"} Base layout
+  %select.template#template

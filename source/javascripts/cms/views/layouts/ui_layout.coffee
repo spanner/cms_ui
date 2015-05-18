@@ -25,7 +25,10 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @siteView()
 
   siteView: (site_slug, page_path) =>
+    console.log "siteview"
+    $.session = @model
     @model.whenReady () =>
+      console.log "session ready"
       user = @model.getUser()
       @setUser(user)
       user.load()

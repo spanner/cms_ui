@@ -7,9 +7,9 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   onRender: () =>
     @wait()
-    @model.whenReady @home
+    @home()
     @model.whenUserReady @goAway
-    @model.whenFailed @home
+    # @model.whenFailed @home
 
   wait: () =>
     @$el.find('.loading').show()

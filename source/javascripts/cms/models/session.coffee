@@ -29,13 +29,14 @@ class CMS.Models.Session extends CMS.Model
 
   build: () =>
     @readCookie()
-    @_user = new CMS.Models.User
+    $.user = @_user = new CMS.Models.User
 
   load: =>
     if @get('token')
       super
     else
-      @notLoaded()
+      # wait and see
+      # @notLoaded()
     @_loaded.promise()
   
   populate: (data) =>
@@ -47,8 +48,10 @@ class CMS.Models.Session extends CMS.Model
     @_user
 
   setUser: (data) =>
-    @populateUser data
+    console.log "setUser", data
+    @populateUser(data.user)
     @writeCookie()
+    @loaded()
 
   userIsReady: () =>
     @_user.isReady()

@@ -42,8 +42,7 @@ class CMS.Views.NavLink extends CMS.Views.ItemView
   className: "nav"
   bindings: 
     ':el':
-      observe: ["nav_name", "title"]
-      onGet: "thisOrThat"
+      observe: "nav_name"
       attributes: [
         name: 'href'
         observe: 'path'
@@ -51,6 +50,7 @@ class CMS.Views.NavLink extends CMS.Views.ItemView
 
   onRender: () =>
     @$el.attr "contenteditable", "true"
+    @model.set("nav_name", @model.get("title")) unless @model.get("nav_name")
     super
 
 
