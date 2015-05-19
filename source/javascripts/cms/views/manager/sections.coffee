@@ -34,7 +34,6 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     pos = (@model.get('position') ? 0)
     above = @model.collection.filter (s) -> s.get('position') > pos
     _.each above, (s, i) ->
-      console.log "displace", i, s
       s.set('position', s.get('position') + 1)
     @model.collection.add
       title: "New section"
