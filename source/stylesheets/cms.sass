@@ -122,6 +122,12 @@ a.section_type
     &:hover
       background-position: -64px -192px
 
+.hidden
+  display: none
+
+.toggle
+  font-size: 0.8rem
+  color: $pale
 
 #ui
   position: relative
@@ -159,7 +165,7 @@ a.section_type
   margin-top: 0
   overflow: hidden
   z-index: 10
-  +box-shadow(inset -4px 0 8px rgba(0,0,0,0.9))
+  +box-shadow(inset -2px 0 6px rgba(0,0,0,0.4))
   #site_tabs
     position: fixed
     top: 0
@@ -200,6 +206,7 @@ a.section_type
         display: block
         padding: 16px 10px 6px 10px
         font-weight: bold
+        clear: both
       select
         margin: 16px 10px 6px 10px
       textarea
@@ -209,16 +216,15 @@ a.section_type
         width: 100%
         clear: both
         border: none
-        background-color: darken($shelf_bg, 3)
+        background: $shelf_head_bg
         color: $shelf_text
         padding: 18px 10px
         box-sizing: border-box
         outline: none
         +light
+        font-size: 1rem
         &.title
           font-size: 2rem
-        &.domain
-          font-size: 1rem
       p.buttons
         margin-top: -32px
         a.button
@@ -228,20 +234,22 @@ a.section_type
             float: left
             z-index: 10
           &.preview
-            +button($green)
+            +button($greenish)
             float: right
 
 #main
+  position: relative
   z-index: 20
   #editor
     z-index: 50
     margin-top: $control_height
-    padding: 20px
+    padding: 20px 0
     [contenteditable]
-      border: 6px solid white
-      background-color: #eaeaed
+      border: 2px dotted $greenish
       outline: none
       border-radius: 5px
+      &:focus
+        border-color: $greyish
 
     header
       overflow: hidden
@@ -281,7 +289,7 @@ a.section_type
     background: $menu_bg
     color: $menu_text
     z-index: 100
-    height: $control_height + 2px
+    height: $control_height
     transition: left 0.5s ease
     #site_manager
       position: relative
@@ -498,7 +506,6 @@ a.section_type
       color: $mid
       margin: 0
       font-size: 1.2rem
-
     .signin
       margin: 0 2em
       .confirmation
@@ -588,3 +595,109 @@ a.section_type
       color: $pale
       +small
 
+
+
+// Invictus bits awaiting a home
+
+$page: black
+$text: white
+$yellow: #ffd700
+$grey: #878787
+
+$black80: #333333
+$black60: #666666
+$black40: #999999
+$black20: #cccccc
+
+$yellow80: #ffdf33
+$yellow60: #ffe766
+$yellow40: #ffef99
+$yellow20: #fff7cc
+
+$twitter: #5ea9dd
+
+
+#editor
+  a
+    color: $yellow
+
+  a.play
+    cursor: pointer
+    background:
+      position: center center
+      repeat: no-repeat
+      image: image-url('play.png')
+
+  a.twitter, a.facebook, a.youtube
+    display: inline-block
+    width: 24px
+    height: 24px
+    overflow: hidden
+    background:
+      position: top left
+      repeat: no-repeat
+      image: image-url("invictus/social_sprite.png")
+
+  a.twitter
+    background-position: 0 0
+    &:hover
+      background-position: -24px 0
+
+  a.facebook
+    background-position: 0 -24px
+    &:hover
+      background-position: -24px -24px
+
+  a.youtube
+    background-position: 0 -48px
+    &:hover
+      background-position: -24px -48px
+
+  header
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    padding-top: 36px
+    padding-bottom: 8px
+    background-color: black
+    &.pinned
+      position: fixed
+      top: -26px
+      left: 0
+      width: 100%
+      z-index: 1000
+    #logo
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      width: 210px
+      height: 70px
+      margin: 0
+      background:
+        position: top left
+        repeat: no-repeat
+        size: contain
+        image: image-url('invictus/logo.png')
+    nav
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      width: 650px
+      a
+        padding: 10px
+      
+    #twitface
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      a
+        display: block
+        float: left
+        margin: 0 0 0 6px
+      
+  main
+    position: relative
+    margin-top: 150px
+    margin-bottom: 80px
+  

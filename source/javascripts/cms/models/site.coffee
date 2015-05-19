@@ -2,11 +2,12 @@ class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
   defaults:
     template: 'responsive'
-  savedAttributes: ["css", "title", "domain", "template", "header", "footer", "css_preprocessor", "css", "js_preprocessor", "js"]
+  savedAttributes: ["css", "title", "domain", "template", "header", "footer", "css_preprocessor", "css", "font_css_url", "js_preprocessor", "js"]
 
   build: =>
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
+    @set('css_preprocessor', 'sass') unless @get('css_preprocessor')
     @on "change:css", @populateCSS
     @pages.on "change:nav", @populateNavigation
 
@@ -35,10 +36,10 @@ class CMS.Models.Site extends CMS.Model
       @set preview_css: @get("temp_css")
     else
       $.ajax("#{_cms.apiUrl()}compile_css",
-        type: "PUT"
+        type: "POST"
         data:
           css: @get("temp_css")
-          css_preprocessor: @get("css_preprocessor")
+          css_preprocessor: @get("css_preprocessor") or "sass"
       ).done (data) =>
         @set preview_css: data?.css
 
@@ -50,6 +51,7 @@ class CMS.Models.Site extends CMS.Model
       data:
         rendered_header: @renderHeader()
         rendered_footer: @renderFooter()
+        rendered_css: @renderCSS()
       method: "PUT"
       success: @published
       error: @failedToPublish

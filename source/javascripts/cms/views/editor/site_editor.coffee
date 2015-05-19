@@ -105,7 +105,12 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   bindings:
     "style": "preview_css"
     "span.title": "title"
-    "link":
+    "link.fonts":
+      attributes: [
+        name: "href"
+        observe: "font_css_url"
+      ]
+    "link.template":
       attributes: [
         name: "href"
         observe: "template"
@@ -119,6 +124,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
       ]
 
   onRender: =>
+    $.site = @model
     @getRegion('controls').show new CMS.Views.SiteControls
       model: @model
     @model.whenReady =>
@@ -144,7 +150,6 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
       model: @model
     @getRegion('tab').show(tab_view)
     $.tv = tab_view
-    
 
   templateStylesheetLink: (template_name) => 
     if template_name

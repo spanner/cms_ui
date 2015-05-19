@@ -3,8 +3,8 @@
 .wrapper
   .section_image
 
-  %h2.section.editable{contenteditable: "true"}
+  %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
 
   %aside.section_aside.editable{contenteditable: "true"}
-
   .section_body.editable{contenteditable: "true"}
+  .section_note.editable{contenteditable: "true"}

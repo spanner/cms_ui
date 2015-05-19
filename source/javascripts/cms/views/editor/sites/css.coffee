@@ -12,14 +12,12 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
     header_area: "textarea#header"
 
   bindings:
+    ".font_css_url": "font_css_url"
     "#temp_css": "temp_css"
-    "style": "preview_css"
-
     "a.revert":
       observe: ["css", "temp_css"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
-
     "a.preview":
       observe: ["preview_css", "temp_css"]
       visible: "notTheSame"
@@ -50,6 +48,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         @ui.textarea.trigger "input"
 
   previewCSS: =>
+    console.log "previewCSS"
     @model.compileCSS()
 
   revertCSS: =>

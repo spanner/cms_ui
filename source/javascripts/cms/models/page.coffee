@@ -1,5 +1,5 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['title', 'introduction', 'nav', 'nav_name', 'nav_position', 'nav_heading', 'path', 'site_id']
+  savedAttributes: ['title', 'hide_title', 'introduction', 'hide_introduction', 'nav', 'nav_name', 'nav_position', 'nav_heading', 'path', 'site_id']
 
   # defaults:
   #   nav: true

@@ -1,4 +1,12 @@
 %main
+  .toggle
+    %input.hide_title{type: "checkbox"}
+    title hidden
   %h1{contenteditable: "true"}
+
+  .toggle
+    %input.hide_introduction{type: "checkbox"}
+    standfirst hidden
   #standfirst{contenteditable: "true"}
+
   #sections

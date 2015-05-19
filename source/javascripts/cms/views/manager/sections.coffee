@@ -14,9 +14,8 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
         selected: "selected"
         destroyed: "deleted_at"
     "a.title":
-      observe: "title"
-      onGet: "sectionName"
-      updateMethod: "html"
+      observe: ["title", "section_type"]
+      onGet: "thisOrThat"
       attributes: [
         observe: "id"
         name: "href"

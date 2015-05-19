@@ -24,14 +24,11 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   homeView: () =>
     @siteView()
 
-  siteView: (site_slug, page_path) =>
-    console.log "siteview"
+  siteView: (site_slug="", page_path="") =>
     $.session = @model
     @model.whenReady () =>
-      console.log "session ready"
       user = @model.getUser()
       @setUser(user)
-      # debugger
       # user.load()
       user.whenReady () =>
         if site = user.sites.findWhere(slug: site_slug)

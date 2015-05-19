@@ -1,6 +1,7 @@
-%link{type: "text/css", rel: "stylesheet"}
+%link.template{type: "text/css", rel: "stylesheet"}
+%link.fonts{type: "text/css", rel: "stylesheet"}
 %script{type: "text/javascript"}
-%style
+%style.preview
 
 #site_tabs
   %a.tab.current{data: {tab: "html"}} Parts

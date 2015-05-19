@@ -73,6 +73,9 @@ class CMS.Views.Section extends CMS.Views.ItemView
     ".section_aside":
       observe: "aside"
       updateMethod: "html"
+    ".section_note":
+      observe: "note"
+      updateMethod: "html"
 
   id: -> 
     "section_#{@model.get('id')}"
@@ -114,9 +117,15 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     "h1":
       observe: "title"
       updateMethod: "html"
+      classes: 
+        "hidden": "hide_title"
+    ".hide_title": "hide_title"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
+      classes: 
+        "hidden": "hide_introduction"
+    ".hide_introduction": "hide_introduction"
 
   onRender: () =>
     @stickit()
@@ -149,5 +158,7 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
       @_toolbar = new MediumEditor '.editable',
         elementsContainer: $("#rte").get(0)
         fixedToolbar: true
+        updateOnEmptySelection: true
+        disablePlaceholders: true
         updateOnEmptySelection: true
 
