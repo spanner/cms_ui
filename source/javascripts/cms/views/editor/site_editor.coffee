@@ -19,7 +19,6 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
-    console.log "ifPublishable", changed, published_at, updated_at
     not changed and (not published_at or updated_at > published_at)
 
   saveSite: (e) =>

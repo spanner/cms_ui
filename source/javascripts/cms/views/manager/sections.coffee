@@ -6,6 +6,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   events:
     "click a.title": "select"
     "click a.delete_section": "deleteSection"
+    "click a.add_section": "addSection"
 
   bindings:
     ":el":
@@ -30,8 +31,15 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
     @model?.destroyReversibly()
 
   addSection: =>
+    pos = (@model.get('position') ? 0)
+    above = @model.collection.filter (s) -> s.get('position') > pos
+    _.each above, (s, i) ->
+      console.log "displace", i, s
+      s.set('position', s.get('position') + 1)
     @model.collection.add
-      page_id: @collection.page.id
+      title: "New section"
+      page_id: @model.get('page_id')
+      position: pos + 1
 
   select: (e) =>
     e?.preventDefault()
@@ -50,6 +58,19 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   template: "sections/menu"
   childView: CMS.Views.ListedSection
+  
+  initialize: ->
+    super
+    $.sections = @collection
+
+  addItem: =>
+    top_pos = @collection.last()?.get('position') ? 0
+    console.log "addSection at pos", top_pos + 1
+    @collection.add
+      title: "New section"
+      page_id: @collection.page.id
+      position: top_pos + 1
+    @collection.sort()
 
 
 class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout

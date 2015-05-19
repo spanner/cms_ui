@@ -63,6 +63,9 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   @mixin "collection", "toggle"
   childViewContainer: ".menu_items"
   
+  events: =>
+    "click a.add_item": "addItem"
+  
   showing: =>
     @$el.css('display') isnt 'none'
 
@@ -77,6 +80,9 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
     @$el.stop().slideUp
       duration: 400
       easing: "glide"
+
+  addItem: =>
+    @collection.add({})
 
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView

@@ -9,7 +9,10 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
     @wait()
     @home()
     @model.whenUserReady @goAway
-    # @model.whenFailed @home
+    if @model.token
+      @model.once "change:token", @home
+    else
+      @home()
 
   wait: () =>
     @$el.find('.loading').show()

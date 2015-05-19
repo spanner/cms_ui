@@ -81,7 +81,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   addPage: (e) =>
     e?.preventDefault()
-    $.newpage = @model.collection.add
+    @model.collection.add
       dir: @model.get('path')
     @model.collection.sort()
 
@@ -106,6 +106,10 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
   template: "pages/menu"
+
+  addItem: =>
+    @collection.add
+      dir: "/"
 
 
 class CMS.Views.PageControls extends CMS.Views.ItemView

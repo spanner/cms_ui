@@ -358,96 +358,100 @@ a.section_type
       position: absolute
       display: none
       top: $control_height
-      background-color: $menu_up_bg
+      background-color: $menu_bg
       width: auto
       +box-shadow(0 4px 6px rgba(0,0,0,0.4))
-      ul.menu_items
-        list-style: none
+      ul
         padding: 0
         margin: 0
-        li
-          position: relative
-          padding: 6px 6px 6px 12px
-          clear: left
-          a
-            color: $menu_up_text
-            white-space: nowrap
-            +light
-          a.title
-          a.nav
-            color: $verypale
-            margin-left: 4px
-            &.selected
-              color: $menu_selected_bg
-          span[contenteditable]
-            display: inline-block
-            vertical-align: middle
-            background-color: white
-            color: $dark
-            border: 0
-            min-width: 40px
-            padding: 3px
-            margin-right: 40px
-            border-radius: 5px
-          span.slug
-            display: none
-            padding: 0
-          span.d, span.a
-            display: inline-block
-            vertical-align: middle
-            min-width: 16px
-            margin-right: 4px
-            height: 16px
-            color: $menu_up_text
-            &:first-child
-              min-width: 0
-          span.controls
-            position: absolute
-            top: 0
-            right: -54px
-            width: 45px
-            height: 34px
-            padding-left: 2px
-            padding-right: 8px
-            background-color: $menu_hover_bg
-            +border-right-radius(20px)
-            display: none
-            a
-              margin: 10px 0 0 0
-          &:hover
-            background-color: $menu_hover_bg
-            a, span.a
-              color: $menu_hover_text
-            .controls
-              display: block
-              background-color: $menu_hover_bg
-          &.changed
-            a.title
-              color: $warm
-          &.new
-            background-color: $warmish
-            color: $menu_hover_text
-            a.title
-              display: none
-            span.controls
-              display: block
-              background-color: $menu_new_bg
-            span.slug
-              display: inline-block
+        background-color: $menu_up_bg
+      li
+        list-style: none
+        position: relative
+        padding: 4px 6px 5px 12px
+        clear: left
+        min-width: 200px
+        &.add
+          background-color: $coolgrey00
+        a
+          color: $menu_up_text
+          white-space: nowrap
+          +light
+        a.title
+        a.nav
+          color: $verypale
+          margin-left: 4px
           &.selected
-            background-color: $menu_selected_bg
+            color: $menu_selected_bg
+        span[contenteditable]
+          display: inline-block
+          vertical-align: middle
+          background-color: white
+          color: $dark
+          border: 0
+          min-width: 40px
+          padding: 3px
+          margin-right: 40px
+          border-radius: 5px
+        span.slug
+          display: none
+          padding: 0
+        span.d, span.a
+          display: inline-block
+          vertical-align: middle
+          min-width: 16px
+          margin-right: 4px
+          height: 16px
+          color: $menu_up_text
+          &:first-child
+            min-width: 0
+        span.controls
+          position: absolute
+          top: 0
+          right: -54px
+          width: 45px
+          height: 34px
+          padding-left: 2px
+          padding-right: 8px
+          background-color: $menu_hover_bg
+          +border-right-radius(20px)
+          display: none
+          a
+            margin: 10px 0 0 0
+        &:hover
+          background-color: $menu_hover_bg
+          a, span.a
+            color: $menu_hover_text
+          .controls
+            display: block
+            background-color: $menu_hover_bg
+        &.changed
+          a.title
+            color: $warm
+        &.new
+          background-color: $warmish
+          color: $menu_hover_text
+          a.title
+            display: none
+          span.controls
+            display: block
+            background-color: $menu_new_bg
+          span.slug
+            display: inline-block
+        &.selected
+          background-color: $menu_selected_bg
+          color: white
+          a, span.a
             color: white
+          &:hover
+            background-color: $menu_selected_bg
             a, span.a
               color: white
-            &:hover
-              background-color: $menu_selected_bg
-              a, span.a
-                color: white
-            span.controls
-              background-color: $menu_selected_bg
-          &.destroyed
-            text-decoration: line-through
-            opacity: 0.4
+          span.controls
+            background-color: $menu_selected_bg
+        &.destroyed
+          text-decoration: line-through
+          opacity: 0.4
 
 
 #page_controls, #site_controls

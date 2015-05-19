@@ -1,5 +1,6 @@
 class CMS.Collections.Sections extends Backbone.Collection
   model: CMS.Models.Section
+  comparator: "position"
 
   initialize: (array, opts) ->
     @page = opts.page
