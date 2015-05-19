@@ -104,6 +104,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     "click a[data-tab]": "showTab"
 
   bindings:
+    "style": "preview_css"
     "span.title": "title"
     "link":
       attributes: [
@@ -111,7 +112,12 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
         observe: "template"
         onGet: "templateStylesheetLink"
       ]
-    "style": "preview_css"
+    "script":
+      attributes: [
+        name: "src"
+        observe: "template"
+        onGet: "templateJavascriptSrc"
+      ]
 
   onRender: =>
     @getRegion('controls').show new CMS.Views.SiteControls
@@ -143,4 +149,8 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
 
   templateStylesheetLink: (template_name) => 
     if template_name
-      "/stylesheets/templates/#{template_name}.css"
+      "/stylesheets/base/#{template_name}.css"
+
+  templateJavascriptSrc: (template_name) => 
+    if template_name
+      "/javascripts/base/#{template_name}.js"

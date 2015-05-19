@@ -8,9 +8,7 @@ class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
       observe: "template"
       selectOptions:
         collection:
-          default: "Default"
-          spanner: "Spanner"
-          invictus: "Invictus"
+          'responsive': "Standard responsive"
 
   onRender: =>
     @stickit()

@@ -1,4 +1,5 @@
 %link{type: "text/css", rel: "stylesheet"}
+%script{type: "text/javascript"}
 %style
 
 #site_tabs

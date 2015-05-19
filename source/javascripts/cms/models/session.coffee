@@ -32,12 +32,15 @@ class CMS.Models.Session extends CMS.Model
     $.user = @_user = new CMS.Models.User
 
   load: =>
-    if @get('token')
-      super
-    else
-      # wait and see
-      # @notLoaded()
+    super if @get('token')
     @_loaded.promise()
+  
+  notLoaded: () =>
+    # Load failure here is not final;
+    # we can still resolve after signing in,
+    # and routing in the ui will resume.
+    @clearToken()
+    # @_loaded.reject()
   
   populate: (data) =>
     @populateUser(data.user)
@@ -48,7 +51,6 @@ class CMS.Models.Session extends CMS.Model
     @_user
 
   setUser: (data) =>
-    console.log "setUser", data
     @populateUser(data.user)
     @writeCookie()
     @loaded()
@@ -72,7 +74,9 @@ class CMS.Models.Session extends CMS.Model
       path: "/"
       expires: 7
 
-  clearCookie: () =>
+  clearToken: () =>
+    console.log "clearToken"
+    @set "token", null
     $.removeCookie _cms.config('cookie_name'),
       domain: _cms.config('cookie_domain')
       path: "/"
