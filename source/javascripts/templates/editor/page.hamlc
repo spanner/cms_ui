@@ -4,7 +4,3 @@
   %h1{contenteditable: "true"}
 
   #sections
-
-  #actions
-    %a.add_section
-      \+ Add section
