@@ -1,102 +1,766 @@
+@import lib/definitions
+@import lib/fonts
+@import lib/loader
+@import lib/codemirror/codemirror
+@import lib/codemirror/spanner
+@import lib/medium
+
 $control_height: 36px
+$left_width: 480px
 
 a
   cursor: pointer
   text-decoration: none
 
 body
-  margin: 0
+  color: $dark
+  line-height: 1.6
 
-.cms-index
-  position: absolute
+body, html
+  margin: 0
+  padding: 0
+  width: 100%
+  height: 100%
+
+h1, h2, h3
+  font-weight: normal
+
+h2.label
+  color: $mid
+  font-size: 10px
+  margin: 0
+  padding: 10px
+
+input
+  +book
+  
+a.add, a.delete, a.menu, a.save
+  display: inline-block
+  vertical-align: top
+  width: 20px
+  height: 20px
+  text-indent: 20px
+  overflow: hidden
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('linksprite.png')
+
+a.add
+  background-position: 0 0
+  &:hover
+    background-position: 0 -32px
+
+a.delete
+  background-position: 0 -192px
+  &:hover
+    background-position: 0 -224px
+
+a.menu
+  background-position: 0 -384px
+  &:hover
+    background-position: 0 -416px
+
+a.save
+  background-position: 0 -288px
+  &:hover
+    background-position: 0 -320px
+
+a[contenteditable]
+  cursor: inherit
+
+a.section_type
+  width: 32px
+  height: 32px
+  display: inline-block
+  vertical-align: top
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('sectionsprite.png')
+  &.default
+    background-position: 0 0
+    &.selected
+      background-position: -32px 0
+    &:hover
+      background-position: -64px 0
+  &.asided
+    background-position: 0 -32px
+    &.selected
+      background-position: -32px -32px
+    &:hover
+      background-position: -64px -32px
+  &.twocol
+    background-position: 0 -64px
+    &.selected
+      background-position: -32px -64px
+    &:hover
+      background-position: -64px -64px
+  &.bigtext
+    background-position: 0 -96px
+    &.selected
+      background-position: -32px -96px
+    &:hover
+      background-position: -64px -96px
+  &.hero
+    background-position: 0 -128px
+    &.selected
+      background-position: -32px -128px
+    &:hover
+      background-position: -64px -128px
+  &.bigquote
+    background-position: 0 -160px
+    &.selected
+      background-position: -32px -160px
+    &:hover
+      background-position: -64px -160px
+  &.carousel
+    background-position: 0 -192px
+    &.selected
+      background-position: -32px -192px
+    &:hover
+      background-position: -64px -192px
+  &.video
+    background-position: 0 -224px
+    &.selected
+      background-position: -32px -224px
+    &:hover
+      background-position: -64px -224px
+  &.grid
+    background-position: 0 -256px
+    &.selected
+      background-position: -32px -256px
+    &:hover
+      background-position: -64px -256px
+
+.hidden
+  display: none
+
+.title_toggle
+  float: right
+  font-size: 0.8rem
+  color: $pale
+  margin-top: -1.7em
+  margin-right: 8px
+
+#ui
+  position: relative
   top: 0
   right: 0
   bottom: 0
   left: 0
+  border-top: 1px solid $menu_bg
+  transition: left 0.5s ease
+  &.shelved
+    left: $left_width
+    #main
+      #manager
+        left: $left_width
+    #shelf
+      #site_tabs
+        left: 0
+      #tab
+        left: 0
 
-.cms-ui
+#session
   height: 100%
   width: 100%
 
-.cms-session, .cms-editor
-  height: 100%
-  width: 100%
-
-.cms-control-bar
-  position: fixed
-  left: 0
-  right: 0
-  height: $control_height
-  background: black
-  color: white
-  a
-    color: white
-  .cms-trail
-    & > a
-      width: 100px
-      height: 100%
-      float: left
-      box-sizing: border-box
-      border:
-        right: 1px solid white
-      span
-        margin: 0 10px
-
-.cms-lists
-  position: fixed
-  top: $control_height
-  color: white
-  a
-    color: white
-    text-decoration: none
-  & > div
-    position: absolute
-    background: black
-    display: none
-    & > div
-      min-width: 100px
-      padding: 3px 10px
-  .cms-sites-list
-    // left: 0
-  .cms-pages-tree
-    left: 100px
-  .cms-sections-list
-    left: 200px
-
-.cms-output
-  position: fixed
-  left: 0
-  right: 0
-  top: $control_height + 1
+#shelf
+  +book
+  position: absolute
+  top: 0
+  right: auto
   bottom: 0
-  scroll: auto
-
-// Page
-
-header
-  background: #ddd
-  width: 100%
-  height: 96px
-  position: relative
-
-main
-  padding: 20px
-  width: 100%
-  box-sizing: border-box
-  position: relative
+  height: 100%
+  left: -$left_width
+  width: $left_width
+  background-color: $shelf_bg
+  color: $shelf_text
+  margin-top: 0
   overflow: hidden
-  section
-    position: relative
-    height: 240px
-    width: 240px
-    margin: 12px
-    background: #eee
-    float: left
+  z-index: 10
+  +box-shadow(inset -2px 0 6px rgba(0,0,0,0.4))
+  #site_tabs
+    position: fixed
+    top: 0
+    left: -$left_width
+    width: $left_width
+    right: 0
+    background: $shelf_head_bg
+    color: $menu_text
+    z-index: 100
+    height: $control_height
+    overflow: hidden
+    transition: left 0.5s ease
+    a.tab
+      +light
+      display: inline-block
+      padding: 6px 10px
+      color: $shelf_text
+      &.current
+        background-color: $shelf_bg
+  #site_controls
+    a
+      +box-shadow(inset -4px 0 8px rgba(0,0,0,0.4))
+      padding-bottom: 40px
+  #configuration
+    #tab
+      position: fixed
+      top: 0
+      left: -$left_width
+      bottom: 0
+      width: $left_width
+      height: 100%
+      box-sizing: border-box
+      padding-top: $control_height
+      overflow-y: auto
+      overflow-x: hidden
+      transition: left 0.5s ease
+      label
+        display: block
+        padding: 16px 10px 6px 10px
+        font-weight: bold
+        clear: both
+      select
+        margin: 16px 10px 6px 10px
+      textarea
+        width: 100%
+        clear: both
+      input
+        width: 100%
+        clear: both
+        border: none
+        background: $shelf_head_bg
+        color: $shelf_text
+        padding: 18px 10px
+        box-sizing: border-box
+        outline: none
+        +light
+        font-size: 1rem
+        &.title
+          font-size: 2rem
+      p.buttons
+        margin-top: -32px
+        a.button
+          display: inline-block
+          &.revert
+            +button($mid)
+            float: left
+            z-index: 10
+          &.preview
+            +button($greenish)
+            float: right
 
-footer
+#main
   position: relative
-  background: #ddd
-  width: 100%
-  height: 32px
+  z-index: 20
+  #editor
+    z-index: 50
+    margin-top: $control_height
+    padding: 20px 0
+    [contenteditable]
+      outline: none
+      &:hover
+        background:
+          color: $editable_bg
+      &:focus
+        background:
+          color: transparent
+          
 
-//
+    header
+      overflow: hidden
+
+    main
+      section
+        position: relative
+        border-top: 1px solid white
+        margin-top: 1em
+        padding-top: 1em
+        .admin
+          position: absolute
+          top: -20px
+          right: -85px
+          width: 85px
+          a.menu
+            position: relative
+            background-color: white
+          div.menu
+            position: relative
+            overflow: hidden
+            margin-top: -1px
+            background-color: white
+            +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+            width: 85px
+            height: 0
+            transition: height 0.5s ease
+            &.open
+              height: 200px
+            a.section_type
+              margin: 4px
+            input[type="checkbox"]
+              margin-right: 4px
+            label
+              display: block
+              color: $pale
+              padding: 8px 6px 0 6px
+
+  #manager
+    +book
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    background: $menu_bg
+    color: $menu_text
+    z-index: 100
+    height: $control_height
+    transition: left 0.5s ease
+    #site_manager
+      position: relative
+      margin: 0
+      float: left
+    #pages_manager
+      margin: 0
+      float: left
+    #sections_manager
+      position: relative
+      margin: 0
+      float: left
+    #rte
+      position: relative
+      float: left
+      margin-left: 24px
+      min-width: 400px
+
+
+    // general purpose menu setup
+    
+    .header
+      position: relative
+      display: inline-block
+      height: $control_height
+      background-color: $menu_bg
+      box-sizing: border-box
+      float: left
+      padding: 0 12px 0 5px
+      margin-right: 5px
+      a
+        display: inline-block
+        vertical-align: middle
+      a.title
+        +light
+        padding: 6px 0 0 0
+        color: $menu_text
+        &.site
+          padding: 6px 0 6px $control_height
+          height: $control_height
+          font-weight: bold
+          box-sizing: border-box
+          background:
+            image: image-url('spanner.svg')
+            position: 0 0
+            repeat: no-repeat
+          &.save_me
+            background-image: image-url('spanner_green.svg')
+            color: $green
+          &.publish_me
+            background-image: image-url('spanner_warm.svg')
+            color: $warm
+        &.arrowed
+          &:before
+            content: "\025B8"
+            width: 8px
+            font-family: sans-serif
+            margin-right: 8px
+      &:hover
+        background-color: $menu_hover_bg
+        a
+          color: $menu_hover_text
+      &.open
+        background-color: $menu_up_bg
+        +box-shadow(0 4px 6px rgba(0,0,0,0.4))
+        a
+          color: $menu_up_text
+        a.title.arrowed
+          &:before
+            content: "\025BE"
+            font-family: sans-serif
+            margin-right: 8px
+    .menu
+      position: absolute
+      display: none
+      top: $control_height
+      background-color: $menu_bg
+      width: auto
+      +box-shadow(0 4px 6px rgba(0,0,0,0.4))
+      ul
+        padding: 0
+        margin: 0
+        background-color: $menu_up_bg
+      li
+        list-style: none
+        position: relative
+        padding: 4px 6px 5px 12px
+        clear: left
+        min-width: 200px
+        &.add
+          background-color: $coolgrey00
+        a
+          color: $menu_up_text
+          white-space: nowrap
+          +light
+        a.title
+        a.nav
+          color: $verypale
+          margin-left: 4px
+          &.selected
+            color: $menu_selected_bg
+        span[contenteditable]
+          display: inline-block
+          vertical-align: middle
+          background-color: white
+          color: $dark
+          border: 0
+          min-width: 40px
+          padding: 3px
+          margin-right: 40px
+          border-radius: 5px
+        span.slug
+          display: none
+          padding: 0
+        span.d, span.a
+          display: inline-block
+          vertical-align: middle
+          min-width: 16px
+          margin-right: 4px
+          height: 16px
+          color: $menu_up_text
+          &:first-child
+            min-width: 0
+        span.controls
+          position: absolute
+          top: 0
+          right: -54px
+          width: 45px
+          height: 34px
+          padding-left: 2px
+          padding-right: 8px
+          background-color: $menu_hover_bg
+          +border-right-radius(20px)
+          display: none
+          a
+            margin: 10px 0 0 0
+        &:hover
+          background-color: $menu_hover_bg
+          a, span.a
+            color: $menu_hover_text
+          .controls
+            display: block
+            background-color: $menu_hover_bg
+        &.changed
+          a.title
+            color: $warm
+        &.new
+          background-color: $warmish
+          color: $menu_hover_text
+          a.title
+            display: none
+          span.controls
+            display: block
+            background-color: $menu_new_bg
+          span.slug
+            display: inline-block
+        &.selected
+          background-color: $menu_selected_bg
+          color: white
+          a, span.a
+            color: white
+          &:hover
+            background-color: $menu_selected_bg
+            a, span.a
+              color: white
+          span.controls
+            background-color: $menu_selected_bg
+        &.destroyed
+          text-decoration: line-through
+          opacity: 0.4
+
+
+#page_controls, #site_controls
+  position: absolute
+  right: 0
+  top: 0
+
+#page_controls, #site_controls
+  a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation, a.preview
+    display: inline-block
+    margin: 0
+    padding: 6px 10px
+    box-sizing: border-box
+    height: $control_height
+    color: white
+    +light
+  a.save_page, a.save_site
+    background-color: $greenish
+    &:hover
+      background-color: $green
+      +glow
+  a.publish_page, a.publish_site
+    background-color: $warmish
+    &:hover
+      background-color: $warm
+      +glow
+  span.confirmation
+    color: $green
+    display: none
+  a.preview
+    color: $pale
+    &.previewing
+      color: $green
+      &:before
+        content: '✓'
+    &:hover
+      color: $warm
+
+// undigested login stuff
+
+
+#session_barrier
+  +book
+  z-index: 60
+  #form
+    position: relative
+    width: 600px
+    margin-top: 100px
+    margin-left: 40px
+    
+    h1
+      color: $mid
+      margin: 0
+      font-size: 1.2rem
+    .signin
+      margin: 0 2em
+      .confirmation
+        padding-top: 12px
+        display: none
+      .qrcode
+        display: inline-block
+        vertical-align: top
+        width: 276px
+        margin: 0
+        img
+          padding: 10px
+          background: white
+      .instructions
+        display: inline-block
+        vertical-align: top
+        width: 256px
+        height: 256px
+        margin: 0
+        margin-left: 10px
+        h4
+          margin: -3px 0 0 0
+        p
+          margin: 0.25em 0
+
+    form
+      fieldset
+        border: 0
+        margin: 0
+        padding: 0
+        a.forgotten, a.lost
+          float: right
+          font-size: 0.9rem
+          padding-top: 5px
+          color: $mid
+          +hover
+        input[type="text"],input[type="email"],input[type="password"]
+          padding: 16px
+          width: 600px
+          font-size: 1.8em
+          border: 1px solid $pale
+          outline: none
+          +border-radius(4px)
+          +light
+          background:
+            position: right 10px top 10px
+            repeat: no-repeat
+            image: url('/images/fieldsprite.png')
+          &::-webkit-input-placeholder
+            color: $pale
+            font-size: 1rem
+          &::-moz-placeholder
+            color: $pale
+            font-size: 1rem
+          &:-ms-input-placeholder
+            color: $pale
+            font-size: 1rem
+          &.placeholder
+            color: $pale
+            font-size: 1rem
+            text-align: right
+          &.valid
+            background-position: right 22px top -82px
+          &.invalid
+            background-position: right 22px top -178px
+        input[type="submit"]
+          padding: 10px 20px 10px 15px
+          margin: 0
+          border: none
+          background-color: white
+          outline: none
+          +box-shadow(0 1px 3px $dark)
+          font-size: 1.5em
+          +light
+          +border-radius(3px)
+          &:active
+            color: $hover
+            +box-shadow(inset 0 1px 6px $dark)
+          &:disabled
+            background-color: white
+            color: $pale
+            box-shadow: none
+
+  .status_panel
+    margin: 5px 5px 5px 0
+    a.sign_out
+      color: $pale
+      +small
+
+#ui.previewing
+  #page_controls
+    a.preview
+      color: $green
+      &:before
+        content: '✓'
+
+  #main #editor main section
+    border-top: none
+    margin-top: 0
+    padding-top: 0
+    
+  .admin, .title_toggle
+    display: none
+
+
+
+
+// Invictus bits looking for a better home
+
+$page: black
+$text: white
+$yellow: #ffd700
+$grey: #878787
+
+$black80: #333333
+$black60: #666666
+$black40: #999999
+$black20: #cccccc
+
+$yellow80: #ffdf33
+$yellow60: #ffe766
+$yellow40: #ffef99
+$yellow20: #fff7cc
+
+$twitter: #5ea9dd
+
+
+#editor
+  font-size: 110%
+
+  a
+    color: $yellow
+
+  a.play
+    cursor: pointer
+    background:
+      position: center center
+      repeat: no-repeat
+      image: image-url('play.png')
+
+  a.twitter, a.facebook, a.youtube
+    display: inline-block
+    width: 24px
+    height: 24px
+    overflow: hidden
+    background:
+      position: top left
+      repeat: no-repeat
+      image: image-url("invictus/social_sprite.png")
+
+  a.twitter
+    background-position: 0 0
+    &:hover
+      background-position: -24px 0
+
+  a.facebook
+    background-position: 0 -24px
+    &:hover
+      background-position: -24px -24px
+
+  a.youtube
+    background-position: 0 -48px
+    &:hover
+      background-position: -24px -48px
+
+  header
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    padding-top: 36px
+    padding-bottom: 8px
+    background-color: black
+    &.pinned
+      position: fixed
+      top: -26px
+      left: 0
+      width: 100%
+      z-index: 1000
+    #logo
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      width: 210px
+      height: 70px
+      margin: 0
+      background:
+        position: top left
+        repeat: no-repeat
+        size: contain
+        image: image-url('invictus/logo.png')
+    nav
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      width: 650px
+      a
+        padding: 10px
+      
+    #twitface
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      a
+        display: block
+        float: left
+        margin: 0 0 0 6px
+      
+  main
+    position: relative
+    margin-top: 150px
+    margin-bottom: 80px
+
+  footer
+    clear: both
+    margin: 24px 0
+    height: 24px
+    border-top: 2px dotted $yellow
+    nav
+      margin: 32px 0
+      a
+        padding: 10px
+
+

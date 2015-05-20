@@ -1,0 +1,13 @@
+%label
+  Header
+%textarea#header
+
+%p.buttons<
+  %a.button.preview.header preview ▸
+
+%label
+  Footer
+%textarea#footer
+
+%p.buttons<
+  %a.button.preview.footer preview ▸

@@ -74,4 +74,12 @@ end
 require 'rack/rewrite'
 use Rack::Rewrite do
   rewrite %r{^\/sites\/.*}, '/index.html'
+  rewrite %r{^\/session\/.*}, '/index.html'
+end
+
+activate :deploy do |deploy|
+  deploy.method = :rsync
+  deploy.host = "seagoon.spanner.org"
+  deploy.path = "/var/www/cms/ui/public"
+  deploy.clean = true
 end

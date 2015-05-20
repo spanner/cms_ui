@@ -1,1 +1,8 @@
-%a.cms-title
+%span.descent
+%a.title
+%a.nav ⚑
+%span.slug{contenteditable: "true"}
+%span.controls>
+  %a.save.save_page √
+  %a.add.add_page +
+  %a.delete.delete_page x

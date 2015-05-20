@@ -1,0 +1,27 @@
+.signin
+  %form.password
+    %h3
+      Resend confirmation
+    %fieldset
+      %p
+        %label{:for => "email"}
+          Email address
+        %input#email{:name => "email", :type => "email", :required => "required"}
+
+      .buttons
+        %input{:type => "submit", :value => "Send message"}
+        %span.formnote
+        or
+        %a{href: "/"}
+          cancel
+
+  .confirmation
+    %h3
+      Confirmation sent
+
+    %p
+      Thank you. If we recognise
+      %span.email
+      then a new confirmation message will be sent.
+      Please allow a few minutes for it to arrive, and keep an eye on your spam folder.
+      The message will appear to come from robot@siss.io.

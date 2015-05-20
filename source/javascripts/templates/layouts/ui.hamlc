@@ -1,1 +1,8 @@
-.cms-ui
+#shelf
+  #configuration
+
+#main
+  #manager
+  #editor
+
+#session_barrier

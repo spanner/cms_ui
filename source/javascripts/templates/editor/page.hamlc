@@ -1,0 +1,6 @@
+%main
+  .title_toggle
+    %input.hide_title{type: "checkbox"} hide page title
+  %h1{contenteditable: "true"}
+
+  #sections

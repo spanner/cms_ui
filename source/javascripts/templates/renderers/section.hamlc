@@ -1,0 +1,6 @@
+.wrapper
+  .section_image
+  %h2.section
+  %aside.section_aside
+  .section_body
+  .section_note

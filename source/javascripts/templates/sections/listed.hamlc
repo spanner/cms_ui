@@ -1,1 +1,4 @@
-%a.cms-title
+%a.title
+%span.controls
+  %a.add.add_section +
+  %a.delete.delete_section x

@@ -1,23 +1,36 @@
 class CMS.Models.User extends CMS.Model
+  savedAttributes: ['email', 'name', 'password', 'password_confirmation', 'otp_secret']
   idAttribute: "uid"
-  url: =>
-    "#{_cms.apiUrl()}users/#{@get("uid")}"
 
   readinessCriteria:
     name: "populatedString"
     email: "validEmail"
-    
-  savedAttributes: ['email', 'name', 'password', 'password_confirmation', 'otp_secret', 'otp_attempt']
+
+  url: =>
+    "#{_cms.apiUrl()}users/#{@get("uid")}"
+
+  initialize: =>
+    $(document).ajaxSend @authenticateRequest
+    super
 
   build: =>
     @sites = new CMS.Collections.Sites @get("sites")
-    @on "change:sites", (model, data) => @sites.reset data
 
-  populate: =>
-    unless @get("populated")
-      @fetch().done (data) =>
-        @sites.reset(data.sites)
-        @set 'populated', true
+  populate: (data) =>
+    console.log "user.populate", data
+    @sites.reset(data.sites)
+
+  readCookie: () =>
+    @set 'token', $.cookie(_cms.config('cookie_name'))
+
+  authenticateRequest: (e, request) =>
+    # request.setRequestHeader("X-ClientID", _cms.clientID)
+    if token = @get('token')
+      request.setRequestHeader("Authorization", "Token token=#{token}")
+
+
+
+
 
   # passwordCheck: =>
   #   url = "#{_sis.config('auth_url')}/users/sign_in.json"

@@ -1,0 +1,13 @@
+%p.large
+  %label
+    Site title
+  %input.title
+
+%p
+  %label
+    domains
+  %input.domain
+
+%p
+  %label{for: "template"} Base layout
+  %select.template#template

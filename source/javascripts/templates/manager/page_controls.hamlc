@@ -1,0 +1,8 @@
+%a.preview
+  preview mode
+%span.confirmation
+  hi
+%a.save_page
+  save page
+%a.publish_page
+  publish page

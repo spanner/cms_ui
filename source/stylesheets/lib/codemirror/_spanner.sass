@@ -1,0 +1,53 @@
+$background: none
+.cm-s-spanner
+  &.CodeMirror
+    background: $background
+    clear: both
+    color: #e0e0e0
+    &::selection, &::-moz-selection
+      background: rgba(48, 48, 48, .99)
+  div.CodeMirror-selected
+    background: #303030 !important
+  .CodeMirror-gutters
+    background: inherit
+    border-right: 1px solid $shelf_bg
+  .CodeMirror-guttermarker
+    color: #ac4142
+  .CodeMirror-guttermarker-subtle
+    color: #505050
+  .CodeMirror-linenumber
+    color: #a0a0a0
+  .CodeMirror-cursor
+    border-left: 1px solid #b0b0b0 !important
+  span.cm-comment
+    color: #8f5536
+  span.cm-atom
+    color: #aa759f
+  span.cm-number
+    color: #aa759f
+  span.cm-property, .cm-s-spanner span.cm-attribute
+    color: #90a959
+  span.cm-keyword
+    color: #ac4142
+  span.cm-string
+    color: #f4bf75
+  span.cm-variable
+    color: #90a959
+  span.cm-variable-2
+    color: #6a9fb5
+  span.cm-def
+    color: #d28445
+  span.cm-bracket
+    color: #e0e0e0
+  span.cm-tag
+    color: #ac4142
+  span.cm-link
+    color: #aa759f
+  span.cm-error
+    background: #ac4142
+    color: #b0b0b0
+  .CodeMirror-activeline-background
+    background: #202020 !important
+  .CodeMirror-matchingbracket
+    text-decoration: underline
+    color: white !important

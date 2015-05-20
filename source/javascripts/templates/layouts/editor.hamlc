@@ -1,15 +1,5 @@
-.cms-control-bar
-  .cms-trail
-    %a.cms-site-crumb.cms-crumb
-    %a.cms-page-crumb.cms-crumb
-    %a.cms-section-crumb.cms-crumb
+%header
 
-  .cms-user-controls
+#page
 
-.cms-output
-
-.cms-lists
-  .cms-sites-list
-  .cms-pages-tree
-  .cms-sections-list
-
+%footer

@@ -1,0 +1,56 @@
+.signin
+  %h3.waiter
+    Please wait while we check your confirmation token.
+
+  %p.refusal
+    Sorry: this confirmation link does not seem to be correct. Have you already confirmed your account?
+    If not, you can 
+    %a{href: "/session/reconfirm"}
+      request another confirmation message.
+    Please make sure you're using the whole link.
+
+  %form{autocomplete: "off"}
+    %h3
+      Hello
+      %span.name
+
+    %p.preamble
+      Thank you for accepting our invitation.
+      Before we go any further, please use this form to secure your account.
+      Your password must be at least six characters long. Spaces are allowed and we recommend using several words.
+
+    %fieldset.password
+      %p
+        %input#password{:name => "password", :type => "password", :required => "required", :placeholder => "Password"}
+      .password_confirmation
+        %p
+          %input#password_confirmation{:name => "password_confirmation", :type => "password", :required => "required", :placeholder => "and please confirm"}
+
+    %fieldset.second_factor
+      .setup
+        .qrcode
+        .instructions
+          %h4
+            Second factor
+          %p
+            This account requires two-factor authentication.
+            Please install 
+            %a{href:"http://m.google.com/authenticator"}
+              Google Authenticator
+            on your phone and then use the app to scan this barcode. 
+            Enter the resulting code in the box below to confirm the link.
+          %p
+            Each time you sign in you will be asked for your password and the current authentication code.
+      %p
+        %input#otp_attempt{:name => "otp_attempt", :type => "text", :placeholder => "Authentication code"}
+
+    %fieldset.buttons
+      %input{:type => "submit", :value => "Save and continue"}
+      %p.error
+
+  .confirmation
+    %h3
+      Thank you. 
+    %p.waiter
+      Control interface loading.
+  
