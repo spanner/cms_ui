@@ -10,5 +10,6 @@
   %body
     = yield
 
+    = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"
     = javascript_include_tag "/javascripts/cms.js"
     = yield_content :scripts

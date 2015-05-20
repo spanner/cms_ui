@@ -1,16 +1,15 @@
 #= require hamlcoffee
-#= require lib/jquery
-#= require lib/jquery.cookie
-#= require lib/underscore
-#= require lib/underscore.string
-#= require lib/backbone
-#= require lib/backbone.cocktail
-#= require lib/backbone.marionette
-#= require lib/backbone.stickit
-#= require lib/utilities
-#= require lib/codemirror
-#= require lib/medium
+#= require lib/_jquery.cookie
+#= require lib/_underscore
+#= require lib/_underscore.string
+#= require lib/_backbone
+#= require lib/_backbone.cocktail
+#= require lib/_backbone.marionette
+#= require lib/_backbone.stickit
+#= require lib/_codemirror
+#= require lib/_medium
 
+#= require lib/utilities
 #= require ./cms/application
 #= require ./cms/config
 #= require ./cms/mixins

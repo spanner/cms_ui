@@ -1,5 +1,4 @@
-#= require lib/jquery
-#= require lib/underscore
+#= require lib/_underscore
 #= require lib/utilities
 
 #= require_tree ./components

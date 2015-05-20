@@ -1,1 +1,0 @@
-#= require ./backbone.stickit/backbone.stickit-0.9.0
