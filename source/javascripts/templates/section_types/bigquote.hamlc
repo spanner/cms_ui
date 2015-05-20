@@ -1,0 +1,3 @@
+%p
+  %span.quote.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
+  %span.speaker.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}

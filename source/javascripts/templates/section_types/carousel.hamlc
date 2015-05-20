@@ -1,0 +1,6 @@
+.slides
+  .slider
+  .section_title
+    %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
+
+.captions.editable{contenteditable: "true"}

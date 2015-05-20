@@ -143,6 +143,30 @@ a.section_type
   margin-top: -1.7em
   margin-right: 8px
 
+p
+  span.quote
+    display: block
+    color: $mid
+    &:before
+      content: '“'
+      font-size: 180%
+      position: absolute
+      width: 12px
+      text-align: right
+      margin-left: -0.5em
+      margin-top: 0
+    &:after
+      content: '”'
+      font-size: 180%
+      position: absolute
+      margin-left: 8px
+      margin-top: 0
+  span.speaker
+    display: block
+    color: white
+
+
+
 #ui
   position: relative
   top: 0
@@ -736,6 +760,7 @@ $twitter: #5ea9dd
       display: inline-block
       vertical-align: middle
       width: 650px
+      font-size: 1.2rem
       a
         padding: 10px
       

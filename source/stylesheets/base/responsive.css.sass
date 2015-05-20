@@ -17,16 +17,18 @@ header
   background-color: black
   color: white
   section
+    position: relative
+    clear: both
     margin: 20px 0
+    +clearfix
     .wrapper
       .section_title
+        display: none
         h2.section
           font-size: 2em
           margin-right: 100px
-          display: none
         &.showing
-          h2.section
-            display: block
+          display: block
       &.default
         .section_image, .section_note, .section_aside
           display: none
@@ -34,22 +36,20 @@ header
           min-height: 100px
           max-width: 800px
       &.twocol
-        .section_image, .section_note
-          display: none
-        .section_body, .section_aside
+        .col
           display: inline-block
           vertical-align: top
+          float: left
           min-height: 100px
           width: 460px
-        .section_aside
-          float: right
+          &.second
+            float: right
       &.asided
         .section_image, .section_note
           display: none
         .section_aside
           float: right
-          width: 30%
-          max-width: 320px
+          width: 293px
           min-height: 50px
           margin: 0 0 10px 60px
           color: $pale
@@ -82,59 +82,55 @@ header
           display: block
           font-size: 1.6rem
           line-height: 1.6
-          margin: 0 auto
-          p
-            display: inline
-            margin: 0
-        .section_image, .section_aside, .section_note
-          display: none
       &.bigquote
-        margin-top: 4em
-        margin-bottom: 4em
-        .section_body, .section_note
+        p
           display: block
           width: 80%
           font-size: 2rem
           line-height: 1.2
-          margin: 0 auto
-          color: $mid
-          p
-            display: inline
-            margin: 0
-        .section_body
-          &:before
-            content: '“'
-            font-size: 180%
-            position: absolute
-            width: 12px
-            text-align: right
-            margin-left: -0.5em
-            margin-top: 0
-          &:after
-            content: '”'
-            font-size: 180%
-            position: absolute
-            margin-left: 8px
-            margin-top: 0
-        .section_note
-          color: white
-        .section_image, .section_aside
-          display: none
-        
+          margin: 2em auto
+      &.grid
+        p
+          width: 300px
+          margin: 20px
+          display: inline-block
+          float: left
       &.carousel
-        .section_aside, .section_note
-          display: none
-        .section_image
-          display: block
-          width: 950px
-          border: 5px solid white
-          height: auto
-          min-height: 480px
-          background-color: $pale
-        .section_body
-          display: block
-          .caption
+        .slides
+          position: relative
+          width: 960px
+          height: 540px
+          overflow: hidden
+          background-color: $green
+          .section_title
+            position: absolute
+            bottom: 10px
+            left: 32px
+            text-shadow: 0 0 10px rgba(0,0,0,0.4)
+            h2
+              margin: 0
+              font-size: 3.6rem
+          .slider
+            width: 5000px
+            height: 540px
+            .image
+              width: 960px
+              height: 540px
+              display: inline-block
+              float: left
+              margin: 0
+              background:
+                repeat: no-repeat
+                position: center center
+                size: cover
+        .captions
+          margin-top: 20px
+          p
+            width: 293px
+            margin: 20px
             display: inline-block
             float: left
-            width: 200px
-            margin-right: 20px
+            &:last-child
+              margin-right: 0
+            &:first-child
+              margin-left: 0
