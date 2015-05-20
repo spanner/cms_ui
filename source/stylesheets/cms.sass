@@ -261,16 +261,11 @@ a.section_type
     padding: 20px 0
     [contenteditable]
       outline: none
-      border:
-        width: 2px
-        color: transparent
-        radius: 5px
-        style: dotted
       &:hover
-        border:
-          color: $yellow
+        background:
+          color: $editable_bg
       &:focus
-        border:
+        background:
           color: transparent
           
 
@@ -672,6 +667,8 @@ $twitter: #5ea9dd
 
 
 #editor
+  font-size: 110%
+
   a
     color: $yellow
 
