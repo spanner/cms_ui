@@ -14,3 +14,6 @@ gem "haml_assets"
 
 # For url-handling in dev
 gem 'rack-rewrite'
+
+# For repling
+gem 'racksh'

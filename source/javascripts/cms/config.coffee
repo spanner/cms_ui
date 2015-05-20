@@ -3,8 +3,8 @@
 
 class CMS.Config
   defaults: 
-    api_url: "https://api.cms.io/"
-    cookie_domain: ".cms.io"
+    api_url: "http://api.cupboard.org/"
+    cookie_domain: ".cupboard.org"
     cookie_name: "cms_prod"
     logging: false
 
@@ -19,7 +19,7 @@ class CMS.Config
     @_settings = _.defaults options, @[options.environment], @defaults
 
   guessEnvironment: () ->
-    prod = new RegExp(/cms\.io/)
+    prod = new RegExp(/cupboard\.org/)
     dev = new RegExp(/cms\.dev/)
     if prod.test(window.location.href)
       "production"

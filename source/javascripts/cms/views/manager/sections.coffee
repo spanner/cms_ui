@@ -74,3 +74,9 @@ class CMS.Views.SectionsList extends CMS.Views.MenuView
 class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
   template: "manager/sections"
   menuView: CMS.Views.SectionsList
+  
+  bindings:
+    '.header a.title':
+      observe: ["title", "section_type"]
+      onGet: "thisOrThat"
+  

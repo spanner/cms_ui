@@ -1,5 +1,5 @@
 class CMS.Views.LayoutView extends Backbone.Marionette.LayoutView
-  @mixin "logging"
+  @mixin "logging", "bindings"
 
 
 class CMS.Views.MenuLayout extends CMS.Views.LayoutView
@@ -50,7 +50,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
 
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
-  @mixin "collection", "toggle"
+  @mixin "collection", "toggle", "bindings"
 
   show: () =>
     @$el.show()
@@ -60,7 +60,7 @@ class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
 
 
 class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
-  @mixin "collection", "toggle"
+  @mixin "collection", "toggle", "bindings"
   childViewContainer: ".menu_items"
   
   events: =>
@@ -86,6 +86,7 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
 
 
 class CMS.Views.ItemView extends Backbone.Marionette.ItemView
+  @mixin "bindings"
 
   onRender: =>
     @stickit()
@@ -93,41 +94,4 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
   log: () =>
     if _cms.logging()
       console.log "#{@constructor.name} view", arguments...
-
-  #visibleFns
-  
-  visibleAsInlineBlock: ($el, isVisible, options) =>
-    if isVisible
-      $el.css "display", "inline-block"
-    else
-      $el.css "display", "none"
-
-  visibleAsBlock: ($el, isVisible, options) =>
-    if isVisible
-      $el.css display: "inline-block"
-    else
-      $el.hide()
-
-  #visibility controls
-  
-  thisOrNotThat: ([value, other_value]=[]) =>
-    value or not other_value
-
-  thisAndThat: ([value, other_value]=[]) =>
-    value and other_value
-
-  thisAndNotThat: ([value, other_value]=[]) =>
-    value and not other_value
-  
-  notTheSame: ([value, other_value]=[]) =>
-    value isnt other_value
-
-
-  #onGets
-
-  untrue: (val) =>
-    not val
-  
-  thisOrThat: ([value, other_value]=[]) =>
-    value or other_value
 

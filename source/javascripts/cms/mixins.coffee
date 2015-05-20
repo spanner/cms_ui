@@ -11,7 +11,45 @@
 
 
 # ### View Mixins
-CMS.Mixins.Crumbed = {}
+CMS.Mixins.CommonBindings = 
+  #visibleFns
+  
+  visibleAsInlineBlock: ($el, isVisible, options) ->
+    if isVisible
+      $el.css "display", "inline-block"
+    else
+      $el.css "display", "none"
+
+  visibleAsBlock: ($el, isVisible, options) ->
+    if isVisible
+      $el.css display: "inline-block"
+    else
+      $el.hide()
+
+  #visibility controls
+  
+  thisOrNotThat: ([value, other_value]=[]) ->
+    value or not other_value
+
+  thisAndThat: ([value, other_value]=[]) ->
+    value and other_value
+
+  thisAndNotThat: ([value, other_value]=[]) ->
+    value and not other_value
+  
+  notTheSame: ([value, other_value]=[]) ->
+    value isnt other_value
+
+
+  #onGets
+
+  untrue: (val) ->
+    not val
+  
+  thisOrThat: ([value, other_value]=[]) ->
+    value or other_value
+
+  
 
 
 CMS.Mixins.Text =
@@ -71,7 +109,7 @@ CMS.Mixins.Logging =
 
 
 Cocktail.mixins =
-  crumbed: CMS.Mixins.Crumbed
+  bindings: CMS.Mixins.CommonBindings
   item: CMS.Mixins.Item
   collection: CMS.Mixins.Collection
   parental: CMS.Mixins.Parental
