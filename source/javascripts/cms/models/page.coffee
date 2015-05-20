@@ -23,6 +23,8 @@ class CMS.Models.Page extends CMS.Model
     @sections.reset(data.sections)
     @populateDates(data)
     @set "changed", false
+    if @isNew() and not @sections.length
+      @sections.add({})
     true
 
   splitPath: =>

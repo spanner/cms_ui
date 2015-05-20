@@ -1,12 +1,10 @@
 %main
-  .toggle
-    %input.hide_title{type: "checkbox"}
-    title hidden
+  .title_toggle
+    %input.hide_title{type: "checkbox"} hide page title
   %h1{contenteditable: "true"}
 
-  .toggle
-    %input.hide_introduction{type: "checkbox"}
-    standfirst hidden
-  #standfirst{contenteditable: "true"}
-
   #sections
+
+  #actions
+    %a.add_section
+      \+ Add section
