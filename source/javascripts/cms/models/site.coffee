@@ -42,7 +42,7 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         @set processed_css: data?.css
 
-  # Publish is a specialized form of save.
+  # Publish is a specialized form of save that takes a snapshot of the current html state.
   #
   publish: () =>
     $.ajax
@@ -50,13 +50,12 @@ class CMS.Models.Site extends CMS.Model
       data:
         rendered_header: @renderHeader()
         rendered_footer: @renderFooter()
-        rendered_css: @renderCSS()
       method: "PUT"
       success: @published
       error: @failedToPublish
 
   published: (response) =>
-    @set(response)
+    @populate(response)
 
   renderHeader: () =>
     renderer = new CMS.Views.HeaderRenderer
