@@ -8,18 +8,18 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
     "paste .temp_css": "paste"
 
   ui:
-    textarea: "textarea#temp_css"
+    textarea: "textarea#css"
     header_area: "textarea#header"
 
   bindings:
     ".font_css_url": "font_css_url"
-    "#temp_css": "temp_css"
+    "#css": "css"
     "a.revert":
-      observe: ["css", "temp_css"]
+      observe: ["original_css", "css"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
     "a.preview":
-      observe: ["preview_css", "temp_css"]
+      observe: ["original_css", "css"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
 
@@ -48,12 +48,8 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         @ui.textarea.trigger "input"
 
   previewCSS: =>
-    console.log "previewCSS"
-    @model.compileCSS()
+    @model.previewCSS()
 
   revertCSS: =>
     @model.revertCSS()
     @editor?.setValue @ui.textarea.val()
-
-  save: =>
-    @model.save(css: @model.get("preview_css"))

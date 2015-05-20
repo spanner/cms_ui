@@ -103,7 +103,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     "click a[data-tab]": "showTab"
 
   bindings:
-    "style": "preview_css"
+    "style": "processed_css"
     "span.title": "title"
     "link.fonts":
       attributes: [

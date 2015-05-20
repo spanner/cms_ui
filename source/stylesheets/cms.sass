@@ -13,7 +13,6 @@ a
   text-decoration: none
 
 body
-  +book
   color: $dark
   line-height: 1.6
 
@@ -153,6 +152,7 @@ a.section_type
   width: 100%
 
 #shelf
+  +book
   position: absolute
   top: 0
   right: auto
@@ -282,6 +282,7 @@ a.section_type
               margin: 4px
 
   #manager
+    +book
     position: fixed
     top: 0
     left: 0
@@ -700,4 +701,14 @@ $twitter: #5ea9dd
     position: relative
     margin-top: 150px
     margin-bottom: 80px
-  
+
+  footer
+    clear: both
+    margin: 24px 0
+    height: 24px
+    border-top: 2px dotted $yellow
+    nav
+      margin: 32px 0
+      a
+        padding: 10px
+      

@@ -1,7 +1,7 @@
 %p
-  %label.css_preprocessor{for: "temp_css"}
+  %label.css_preprocessor{for: "css"}
     Site SASS
-  %textarea#temp_css
+  %textarea#css
 
 %p.buttons<
   %a.button.revert ◂ revert

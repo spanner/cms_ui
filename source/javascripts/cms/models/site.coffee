@@ -8,13 +8,13 @@ class CMS.Models.Site extends CMS.Model
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
     @set('css_preprocessor', 'sass') unless @get('css_preprocessor')
-    @on "change:css", @populateCSS
-    @pages.on "change:nav", @populateNavigation
 
   populate: (data) =>
     @pages.reset(data.pages)
     @populateDates(data)
     @populateNavigation()
+    @populateCSS()
+    @pages.on "change:nav", @populateNavigation
     true
   
   populateNavigation: (e) =>
@@ -22,26 +22,25 @@ class CMS.Models.Site extends CMS.Model
     @touch() if e
 
   populateCSS: =>
-    @set temp_css: @get("css")
-    @compileCSS()
+    @set original_css: @get("css")
+    @set original_processed_css: @get("processed_css")
 
   revertCSS: =>
-    @populateCSS()
+    @set css: @get("original_css")
+    @set processed_css: @get("original_processed_css")
 
   previewCSS: =>
-    @set preview_css: @get("temp_css")
-
-  compileCSS: =>
     if @get("css_preprocessor") is "css"
-      @set preview_css: @get("temp_css")
+      @set processed_css: @get("css")
     else
       $.ajax("#{_cms.apiUrl()}compile_css",
         type: "POST"
         data:
-          css: @get("temp_css")
+          css: @get("css")
           css_preprocessor: @get("css_preprocessor") or "sass"
+          # css_enclosure: "#page"
       ).done (data) =>
-        @set preview_css: data?.css
+        @set processed_css: data?.css
 
   # Publish is a specialized form of save.
   #
