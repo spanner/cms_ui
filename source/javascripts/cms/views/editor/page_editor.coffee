@@ -3,15 +3,21 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   
   events:
     "click a.menu": "toggleMenu"
+    "click div.properties": "containEvent"
   
   modelEvents:
     "change:section_type": "setSelection"
   
+  bindings:
+    "input.show_title": "show_title"
+  
   onRender: () =>
+    @stickit()
     @_menu = @$el.find('.menu')
+    @_typer = @$el.find('.section_types')
     for type in CMS.Models.Section.types
       do (type) =>
-        a = $("<a class=\"section_type #{type}\"></a>").appendTo(@_menu)
+        a = $("<a class=\"section_type #{type}\"></a>").appendTo(@_typer)
         a.click (e) =>
           e?.preventDefault()
           @setType(type)
@@ -19,8 +25,8 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
 
   setSelection: () =>
     type = @model.get('section_type') or 'default'
-    @_menu.find("a.section_type").removeClass('selected')
-    @_menu.find("a.#{type}").addClass('selected')
+    @_typer.find("a.section_type").removeClass('selected')
+    @_typer.find("a.#{type}").addClass('selected')
 
   toggleMenu: (e) =>
     e?.preventDefault()
@@ -66,7 +72,9 @@ class CMS.Views.Section extends CMS.Views.ItemView
       ]
     "h2.section":
       observe: "title"
-      updateMethod: "html"
+    ".section_title":
+      classes:
+        showing: "show_title"
     ".section_body":
       observe: "content"
       updateMethod: "html"

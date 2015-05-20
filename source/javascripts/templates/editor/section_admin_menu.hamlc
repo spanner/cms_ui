@@ -1,3 +1,7 @@
 %a.menu
 .menu
   .section_types
+  .properties
+    %label
+      %input.show_title{type: "checkbox"} 
+      title

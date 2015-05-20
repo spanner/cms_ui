@@ -19,12 +19,15 @@ header
   section
     margin: 20px 0
     .wrapper
-      h2.section
-        font-size: 2em
-        margin-right: 100px
-      &.default
+      .section_title
         h2.section
+          font-size: 2em
+          margin-right: 100px
           display: none
+        &.showing
+          h2.section
+            display: block
+      &.default
         .section_image, .section_note
           display: none
         .section_aside
@@ -72,8 +75,6 @@ header
           &[contenteditable]
             border: none
       &.bigtext
-        h2.section
-          display: none
         .section_body
           display: block
           width: 60%
@@ -86,12 +87,12 @@ header
         .section_image, .section_aside, .section_note
           display: none
       &.bigquote
-        h2.section
-          display: none
+        margin-top: 4em
+        margin-bottom: 4em
         .section_body, .section_note
           display: block
           width: 60%
-          font-size: 2.5rem
+          font-size: 2rem
           line-height: 1.2
           margin: 0 auto
           color: $mid
@@ -119,8 +120,6 @@ header
           display: none
         
       &.carousel
-        h2.section
-          display: none
         .section_aside, .section_note
           display: none
         .section_image

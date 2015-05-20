@@ -49,7 +49,10 @@ CMS.Mixins.CommonBindings =
   thisOrThat: ([value, other_value]=[]) ->
     value or other_value
 
+  # useful
   
+  containEvent: (e) ->
+    e?.stopImmediatePropagation()
 
 
 CMS.Mixins.Text =

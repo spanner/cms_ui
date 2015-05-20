@@ -84,42 +84,54 @@ a.section_type
       background-position: -32px 0
     &:hover
       background-position: -64px 0
-  &.twocol
+  &.asided
     background-position: 0 -32px
     &.selected
       background-position: -32px -32px
     &:hover
       background-position: -64px -32px
-  &.bigtext
+  &.twocol
     background-position: 0 -64px
     &.selected
       background-position: -32px -64px
     &:hover
       background-position: -64px -64px
-  &.hero
+  &.bigtext
     background-position: 0 -96px
     &.selected
       background-position: -32px -96px
     &:hover
       background-position: -64px -96px
-  &.bigquote
+  &.hero
     background-position: 0 -128px
     &.selected
       background-position: -32px -128px
     &:hover
       background-position: -64px -128px
-  &.carousel
+  &.bigquote
     background-position: 0 -160px
     &.selected
       background-position: -32px -160px
     &:hover
       background-position: -64px -160px
-  &.video
+  &.carousel
     background-position: 0 -192px
     &.selected
       background-position: -32px -192px
     &:hover
       background-position: -64px -192px
+  &.video
+    background-position: 0 -224px
+    &.selected
+      background-position: -32px -224px
+    &:hover
+      background-position: -64px -224px
+  &.grid
+    background-position: 0 -256px
+    &.selected
+      background-position: -32px -256px
+    &:hover
+      background-position: -64px -256px
 
 .hidden
   display: none
@@ -128,7 +140,8 @@ a.section_type
   float: right
   font-size: 0.8rem
   color: $pale
-  margin-top: -1.4em
+  margin-top: -1.7em
+  margin-right: 8px
 
 #ui
   position: relative
@@ -247,11 +260,16 @@ a.section_type
     margin-top: $control_height
     padding: 20px 0
     [contenteditable]
-      border: 2px dotted $greenish
       outline: none
-      border-radius: 5px
-      &:focus
-        border-color: $greyish
+      border:
+        width: 2px
+        color: transparent
+        radius: 5px
+        style: dotted
+      &:hover
+        border:
+          color: $yellow
+          
 
     header
       overflow: hidden
@@ -259,29 +277,35 @@ a.section_type
     main
       section
         position: relative
+        border-top: 1px solid white
+        margin-top: 1em
+        padding-top: 1em
         .admin
           position: absolute
-          top: 10px
-          right: -54px
+          top: -20px
+          right: -85px
           width: 85px
           a.menu
             position: relative
             background-color: white
-            border-radius: 3px
           div.menu
             position: relative
             overflow: hidden
-            margin-top: -3px
+            margin-top: -1px
             background-color: white
-            border-radius: 3px
             +box-shadow(0 2px 5px rgba(0,0,0,0.4))
             width: 85px
             height: 0
             transition: height 0.5s ease
             &.open
-              height: 120px
+              height: 192px
             a.section_type
               margin: 4px
+            input[type="checkbox"]
+              margin-right: 4px
+            label
+              color: $pale
+              padding: 4px 6px
 
   #manager
     +book
