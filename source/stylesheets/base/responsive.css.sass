@@ -88,7 +88,7 @@ header
           width: 80%
           font-size: 2rem
           line-height: 1.2
-          margin: 2em auto
+          margin: 1.5em auto
       &.grid
         p
           width: 300px
@@ -130,7 +130,14 @@ header
             margin: 20px
             display: inline-block
             float: left
+            color: $pale
+            a
+              color: darken($yellow, 15)
             &:last-child
               margin-right: 0
             &:first-child
               margin-left: 0
+            &.current
+              color: white
+              a
+                color: $yellow
