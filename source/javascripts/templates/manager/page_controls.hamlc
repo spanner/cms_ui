@@ -1,6 +1,8 @@
+%a.preview
+  preview mode
 %span.confirmation
   hi
 %a.save_page
-  Save
+  save page
 %a.publish_page
-  Publish
+  publish page

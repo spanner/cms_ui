@@ -118,6 +118,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   events:
     "click a.save_page": "savePage"
     "click a.publish_page": "publishPage"
+    "click a.preview": "togglePreview"
 
   ui:
     confirmation: "span.confirmation"
@@ -147,6 +148,10 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   
   confirm: (message) =>
     @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
+
+  togglePreview: (e) =>
+    e?.preventDefault()
+    $('#ui').toggleClass('previewing')
 
 
 class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout

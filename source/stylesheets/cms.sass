@@ -269,6 +269,9 @@ a.section_type
       &:hover
         border:
           color: $yellow
+      &:focus
+        border:
+          color: transparent
           
 
     header
@@ -495,7 +498,7 @@ a.section_type
   top: 0
 
 #page_controls, #site_controls
-  a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation
+  a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation, a.preview
     display: inline-block
     margin: 0
     padding: 6px 10px
@@ -516,9 +519,16 @@ a.section_type
   span.confirmation
     color: $green
     display: none
+  a.preview
+    color: $pale
+    &.previewing
+      color: $green
+      &:before
+        content: '✓'
+    &:hover
+      color: $warm
 
 // undigested login stuff
-
 
 
 #session_barrier
@@ -623,9 +633,25 @@ a.section_type
       color: $pale
       +small
 
+#ui.previewing
+  #page_controls
+    a.preview
+      color: $green
+      &:before
+        content: '✓'
+
+  #main #editor main section
+    border-top: none
+    margin-top: 0
+    padding-top: 0
+    
+  .admin, .title_toggle
+    display: none
 
 
-// Invictus bits awaiting a home
+
+
+// Invictus bits looking for a better home
 
 $page: black
 $text: white
@@ -738,4 +764,5 @@ $twitter: #5ea9dd
       margin: 32px 0
       a
         padding: 10px
-      
+
+
