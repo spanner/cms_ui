@@ -231,6 +231,7 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
 
   events: 
     "click a.add_slide": "addSlide"
+    "click .captions p": "setSlide"
 
   ui:
     carousel: ".carousel"
@@ -253,7 +254,7 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
     super
     @_slick = @ui.carousel.slick
       autoplay: true
-      autoplaySpeed: 5000
+      autoplaySpeed: 10000
     @_slick.on 'beforeChange', @setCaption
 
   addSlide: () =>
@@ -261,10 +262,11 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
     # add picture block to slides
     # add caption block to captions
 
+  setSlide: (e) =>
+    e?.preventDefault()
+    if clicked = e.target
+      @ui.carousel.slick 'slickGoTo', $(clicked).index()
+
   setCaption: (e, slick, current_slide, next_slide) =>
     @ui.captions.find('p').removeClass('current').eq(next_slide).addClass('current')
-    
-    
-    
-    
 
