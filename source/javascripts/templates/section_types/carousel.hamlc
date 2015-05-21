@@ -1,5 +1,5 @@
-.slides
-  .slider
+.frame
+  .carousel
   .section_title
     %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
 

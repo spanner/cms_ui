@@ -4,9 +4,15 @@
 @import lib/codemirror/codemirror
 @import lib/codemirror/spanner
 @import lib/medium
+@import lib/slick
+@import lib/slick_theme
 
 $control_height: 36px
 $left_width: 480px
+
+*
+  font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
 
 a
   cursor: pointer
@@ -146,7 +152,7 @@ a.section_type
 p
   span.quote
     display: block
-    color: $mid
+    color: $pale
     &:before
       content: '“'
       font-size: 180%

@@ -49,7 +49,6 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
     @model.set 'section_type', type,
       stickitChange: true
 
-
 class CMS.Views.Section extends CMS.Views.ItemView
   template: "editor/section"
   tagName: "section"
@@ -233,13 +232,17 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
   events: 
     "click a.add_slide": "addSlide"
 
+  ui:
+    carousel: ".carousel"
+    captions: ".captions"
+
   bindings:
     "h2.section":
       observe: "title"
     ".section_title":
       classes:
         showing: "show_title"
-    ".slider":
+    ".carousel":
       observe: "content"
       updateMethod: "html"
     ".captions":
@@ -248,14 +251,18 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
 
   onRender: () =>
     super
+    @_slick = @ui.carousel.slick
+      autoplay: true
+      autoplaySpeed: 5000
+    @_slick.on 'beforeChange', @setCaption
 
   addSlide: () =>
     # pick image
     # add picture block to slides
     # add caption block to captions
-    
-    
-    
+
+  setCaption: (e, slick, current_slide, next_slide) =>
+    @ui.captions.find('p').removeClass('current').eq(next_slide).addClass('current')
     
     
     

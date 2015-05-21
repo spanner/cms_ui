@@ -19,7 +19,6 @@ header
   section
     position: relative
     clear: both
-    margin: 20px 0
     +clearfix
     .wrapper
       .section_title
@@ -53,30 +52,12 @@ header
           min-height: 50px
           margin: 0 0 10px 60px
           color: $pale
+          img:first-child
+            margin-top: 1em
         .section_body
           min-height: 100px
           max-width: 800px
           border-top: 1px solid transparent
-      &.hero
-        .section_body, .section_aside .section_note
-          display: none
-        .section_image
-          display: block
-          width: 950px
-          border: 5px solid white
-          height: auto
-          min-height: 480px
-          background-color: $green
-        h2.section
-          position: absolute
-          bottom: 20px
-          left: 20px
-          margin: 0
-          color: white
-          min-width: 100px
-          padding: 10px
-          &[contenteditable]
-            border: none
       &.bigtext
         .section_body
           display: block
@@ -95,8 +76,8 @@ header
           margin: 20px
           display: inline-block
           float: left
-      &.carousel
-        .slides
+      &.hero
+        .frame
           position: relative
           width: 960px
           height: 540px
@@ -104,15 +85,45 @@ header
           background-color: $green
           .section_title
             position: absolute
-            bottom: 10px
-            left: 32px
+            bottom: 0
+            left: 0
+            right: 0
             text-shadow: 0 0 10px rgba(0,0,0,0.4)
             h2
               margin: 0
-              font-size: 3.6rem
-          .slider
-            width: 5000px
-            height: 540px
+              padding: 12px 20px
+              font-size: 3.4rem
+              line-height: 1
+              p
+                display: inline
+        .section_image
+          display: block
+          width: 950px
+          border: 5px solid white
+          height: auto
+          min-height: 480px
+          background-color: $green
+      &.carousel
+        .frame
+          position: relative
+          width: 960px
+          height: 540px
+          overflow: hidden
+          background-color: $green
+          .section_title
+            position: absolute
+            bottom: 0
+            left: 0
+            right: 0
+            text-shadow: 0 0 10px rgba(0,0,0,0.4)
+            h2
+              margin: 0
+              padding: 12px 20px
+              font-size: 3.4rem
+              line-height: 1
+              p
+                display: inline
+          .carousel
             .image
               width: 960px
               height: 540px
@@ -130,14 +141,13 @@ header
             margin: 20px
             display: inline-block
             float: left
-            color: $pale
+            opacity: 0.75
+            transition: opacity 0.3s ease
             a
-              color: darken($yellow, 15)
+              color: darken($yellow, 10)
             &:last-child
               margin-right: 0
             &:first-child
               margin-left: 0
             &.current
-              color: white
-              a
-                color: $yellow
+              opacity: 1.0
