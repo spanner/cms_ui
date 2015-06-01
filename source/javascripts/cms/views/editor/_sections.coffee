@@ -17,7 +17,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
     @_typer = @$el.find('.section_types')
     for type in CMS.Models.Section.types
       do (type) =>
-        a = $("<a class=\"section_type #{type}\"></a>").appendTo(@_typer)
+        a = $("<a class=\"section_type #{type}\" title=\"#{type}\"></a>").appendTo(@_typer)
         a.click (e) =>
           e?.preventDefault()
           @setType(type)
@@ -48,6 +48,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   setType: (type) =>
     @model.set 'section_type', type,
       stickitChange: true
+
 
 class CMS.Views.Section extends CMS.Views.ItemView
   template: "editor/section"

@@ -299,10 +299,6 @@ p
       &:focus
         background:
           color: transparent
-          
-
-    header
-      overflow: hidden
 
     main
       section
@@ -697,6 +693,17 @@ $yellow20: #fff7cc
 
 $twitter: #5ea9dd
 
+body
+  background-color: black
+  line-height: 1.6
+
+header
+  min-height: 96px
+  h1
+    text-align: center
+
+header, footer
+  +central
 
 #editor
   font-size: 110%
@@ -736,7 +743,7 @@ $twitter: #5ea9dd
     &:hover
       background-position: -24px -48px
 
-  header
+  #header
     position: absolute
     top: 0
     left: 0
@@ -793,20 +800,22 @@ $twitter: #5ea9dd
       margin-bottom: 0
       font-size: 3.2rem
 
-  footer
+  #footer
     clear: both
     +clearfix
     margin: 56px 0 32px 0
-    border-top: 2px dotted $yellow
-    h3
-      margin-bottom: 0
-    nav
-      a
-        padding: 10px
-        &:first-child
-          margin-left: -10px
-        &:last-child
-          color: $pale
-        &:hover
-          color: white
+    footer
+      padding-top: 40px
+      border-top: 2px dotted $yellow
+      h3
+        margin-bottom: 0
+      nav
+        a
+          padding: 10px
+          &:first-child
+            margin-left: -10px
+          &:last-child
+            color: $pale
+          &:hover
+            color: white
 

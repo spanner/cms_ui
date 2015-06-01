@@ -1,0 +1,12 @@
+#header
+  %header
+  
+#page
+  %main
+    %h1{contenteditable: "true"}
+
+    #sections
+
+
+#footer
+  %footer

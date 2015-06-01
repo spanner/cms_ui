@@ -1,26 +1,14 @@
 @import lib/definitions
 
-body
-  background-color: black
-  line-height: 1.6
-  
-header
-  width: 100%
-  min-height: 96px
-  h1
-    text-align: center
-
 #main
-  width: 90%
-  max-width: 960px
-  margin: 0 auto
   background-color: black
   color: white
   section
     position: relative
-    clear: both
     +clearfix
     .wrapper
+      +central
+      margin: 0 auto
       .section_title
         display: none
         h2.section
@@ -83,10 +71,14 @@ header
           display: inline-block
           float: left
       &.hero
+        position: relative
+        top: 0
+        width: 90vw
+        max-width: 1340px
+        height: 80vh
+        background-color: $coolgrey11
         .frame
           position: relative
-          width: 960px
-          height: 540px
           overflow: hidden
           background-color: $green
           .section_title

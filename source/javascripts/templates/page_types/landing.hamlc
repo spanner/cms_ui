@@ -1,0 +1,13 @@
+#hero
+  .bg
+
+  #header
+    %header
+  %h1{contenteditable: "true"}
+  .intro{contenteditable: "true"}
+
+#page
+  #sections
+
+#footer
+  %footer
