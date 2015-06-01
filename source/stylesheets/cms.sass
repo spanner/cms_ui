@@ -4,9 +4,15 @@
 @import lib/codemirror/codemirror
 @import lib/codemirror/spanner
 @import lib/medium
+@import lib/slick
+@import lib/slick_theme
 
 $control_height: 36px
 $left_width: 480px
+
+*
+  font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
 
 a
   cursor: pointer
@@ -141,7 +147,31 @@ a.section_type
   font-size: 0.8rem
   color: $pale
   margin-top: -1.7em
-  margin-right: 8px
+  margin-right: 16px
+
+p
+  span.quote
+    display: block
+    color: $pale
+    &:before
+      content: '“'
+      font-size: 180%
+      position: absolute
+      width: 12px
+      text-align: right
+      margin-left: -0.5em
+      margin-top: 0
+    &:after
+      content: '”'
+      font-size: 180%
+      position: absolute
+      margin-left: 8px
+      margin-top: 0
+  span.speaker
+    display: block
+    color: white
+
+
 
 #ui
   position: relative
@@ -200,10 +230,12 @@ a.section_type
       color: $shelf_text
       &.current
         background-color: $shelf_bg
+
   #site_controls
     a
       +box-shadow(inset -4px 0 8px rgba(0,0,0,0.4))
       padding-bottom: 40px
+
   #configuration
     #tab
       position: fixed
@@ -281,7 +313,7 @@ a.section_type
         .admin
           position: absolute
           top: -20px
-          right: -85px
+          right: -80px
           width: 85px
           a.menu
             position: relative
@@ -411,7 +443,6 @@ a.section_type
           color: $menu_up_text
           white-space: nowrap
           +light
-        a.title
         a.nav
           color: $verypale
           margin-left: 4px
@@ -736,8 +767,13 @@ $twitter: #5ea9dd
       display: inline-block
       vertical-align: middle
       width: 650px
+      font-size: 1.2rem
       a
         padding: 10px
+        &:last-child
+          color: $pale
+        &:hover
+          color: white
       
     #twitface
       position: relative
@@ -750,17 +786,27 @@ $twitter: #5ea9dd
       
   main
     position: relative
-    margin-top: 150px
+    margin-top: 116px
     margin-bottom: 80px
+    h1
+      margin-top: 1em
+      margin-bottom: 0
+      font-size: 3.2rem
 
   footer
     clear: both
-    margin: 24px 0
-    height: 24px
+    +clearfix
+    margin: 56px 0 32px 0
     border-top: 2px dotted $yellow
+    h3
+      margin-bottom: 0
     nav
-      margin: 32px 0
       a
         padding: 10px
-
+        &:first-child
+          margin-left: -10px
+        &:last-child
+          color: $pale
+        &:hover
+          color: white
 

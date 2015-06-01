@@ -1,0 +1,2 @@
+.col.first.editable{contenteditable: "true"}
+.col.second.editable{contenteditable: "true"}

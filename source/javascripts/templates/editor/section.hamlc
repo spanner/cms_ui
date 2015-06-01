@@ -1,13 +1,2 @@
 .admin
-
 .wrapper
-  .section_image
-
-  .section_title
-    %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
-
-  %aside.section_aside.editable{contenteditable: "true"}
-
-  .section_body.editable{contenteditable: "true"}
-
-  .section_note.editable{contenteditable: "true"}

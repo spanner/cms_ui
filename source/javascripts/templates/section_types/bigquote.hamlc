@@ -1,0 +1,5 @@
+.section_title
+  %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
+%p
+  %span.quote.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
+  %span.speaker.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}

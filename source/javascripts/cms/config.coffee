@@ -3,13 +3,13 @@
 
 class CMS.Config
   defaults: 
-    api_url: "http://api.cupboard.org/"
+    api_url: "http://api.cupboard.org/api/1/"
     cookie_domain: ".cupboard.org"
     cookie_name: "cms_prod"
     logging: false
 
   development:
-    api_url: "http://api.cms.dev/"#"http://localhost:9292/"#
+    api_url: "http://api.cms.dev/api/1/"#"http://localhost:9292/"#
     cookie_domain: ".cms.dev"
     cookie_name: "cms_dev"
     logging: true
