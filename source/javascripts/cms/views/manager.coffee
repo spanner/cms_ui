@@ -154,6 +154,160 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     $('#ui').toggleClass('previewing')
 
 
+
+class CMS.Views.ListedSection extends  CMS.Views.ItemView
+  template: "sections/listed"
+  tagName: "li"
+  className: "item"
+
+  events:
+    "click a.title": "select"
+    "click a.delete_section": "deleteSection"
+    "click a.add_section": "addSection"
+
+  bindings:
+    ":el":
+      classes:
+        selected: "selected"
+        destroyed: "deleted_at"
+    "a.title":
+      observe: ["title", "section_type"]
+      onGet: "thisOrThat"
+      attributes: [
+        observe: "id"
+        name: "href"
+        onGet: "sectionUrl"
+      ]
+
+  onRender: () =>
+    @stickit()
+    @model.select() if window.location.hash is @sectionUrl(@model.get('id'))
+
+  deleteSection: =>
+    @model?.destroyReversibly()
+
+  addSection: =>
+    pos = (@model.get('position') ? 0)
+    above = @model.collection.filter (s) -> s.get('position') > pos
+    _.each above, (s, i) ->
+      s.set('position', s.get('position') + 1)
+    @model.collection.add
+      title: "New section"
+      page_id: @model.get('page_id')
+      position: pos + 1
+
+  select: (e) =>
+    e?.preventDefault()
+    @model.select()
+
+  sectionUrl: (id) =>
+    "#section_#{id}"
+
+  sectionName: (title) =>
+    label = title || "New section"
+    if label.length > 38
+      label = label.substr(0, 36) + "..."
+    label
+
+
+class CMS.Views.SectionsList extends CMS.Views.MenuView
+  template: "sections/menu"
+  childView: CMS.Views.ListedSection
+  
+  initialize: ->
+    super
+    $.sections = @collection
+
+  addItem: =>
+    top_pos = @collection.last()?.get('position') ? 0
+    console.log "addSection at pos", top_pos + 1
+    @collection.add
+      title: "New section"
+      page_id: @collection.page.id
+      position: top_pos + 1
+    @collection.sort()
+
+
+class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
+  template: "manager/sections"
+  menuView: CMS.Views.SectionsList
+  
+  bindings:
+    '.header a.title':
+      observe: ["title", "section_type"]
+      onGet: "thisOrThat"
+
+
 class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
   menuView: CMS.Views.PagesTree
+
+
+class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
+  template: "manager/site"
+  
+  bindings:
+    '.header a.title':
+      observe: "title"
+      updateMethod: "html"
+      attributes: [
+        name: "class"
+        observe: ["changed", "published_at", "updated_at"]
+        onGet: "siteStatus"
+      ]
+
+  showing: =>
+    showing = $('#ui').hasClass('shelved')
+    showing
+
+  open: =>
+    _cms.vent.trigger "reset" #nb. closes us too.
+    $('#ui').addClass('shelved')
+
+  close: =>
+    $('#ui').removeClass('shelved')
+
+  siteStatus: ([changed, published_at, updated_at]=[]) =>
+    if changed
+      "site title save_me"
+    else if (updated_at > published_at)
+      "site title publish_me"
+    else
+      "site title"
+
+
+class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
+  template: "layouts/manager"
+  regions:
+    site: "#site_manager"
+    pages: "#pages_manager"
+    sections: "#sections_manager"
+    controls: "#page_controls"
+
+  onRender: =>
+    @stickit()
+    @model.whenReady =>
+      @_site_manager = new CMS.Views.SiteManagerLayout
+        collection: @model.sites
+      @getRegion('site').show(@_site_manager)
+
+  setSite: (site) =>
+    site.select()
+    site.whenReady () =>
+      @_pages_manager = new CMS.Views.PagesManagerLayout
+        collection: site.pages
+      @getRegion('pages').show(@_pages_manager)
+
+  setPage: (page) =>
+    page.select()
+    page.whenReady () =>
+      @_sections_manager = new CMS.Views.SectionsManagerLayout
+        collection: page.sections
+      @getRegion('sections').show(@_sections_manager)
+      @_page_controls = new CMS.Views.PageControls
+        model: page
+      @getRegion('controls').show(@_page_controls)
+
+  setSection: (section) =>
+    # hash-observation hooks link here how?
+    section.select()
