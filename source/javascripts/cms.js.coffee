@@ -26,9 +26,19 @@ $ ->
   _.mixin(_.str.exports())
   
   Backbone.Marionette.Renderer.render = (template, data) ->
-    if template?
-      throw("Template '" + template + "' not found!") unless JST[template]
-      JST[template](data)
+    if template? 
+      # precompiled hamlc templates are available in JST keyed by path
+      if JST[template]
+        JST[template](data)
+
+      # or you can provide a function that returns html
+      else if _.isFunction(template)
+        template(data)
+
+      # or just some html. Since we are binding it is very unusual
+      # for any data to be given to render() anyway.
+      else
+        template
     else
       ""
 

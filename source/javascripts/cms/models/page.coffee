@@ -1,8 +1,8 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['title', 'hide_title', 'introduction', 'hide_introduction', 'nav', 'nav_name', 'nav_position', 'nav_heading', 'path', 'site_id']
+  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'nav', 'nav_name', 'nav_position', 'nav_heading']
 
-  # defaults:
-  #   nav: true
+  defaults:
+    nav: false
 
   build: =>
     if @get('path')
@@ -11,13 +11,12 @@ class CMS.Models.Page extends CMS.Model
       @joinPath()
     @on "change:slug", @joinPath
     @on "change:dir", @joinPath
-    @on "change:nav", @updateNav
+    @on "change:nav", @updateSiteNav
+    @on "change:page_type_id", @setPageType
     @on "sync", @splitPath
     @sections = new CMS.Collections.Sections @get('sections'), page: @
     @sections.on "add reset remove", @markAsChanged
     @sections.on "change", @changedIfAnySectionChanged
-    
-  # when a page is created it is given a stem to which a slug must be added to get the full path.
 
   populate: (data) =>
     @sections.reset(data.sections)
@@ -42,8 +41,15 @@ class CMS.Models.Page extends CMS.Model
   childPages: =>
     @collection.findWhere(dir: @get('path'))
 
-  updateNav: =>
+  updateSiteNav: =>
     @getSite()?.populateNavigation()
+
+  setPageType: () =>
+    @page_type = @site.page_types.find(@get('page_type_id'))
+    unless @sections.length()
+      for type in @page_type.default_sections_list
+        @sections.add
+          section_type: type
 
   getSite: =>
     @collection.site
@@ -64,23 +70,22 @@ class CMS.Models.Page extends CMS.Model
       url: @url() + "/publish"
       data:
         rendered_head: @renderHead()
-        rendered_main: @renderMain()
+        rendered_body: @renderBody()
       method: "PUT"
       success: @published
       error: @failedToPublish
   
   published: (response) =>
-    console.log "published", response
     @set(response)
     
   renderHead: () =>
-    renderer = new CMS.Views.HeadRenderer
+    renderer = new CMS.Views.PageHeadRenderer
       model: @
     renderer.render()
     renderer.$el.get(0).outerHTML
 
-  renderMain: () =>
-    renderer = new CMS.Views.MainRenderer
+  renderBody: () =>
+    renderer = new CMS.Views.PageBodyRenderer
       model: @
       collection: @sections
     renderer.render()
