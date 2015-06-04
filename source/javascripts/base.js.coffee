@@ -1,6 +1,6 @@
 #= require ./lib/underscore
 #= require ./lib/utilities
-#= require_tree ./section_types
+#= require_tree ./public
 #= require_self
 
 $ ->
