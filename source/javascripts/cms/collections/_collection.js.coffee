@@ -1,4 +1,4 @@
-class Cms.Collection extends Backbone.Collection
+class CMS.Collection extends Backbone.Collection
 
   # Our collections always belong to a site, and their model urls are nested within it.
   # except the collection of sites is a root resource.
@@ -12,4 +12,5 @@ class Cms.Collection extends Backbone.Collection
     @_site
 
   url: =>
+    debugger unless @_site
     [@_site.url(), @_path].join('/')

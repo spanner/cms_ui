@@ -1,2 +1,2 @@
-class CMS.Collections.PageTypes extends Cms.Collection
+class CMS.Collections.PageTypes extends CMS.Collection
   model: CMS.Models.PageType

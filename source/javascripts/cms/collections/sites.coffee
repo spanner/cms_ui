@@ -1,4 +1,4 @@
-class CMS.Collections.Sites extends Cms.Collection
+class CMS.Collections.Sites extends CMS.Collection
   model: CMS.Models.Site
 
   url: =>

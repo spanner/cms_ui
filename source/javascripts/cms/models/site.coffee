@@ -1,7 +1,5 @@
 class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
-  defaults:
-    template: 'responsive'
   savedAttributes: ["css", "title", "domain", "template", "header", "footer", "sass", "font_css_url", "coffee"]
 
   build: =>
@@ -10,8 +8,8 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages = new CMS.Collections.NavPages
 
   populate: (data) =>
-    @pages.reset(data.pages)
     @page_types.reset(data.page_types)
+    @pages.reset(data.pages)
     @populateDates(data)
     @populateNavigation()
     @populateCSS()

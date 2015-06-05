@@ -146,14 +146,6 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     @getRegion('tab').show(tab_view)
     $.tv = tab_view
 
-  templateStylesheetLink: (template_name) => 
-    if template_name
-      "/stylesheets/base/#{template_name}.css"
-
-  templateJavascriptSrc: (template_name) => 
-    if template_name
-      "/javascripts/base/#{template_name}.js"
-
 
 class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
   template: "sites/js"
@@ -295,11 +287,6 @@ class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
   bindings:
     ".title": "title"
     ".domain": "domain"
-    "select.template":
-      observe: "template"
-      selectOptions:
-        collection:
-          'responsive': "Standard responsive"
 
   onRender: =>
     @stickit()

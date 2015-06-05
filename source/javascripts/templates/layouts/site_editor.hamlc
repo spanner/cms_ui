@@ -1,6 +1,3 @@
-%link.template{type: "text/css", rel: "stylesheet"}
-%link.fonts{type: "text/css", rel: "stylesheet"}
-%script{type: "text/javascript"}
 %style.preview
 
 #site_tabs

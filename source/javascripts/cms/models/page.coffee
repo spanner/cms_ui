@@ -45,14 +45,14 @@ class CMS.Models.Page extends CMS.Model
     @getSite()?.populateNavigation()
 
   setPageType: () =>
-    @page_type = @site.page_types.find(@get('page_type_id'))
-    unless @sections.length()
-      for type in @page_type.default_sections_list
+    @page_type = @getSite().page_types.find(@get('page_type_id'))
+    unless @sections.size()
+      for type in @page_type.defaultSectionsList()
         @sections.add
           section_type: type
 
   getSite: =>
-    @collection.site
+    @collection.getSite()
 
   changedIfAnySectionChanged: (e) =>
     if @sections.findWhere(changed: true)

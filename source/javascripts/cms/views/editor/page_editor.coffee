@@ -105,7 +105,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   template: "editor/page"
-  childView: "CMS.Views.Section"
+  childView: CMS.Views.Section
   childViewContainer: "#sections"
   
   childViewOptions: () =>

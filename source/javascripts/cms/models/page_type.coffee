@@ -3,10 +3,7 @@ class CMS.Models.PageType extends CMS.Model
 
   defaults:
     default_sections: ""
-    default_sections_list: []
 
-  build: =>
-    @on "change:default_sections", @setDefaultSectionsList
-
-  setDefaultSectionsList: () =>
-    @set "default_sections_list", (@get('default_sections') || "").split(',')
+  defaultSectionsList: () =>
+    (@get('default_sections') || "").split(',')
+    

@@ -1,10 +1,9 @@
-class CMS.Collections.Pages extends Cms.Collection
+class CMS.Collections.Pages extends CMS.Collection
   model: CMS.Models.Page
   comparator: "path"
 
   initialize: (array, opts) ->
-    @site = opts.site
+    super
     @on 'add', (model, collection, options) =>
-      model.set('site_id', @site.get('id'))
       model.once 'sync', () =>
         @sort()

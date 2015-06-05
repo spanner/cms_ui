@@ -3,7 +3,7 @@
 # Once we start reusing sections then something more clever will
 # be required.
 #
-class CMS.Collections.Sections extends Cms.Collection
+class CMS.Collections.Sections extends CMS.Collection
   model: CMS.Models.Section
   comparator: "position"
 
