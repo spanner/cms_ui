@@ -1,4 +1,4 @@
-class CMS.Collections.Sites extends Backbone.Collection
+class CMS.Collections.Sites extends Cms.Collection
   model: CMS.Models.Site
 
   url: =>

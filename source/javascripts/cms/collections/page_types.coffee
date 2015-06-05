@@ -1,2 +1,2 @@
-class CMS.Collections.PageTypes extends Backbone.Collection
+class CMS.Collections.PageTypes extends Cms.Collection
   model: CMS.Models.PageType

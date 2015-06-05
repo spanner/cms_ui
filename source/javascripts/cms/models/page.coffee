@@ -63,7 +63,7 @@ class CMS.Models.Page extends CMS.Model
     json.sections = @sections.toJSON()
     json
 
-  # Publish is a specialized save.
+  # Publish is a special save that sends up our rendered html form saving.
   #
   publish: () =>
     $.ajax

@@ -40,7 +40,7 @@ class CMS.Models.Site extends CMS.Model
     ).done (data) =>
       @set css: data?.css
 
-  # Publish is a specialized form of save that takes a snapshot of the current html state.
+  # Publish is a special save that sends up a snapshot of the current state of our html parts.
   #
   publish: () =>
     $.ajax

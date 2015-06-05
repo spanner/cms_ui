@@ -105,11 +105,6 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   bindings:
     "style": "processed_css"
     "span.title": "title"
-    "link.fonts":
-      attributes: [
-        name: "href"
-        observe: "font_css_url"
-      ]
     "link.template":
       attributes: [
         name: "href"
@@ -204,7 +199,6 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
     header_area: "textarea#header"
 
   bindings:
-    ".font_css_url": "font_css_url"
     "#css": "css"
     "a.revert":
       observe: ["original_css", "css"]

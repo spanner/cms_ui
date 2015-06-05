@@ -1,4 +1,4 @@
-class CMS.Collections.Pages extends Backbone.Collection
+class CMS.Collections.Pages extends Cms.Collection
   model: CMS.Models.Page
   comparator: "path"
 
@@ -8,7 +8,3 @@ class CMS.Collections.Pages extends Backbone.Collection
       model.set('site_id', @site.get('id'))
       model.once 'sync', () =>
         @sort()
-    $.pages = @
-
-  url: =>
-    "#{_cms.apiUrl()}pages"

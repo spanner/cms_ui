@@ -290,6 +290,7 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
       @_site_manager = new CMS.Views.SiteManagerLayout
         collection: @model.sites
       @getRegion('site').show(@_site_manager)
+      #TODO init user/session menu
 
   setSite: (site) =>
     site.select()

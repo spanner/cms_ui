@@ -41,7 +41,6 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
 
   setUser: (user) =>
     # we have user object with sites collection
-    #TODO init user/session menu
     @_manager = new CMS.Views.ManagerLayout
       model: user
     @getRegion('manager').show @_manager

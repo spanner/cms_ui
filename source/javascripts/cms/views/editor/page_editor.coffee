@@ -154,7 +154,6 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         el: @$el.find("footer")
       @_footer_view.render()
 
-      console.log "loading toolbar into", $("#rte").get(0)
       @_toolbar = new MediumEditor '.editable',
         elementsContainer: $("#rte").get(0)
         fixedToolbar: true
