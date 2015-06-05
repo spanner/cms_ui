@@ -30,7 +30,7 @@ class CMS.Views.PageSectionRenderer extends CMS.Views.ItemView
     "wrapper #{section_type}"
 
 
-class CMS.Views.PageBodyRenderer extends Backbone.Marionette.CompositeView
+class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   childView: CMS.Views.PageSectionRenderer
   childViewContainer: "main"
   tagName: "body"
@@ -50,22 +50,6 @@ class CMS.Views.PageBodyRenderer extends Backbone.Marionette.CompositeView
     @stickit()
 
 
-class CMS.Views.PageHeadRenderer extends Backbone.Marionette.ItemView
-  template: "renderers/head"
-  tagName: "head"
-
-  bindings:
-    "title":
-      observe: "title"
-      onGet: "headTitle"
-
-  onRender: () =>
-    @stickit()
-
-  headTitle: (title) =>
-    "site name | #{title}"
-
-
 class CMS.Views.PageLinkRenderer extends CMS.Views.ItemView
   template: false
   tagName: "a"
@@ -80,35 +64,7 @@ class CMS.Views.PageLinkRenderer extends CMS.Views.ItemView
       ]
 
 
-class CMS.Views.SiteNavRenderer extends CMS.Views.CollectionView
+class CMS.Views.SiteNavigationRenderer extends CMS.Views.CollectionView
   tagName: "nav"
   childView: CMS.Views.PageLinkRenderer
-
-
-class CMS.Views.SiteHeaderRenderer extends CMS.Views.ItemView
-  tagName: 'header'
-  
-  template: (data) =>
-    @model.get('header') ? "<title />"
-  
-  onRender: () =>
-    super
-    @_nav = new CMS.Views.NavigationRenderer
-      collection: @model.nav_pages
-      el: @$el.find('nav')
-    @_nav.render()
-
-
-class CMS.Views.SiteFooterRenderer extends CMS.Views.ItemView
-  tagName: 'footer'
-  
-  template: (data) =>
-    @model.get('footer')
-
-  onRender: () =>
-    super
-    @_nav = new CMS.Views.NavigationRenderer
-      collection: @model.nav_pages
-      el: @$el.find('nav')
-    @_nav.render()
 

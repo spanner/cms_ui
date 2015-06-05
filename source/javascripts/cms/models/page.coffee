@@ -63,29 +63,25 @@ class CMS.Models.Page extends CMS.Model
     json.sections = @sections.toJSON()
     json
 
-  # Publish is a special save that sends up our rendered html form saving.
+  # Publish is a special save that sends up our rendered html for composition and saving.
   #
   publish: () =>
     $.ajax
       url: @url() + "/publish"
       data:
-        rendered_head: @renderHead()
-        rendered_body: @renderBody()
+        main_html: @render()
       method: "PUT"
       success: @published
       error: @failedToPublish
   
   published: (response) =>
     @set(response)
-    
-  renderHead: () =>
-    renderer = new CMS.Views.PageHeadRenderer
-      model: @
-    renderer.render()
-    renderer.$el.get(0).outerHTML
 
-  renderBody: () =>
-    renderer = new CMS.Views.PageBodyRenderer
+  failedToPublish: (request) =>
+    #...
+
+  render: () =>
+    renderer = new CMS.Views.PageRenderer
       model: @
       collection: @sections
     renderer.render()

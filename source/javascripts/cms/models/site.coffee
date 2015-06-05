@@ -20,7 +20,7 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages.reset(@pages.where(nav: true))
     @touch() if e
 
-  #TODO repeat for coffee -> js
+  #TODO also for coffee -> js
   #
   populateCSS: =>
     @set original_sass: @get("sass")
@@ -31,7 +31,7 @@ class CMS.Models.Site extends CMS.Model
     @set css: @get("original_css")
 
   previewCSS: =>
-    $.ajax("#{_cms.apiUrl()}compile_css",
+    $.ajax("#{_cms.apiUrl()}preview_css",
       type: "POST"
       data:
         sass: @get("sass")
@@ -43,25 +43,22 @@ class CMS.Models.Site extends CMS.Model
   publish: () =>
     $.ajax
       url: @url() + "/publish"
-      data:
-        rendered_header: @renderHeader()
-        rendered_footer: @renderFooter()
       method: "PUT"
+      data:
+        nav_html: @renderNavigation()
       success: @published
       error: @failedToPublish
 
   published: (response) =>
     @populate(response)
 
-  renderHeader: () =>
-    renderer = new CMS.Views.SiteHeaderRenderer
-      model: @
-    renderer.render()
-    renderer.$el.get(0).outerHTML
+  failedToPublish: (request) =>
+    #...
 
-  renderFooter: () =>
-    renderer = new CMS.Views.SiteFooterRenderer
+  renderNavigation: () =>
+    renderer = new CMS.Views.SiteNavigationRenderer
       model: @
+      collection: @sections
     renderer.render()
     renderer.$el.get(0).outerHTML
 

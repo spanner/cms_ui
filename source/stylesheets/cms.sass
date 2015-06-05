@@ -10,6 +10,8 @@
 $control_height: 36px
 $left_width: 480px
 
+// Base formatting
+
 *
   font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -31,6 +33,9 @@ body, html
 h1, h2, h3
   font-weight: normal
 
+
+// Widely-used elements styles
+
 h2.label
   color: $mid
   font-size: 10px
@@ -39,7 +44,7 @@ h2.label
 
 input
   +book
-  
+
 a.add, a.delete, a.menu, a.save
   display: inline-block
   vertical-align: top
@@ -172,51 +177,57 @@ p
     color: white
 
 
+// Page construction
 
 #ui
   position: relative
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
   border-top: 1px solid $menu_bg
-  transition: left 0.5s ease
-  &.shelved
+  transition: margin-left 0.5s ease
+  margin-left: -$left_width
+  min-height: 100%
+  #shelf
+    position: relative
+    float: left
+    width: $left_width
+    height: 100%
+    overflow: auto
+  #main
+    position: absolute
+    top: 0
     left: $left_width
+    right: 0
+    bottom: 0
+    overflow: auto
+    #manager
+      position: fixed
+      top: 0
+      left: 0
+      right: 0
+      background: $menu_bg
+      color: $menu_text
+      z-index: 100
+      height: $control_height
+      transition: left 0.5s ease
+  &.shelved
+    margin-left: 0
     #main
       #manager
         left: $left_width
-    #shelf
-      #site_tabs
-        left: 0
-      #tab
-        left: 0
-
+ 
 #session
   height: 100%
   width: 100%
 
 #shelf
   +book
-  position: absolute
-  top: 0
-  right: auto
-  bottom: 0
-  height: 100%
-  left: -$left_width
-  width: $left_width
   background-color: $shelf_bg
   color: $shelf_text
-  margin-top: 0
-  overflow: hidden
   z-index: 10
-  +box-shadow(inset -2px 0 6px rgba(0,0,0,0.4))
   #site_tabs
     position: fixed
+    left: 0
     top: 0
-    left: -$left_width
     width: $left_width
-    right: 0
     background: $shelf_head_bg
     color: $menu_text
     z-index: 100
