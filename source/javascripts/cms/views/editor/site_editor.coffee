@@ -103,7 +103,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     "click a[data-tab]": "showTab"
 
   bindings:
-    "style": "processed_css"
+    "style": "css"
     "span.title": "title"
     "link.template":
       attributes: [
@@ -191,7 +191,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
     header_area: "textarea#header"
 
   bindings:
-    "#css": "css"
+    "#css": "sass"
     "a.revert":
       observe: ["original_css", "css"]
       visible: "notTheSame"
