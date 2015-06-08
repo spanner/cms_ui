@@ -25,7 +25,11 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
     @getRegion('form').reset()
     # @getRegion('menu').show(new CMS.Views.SessionMenu)
 
+  hide: () =>
+    @$el.hide()
+
   show: (action) =>
+    @$el.show()
     switch action
       when "reset" then @showForm('SessionResetForm')
       when "confirm" then @showForm('SessionConfirmationForm')
