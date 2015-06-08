@@ -1,71 +1,64 @@
 class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
-  defaults:
-    template: 'responsive'
-  savedAttributes: ["css", "title", "domain", "template", "header", "footer", "css_preprocessor", "css", "font_css_url", "js_preprocessor", "js"]
+  savedAttributes: ["css", "title", "domain", "template", "header", "footer", "sass", "font_css_url", "coffee"]
 
   build: =>
+    @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @nav_pages = new CMS.Collections.NavPages
-    @set('css_preprocessor', 'sass') unless @get('css_preprocessor')
 
   populate: (data) =>
+    @page_types.reset(data.page_types)
     @pages.reset(data.pages)
     @populateDates(data)
     @populateNavigation()
     @populateCSS()
     @pages.on "change:nav", @populateNavigation
     true
-  
+
   populateNavigation: (e) =>
     @nav_pages.reset(@pages.where(nav: true))
     @touch() if e
 
+  #TODO also for coffee -> js
+  #
   populateCSS: =>
+    @set original_sass: @get("sass")
     @set original_css: @get("css")
-    @set original_processed_css: @get("processed_css")
 
   revertCSS: =>
+    @set sass: @get("original_sass")
     @set css: @get("original_css")
-    @set processed_css: @get("original_processed_css")
 
   previewCSS: =>
-    if @get("css_preprocessor") is "css"
-      @set processed_css: @get("css")
-    else
-      $.ajax("#{_cms.apiUrl()}compile_css",
-        type: "POST"
-        data:
-          css: @get("css")
-          css_preprocessor: @get("css_preprocessor") or "sass"
-          # css_enclosure: "#page"
-      ).done (data) =>
-        @set processed_css: data?.css
+    $.ajax("#{_cms.apiUrl()}preview_css",
+      type: "POST"
+      data:
+        sass: @get("sass")
+    ).done (data) =>
+      @set css: data?.css
 
-  # Publish is a specialized form of save that takes a snapshot of the current html state.
+  # Publish is a special save that sends up a snapshot of the current state of our html parts.
   #
   publish: () =>
     $.ajax
       url: @url() + "/publish"
-      data:
-        rendered_header: @renderHeader()
-        rendered_footer: @renderFooter()
       method: "PUT"
+      data:
+        nav_html: @renderNavigation()
       success: @published
       error: @failedToPublish
 
   published: (response) =>
     @populate(response)
 
-  renderHeader: () =>
-    renderer = new CMS.Views.HeaderRenderer
-      model: @
-    renderer.render()
-    renderer.$el.get(0).outerHTML
+  failedToPublish: (request) =>
+    #...
 
-  renderFooter: () =>
-    renderer = new CMS.Views.FooterRenderer
+  renderNavigation: () =>
+    renderer = new CMS.Views.SiteNavigationRenderer
       model: @
+      collection: @sections
     renderer.render()
     renderer.$el.get(0).outerHTML
 

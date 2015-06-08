@@ -1,4 +1,4 @@
-class CMS.Views.SectionRenderer extends CMS.Views.ItemView
+class CMS.Views.PageSectionRenderer extends CMS.Views.ItemView
   template: "renderers/section"
   tagName: "section"
 
@@ -21,7 +21,6 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
 
   onRender: () =>
     @stickit()
-    #todo: remove empty elements?
 
   id: -> 
     "section_#{@model.get('id')}"
@@ -31,11 +30,10 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
     "wrapper #{section_type}"
 
 
-class CMS.Views.MainRenderer extends Backbone.Marionette.CompositeView
-  template: "renderers/main"
-  childView: CMS.Views.SectionRenderer
-  childViewContainer: "#sections"
-  tagName: "main"
+class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
+  childView: CMS.Views.PageSectionRenderer
+  childViewContainer: "main"
+  tagName: "body"
 
   bindings:
     "h1":
@@ -45,22 +43,28 @@ class CMS.Views.MainRenderer extends Backbone.Marionette.CompositeView
       observe: "introduction"
       updateMethod: "html"
 
+  template: (data) =>
+    @model.page_type?.get('template') or "<header /><main /><footer />"
+
   onRender: () =>
     @stickit()
 
 
-class CMS.Views.HeadRenderer extends Backbone.Marionette.ItemView
-  template: "renderers/head"
-  tagName: "head"
+class CMS.Views.PageLinkRenderer extends CMS.Views.ItemView
+  template: false
+  tagName: "a"
+  className: "nav"
+  bindings: 
+    ':el':
+      observe: ["nav_name", "title"]
+      onGet: "thisOrThat"
+      attributes: [
+        name: 'href'
+        observe: 'path'
+      ]
 
-  bindings:
-    "title":
-      observe: "title"
-      onGet: "headTitle"
 
-  onRender: () =>
-    # TODO: site-meta renderer drops in here
-    @stickit()
+class CMS.Views.SiteNavigationRenderer extends CMS.Views.CollectionView
+  tagName: "nav"
+  childView: CMS.Views.PageLinkRenderer
 
-  headTitle: (title) =>
-    "site name | #{title}"

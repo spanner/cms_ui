@@ -9,24 +9,12 @@ class CMS.Models.User extends CMS.Model
   url: =>
     "#{_cms.apiUrl()}users/#{@get("uid")}"
 
-  initialize: =>
-    $(document).ajaxSend @authenticateRequest
-    super
-
   build: =>
     @sites = new CMS.Collections.Sites @get("sites")
 
   populate: (data) =>
-    console.log "user.populate", data
     @sites.reset(data.sites)
 
-  readCookie: () =>
-    @set 'token', $.cookie(_cms.config('cookie_name'))
-
-  authenticateRequest: (e, request) =>
-    # request.setRequestHeader("X-ClientID", _cms.clientID)
-    if token = @get('token')
-      request.setRequestHeader("Authorization", "Token token=#{token}")
 
 
 

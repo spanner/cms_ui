@@ -10,6 +10,8 @@
 $control_height: 36px
 $left_width: 480px
 
+// Base formatting
+
 *
   font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -31,6 +33,9 @@ body, html
 h1, h2, h3
   font-weight: normal
 
+
+// Widely-used elements styles
+
 h2.label
   color: $mid
   font-size: 10px
@@ -39,7 +44,7 @@ h2.label
 
 input
   +book
-  
+
 a.add, a.delete, a.menu, a.save
   display: inline-block
   vertical-align: top
@@ -172,51 +177,57 @@ p
     color: white
 
 
+// Page construction
 
 #ui
   position: relative
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
   border-top: 1px solid $menu_bg
-  transition: left 0.5s ease
-  &.shelved
+  transition: margin-left 0.5s ease
+  margin-left: -$left_width
+  min-height: 100%
+  #shelf
+    position: relative
+    float: left
+    width: $left_width
+    height: 100%
+    overflow: auto
+  #main
+    position: absolute
+    top: 0
     left: $left_width
+    right: 0
+    bottom: 0
+    overflow: auto
+    #manager
+      position: fixed
+      top: 0
+      left: 0
+      right: 0
+      background: $menu_bg
+      color: $menu_text
+      z-index: 100
+      height: $control_height
+      transition: left 0.5s ease
+  &.shelved
+    margin-left: 0
     #main
       #manager
         left: $left_width
-    #shelf
-      #site_tabs
-        left: 0
-      #tab
-        left: 0
-
+ 
 #session
   height: 100%
   width: 100%
 
 #shelf
   +book
-  position: absolute
-  top: 0
-  right: auto
-  bottom: 0
-  height: 100%
-  left: -$left_width
-  width: $left_width
   background-color: $shelf_bg
   color: $shelf_text
-  margin-top: 0
-  overflow: hidden
   z-index: 10
-  +box-shadow(inset -2px 0 6px rgba(0,0,0,0.4))
   #site_tabs
     position: fixed
+    left: 0
     top: 0
-    left: -$left_width
     width: $left_width
-    right: 0
     background: $shelf_head_bg
     color: $menu_text
     z-index: 100
@@ -299,10 +310,6 @@ p
       &:focus
         background:
           color: transparent
-          
-
-    header
-      overflow: hidden
 
     main
       section
@@ -349,6 +356,8 @@ p
     z-index: 100
     height: $control_height
     transition: left 0.5s ease
+    &:empty
+      display: none
     #site_manager
       position: relative
       margin: 0
@@ -566,11 +575,20 @@ p
     width: 600px
     margin-top: 100px
     margin-left: 40px
-    
     h1
       color: $mid
+      font-weight: lighter
       margin: 0
-      font-size: 1.2rem
+      font-size: 1.25rem
+      line-height: 34px
+      span
+        display: block
+        float: left
+        height: 32px
+      span.logo
+        width: 32px
+        margin-right: 0
+        margin-left: -32px
     .signin
       margin: 0 2em
       .confirmation
@@ -678,135 +696,18 @@ p
 
 
 
-// Invictus bits looking for a better home
+// some svg experiments
+span.logo
+  width: 32px
+  height: 32px
+  margin-right: 4px
 
-$page: black
-$text: white
-$yellow: #ffd700
-$grey: #878787
-
-$black80: #333333
-$black60: #666666
-$black40: #999999
-$black20: #cccccc
-
-$yellow80: #ffdf33
-$yellow60: #ffe766
-$yellow40: #ffef99
-$yellow20: #fff7cc
-
-$twitter: #5ea9dd
-
-
-#editor
-  font-size: 110%
-
-  a
-    color: $yellow
-
-  a.play
-    cursor: pointer
-    background:
-      position: center center
-      repeat: no-repeat
-      image: image-url('play.png')
-
-  a.twitter, a.facebook, a.youtube
-    display: inline-block
-    width: 24px
-    height: 24px
-    overflow: hidden
-    background:
-      position: top left
-      repeat: no-repeat
-      image: image-url("invictus/social_sprite.png")
-
-  a.twitter
-    background-position: 0 0
-    &:hover
-      background-position: -24px 0
-
-  a.facebook
-    background-position: 0 -24px
-    &:hover
-      background-position: -24px -24px
-
-  a.youtube
-    background-position: 0 -48px
-    &:hover
-      background-position: -24px -48px
-
-  header
-    position: absolute
-    top: 0
-    left: 0
-    width: 100%
-    padding-top: 36px
-    padding-bottom: 8px
-    background-color: black
-    &.pinned
-      position: fixed
-      top: -26px
-      left: 0
-      width: 100%
-      z-index: 1000
-    #logo
-      position: relative
-      display: inline-block
-      vertical-align: middle
-      width: 210px
-      height: 70px
-      margin: 0
-      background:
-        position: top left
-        repeat: no-repeat
-        size: contain
-        image: image-url('invictus/logo.png')
-    nav
-      position: relative
-      display: inline-block
-      vertical-align: middle
-      width: 650px
-      font-size: 1.2rem
-      a
-        padding: 10px
-        &:last-child
-          color: $pale
-        &:hover
-          color: white
-      
-    #twitface
-      position: relative
-      display: inline-block
-      vertical-align: middle
-      a
-        display: block
-        float: left
-        margin: 0 0 0 6px
-      
-  main
-    position: relative
-    margin-top: 116px
-    margin-bottom: 80px
-    h1
-      margin-top: 1em
-      margin-bottom: 0
-      font-size: 3.2rem
-
-  footer
-    clear: both
-    +clearfix
-    margin: 56px 0 32px 0
-    border-top: 2px dotted $yellow
-    h3
-      margin-bottom: 0
-    nav
-      a
-        padding: 10px
-        &:first-child
-          margin-left: -10px
-        &:last-child
-          color: $pale
-        &:hover
-          color: white
+.logo
+  polygon
+    fill: none
+    stroke: $mid
+    stroke-width: 1px
+  &:hover
+    polygon
+      stroke: $warm
 

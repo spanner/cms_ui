@@ -1,10 +1,7 @@
-%link.template{type: "text/css", rel: "stylesheet"}
-%link.fonts{type: "text/css", rel: "stylesheet"}
-%script{type: "text/javascript"}
 %style.preview
 
 #site_tabs
-  %a.tab.current{data: {tab: "html"}} Parts
+  %a.tab.current{data: {tab: "html"}} HTML
   %a.tab{data: {tab: "css"}} CSS
   %a.tab{data: {tab: "js"}} JS
   %a.tab{data: {tab: "assets"}} Assets
