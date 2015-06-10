@@ -131,6 +131,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
+  tagName: "iframe"
 
   template: () =>
     @model.getSite().get('html')

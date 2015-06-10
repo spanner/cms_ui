@@ -154,7 +154,6 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     $('#cms-ui').toggleClass('previewing')
 
 
-
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
   template: "sections/listed"
   tagName: "li"
