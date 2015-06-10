@@ -132,6 +132,19 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     $.page = @model
 
 
+class CMS.Views.PageHead extends Backbone.Marionette.ItemView
+  template: false
+
+  bindings:
+    "style": "css"
+
+  onRender: =>
+    @model.whenReady =>
+      @$el.append('<style />')
+      # @$el.append('<link href="/stylesheets/base.css" type="text/css" />')
+      @stickit()
+      console.log "bound css", @model.get('css')
+
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   tagName: "iframe"
   template: false
@@ -146,6 +159,11 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
       doc.write(html)
       doc.close()
       
+      @_page_head_view = new CMS.Views.PageHead
+        model: @model.getSite()
+        el: $(doc.head)
+      @_page_head_view.render()
+
       @_page_view = new CMS.Views.Page
         model: @model
         collection: @model.sections
