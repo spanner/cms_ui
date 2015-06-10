@@ -1,6 +1,6 @@
 class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
-  savedAttributes: ["css", "title", "domain", "template", "header", "footer", "sass", "font_css_url", "coffee"]
+  savedAttributes: ["title", "domain", "template", "html", "sass", "coffee"]
 
   build: =>
     @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
@@ -32,8 +32,9 @@ class CMS.Models.Site extends CMS.Model
 
   previewCSS: =>
     $.ajax("#{@url()}/preview_css",
-      type: "GET"
-      data: sass: @get("sass")
+      type: "POST"
+      data: 
+        sass: @get("sass")
     ).done (data) =>
       @set css: data?.css
 
