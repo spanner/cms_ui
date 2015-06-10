@@ -1,5 +1,4 @@
 @import lib/definitions
-@import lib/fonts
 @import lib/loader
 @import lib/codemirror/codemirror
 @import lib/codemirror/spanner
@@ -7,22 +6,27 @@
 @import lib/slick
 @import lib/slick_theme
 
-$control_height: 36px
-$left_width: 480px
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700)
 
-// Base formatting
+=cms-font-standard
+  font-family: 'Open Sans', sans-serif
+  font-weight: normal
+  font-style: normal
 
-*
-  font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+=cms-font-light
+  font-family: 'Open Sans', sans-serif
+  font-weight: lighter
+  font-style: normal
 
-a
-  cursor: pointer
-  text-decoration: none
+=cms-font-heading
+  font-family: 'Open Sans', sans-serif
+  letter-spacing: 0.03em
 
-body
-  color: $dark
-  line-height: 1.6
+=cms-font-subheading
+  font-family: 'Open Sans', sans-serif
+
+$cms_control_height: 36px
+$cms_left_width: 480px
 
 body, html
   margin: 0
@@ -30,175 +34,26 @@ body, html
   width: 100%
   height: 100%
 
-h1, h2, h3
-  font-weight: normal
-
-
-// Widely-used elements styles
-
-h2.label
-  color: $mid
-  font-size: 10px
-  margin: 0
-  padding: 10px
-
-input
-  +book
-
-a.add, a.delete, a.menu, a.save
-  display: inline-block
-  vertical-align: top
-  width: 20px
-  height: 20px
-  text-indent: 20px
-  overflow: hidden
-  background:
-    position: 0 0
-    repeat: no-repeat
-    image: image-url('linksprite.png')
-
-a.add
-  background-position: 0 0
-  &:hover
-    background-position: 0 -32px
-
-a.delete
-  background-position: 0 -192px
-  &:hover
-    background-position: 0 -224px
-
-a.menu
-  background-position: 0 -384px
-  &:hover
-    background-position: 0 -416px
-
-a.save
-  background-position: 0 -288px
-  &:hover
-    background-position: 0 -320px
-
-a[contenteditable]
-  cursor: inherit
-
-a.section_type
-  width: 32px
-  height: 32px
-  display: inline-block
-  vertical-align: top
-  background:
-    position: 0 0
-    repeat: no-repeat
-    image: image-url('sectionsprite.png')
-  &.default
-    background-position: 0 0
-    &.selected
-      background-position: -32px 0
-    &:hover
-      background-position: -64px 0
-  &.asided
-    background-position: 0 -32px
-    &.selected
-      background-position: -32px -32px
-    &:hover
-      background-position: -64px -32px
-  &.twocol
-    background-position: 0 -64px
-    &.selected
-      background-position: -32px -64px
-    &:hover
-      background-position: -64px -64px
-  &.bigtext
-    background-position: 0 -96px
-    &.selected
-      background-position: -32px -96px
-    &:hover
-      background-position: -64px -96px
-  &.hero
-    background-position: 0 -128px
-    &.selected
-      background-position: -32px -128px
-    &:hover
-      background-position: -64px -128px
-  &.bigquote
-    background-position: 0 -160px
-    &.selected
-      background-position: -32px -160px
-    &:hover
-      background-position: -64px -160px
-  &.carousel
-    background-position: 0 -192px
-    &.selected
-      background-position: -32px -192px
-    &:hover
-      background-position: -64px -192px
-  &.video
-    background-position: 0 -224px
-    &.selected
-      background-position: -32px -224px
-    &:hover
-      background-position: -64px -224px
-  &.grid
-    background-position: 0 -256px
-    &.selected
-      background-position: -32px -256px
-    &:hover
-      background-position: -64px -256px
-
-.hidden
-  display: none
-
-.title_toggle
-  float: right
-  font-size: 0.8rem
-  color: $pale
-  margin-top: -1.7em
-  margin-right: 16px
-
-p
-  span.quote
-    display: block
-    color: $pale
-    &:before
-      content: '“'
-      font-size: 180%
-      position: absolute
-      width: 12px
-      text-align: right
-      margin-left: -0.5em
-      margin-top: 0
-    &:after
-      content: '”'
-      font-size: 180%
-      position: absolute
-      margin-left: 8px
-      margin-top: 0
-  span.speaker
-    display: block
-    color: white
-
-
 // Page construction
 
-#ui
+#cms-ui
   position: relative
   border-top: 1px solid $menu_bg
   transition: margin-left 0.5s ease
-  margin-left: -$left_width
+  margin-left: -$cms_left_width
   min-height: 100%
-  #shelf
-    position: relative
-    float: left
-    width: $left_width
+  #cms-shelf
+    position: absolute
+    left: 0
+    top: 0
+    width: $cms_left_width
     height: 100%
     overflow: auto
-  #main
-    position: absolute
-    top: 0
-    left: $left_width
-    right: 0
-    bottom: 0
+  #cms-main
+    position: relative
+    margin-left: $cms_left_width
     overflow: auto
-    #manager
+    #cms-manager
       position: fixed
       top: 0
       left: 0
@@ -206,20 +61,23 @@ p
       background: $menu_bg
       color: $menu_text
       z-index: 100
-      height: $control_height
+      height: $cms_control_height
       transition: left 0.5s ease
   &.shelved
     margin-left: 0
-    #main
-      #manager
-        left: $left_width
- 
-#session
+    #cms-main
+      #cms-manager
+        left: $cms_left_width
+
+
+// Rules for all CMS-contained elements
+
+#cms-session
   height: 100%
   width: 100%
 
-#shelf
-  +book
+#cms-shelf
+  +cms-font-standard
   background-color: $shelf_bg
   color: $shelf_text
   z-index: 10
@@ -227,15 +85,15 @@ p
     position: fixed
     left: 0
     top: 0
-    width: $left_width
+    width: $cms_left_width
     background: $shelf_head_bg
     color: $menu_text
     z-index: 100
-    height: $control_height
+    height: $cms_control_height
     overflow: hidden
     transition: left 0.5s ease
     a.tab
-      +light
+      +cms-font-light
       display: inline-block
       padding: 6px 10px
       color: $shelf_text
@@ -247,16 +105,16 @@ p
       +box-shadow(inset -4px 0 8px rgba(0,0,0,0.4))
       padding-bottom: 40px
 
-  #configuration
+  #cms-configuration
     #tab
       // position: fixed
       top: 0
-      left: -$left_width
+      left: -$cms_left_width
       bottom: 0
-      width: $left_width
+      width: $cms_left_width
       height: 100%
       box-sizing: border-box
-      padding-top: $control_height
+      padding-top: $cms_control_height
       overflow-y: auto
       overflow-x: hidden
       transition: left 0.5s ease
@@ -281,7 +139,7 @@ p
         box-sizing: border-box
         outline: none
         margin: 0 10px
-        +light
+        +cms-font-light
         font-size: 1rem
         &.title
           font-size: 2rem
@@ -297,12 +155,12 @@ p
             +button($greenish)
             float: right
 
-#main
+#cms-main
   position: relative
   z-index: 20
-  #editor
+  #cms-editor
     z-index: 50
-    margin-top: $control_height
+    margin-top: $cms_control_height
     padding: 20px 0
     [contenteditable]
       outline: none
@@ -347,8 +205,8 @@ p
               color: $pale
               padding: 8px 6px 0 6px
 
-  #manager
-    +book
+  #cms-manager
+    +cms-font-standard
     position: fixed
     top: 0
     left: 0
@@ -356,7 +214,7 @@ p
     background: $menu_bg
     color: $menu_text
     z-index: 100
-    height: $control_height
+    height: $cms_control_height
     transition: left 0.5s ease
     &:empty
       display: none
@@ -383,7 +241,7 @@ p
     .header
       position: relative
       display: inline-block
-      height: $control_height
+      height: $cms_control_height
       background-color: $menu_bg
       box-sizing: border-box
       float: left
@@ -393,12 +251,12 @@ p
         display: inline-block
         vertical-align: middle
       a.title
-        +light
+        +cms-font-light
         padding: 6px 0 0 0
         color: $menu_text
         &.site
-          padding: 6px 0 6px $control_height
-          height: $control_height
+          padding: 6px 0 6px $cms_control_height
+          height: $cms_control_height
           font-weight: bold
           box-sizing: border-box
           background:
@@ -434,7 +292,7 @@ p
     .menu
       position: absolute
       display: none
-      top: $control_height
+      top: $cms_control_height
       background-color: $menu_bg
       width: auto
       +box-shadow(0 4px 6px rgba(0,0,0,0.4))
@@ -453,7 +311,7 @@ p
         a
           color: $menu_up_text
           white-space: nowrap
-          +light
+          +cms-font-light
         a.nav
           color: $verypale
           margin-left: 4px
@@ -541,9 +399,9 @@ p
     margin: 0
     padding: 6px 10px
     box-sizing: border-box
-    height: $control_height
+    height: $cms_control_height
     color: white
-    +light
+    +cms-font-light
   a.save_page, a.save_site
     background-color: $greenish
     &:hover
@@ -577,7 +435,7 @@ p
   height: 100%
   z-index: 60
   background-color: white
-  +book
+  +cms-font-standard
   #form
     position: relative
     width: 600px
@@ -640,7 +498,7 @@ p
           border: 1px solid $pale
           outline: none
           +border-radius(4px)
-          +light
+          +cms-font-light
           background:
             position: right 10px top 10px
             repeat: no-repeat
@@ -670,7 +528,7 @@ p
           outline: none
           +box-shadow(0 1px 3px $dark)
           font-size: 1.5em
-          +light
+          +cms-font-light
           +border-radius(3px)
           &:active
             color: $hover
@@ -686,14 +544,14 @@ p
       color: $pale
       +small
 
-#ui.previewing
+#cms-ui.previewing
   #page_controls
     a.preview
       color: $green
       &:before
         content: '✓'
 
-  #main #editor main section
+  #cms-main #cms-editor main section
     border-top: none
     margin-top: 0
     padding-top: 0

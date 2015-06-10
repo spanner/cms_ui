@@ -24,7 +24,7 @@ class CMS.Application extends Backbone.Marionette.Application
     @_session = new CMS.Models.Session
     @_ui = new CMS.Views.UILayout
       model: @_session
-      el: "#ui"
+      el: "#cms-ui"
     @_router = new CMS.AppRouter
       controller: @_ui
     @_ui.render()

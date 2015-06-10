@@ -1,10 +1,10 @@
-#session_barrier
+#cms-session-barrier
 
-#shelf
-  #configuration
+#cms-shelf
+  #cms-configuration
 
-#main
-  #manager
-  #editor
+#cms-main
+  #cms-manager
+  #cms-editor
 
 

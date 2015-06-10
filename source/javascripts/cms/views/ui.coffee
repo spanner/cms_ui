@@ -2,11 +2,11 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   template: "layouts/ui"
 
   regions:
-    configuration: '#configuration'
-    manager: '#manager'
-    editor: '#editor'
-    session: '#session_barrier'
-    user: '#user_settings'
+    configuration: '#cms-configuration'
+    manager: '#cms-manager'
+    editor: '#cms-editor'
+    # session: '#cms-session-barrier'
+    # user: '#cms-user-settings'
 
   #todo: user menu inc logout and preferences
 
@@ -15,7 +15,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     # visible if there is no session yet, or it we route to a management view.
     @_barrier = new CMS.Views.SessionLayout
       model: @model
-      el: @$el.find('#session_barrier')
+      el: @$el.find('#cms-session-barrier')
     @_barrier.render()
 
   sessionView: (action) =>

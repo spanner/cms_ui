@@ -151,7 +151,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
 
   togglePreview: (e) =>
     e?.preventDefault()
-    $('#ui').toggleClass('previewing')
+    $('#cms-ui').toggleClass('previewing')
 
 
 
@@ -257,15 +257,15 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
       ]
 
   showing: =>
-    showing = $('#ui').hasClass('shelved')
+    showing = $('#cms-ui').hasClass('shelved')
     showing
 
   open: =>
     _cms.vent.trigger "reset" #nb. closes us too.
-    $('#ui').addClass('shelved')
+    $('#cms-ui').addClass('shelved')
 
   close: =>
-    $('#ui').removeClass('shelved')
+    $('#cms-ui').removeClass('shelved')
 
   siteStatus: ([changed, published_at, updated_at]=[]) =>
     if changed
