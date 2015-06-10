@@ -152,6 +152,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   togglePreview: (e) =>
     e?.preventDefault()
     $('#ui').toggleClass('previewing')
+    $('iframe').contents().find("body").toggleClass('previewing')
 
 
 

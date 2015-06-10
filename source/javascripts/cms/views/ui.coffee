@@ -56,6 +56,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
   setPage: (page) =>
     # we have page object with sections collection
     @_manager.setPage(page)
-    @_editor = new CMS.Views.PageEditorLayout
+    @_editor = new CMS.Views.PageIFrame
       model: page
-    @getRegion('editor').show @_editor
+      el: @$el.find("#editor")
+    # @getRegion('editor').show @_editor

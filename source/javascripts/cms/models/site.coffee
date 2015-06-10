@@ -31,8 +31,8 @@ class CMS.Models.Site extends CMS.Model
     @set css: @get("original_css")
 
   previewCSS: =>
-    $.ajax("#{@url()}/preview_css",
-      type: "GET"
+    $.ajax(@url() + "/preview_css",
+      type: "PUT"
       data: sass: @get("sass")
     ).done (data) =>
       @set css: data?.css

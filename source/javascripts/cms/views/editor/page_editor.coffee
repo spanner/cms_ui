@@ -129,6 +129,25 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     @stickit()
     $.page = @model
 
+class CMS.Views.PageHead extends Backbone.Marionette.ItemView
+  template: "pages/head"
+  bindings:
+    "style": "css"
+
+  onRender: =>
+    @stickit()
+
+class CMS.Views.PageIFrame extends Backbone.Marionette.LayoutView
+  initialize: ->
+    head = new CMS.Views.PageHead
+      model: @model.getSite()
+      el: @$el.contents().find("head")
+    head.render()
+
+    editor = new CMS.Views.PageEditorLayout
+      model: @model
+      el: @$el.contents().find("body")
+    editor.render()
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/editor"
