@@ -96,7 +96,7 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
 class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/site_editor"
   regions:
-    "tab": "#tab"
+    "tab": "#cms-config-body"
     "controls": "#site_controls"
 
   events:

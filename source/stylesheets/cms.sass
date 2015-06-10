@@ -1,3 +1,5 @@
+//= require_tree ./public
+
 @import lib/definitions
 @import lib/loader
 @import lib/codemirror/codemirror
@@ -10,22 +12,23 @@
 
 =cms-font-standard
   font-family: 'Open Sans', sans-serif
-  font-weight: normal
+  font-weight: 400
   font-style: normal
+  font-size: 15px
 
 =cms-font-light
-  font-family: 'Open Sans', sans-serif
-  font-weight: lighter
-  font-style: normal
+  +cms-font-standard
+  font-weight: 300
 
 =cms-font-heading
-  font-family: 'Open Sans', sans-serif
+  +cms-font-standard
   letter-spacing: 0.03em
 
 =cms-font-subheading
-  font-family: 'Open Sans', sans-serif
+  +cms-font-standard
+  font-weight: 700
 
-$cms_control_height: 36px
+$cms_control_height: 32px
 $cms_left_width: 480px
 
 body, html
@@ -33,6 +36,118 @@ body, html
   padding: 0
   width: 100%
   height: 100%
+
+
+// Element-formatting within CMS elements
+// Seems to be links, mostly.
+// Formatting within the editor is left along as much as possible.
+// Only the section type and site css should really have effect there,
+// but we do need to add some control buttons.
+
+a.cms-add, a.cms-delete, a.cms-menu, a.cms-save
+  display: inline-block
+  vertical-align: top
+  width: 20px
+  height: 20px
+  text-indent: 20px
+  overflow: hidden
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('linksprite.png')
+
+a.cms-add
+  background-position: 0 0
+  &:hover
+    background-position: 0 -32px
+
+a.cms-delete
+  background-position: 0 -192px
+  &:hover
+    background-position: 0 -224px
+
+a.cms-menu
+  background-position: 0 -384px
+  &:hover
+    background-position: 0 -416px
+
+a.cms-save
+  background-position: 0 -288px
+  &:hover
+    background-position: 0 -320px
+
+a[contenteditable]
+  cursor: inherit
+
+a.cms-section-type
+  width: 32px
+  height: 32px
+  display: inline-block
+  vertical-align: top
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('sectionsprite.png')
+  &.default
+    background-position: 0 0
+    &.selected
+      background-position: -32px 0
+    &:hover
+      background-position: -64px 0
+  &.asided
+    background-position: 0 -32px
+    &.selected
+      background-position: -32px -32px
+    &:hover
+      background-position: -64px -32px
+  &.twocol
+    background-position: 0 -64px
+    &.selected
+      background-position: -32px -64px
+    &:hover
+      background-position: -64px -64px
+  &.bigtext
+    background-position: 0 -96px
+    &.selected
+      background-position: -32px -96px
+    &:hover
+      background-position: -64px -96px
+  &.hero
+    background-position: 0 -128px
+    &.selected
+      background-position: -32px -128px
+    &:hover
+      background-position: -64px -128px
+  &.bigquote
+    background-position: 0 -160px
+    &.selected
+      background-position: -32px -160px
+    &:hover
+      background-position: -64px -160px
+  &.carousel
+    background-position: 0 -192px
+    &.selected
+      background-position: -32px -192px
+    &:hover
+      background-position: -64px -192px
+  &.video
+    background-position: 0 -224px
+    &.selected
+      background-position: -32px -224px
+    &:hover
+      background-position: -64px -224px
+  &.grid
+    background-position: 0 -256px
+    &.selected
+      background-position: -32px -256px
+    &:hover
+      background-position: -64px -256px
+
+#cms-shelf, #cms-manager
+  +cms-font-standard
+  a
+    cursor: pointer
+    text-decoration: none
 
 // Page construction
 
@@ -69,10 +184,7 @@ body, html
       #cms-manager
         left: $cms_left_width
 
-
-// Rules for all CMS-contained elements
-
-#cms-session
+#cms-session-barrier
   height: 100%
   width: 100%
 
@@ -100,14 +212,8 @@ body, html
       &.current
         background-color: $shelf_bg
 
-  #site_controls
-    a
-      +box-shadow(inset -4px 0 8px rgba(0,0,0,0.4))
-      padding-bottom: 40px
-
   #cms-configuration
-    #tab
-      // position: fixed
+    #cms-config-body
       top: 0
       left: -$cms_left_width
       bottom: 0
@@ -115,8 +221,7 @@ body, html
       height: 100%
       box-sizing: border-box
       padding-top: $cms_control_height
-      overflow-y: auto
-      overflow-x: hidden
+      overflow: hidden
       transition: left 0.5s ease
       label
         display: block
@@ -170,40 +275,33 @@ body, html
       &:focus
         background:
           color: transparent
-
-    main
-      section
+    .cms-section-menu
+      position: absolute
+      top: -20px
+      right: -80px
+      width: 85px
+      a.cms-menu
         position: relative
-        border-top: 1px solid white
-        margin-top: 1em
-        padding-top: 1em
-        .admin
-          position: absolute
-          top: -20px
-          right: -80px
-          width: 85px
-          a.menu
-            position: relative
-            background-color: white
-          div.menu
-            position: relative
-            overflow: hidden
-            margin-top: -1px
-            background-color: white
-            +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-            width: 85px
-            height: 0
-            transition: height 0.5s ease
-            &.open
-              height: 200px
-            a.section_type
-              margin: 4px
-            input[type="checkbox"]
-              margin-right: 4px
-            label
-              display: block
-              color: $pale
-              padding: 8px 6px 0 6px
+        background-color: white
+      div.cms-menu
+        position: relative
+        overflow: hidden
+        margin-top: -1px
+        background-color: white
+        +box-shadow(0 2px 5px rgba(0,0,0,0.4))
+        width: 85px
+        height: 0
+        transition: height 0.5s ease
+        &.open
+          height: 200px
+        a.section_type
+          margin: 4px
+        input[type="checkbox"]
+          margin-right: 4px
+        label
+          display: block
+          color: $pale
+          padding: 8px 6px 0 6px
 
   #cms-manager
     +cms-font-standard
@@ -289,7 +387,7 @@ body, html
             content: "\025BE"
             font-family: sans-serif
             margin-right: 8px
-    .menu
+    .cms-menu
       position: absolute
       display: none
       top: $cms_control_height
@@ -555,8 +653,10 @@ body, html
     border-top: none
     margin-top: 0
     padding-top: 0
+    position: relative
+    border: 1px solid green
     
-  .admin, .title_toggle
+  .cms-section-menu
     display: none
 
 

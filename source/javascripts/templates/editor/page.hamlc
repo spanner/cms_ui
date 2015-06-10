@@ -1,4 +1,3 @@
-%main
-  %h1{contenteditable: "true"}
+%h1{contenteditable: "true"}
 
-  #sections
+#sections

@@ -3,6 +3,6 @@
 %a.nav ⚑
 %span.slug{contenteditable: "true"}
 %span.controls>
-  %a.save.save_page √
-  %a.add.add_page +
-  %a.delete.delete_page x
+  %a.cms-save.save_page √
+  %a.cms-add.add_page +
+  %a.cms-delete.delete_page x

@@ -3,13 +3,10 @@
     %title
       CMS UI
     = stylesheet_link_tag "/stylesheets/cms.css"
-    = yield_content :styles
-    %style#template{type: "text/css"}
-    %style#custom{type: "text/css"}
+
 
   %body
     = yield
 
     = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"
     = javascript_include_tag "/javascripts/cms.js"
-    = yield_content :scripts

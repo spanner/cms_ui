@@ -1,5 +1,5 @@
-%a.menu
-.menu
+%a.cms-menu
+.cms-menu
   .properties
     %label
       %input.show_title{type: "checkbox"} 

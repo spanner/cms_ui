@@ -9,8 +9,10 @@ $background: none
   div.CodeMirror-selected
     background: #303030 !important
   .CodeMirror-gutters
-    background: inherit
-    border-right: 1px solid $shelf_bg
+    background-color: $shelf_bg
+    border-right: 1px solid lighten($shelf_bg, 20)
+    padding-right: 4px
+    opacity: 0.5
   .CodeMirror-guttermarker
     color: #ac4142
   .CodeMirror-guttermarker-subtle

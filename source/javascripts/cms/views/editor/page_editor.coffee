@@ -2,7 +2,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   template: "editor/section_admin_menu"
   
   events:
-    "click a.menu": "toggleMenu"
+    "click a.cms-menu": "toggleMenu"
     "click div.properties": "containEvent"
   
   modelEvents:
@@ -13,7 +13,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   
   onRender: () =>
     @stickit()
-    @_menu = @$el.find('.menu')
+    @_menu = @$el.find('.cms-menu')
     @_typer = @$el.find('.section_types')
     for type in CMS.Models.Section.types
       do (type) =>
@@ -37,7 +37,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
       @openMenu()
 
   openMenu: () =>
-    $('.menu').not(@_menu).removeClass('open')
+    $('.cms-menu').not(@_menu).removeClass('open')
     @_menu.addClass('open')
     $(document).bind "click", @closeMenu
     
@@ -82,7 +82,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
     super
     @_admin_menu = new CMS.Views.SectionAdminMenu
       model: @model
-      el: @$el.find('.admin')
+      el: @$el.find('.cms-section-menu')
     @_admin_menu.render()
     @renderSectionType()
   
@@ -104,9 +104,9 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
-  template: "editor/page"
   childView: CMS.Views.Section
   childViewContainer: "#sections"
+  template: "editor/page"
   
   childViewOptions: () =>
     toolbar: @_toolbar
@@ -131,33 +131,24 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
-  template: "layouts/editor"
+
+  template: () =>
+    @model.getSite().get('html')
 
   onRender: =>
     @_toolbar?.destroy()
     @model.whenReady =>
-      # TODO: site-meta view drops in here?
+      if page_container = @$el.find("main").get(0)
+        @_page_view = new CMS.Views.Page
+          model: @model
+          collection: @model.sections
+          el: page_container
+        @_page_view.render()
 
-      @_header_view = new CMS.Views.Header
-        model: @model.getSite()
-        el: @$el.find("header")
-      @_header_view.render()
-
-      @_page_view = new CMS.Views.Page
-        model: @model
-        collection: @model.sections
-        el: @$el.find("#page")
-      @_page_view.render()
-
-      @_footer_view = new CMS.Views.Footer
-        model: @model.getSite()
-        el: @$el.find("footer")
-      @_footer_view.render()
-
-      @_toolbar = new MediumEditor '.editable',
-        elementsContainer: $("#rte").get(0)
-        fixedToolbar: true
-        updateOnEmptySelection: true
-        disablePlaceholders: true
-        updateOnEmptySelection: true
+        @_toolbar = new MediumEditor '.editable',
+          elementsContainer: $("#rte").get(0)
+          fixedToolbar: true
+          updateOnEmptySelection: true
+          disablePlaceholders: true
+          updateOnEmptySelection: true
 

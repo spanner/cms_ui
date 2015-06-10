@@ -8,4 +8,4 @@
   %a.tab{data: {tab: "config"}} Config
   #site_controls
 
-#tab
+#cms-config-body

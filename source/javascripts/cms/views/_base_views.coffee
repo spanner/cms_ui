@@ -19,7 +19,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   onRender: =>
     if menu_view_class = @getOption('menuView')
       @_menu_view = new menu_view_class
-        el: @$el.find(".menu")
+        el: @$el.find(".cms-menu")
         collection: @collection
       @_menu_view.render()
     @setModel()
@@ -61,7 +61,7 @@ class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
 
 class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   @mixin "collection", "toggle", "bindings"
-  childViewContainer: ".menu_items"
+  childViewContainer: ".cms-menu_items"
   
   events: =>
     "click a.add_item": "addItem"
