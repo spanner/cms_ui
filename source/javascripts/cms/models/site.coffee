@@ -38,6 +38,12 @@ class CMS.Models.Site extends CMS.Model
     ).done (data) =>
       @set css: data?.css
 
+  getWrapper: () =>
+    if html = @get('html')
+      $(html)
+    else
+      $("<html><head><title /></head><body><main /></body></html>")
+
   # Publish is a special save that sends up a snapshot of the current state of our html parts.
   #
   publish: () =>

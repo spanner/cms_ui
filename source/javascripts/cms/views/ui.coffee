@@ -58,5 +58,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @_manager.setPage(page)
     @_editor = new CMS.Views.PageEditorLayout
       model: page
-    @getRegion('editor').show @_editor
-    console.log "editor", @_editor, "is in the iframe"
+      el: @$el.find('#cms-editor')
+    @_editor.render()
+    # @getRegion('editor').show @_editor
+    # debugger

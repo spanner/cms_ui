@@ -106,6 +106,8 @@ class CMS.Views.Section extends CMS.Views.ItemView
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childView: CMS.Views.Section
   childViewContainer: "#sections"
+
+  # template is going to come from page_type#html, but for now we use a normal file.
   template: "editor/page"
   
   childViewOptions: () =>
@@ -132,24 +134,28 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   tagName: "iframe"
-
-  template: () =>
-    @model.getSite().get('html')
+  template: false
 
   onRender: =>
-    @_toolbar?.destroy()
-    @model.whenReady =>
-      if page_container = @$el.find("main").get(0)
-        @_page_view = new CMS.Views.Page
-          model: @model
-          collection: @model.sections
-          el: page_container
-        @_page_view.render()
+    # @_toolbar?.destroy()
 
-        @_toolbar = new MediumEditor '.editable',
-          elementsContainer: $("#rte").get(0)
-          fixedToolbar: true
-          updateOnEmptySelection: true
-          disablePlaceholders: true
-          updateOnEmptySelection: true
+    @model.whenReady =>
+      html = @model.getSite()?.get('html')
+      doc = @el.contentWindow.document
+      doc.open()
+      doc.write(html)
+      doc.close()
+      
+      @_page_view = new CMS.Views.Page
+        model: @model
+        collection: @model.sections
+        el: $(doc.body).find('main')
+      @_page_view.render()
+
+      # @_toolbar = new MediumEditor '.editable',
+      #   elementsContainer: $("#rte").get(0)
+      #   fixedToolbar: true
+      #   updateOnEmptySelection: true
+      #   disablePlaceholders: true
+      #   updateOnEmptySelection: true
 

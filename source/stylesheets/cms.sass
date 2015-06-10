@@ -266,45 +266,44 @@ a.cms-section-type
   #cms-editor
     z-index: 50
     margin-top: $cms_control_height
-    iframe
-      height: 100%
-      width: 100%
-    
-      [contenteditable]
-        outline: none
-        &:hover
-          background:
-            color: $editable_bg
-        &:focus
-          background:
-            color: transparent
-      .cms-section-menu
-        position: absolute
-        top: -20px
-        right: -80px
+    height: 100%
+    width: 100%
+  
+    [contenteditable]
+      outline: none
+      &:hover
+        background:
+          color: $editable_bg
+      &:focus
+        background:
+          color: transparent
+    .cms-section-menu
+      position: absolute
+      top: -20px
+      right: -80px
+      width: 85px
+      a.cms-menu
+        position: relative
+        background-color: white
+      div.cms-menu
+        position: relative
+        overflow: hidden
+        margin-top: -1px
+        background-color: white
+        +box-shadow(0 2px 5px rgba(0,0,0,0.4))
         width: 85px
-        a.cms-menu
-          position: relative
-          background-color: white
-        div.cms-menu
-          position: relative
-          overflow: hidden
-          margin-top: -1px
-          background-color: white
-          +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-          width: 85px
-          height: 0
-          transition: height 0.5s ease
-          &.open
-            height: 200px
-          a.section_type
-            margin: 4px
-          input[type="checkbox"]
-            margin-right: 4px
-          label
-            display: block
-            color: $pale
-            padding: 8px 6px 0 6px
+        height: 0
+        transition: height 0.5s ease
+        &.open
+          height: 200px
+        a.section_type
+          margin: 4px
+        input[type="checkbox"]
+          margin-right: 4px
+        label
+          display: block
+          color: $pale
+          padding: 8px 6px 0 6px
 
   #cms-manager
     +cms-font-standard

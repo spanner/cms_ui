@@ -5,6 +5,6 @@
 
 #cms-main
   #cms-manager
-  #cms-editor
+  %iframe#cms-editor
 
 
