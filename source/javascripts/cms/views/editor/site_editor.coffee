@@ -152,7 +152,6 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
 
   ui:
     textarea: "textarea#js"
-    header_area: "textarea#header"
 
   onRender: =>
     @stickit()
@@ -238,47 +237,39 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
   template: "sites/html"
 
   events:
-    "click a.preview.header": "previewHeader"
-    "click a.preview.footer": "previewFooter"
+    "click a.preview.html": "previewHTML"
 
   bindings:
-    "#header": "header"
-    "#footer": "footer"
+    "#html": "html"
 
   ui:
-    header_area: "textarea#header"
-    footer_area: "textarea#footer"
+    textarea: "textarea#html"
 
   onRender: =>
     @stickit()
     _.delay @show, 2
 
   show: =>
-    @header_editor ?= CodeMirror.fromTextArea @ui.header_area[0],
-      mode: "markdown"
-      theme: "spanner"
-      lineNumbers: true
-      showCursorWhenSelecting: true
-      tabSize: 2
-      extraKeys:
-        "Cmd-Enter": @previewHeader
+    unless @editor
+      @editor = CodeMirror.fromTextArea @ui.textarea[0],
+        mode: "html"
+        theme: "spanner"
+        showCursorWhenSelecting: true
+        lineNumbers: true
+        tabSize: 2
+        extraKeys:
+          "Cmd-Enter": @previewHTML
 
-    @footer_editor ?= CodeMirror.fromTextArea @ui.footer_area[0],
-      mode: "markdown"
-      theme: "spanner"
-      lineNumbers: true
-      showCursorWhenSelecting: true
-      tabSize: 2
-      extraKeys:
-        "Cmd-Enter": @previewFooter
+      @model.on "change:js_preprocessor", (model, value) ->
+        @editor.setOption mode: value
 
-  previewHeader: =>
-    @ui.header_area.val @header_editor.getValue()
-    @ui.header_area.trigger "change"
+      @editor.on "change", =>
+        @ui.textarea.val @editor.getValue()
+        @ui.textarea.trigger "change"
 
-  previewFooter: =>
-    @ui.footer_area.val @footer_editor.getValue()
-    @ui.footer_area.trigger "change"
+  previewHTML: =>
+    @ui.textarea.val @editor.getValue()
+    @ui.textarea.trigger "change"
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView

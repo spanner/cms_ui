@@ -1,13 +1,5 @@
-%label
-  Header
-%textarea#header
+%textarea#html
 
 %p.buttons<
+  %a.button.revert ◂ revert
   %a.button.preview.header preview ▸
-
-%label
-  Footer
-%textarea#footer
-
-%p.buttons<
-  %a.button.preview.footer preview ▸
