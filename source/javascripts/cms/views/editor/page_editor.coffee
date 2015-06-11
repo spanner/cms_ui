@@ -141,9 +141,9 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
   onRender: =>
     @model.whenReady =>
       @$el.append('<style />')
-      # @$el.append('<link href="/stylesheets/base.css" type="text/css" />')
+      @$el.append '<link rel="stylesheet" href="/stylesheets/cms-base.css" type="text/css" />',
       @stickit()
-      console.log "bound css", @model.get('css')
+
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   tagName: "iframe"
