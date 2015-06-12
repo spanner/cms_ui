@@ -158,11 +158,21 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
       doc.open()
       doc.write(html)
       doc.close()
-      
+
       @_page_head_view = new CMS.Views.PageHead
         model: @model.getSite()
         el: $(doc.head)
       @_page_head_view.render()
+
+      @_page_header = new CMS.Views.Header
+        model: @model.getSite()
+        el: $(doc.body).find('header')
+      @_page_header.render()
+
+      @_page_footer = new CMS.Views.Footer
+        model: @model.getSite()
+        el: $(doc.body).find('footer')
+      @_page_footer.render()
 
       @_page_view = new CMS.Views.Page
         model: @model

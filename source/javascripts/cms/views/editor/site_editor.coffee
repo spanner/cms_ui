@@ -87,7 +87,7 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
     @model.whenReady @renderNav
 
   renderNav: =>
-    @$el.html @model.get('footer')
+    # @$el.html @model.get('footer')
     @_nav = new CMS.Views.Navigation
       collection: @model.nav_pages
       el: @$el.find('nav')
@@ -196,7 +196,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
     "a.preview":
-      observe: ["original_css", "css"]
+      observe: ["original_sass", "sass"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
 

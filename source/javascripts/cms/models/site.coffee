@@ -36,7 +36,9 @@ class CMS.Models.Site extends CMS.Model
       data: 
         sass: @get("sass")
     ).done (data) =>
-      @set css: data?.css
+      if errors = data?.errors
+        console.error "SASS parsing errors:", errors
+      @set data?.site
 
   getWrapper: () =>
     if html = @get('html')
