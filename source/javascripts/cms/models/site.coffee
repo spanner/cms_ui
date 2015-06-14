@@ -1,6 +1,6 @@
 class CMS.Models.Site extends CMS.Model
   idAttribute: "slug"
-  savedAttributes: ["title", "domain", "template", "html", "sass", "coffee"]
+  savedAttributes: ["title", "domain", "template", "haml", "sass", "coffee"]
 
   build: =>
     @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @

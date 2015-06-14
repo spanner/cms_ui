@@ -51,7 +51,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
 
 
 class CMS.Views.Section extends CMS.Views.ItemView
-  template: "editor/section"
+  template: false
   tagName: "section"
 
   events:
@@ -76,26 +76,26 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
   onRender: =>
     super
-    @_admin_menu = new CMS.Views.SectionAdminMenu
-      model: @model
-      el: @$el.find('.cms-section-menu')
-    @_admin_menu.render()
     @renderSectionType()
-  
+
   renderSectionType: () =>
     section_type = @model.get('section_type') or 'default'
     wrapper_class_name = section_type.charAt(0).toUpperCase() + section_type.substr(1).toLowerCase() + 'Section'
     wrapper_class = CMS.Views[wrapper_class_name] ? CMS.Views['DefaultSection']
     @_section_wrapper = new wrapper_class
       model: @model
-      el: @$el.find('.wrapper')
+      el: @$el
     @_section_wrapper.render()
+    @_section_menu = new CMS.Views.SectionAdminMenu
+      model: @model
+      el: @$el.find('.cms-section-menu')
+    @_section_menu.render()
 
   select: =>
     @model.select()
 
   sectionClass: (section_type) =>
-    section_type ? 'default'
+    section_type or 'default'
 
 
 

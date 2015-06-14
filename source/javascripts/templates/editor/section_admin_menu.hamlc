@@ -1,4 +1,5 @@
-%a.cms-menu
+%a.button.cms-menu
+  ☰
 .cms-menu
   .properties
     %label

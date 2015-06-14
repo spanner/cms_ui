@@ -1,4 +1,5 @@
 @import lib/definitions
+@import lib/fonts
 
 [contenteditable]
   outline: none
@@ -9,133 +10,55 @@
     background:
       color: transparent
 
-a.cms-menu
-  display: inline-block
-  vertical-align: top
-  width: 20px
-  height: 20px
-  text-indent: 20px
-  overflow: hidden
-  background:
-    position: 0 -384px
-    repeat: no-repeat
-    image: image-url('linksprite.png')
-  &:hover
-    background-position: 0 -416px
-
-main
-  section
-    position: relative
-    border-top: 1px solid white
-    margin-top: 1em
-    padding-top: 1em
-    .cms-section-menu
-      position: absolute
-      top: -20px
-      right: 0
-      width: 85px
-      a.cms-menu
-        position: relative
-        background-color: white
-      div.cms-menu
-        position: relative
-        overflow: hidden
-        margin-top: -1px
-        background-color: white
-        +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-        width: 85px
-        height: 0
-        transition: height 0.5s ease
-        &.open
-          height: 200px
-        input[type="checkbox"]
-          margin-right: 4px
-        label
-          display: block
-          color: $pale
-          padding: 8px 6px 0 6px
-        a.section_type
-          width: 32px
-          height: 32px
-          display: inline-block
-          vertical-align: top
-          margin: 4px
-          background:
-            position: 0 0
-            repeat: no-repeat
-            image: image-url('sectionsprite.png')
-          &.default
-            background-position: 0 0
-            &.selected
-              background-position: -32px 0
-            &:hover
-              background-position: -64px 0
-          &.asided
-            background-position: 0 -32px
-            &.selected
-              background-position: -32px -32px
-            &:hover
-              background-position: -64px -32px
-          &.twocol
-            background-position: 0 -64px
-            &.selected
-              background-position: -32px -64px
-            &:hover
-              background-position: -64px -64px
-          &.bigtext
-            background-position: 0 -96px
-            &.selected
-              background-position: -32px -96px
-            &:hover
-              background-position: -64px -96px
-          &.hero
-            background-position: 0 -128px
-            &.selected
-              background-position: -32px -128px
-            &:hover
-              background-position: -64px -128px
-          &.bigquote
-            background-position: 0 -160px
-            &.selected
-              background-position: -32px -160px
-            &:hover
-              background-position: -64px -160px
-          &.carousel
-            background-position: 0 -192px
-            &.selected
-              background-position: -32px -192px
-            &:hover
-              background-position: -64px -192px
-          &.video
-            background-position: 0 -224px
-            &.selected
-              background-position: -32px -224px
-            &:hover
-              background-position: -64px -224px
-          &.grid
-            background-position: 0 -256px
-            &.selected
-              background-position: -32px -256px
-            &:hover
-              background-position: -64px -256px
-
-body.previewing
-  #main #editor main section
-    border-top: none
-    margin-top: 0
-    padding-top: 0
-
-  .admin, .title_toggle
-    display: none
-
 /* Section types will end up with a nice place to live */
     
 main
   section
     position: relative
     +clearfix
+    .cms-controls
+      +cms-font-light
+      position: absolute
+      display: none
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      background-color: $darkish
+      z-index: 50
+      pointer-events: none
+      .cms-buttons
+        position: absolute
+        bottom: 10%
+        right: 10%
+        .cms-section-menu
+          display: inline
+        .button
+          display: inline-block
+          pointer-events: auto
+          margin: 0 0.25em
+          padding: 0.85em 1em
+          background-color: $warmish
+          color: white
+          box-sizing: border-box
+          border-radius: 4px
+          cursor: pointer
+          &:hover
+            background-color: $warm
+    div.cms-menu
+      display: none
+
+
+    &:hover
+      .cms-controls
+        display: block
+
+    .built
+      z-index: 10
+
     .content
       +central
+      z-index: 20
 
     &.default
       .section_body
@@ -185,7 +108,7 @@ main
         font-size: 1.75rem
         line-height: 1.25
         margin: 1.25em auto
-        span.quote
+        span.quoted
           &:before
             content: '“'
             font-size: 180%
@@ -200,6 +123,8 @@ main
             position: absolute
             margin-left: -0.1em
             margin-top: -0.1em
+        span.speaker
+          margin-left: 1em
 
     &.grid
       .block
@@ -215,7 +140,6 @@ main
       margin: 0
       max-height: 90vh
       min-height: 50vh
-      background-color: $green
       .built
         position: relative
         overflow: hidden
@@ -225,15 +149,12 @@ main
           // min-height: 600px
           position: relative
           margin: 0 auto
-          z-index: 1
       .content
         position: absolute
         bottom: 1.25em
         left: 0
         right: 0
-        z-index: 100
         h1
-          +central
           font-size: 5em
           color: white
           text-shadow: 0 0 10px rgba(0,0,0,0.6)

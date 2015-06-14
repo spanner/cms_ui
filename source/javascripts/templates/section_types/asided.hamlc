@@ -1,3 +1,6 @@
 .content
   %aside.section_aside.editable{contenteditable: "true"}
   .section_body.editable{contenteditable: "true"}
+.cms-controls
+  .cms-buttons
+    .cms-section-menu

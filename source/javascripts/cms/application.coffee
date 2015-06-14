@@ -11,11 +11,13 @@ CMS.Mixins = {}
 root = exports ? this
 root.CMS = CMS
 
+
 class CMS.AppRouter extends Backbone.Marionette.AppRouter
   appRoutes:
     "sites/:site_slug(/*path)": "siteView"
     "session/:action": "sessionView"
     "(/)": "homeView"
+
 
 class CMS.Application extends Backbone.Marionette.Application
   initialize: ->

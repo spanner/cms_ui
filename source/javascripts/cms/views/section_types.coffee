@@ -1,3 +1,23 @@
+class CMS.Views.SectionView extends CMS.Views.ItemView
+  tagName: "section"
+
+  initialize: () =>
+    super
+    @on 'reset', @resetHtml
+
+  resetHtml: =>
+    @model.set "built_html", @renderContent()
+
+  renderContent: () =>
+    if template = @getContentTemplate()
+      Marionette.Renderer.render template, {}, @
+    else
+      ""
+
+  getContentTemplate: () =>
+    @getOption('content_template')
+
+
 class CMS.Views.DefaultSection extends CMS.Views.ItemView
   template: "section_types/default"
   tagName: "section"
@@ -65,7 +85,7 @@ class CMS.Views.BigquoteSection extends CMS.Views.ItemView
     ".section_title":
       classes:
         showing: "show_title"
-    ".quote":
+    ".quoted":
       observe: "main_html"
       updateMethod: "text"
     ".speaker":
@@ -103,23 +123,34 @@ class CMS.Views.GridSection extends CMS.Views.ItemView
       updateMethod: "html"
 
 
-class CMS.Views.HeroSection extends CMS.Views.ItemView
+class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
-  tagName: "section"
+  content_template: "section_content/hero"
 
   bindings:
     "h1":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
-    ".section_body":
-      observe: "main_html"
+    ".built":
+      observe: "built_html"
       updateMethod: "html"
   
   onRender: =>
-    # set default model content so that the image-picker can get at it
+    @resetHtml() unless @model.get('built_html')
+    # @_video_picker = new CMS.Views.VideoPicker
+    #   el: @$el.find('video')
+    # @_image_picker = new CMS.Views.ImagePicker
+    #   el: @$el.find('image')
     super
+
+
+
+
+
+
+
+
+
+
 
 
 class CMS.Views.CarouselSection extends CMS.Views.ItemView
