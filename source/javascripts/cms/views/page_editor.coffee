@@ -108,7 +108,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childViewContainer: "#sections"
 
   template: () =>
-    @model.page_type.get('template')
+    @model.page_type.get('html')
   
   childViewOptions: () =>
     toolbar: @_toolbar
@@ -123,7 +123,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
-      classes: 
+      classes:
         "hidden": "hide_introduction"
     ".hide_introduction": "hide_introduction"
 

@@ -13,7 +13,6 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
 
   initialize: ->
     super
-    _cms.vent.on "reset", @close
     @collection.on "change:selected", @setModel
 
   onRender: =>

@@ -1,4 +1,4 @@
-%textarea#html
+%textarea#haml
 
 %p.buttons<
   %a.button.revert ◂ revert

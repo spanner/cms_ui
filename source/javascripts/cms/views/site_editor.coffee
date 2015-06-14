@@ -241,10 +241,10 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
     "click a.preview.html": "previewHTML"
 
   bindings:
-    "#html": "html"
+    "#haml": "haml"
 
   ui:
-    textarea: "textarea#html"
+    textarea: "textarea#haml"
 
   onRender: =>
     @stickit()
@@ -253,16 +253,13 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
   show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
-        mode: "htmlmixed"
+        mode: "haml"
         theme: "spanner"
         showCursorWhenSelecting: true
         lineNumbers: true
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewHTML
-
-      @model.on "change:js_preprocessor", (model, value) ->
-        @editor.setOption mode: value
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()

@@ -32,7 +32,7 @@ main
     .cms-section-menu
       position: absolute
       top: -20px
-      right: -80px
+      right: 0
       width: 85px
       a.cms-menu
         position: relative
@@ -48,14 +48,76 @@ main
         transition: height 0.5s ease
         &.open
           height: 200px
-        a.section_type
-          margin: 4px
         input[type="checkbox"]
           margin-right: 4px
         label
           display: block
           color: $pale
           padding: 8px 6px 0 6px
+        a.section_type
+          width: 32px
+          height: 32px
+          display: inline-block
+          vertical-align: top
+          margin: 4px
+          background:
+            position: 0 0
+            repeat: no-repeat
+            image: image-url('sectionsprite.png')
+          &.default
+            background-position: 0 0
+            &.selected
+              background-position: -32px 0
+            &:hover
+              background-position: -64px 0
+          &.asided
+            background-position: 0 -32px
+            &.selected
+              background-position: -32px -32px
+            &:hover
+              background-position: -64px -32px
+          &.twocol
+            background-position: 0 -64px
+            &.selected
+              background-position: -32px -64px
+            &:hover
+              background-position: -64px -64px
+          &.bigtext
+            background-position: 0 -96px
+            &.selected
+              background-position: -32px -96px
+            &:hover
+              background-position: -64px -96px
+          &.hero
+            background-position: 0 -128px
+            &.selected
+              background-position: -32px -128px
+            &:hover
+              background-position: -64px -128px
+          &.bigquote
+            background-position: 0 -160px
+            &.selected
+              background-position: -32px -160px
+            &:hover
+              background-position: -64px -160px
+          &.carousel
+            background-position: 0 -192px
+            &.selected
+              background-position: -32px -192px
+            &:hover
+              background-position: -64px -192px
+          &.video
+            background-position: 0 -224px
+            &.selected
+              background-position: -32px -224px
+            &:hover
+              background-position: -64px -224px
+          &.grid
+            background-position: 0 -256px
+            &.selected
+              background-position: -32px -256px
+            &:hover
+              background-position: -64px -256px
 
 body.previewing
   #main #editor main section

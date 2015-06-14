@@ -213,14 +213,9 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   template: "sections/menu"
   childView: CMS.Views.ListedSection
-  
-  initialize: ->
-    super
-    $.sections = @collection
 
   addItem: =>
     top_pos = @collection.last()?.get('position') ? 0
-    console.log "addSection at pos", top_pos + 1
     @collection.add
       title: "New section"
       page_id: @collection.page.id
@@ -231,7 +226,11 @@ class CMS.Views.SectionsList extends CMS.Views.MenuView
 class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
   template: "manager/sections"
   menuView: CMS.Views.SectionsList
-  
+
+  initialize: ->
+    super
+    _cms.vent.on "reset", @close
+
   bindings:
     '.header a.title':
       observe: ["title", "section_type"]
@@ -241,6 +240,10 @@ class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
 class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
   menuView: CMS.Views.PagesTree
+
+  initialize: ->
+    super
+    _cms.vent.on "reset", @close
 
 
 class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
