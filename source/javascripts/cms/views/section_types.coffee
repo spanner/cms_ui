@@ -9,13 +9,13 @@ class CMS.Views.DefaultSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".section_body":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
     ".section_aside":
-      observe: "aside"
+      observe: "secondary_html"
       updateMethod: "html"
     ".section_note":
-      observe: "note"
+      observe: "caption_html"
       updateMethod: "html"
 
 
@@ -30,10 +30,10 @@ class CMS.Views.TwocolSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".col.first":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
     ".col.second":
-      observe: "aside"
+      observe: "secondary_html"
       updateMethod: "html"
 
 
@@ -48,10 +48,10 @@ class CMS.Views.AsidedSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".section_body":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
     ".section_aside":
-      observe: "aside"
+      observe: "secondary_html"
       updateMethod: "html"
 
 
@@ -66,10 +66,10 @@ class CMS.Views.BigquoteSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".quote":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "text"
     ".speaker":
-      observe: "aside"
+      observe: "secondary_html"
       updateMethod: "text"
 
 
@@ -84,7 +84,7 @@ class CMS.Views.BigtextSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".section_body":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
 
 
@@ -99,7 +99,7 @@ class CMS.Views.GridSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".section_body":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
 
 
@@ -114,7 +114,7 @@ class CMS.Views.HeroSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".section_body":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
   
   onRender: =>
@@ -141,10 +141,10 @@ class CMS.Views.CarouselSection extends CMS.Views.ItemView
       classes:
         showing: "show_title"
     ".carousel":
-      observe: "content"
+      observe: "main_html"
       updateMethod: "html"
     ".captions":
-      observe: "aside"
+      observe: "secondary_html"
       updateMethod: "html"
 
   onRender: () =>
