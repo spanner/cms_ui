@@ -108,7 +108,7 @@ class CMS.Views.HeroSection extends CMS.Views.ItemView
   tagName: "section"
 
   bindings:
-    "h2.section":
+    "h1":
       observe: "title"
     ".section_title":
       classes:

@@ -128,176 +128,163 @@ body.previewing
   .admin, .title_toggle
     display: none
 
-p
-  span.quote
-    display: block
-    color: $pale
-    &:before
-      content: '“'
-      font-size: 180%
-      position: absolute
-      width: 12px
-      text-align: right
-      margin-left: -0.5em
-      margin-top: 0
-    &:after
-      content: '”'
-      font-size: 180%
-      position: absolute
-      margin-left: 8px
-      margin-top: 0
-  span.speaker
-    display: block
-    color: white
-
+/* Section types will end up with a nice place to live */
+    
 main
   section
     position: relative
     +clearfix
-    .wrapper
+    .content
       +central
-      margin: 0 auto
-      .section_title
-        display: none
-        h2.section
-          font-size: 2em
-          margin-right: 100px
-        &.showing
-          display: block
-      &.default
-        .section_image, .section_note, .section_aside
-          display: none
-        .section_body
-          min-height: 100px
-          max-width: 800px
-      &.twocol
-        .col
-          display: inline-block
-          vertical-align: top
-          float: left
-          min-height: 100px
-          width: 460px
-          &.second
-            float: right
-      &.asided
-        .section_image, .section_note
-          display: none
-        .section_aside
+
+    &.default
+      .section_body
+        min-height: 100px
+        max-width: 800px
+
+    &.twocol
+      .col
+        display: inline-block
+        vertical-align: top
+        float: left
+        min-height: 100px
+        width: 460px
+        &.second
           float: right
+
+    &.asided
+      aside
+        float: right
+        width: 293px
+        min-height: 50px
+        margin: 0 0 16px 60px
+        color: $pale
+        p:first-child
+          margin-top: 0
+        img:first-child
+          margin-top: 0.4em
+      .section_body
+        min-height: 100px
+        max-width: 800px
+        border-top: 1px solid transparent
+        p:first-child
+          margin-top: 0
+        img:first-child
+          margin-top: 0.4em
+
+    &.bigtext
+      .section_body
+        display: block
+        font-size: 1.6rem
+        line-height: 1.6
+
+    &.bigquote
+      p
+        display: block
+        width: 80%
+        font-size: 1.75rem
+        line-height: 1.25
+        margin: 1.25em auto
+        span.quote
+          &:before
+            content: '“'
+            font-size: 180%
+            position: absolute
+            width: 12px
+            text-align: right
+            margin-left: -0.4em
+            margin-top: -0.1em
+          &:after
+            content: '”'
+            font-size: 180%
+            position: absolute
+            margin-left: -0.1em
+            margin-top: -0.1em
+
+    &.grid
+      .block
+        width: 300px
+        margin: 20px
+        display: inline-block
+        float: left
+
+    &.hero
+      position: relative
+      top: 0
+      width: 100vw
+      margin: 0
+      max-height: 90vh
+      min-height: 50vh
+      background-color: $green
+      .built
+        position: relative
+        overflow: hidden
+        img, video
+          width: 100%
+          height: auto
+          // min-height: 600px
+          position: relative
+          margin: 0 auto
+          z-index: 1
+      .content
+        position: absolute
+        bottom: 1.25em
+        left: 0
+        right: 0
+        z-index: 100
+        h1
+          +central
+          font-size: 5em
+          color: white
+          text-shadow: 0 0 10px rgba(0,0,0,0.6)
+          line-height: 1
+          text-transform: uppercase
+
+    &.carousel
+      .content
+        position: absolute
+        bottom: 0
+        left: 0
+        right: 0
+        text-shadow: 0 0 10px rgba(0,0,0,0.4)
+        h2
+          margin: 0
+          padding: 12px 20px
+          font-size: 3.4rem
+          line-height: 1
+          p
+            display: inline
+      .built
+        position: relative
+        width: 960px
+        height: 540px
+        overflow: hidden
+        background-color: $green
+        .carousel
+          .image
+            width: 960px
+            height: 540px
+            display: inline-block
+            float: left
+            margin: 0
+            background:
+              repeat: no-repeat
+              position: center center
+              size: cover
+      .captions
+        margin-top: 20px
+        p
           width: 293px
-          min-height: 50px
-          margin: 0 0 16px 60px
-          color: $pale
-          p:first-child
-            margin-top: 0
-          img:first-child
-            margin-top: 0.4em
-        .section_body
-          min-height: 100px
-          max-width: 800px
-          border-top: 1px solid transparent
-          p:first-child
-            margin-top: 0
-          img:first-child
-            margin-top: 0.4em
-      &.bigtext
-        .section_body
-          display: block
-          font-size: 1.6rem
-          line-height: 1.6
-      &.bigquote
-        p
-          display: block
-          width: 80%
-          font-size: 1.75rem
-          line-height: 1.25
-          margin: 1.25em auto
-      &.grid
-        p
-          width: 300px
           margin: 20px
           display: inline-block
           float: left
-      &.hero
-        position: relative
-        top: 0
-        width: 90vw
-        max-width: 1340px
-        height: 80vh
-        background-color: $coolgrey11
-        .frame
-          position: relative
-          overflow: hidden
-          background-color: $green
-          .section_title
-            position: absolute
-            bottom: 0
-            left: 0
-            right: 0
-            text-shadow: 0 0 10px rgba(0,0,0,0.4)
-            h2
-              margin: 0
-              padding: 12px 20px
-              font-size: 3.4rem
-              line-height: 1
-              p
-                display: inline
-        .section_image
-          display: block
-          width: 950px
-          border: 5px solid white
-          height: auto
-          min-height: 480px
-          background-color: $green
-      &.carousel
-        .frame
-          position: relative
-          width: 960px
-          height: 540px
-          overflow: hidden
-          background-color: $green
-          .section_title
-            position: absolute
-            bottom: 0
-            left: 0
-            right: 0
-            text-shadow: 0 0 10px rgba(0,0,0,0.4)
-            h2
-              margin: 0
-              padding: 12px 20px
-              font-size: 3.4rem
-              line-height: 1
-              p
-                display: inline
-          .carousel
-            .image
-              width: 960px
-              height: 540px
-              display: inline-block
-              float: left
-              margin: 0
-              background:
-                repeat: no-repeat
-                position: center center
-                size: cover
-        .captions
-          margin-top: 20px
-          p
-            width: 293px
-            margin: 20px
-            display: inline-block
-            float: left
-            opacity: 0.75
-            transition: opacity 0.3s ease
-            a
-              color: darken($yellow, 10)
-            &:last-child
-              margin-right: 0
-            &:first-child
-              margin-left: 0
-            &.current
-              opacity: 1.0
-    &:first-child
-      .wrapper
-        &.bigtext
-          margin-top: 0
+          opacity: 0.75
+          transition: opacity 0.3s ease
+          a
+            color: darken($yellow, 10)
+          &:last-child
+            margin-right: 0
+          &:first-child
+            margin-left: 0
+          &.current
+            opacity: 1.0

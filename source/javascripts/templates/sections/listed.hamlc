@@ -1,4 +1,4 @@
 %a.title
 %span.controls
   %a.cms-add.add_section +
-  %a.delete.delete_section x
+  %a.cms-delete.delete_section x

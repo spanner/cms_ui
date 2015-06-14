@@ -58,7 +58,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
   pageSlug: ([dir, slug]=[]) =>
-    slug or "home"
+    slug or "Home"
 
   liClass: (id) =>
     if id then "branch" else "branch new"
@@ -172,7 +172,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
         destroyed: "deleted_at"
     "a.title":
       observe: ["title", "section_type"]
-      onGet: "thisOrThat"
+      onGet: "titleOrType"
       attributes: [
         observe: "id"
         name: "href"
@@ -209,6 +209,8 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
       label = label.substr(0, 36) + "..."
     label
 
+  titleOrType: ([title, section_type]=[]) =>
+    _.stripTags(title or section_type).replace(/&nbsp;/g, ' ').replace(/(\r|\n)+/gm, " ")
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   template: "sections/menu"
@@ -227,23 +229,34 @@ class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
   template: "manager/sections"
   menuView: CMS.Views.SectionsList
 
+  bindings:
+    '.header a.title':
+      observe: ["title", "section_type"]
+      onGet: "titleOrType"
+  
   initialize: ->
     super
     _cms.vent.on "reset", @close
 
-  bindings:
-    '.header a.title':
-      observe: ["title", "section_type"]
-      onGet: "thisOrThat"
+  titleOrType: ([title, section_type]=[]) =>
+    _.stripTags(title or section_type).replace(/&nbsp;/g, ' ')
 
 
 class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
   template: "manager/pages"
   menuView: CMS.Views.PagesTree
 
+  bindings:
+    '.header a.title':
+      observe: "slug"
+      onGet: "slugOrHome"
+
   initialize: ->
     super
     _cms.vent.on "reset", @close
+
+  slugOrHome: (slug) =>
+    slug or "Home"
 
 
 class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout

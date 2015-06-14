@@ -61,14 +61,10 @@ class CMS.Views.Section extends CMS.Views.ItemView
     ":el":
       observe: "deleted_at"
       visible: "untrue"
-      classes:
-        selected: "selected"
-        destroyed: "destroyed"
-    ".wrapper":
       attributes: [
         name: "class"
         observe: "section_type"
-        onGet: "wrapperClass"
+        onGet: "sectionClass"
       ]
 
   id: -> 
@@ -98,9 +94,10 @@ class CMS.Views.Section extends CMS.Views.ItemView
   select: =>
     @model.select()
 
-  wrapperClass: (section_type) =>
-    section_type ?= 'default'
-    "wrapper #{section_type}"
+  sectionClass: (section_type) =>
+    section_type ? 'default'
+
+
 
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
@@ -114,7 +111,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     toolbar: @_toolbar
 
   bindings:
-    "h1":
+    "h1.pagetitle":
       observe: "title"
       updateMethod: "html"
       classes: 
