@@ -107,8 +107,8 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childView: CMS.Views.Section
   childViewContainer: "#sections"
 
-  # template is going to come from page_type#html, but for now we use a normal file.
-  template: "editor/page"
+  template: () =>
+    @model.page_type.get('template')
   
   childViewOptions: () =>
     toolbar: @_toolbar

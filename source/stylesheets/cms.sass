@@ -25,7 +25,7 @@
   +cms-font-standard
   font-weight: 700
 
-$cms_control_height: 32px
+$cms_control_height: 36px
 $cms_left_width: 480px
 
 body
@@ -42,7 +42,7 @@ a
   text-decoration: none
   color: $warm
 
-a.cms-add, a.cms-delete, a.cms-menu, a.cms-save
+a.cms-add, a.cms-delete, a.cms-save
   display: inline-block
   vertical-align: top
   width: 20px
@@ -64,15 +64,11 @@ a.cms-delete
   &:hover
     background-position: 0 -224px
 
-a.cms-menu
-  background-position: 0 -384px
-  &:hover
-    background-position: 0 -416px
-
 a.cms-save
   background-position: 0 -288px
   &:hover
     background-position: 0 -320px
+
 
 a[contenteditable]
   cursor: inherit
@@ -273,33 +269,6 @@ a.cms-section-type
       &:focus
         background:
           color: transparent
-    .cms-section-menu
-      position: absolute
-      top: -20px
-      right: -80px
-      width: 85px
-      a.cms-menu
-        position: relative
-        background-color: white
-      div.cms-menu
-        position: relative
-        overflow: hidden
-        margin-top: -1px
-        background-color: white
-        +box-shadow(0 2px 5px rgba(0,0,0,0.4))
-        width: 85px
-        height: 0
-        transition: height 0.5s ease
-        &.open
-          height: 200px
-        a.section_type
-          margin: 4px
-        input[type="checkbox"]
-          margin-right: 4px
-        label
-          display: block
-          color: $pale
-          padding: 8px 6px 0 6px
 
   #cms-manager
     position: fixed
@@ -487,8 +456,6 @@ a.cms-section-type
   position: absolute
   right: 0
   top: 0
-
-#page_controls, #site_controls
   a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation, a.preview
     display: inline-block
     margin: 0

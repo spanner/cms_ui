@@ -1,18 +1,18 @@
 $background: none
+
 .cm-s-spanner
   &.CodeMirror
     background: $background
     clear: both
-    color: #e0e0e0
+    color: $shelf_text
     &::selection, &::-moz-selection
       background: rgba(48, 48, 48, .99)
   div.CodeMirror-selected
-    background: #303030 !important
+    background: $warmish !important
   .CodeMirror-gutters
-    background-color: $shelf_bg
-    border-right: 1px solid lighten($shelf_bg, 20)
+    background-color: $shelf_head_bg
+    border-right: 1px solid $shelf_bg
     padding-right: 4px
-    opacity: 0.5
   .CodeMirror-guttermarker
     color: #ac4142
   .CodeMirror-guttermarker-subtle

@@ -93,6 +93,7 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
       el: @$el.find('nav')
     @_nav.render()
 
+
 class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
   template: "layouts/site_editor"
   regions:
@@ -252,7 +253,7 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
   show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
-        mode: "html"
+        mode: "htmlmixed"
         theme: "spanner"
         showCursorWhenSelecting: true
         lineNumbers: true
