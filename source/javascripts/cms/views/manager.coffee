@@ -233,10 +233,6 @@ class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
     '.header a.title':
       observe: ["title", "section_type"]
       onGet: "titleOrType"
-  
-  initialize: ->
-    super
-    _cms.vent.on "reset", @close
 
   titleOrType: ([title, section_type]=[]) =>
     _.stripTags(title or section_type).replace(/&nbsp;/g, ' ')
@@ -250,10 +246,6 @@ class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
     '.header a.title':
       observe: "slug"
       onGet: "slugOrHome"
-
-  initialize: ->
-    super
-    _cms.vent.on "reset", @close
 
   slugOrHome: (slug) =>
     slug or "Home"
@@ -278,6 +270,8 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
     showing = $('#cms-ui').hasClass('shelved')
     showing
 
+  #TODO handle these through an event listener in the UI layout and set a cookie with interface state.
+  #
   toggleUI: (e) =>
     e?.preventDefault()
     $('#cms-ui').toggleClass('collapsed')

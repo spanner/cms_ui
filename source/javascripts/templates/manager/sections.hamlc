@@ -1,4 +1,4 @@
 .header
-  %a.title.arrowed.button
+  %a.title.arrowed.button.cms-menu-head
     Section...
-.cms-menu
+.cms-menu-body

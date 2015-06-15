@@ -66,7 +66,7 @@ main
     .cms-controls
       +cms-font-light
       position: absolute
-      display: none
+      display: block
       top: 0
       left: 0
       width: 100%
@@ -74,13 +74,6 @@ main
       background-color: $darkish
       z-index: 50
       pointer-events: none
-      &.open
-        display: block
-        a.cms-menu-head
-          border-bottom-right-radius: 0
-          border-bottom-left-radius: 0
-          padding-bottom: 20px
-          margin-bottom: 0
       .cms-buttons
         position: absolute
         bottom: 10%
@@ -99,7 +92,17 @@ main
           cursor: pointer
           &:hover
             background-color: $warm
-
+        .cms-video-picker, .cms-image-picker, .cms-section-menu
+          display: inline-block
+          float: left
+          &.open
+            .button
+              margin-bottom: 0
+              padding-bottom: 20px
+              border-bottom-left-radius: 0
+              border-bottom-right-radius: 0
+            
+          
     &:hover
       .cms-controls
         display: block
@@ -118,17 +121,28 @@ main
       box-sizing: border-box
       pointer-events: auto
       border-radius: 4px
-      border-top-right-radius: 0
-      &.open
-        height: auto
-        padding: 0.85em 1em
+      &.section_types
+        border-top-right-radius: 0
+      &.wide
+        width: 400px
       a.cms-section-type
         color: white
         opacity: 0.6
         &.selected, &:hover
           opacity: 1
           +glow
-
+      ul
+        padding: 0
+        margin: 0
+        list-style: none
+    .open
+      .cms-menu-head
+        padding-bottom: 20px
+      .cms-menu-body
+        height: auto
+        display: block
+        padding: 0.85em 1em
+    
     .built
       z-index: 10
 

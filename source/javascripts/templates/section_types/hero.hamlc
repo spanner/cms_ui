@@ -3,8 +3,6 @@
   %h1.editable{contenteditable: "plaintext-only"}
 .cms-controls
   .cms-buttons
-    %a.button.choose_video
-      Choose video
-    %a.button.choose_image
-      Choose image
+    .cms-video-picker
+    .cms-image-picker
     .cms-section-menu

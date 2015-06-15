@@ -1,4 +1,5 @@
 %p.controls
 
 %p
-  Assets...
+  This view brings together all the image and video assets of this site
+  to allow global replacement and administration.

@@ -5,6 +5,9 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     super
     @on 'reset', @resetHtml
 
+  onRender: =>
+    super
+
   resetHtml: =>
     @model.set "built_html", @renderContent()
 
@@ -128,6 +131,10 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
   content_template: "section_content/hero"
 
+  events: 
+    "click a.choose_video": "chooseVideo"
+    "click a.choose_image": "chooseImage"
+
   bindings:
     "h1":
       observe: "title"
@@ -137,14 +144,33 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   
   onRender: =>
     @resetHtml() unless @model.get('built_html')
-    # @_video_picker = new CMS.Views.VideoPicker
-    #   el: @$el.find('video')
-    # @_image_picker = new CMS.Views.ImagePicker
-    #   el: @$el.find('image')
+
+    @_section_menu = new CMS.Views.SectionAdminMenu
+      model: @model
+      el: @$el.find('.cms-section-menu')
+    @_section_menu.render()
+
+    @_video_picker = new CMS.Views.VideoPickerLayout
+      model: @model.getSite()
+      el: @$el.find('.cms-video-picker')
+      targetEl: @$el.find('video')
+    @_video_picker.render()
+
+    #nb image-picker knows what to do with video element
+    @_image_picker = new CMS.Views.ImagePickerLayout
+      model: @model.getSite()
+      el: @$el.find('.cms-image-picker')
+      targetEl: @$el.find('video')
+    @_image_picker.render()
     super
 
+  chooseVideo: (e) =>
+    e?.preventDefault()
+    @_video_picker.pick()
 
-
+  chooseImage: (e) =>
+    e?.preventDefault()
+    @_image_picker.pick()
 
 
 

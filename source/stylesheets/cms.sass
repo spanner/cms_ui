@@ -274,12 +274,13 @@ a[contenteditable]
             background-color: $blue
           
 
-    .cms-menu
+    .cms-menu-body
       position: absolute
       display: none
       top: 54px
       background-color: $warmish
       width: auto
+      min-width: 120px
       border-radius: 4px
       border-top-left-radius: 0
       ul
@@ -365,6 +366,17 @@ a[contenteditable]
         &.destroyed
           text-decoration: line-through
           opacity: 0.4
+
+    .open
+      .cms-menu-head
+        padding-bottom: 20px
+        margin-bottom: 0
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+      .cms-menu-body
+        height: auto
+        display: block
+    
 
 #cms-session-barrier
   position: fixed

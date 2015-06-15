@@ -1,51 +1,3 @@
-class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
-  template: "editor/section_admin_menu"
-  
-  events:
-    "click a.cms-menu-head": "toggleMenu"
-  
-  modelEvents:
-    "change:section_type": "setSelection"
-  
-  onRender: () =>
-    @stickit()
-    @_menu = @$el.find('.cms-menu-body')
-    @_typer = @$el.find('.section_types')
-    
-    for type in CMS.Models.Section.types
-      do (type) =>
-        a = $("<a class=\"cms-section-type #{type}\" title=\"#{type}\">#{type}</a>").appendTo(@_typer)
-        a.click (e) =>
-          e?.preventDefault()
-          @setType(type)
-      @setSelection()
-
-  setSelection: () =>
-    type = @model.get('section_type') or 'default'
-    @_typer.find("a.section_type").removeClass('selected')
-    @_typer.find("a.#{type}").addClass('selected')
-
-  toggleMenu: (e) =>
-    if @_menu.hasClass('open')
-      @closeMenu(e)
-    else
-      @openMenu(e)
-
-  openMenu: (e) =>
-    e?.preventDefault()
-    @_menu.addClass('open')
-    @_menu.parents('.cms-controls').addClass('open')
-    $(document).on "click", @closeMenu
-    
-  closeMenu: (e) =>
-    e?.preventDefault()
-    $(document).off "click", @closeMenu
-    @_menu.removeClass('open')
-    @_menu.parents('.cms-controls').removeClass('open')
-
-  setType: (type) =>
-    @model.set 'section_type', type,
-      stickitChange: true
 
 
 class CMS.Views.Section extends CMS.Views.ItemView
@@ -84,10 +36,6 @@ class CMS.Views.Section extends CMS.Views.ItemView
       model: @model
       el: @$el
     @_section_wrapper.render()
-    @_section_menu = new CMS.Views.SectionAdminMenu
-      model: @model
-      el: @$el.find('.cms-section-menu')
-    @_section_menu.render()
 
   select: =>
     @model.select()

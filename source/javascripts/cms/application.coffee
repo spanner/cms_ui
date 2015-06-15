@@ -24,6 +24,7 @@ class CMS.Application extends Backbone.Marionette.Application
     root._cms = @
     @_config = new CMS.Config
     @_session = new CMS.Models.Session
+    @_jobs = new CMS.Collections.Jobs
     @_ui = new CMS.Views.UILayout
       model: @_session
       el: "#cms-ui"
@@ -59,3 +60,9 @@ class CMS.Application extends Backbone.Marionette.Application
         trigger: trigger
         replace: replace
 
+  job: (message) =>
+    @_jobs.add
+      message: message
+
+  jobQueue: () =>
+    @_jobs

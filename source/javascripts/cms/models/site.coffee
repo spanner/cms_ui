@@ -5,6 +5,8 @@ class CMS.Models.Site extends CMS.Model
   build: =>
     @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
     @pages = new CMS.Collections.Pages @get('pages'), site: @
+    @images = new CMS.Collections.Images @get('images'), site: @
+    @videos = new CMS.Collections.Videos @get('videos'), site: @
     @nav_pages = new CMS.Collections.NavPages
 
   populate: (data) =>
@@ -13,8 +15,13 @@ class CMS.Models.Site extends CMS.Model
     @populateDates(data)
     @populateNavigation()
     @populateCSS()
+    @populateAssets()
     @pages.on "change:nav", @populateNavigation
     true
+
+  populateAssets: =>
+    @images.reset @get("images")
+    @videos.reset @get("videos")
 
   populateNavigation: (e) =>
     @nav_pages.reset(@pages.where(nav: true))

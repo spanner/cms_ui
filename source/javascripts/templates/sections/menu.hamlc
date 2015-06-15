@@ -1,4 +1,4 @@
-%ul.cms-menu_items
+%ul.cms-menu-items
 %ul
   %li.add
     %a.add_item + section
