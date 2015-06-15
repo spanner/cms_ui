@@ -59,6 +59,34 @@ a.cms-section-type
     &.selected, &:hover
       background-position: -400px -256px
 
+ul.assets
+  padding: 0
+  margin: 20px
+  list-style: none
+  &.videos, &.images
+    li
+      display: inline-block
+      float: left
+      margin: 0 20px 20px 0
+      overflow: hidden
+      width: 48px
+      height: 48px
+      a
+        display: block
+        width: 48px
+        height: 48px
+        cursor: pointer
+        background:
+          color: $pale
+          position: center center
+          size: cover
+          repeat: no-repeat
+        &.add
+          background-color: $green
+      input
+        position: absolute
+        left: 1000px
+
 main
   section
     position: relative
@@ -114,6 +142,7 @@ main
       top: 54px
       width: 128px
       height: 0
+      max-height: 500px
       overflow: hidden
       padding: 0
       background-color: $warmish
@@ -121,6 +150,13 @@ main
       box-sizing: border-box
       pointer-events: auto
       border-radius: 4px
+      transition: height 1s ease
+      ul
+        padding: 0
+        margin: 10px
+        list-style: none
+        &.assets
+          margin: 20px
       &.section_types
         border-top-right-radius: 0
       &.wide
@@ -131,17 +167,12 @@ main
         &.selected, &:hover
           opacity: 1
           +glow
-      ul
-        padding: 0
-        margin: 0
-        list-style: none
     .open
       .cms-menu-head
         padding-bottom: 20px
       .cms-menu-body
         height: auto
         display: block
-        padding: 0.85em 1em
     
     .built
       z-index: 10

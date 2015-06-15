@@ -36,11 +36,9 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   open: =>
     _cms.vent.trigger "reset_menus"
     @$el.addClass('open')
-    @_menu_view?.show()
 
   close: =>
     @$el.removeClass('open')
-    @_menu_view?.hide()
     
   setModel: =>
     @model = @collection.findWhere(selected: true)
@@ -53,24 +51,6 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   
   events: =>
     "click a.add_item": "addItem"
-  
-  onRender: =>
-    console.log "menu_view rendered in", @el
-
-  showing: =>
-    @$el.css('display') isnt 'none'
-
-  show: =>
-    @$el.stop().slideDown
-      duration: 400
-      easing: "boing"
-    , =>
-      @$el.css 'height', 'auto'
-
-  hide: =>
-    @$el.stop().slideUp
-      duration: 400
-      easing: "glide"
 
   addItem: =>
     @collection.add({})

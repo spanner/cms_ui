@@ -1,0 +1,4 @@
+%ul.cms-menu-items.assets.videos
+  %li
+    %a.add.add_item
+      %img

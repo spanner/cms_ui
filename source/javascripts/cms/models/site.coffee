@@ -5,8 +5,8 @@ class CMS.Models.Site extends CMS.Model
   build: =>
     @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
     @pages = new CMS.Collections.Pages @get('pages'), site: @
-    @images = new CMS.Collections.Images @get('images'), site: @
-    @videos = new CMS.Collections.Videos @get('videos'), site: @
+    $.im = @images = new CMS.Collections.Images @get('images'), site: @
+    $.vid = @videos = new CMS.Collections.Videos @get('videos'), site: @
     @nav_pages = new CMS.Collections.NavPages
 
   populate: (data) =>

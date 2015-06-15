@@ -24,6 +24,7 @@ class CMS.Views.SectionTypeList extends CMS.Views.MenuView
   tagName: 'ul'
   childView: CMS.Views.ListedSectionType
 
+
 class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
   template: "sections/section_type_menu"
   menuView: CMS.Views.SectionTypeList
@@ -43,66 +44,24 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
       @model.set 'section_type', section_type.get('name')
 
 
-class CMS.Views.AssetPickerLayout extends CMS.Views.MenuLayout
-  tagName: "div"
-  className: "picker"
-
-  clickFileField: (e) =>
-    @_filefield.trigger('click')
-
-  getPickedFile: (e) =>
-    if files = @_filefield[0].files
-      @readLocalFile files[0]
-
-  getDroppedFile: (e) =>
-    @dragOut(e)
-    if files = e.originalEvent.dataTransfer.files
-      @readLocalFile files[0]
-
-  readLocalFile: (file) =>
-    if file?
-      if @fileOk(file.name, file.size)
-        job = _cms.job("Reading file")
-        #...and show a loading bar here.
-        reader = new FileReader()
-        reader.onprogress = (e) -> 
-          job.setProgress(e)
-        reader.onloadend = () =>
-          @setImage reader.result, file.name, file.size
-          job.complete()
-        reader.readAsDataURL(file)
-
-  fileOk: (filename, filesize) =>
-    @fileNameOk(filename, filesize) and @fileSizeOk(filename, filesize)
-
-  fileSizeOk: (filename, filesize) =>
-    true
-
-  fileNameOk: (filename, filesize) =>
-    true
-
-  complain: (error, filename, filesize) =>
-    console.log "error"
-
-  # drop event handlers
-  
-  dragIn: (e) =>
-  dragOut: (e) =>
-  containEvent: (e) =>
-
-
 class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
+  ui:
+    filefield: 'input[type="file"]'
+    img: 'img'
+
   events:
     "click a.delete": "deleteModel"
+    "change input[type='file']": "getPickedFile"
 
   bindings:
-    "img":
-      attributes: [
-        name: "src"
-        observe: "url"
-      ]
+    "a.preview":
+      observe: "preview_url"
+      update: "setBackground"
     ".file_size":
-      observe: "filesize"
+      observe: "file_size"
+      onGet: "inBytes"
+    ".file_type":
+      observe: "filet_ype"
       onGet: "inBytes"
     ".width":
       observe: "width"
@@ -116,10 +75,68 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
+    @clickFileField() if @model.isNew()
 
   deleteModel: (e) =>
     e?.preventDefault()
     @model.remove()
+
+  clickFileField: (e) =>
+    @ui.filefield.trigger('click')
+
+  getPickedFile: (e) =>
+    if files = @ui.filefield[0].files
+      @readLocalFile files[0]
+
+  getDroppedFile: (e) =>
+    @dragOut(e)
+    if files = e.originalEvent.dataTransfer.files
+      @readLocalFile files[0]
+
+  readLocalFile: (file) =>
+    if file?
+      if @fileOk(file.name, file.size)
+        job = _cms.job("Reading file")
+        #...and show a loading bar within the image box
+        reader = new FileReader()
+        reader.onprogress = (e) -> 
+          job.setProgress(e)
+        reader.onloadend = () =>
+          @setFile reader.result, file
+          job.complete()
+        reader.readAsDataURL(file)
+
+  setFile: (data, file) =>
+    preview_data = @getPreview(data, file)
+    @model.set
+      file: data
+      file_type: data.type
+      preview_url: preview_data
+
+  getPreview: (data, file) =>
+    data
+
+  setBackground: ($el, val, m, opts) =>
+    $el.css "background-image", "url(#{val})"
+
+  fileOk: (filename, filesize) =>
+    @fileNameOk(filename, filesize) and @fileSizeOk(filename, filesize)
+
+  fileSizeOk: (filename, filesize) =>
+    true
+
+  fileNameOk: (filename, filesize) =>
+    true
+
+  complain: (error, filename, filesize) =>
+    console.log "error"
+  
+
+  # drop event handlers
+  
+  dragIn: (e) =>
+  dragOut: (e) =>
+  containEvent: (e) =>
 
   # onGet formatters
 
@@ -150,18 +167,18 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   addItem: =>
     @collection.add
-      site_id: @collection.site.id
-    @collection.sort()
+      site_id: @collection.getSite().id
 
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
+  tagName: "li"
 
 class CMS.Views.VideosList extends CMS.Views.AssetsListView
-  template: "sections/menu"
+  template: "videos/list"
   childView: CMS.Views.ListedVideo
 
-class CMS.Views.VideoPickerLayout extends CMS.Views.AssetPickerLayout
+class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
   template: "videos/picker"
   menuView: CMS.Views.VideosList
 
@@ -172,12 +189,13 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.AssetPickerLayout
 
 class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"
+  tagName: "li"
 
 class CMS.Views.ImagesList extends CMS.Views.AssetsListView
-  template: "sections/menu"
+  template: "images/list"
   childView: CMS.Views.ListedImage
 
-class CMS.Views.ImagePickerLayout extends CMS.Views.AssetPickerLayout
+class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   template: "images/picker"
   menuView: CMS.Views.ImagesList
 

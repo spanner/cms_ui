@@ -1,0 +1,4 @@
+%ul.cms-menu-items.assets.images
+  %li
+    %a.add.add_item
+      %img
