@@ -33,12 +33,31 @@ class CMS.Models.Site extends CMS.Model
   previewCSS: =>
     $.ajax("#{@url()}/preview_css",
       type: "POST"
-      data: 
+      data:
         sass: @get("sass")
     ).done (data) =>
       if errors = data?.errors
         console.error "SASS parsing errors:", errors
       @set data?.site
+
+  populateJS: =>
+    @set original_coffee: @get("coffee")
+    @set original_js: @get("js")
+
+  revertJS: =>
+    @set coffee: @get("original_coffee")
+    @set js: @get("original_js")
+
+  previewJS: =>
+    $.ajax("#{@url()}/preview_js",
+      type: "POST"
+      data: 
+        coffee: @get("coffee")
+    ).done (data) =>
+      if errors = data?.errors
+        console.error "Coffeescript parsing errors:", errors
+      @set data?.site
+      eval(@get("js"))
 
   getWrapper: () =>
     if html = @get('html')

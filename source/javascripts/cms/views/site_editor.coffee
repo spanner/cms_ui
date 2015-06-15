@@ -149,7 +149,16 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
 
 
 class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
+  @mixin 'text'
   template: "sites/js"
+
+  events:
+    "click a.preview": "previewJS"
+    "click a.revert": "revertJS"
+    "paste .coffee": "paste"
+
+  bindings:
+    "#js": "coffee"
 
   ui:
     textarea: "textarea#js"
@@ -161,7 +170,7 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
   show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
-        mode: @model.get("js_preprocessor") ? "javascript"
+        mode: @model.get("js_preprocessor") ? "coffeescript"
         theme: "spanner"
         showCursorWhenSelecting: true
         lineNumbers: true
@@ -175,6 +184,13 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
+
+  previewJS: =>
+    @model.previewJS()
+
+  revertJS: =>
+    @model.revertJS()
+    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteCSS extends CMS.Views.ItemView
