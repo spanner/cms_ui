@@ -6,5 +6,5 @@
     %a.button.choose_video
       Choose video
     %a.button.choose_image
-      Choose poster image
+      Choose image
     .cms-section-menu

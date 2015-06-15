@@ -11,7 +11,54 @@
       color: transparent
 
 /* Section types will end up with a nice place to live */
-    
+
+a.cms-section-type
+  display: block
+  height: 36px
+  text-indent: 34px
+  line-height: 36px
+  cursor: pointer
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('sectionsprite.png')
+  &.default
+    background-position: 0 0
+    &.selected, &:hover
+      background-position: -400px 0
+  &.asided
+    background-position: 0 -32px
+    &.selected, &:hover
+      background-position: -400px -32px
+  &.twocol
+    background-position: 0 -64px
+    &.selected, &:hover
+      background-position: -400px -64px
+  &.bigtext
+    background-position: 0 -96px
+    &.selected, &:hover
+      background-position: -400px -96px
+  &.hero
+    background-position: 0 -128px
+    &.selected, &:hover
+      background-position: -400px -128px
+  &.bigquote
+    background-position: 0 -160px
+    &.selected, &:hover
+      background-position: -400px -160px
+  &.carousel
+    background-position: 0 -192px
+    &.selected, &:hover
+      background-position: -400px -192px
+  &.video
+    background-position: 0 -224px
+    &.selected, &:hover
+      background-position: -400px -224px
+  &.grid
+    background-position: 0 -256px
+    &.selected, &:hover
+      background-position: -400px -256px
+
 main
   section
     position: relative
@@ -19,7 +66,7 @@ main
     .cms-controls
       +cms-font-light
       position: absolute
-      display: block
+      display: none
       top: 0
       left: 0
       width: 100%
@@ -27,6 +74,13 @@ main
       background-color: $darkish
       z-index: 50
       pointer-events: none
+      &.open
+        display: block
+        a.cms-menu-head
+          border-bottom-right-radius: 0
+          border-bottom-left-radius: 0
+          padding-bottom: 20px
+          margin-bottom: 0
       .cms-buttons
         position: absolute
         bottom: 10%
@@ -45,31 +99,35 @@ main
           cursor: pointer
           &:hover
             background-color: $warm
-          &.open
-            border-bottom-right-radius: 0
-            border-bottom-left-radius: 0
-            padding-bottom: 20px
-            margin-bottom: 0
-            
-    div.cms-menu
+
+    &:hover
+      .cms-controls
+        display: block
+
+    .cms-menu-body
       display: block
       position: absolute
       right: 0
       top: 54px
-      width: 100px
-      height: auto
-      padding: 0.85em 1em
+      width: 128px
+      height: 0
+      overflow: hidden
+      padding: 0
       background-color: $warmish
       color: white
       box-sizing: border-box
       pointer-events: auto
       border-radius: 4px
       border-top-right-radius: 0
-
-
-    &:hover
-      .cms-controls
-        display: block
+      &.open
+        height: auto
+        padding: 0.85em 1em
+      a.cms-section-type
+        color: white
+        opacity: 0.6
+        &.selected, &:hover
+          opacity: 1
+          +glow
 
     .built
       z-index: 10
@@ -114,7 +172,7 @@ main
           margin-top: 0.4em
 
     &.bigtext
-      .section_body
+      .content
         display: block
         font-size: 1.6rem
         line-height: 1.6

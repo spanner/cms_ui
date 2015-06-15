@@ -1,2 +1,6 @@
-.section_body.editable{contenteditable: "true"}
- 
+.content
+  .section_body
+.cms-controls
+  .cms-buttons
+    .cms-section-menu
+     

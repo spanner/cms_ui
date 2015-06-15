@@ -2,22 +2,19 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
   template: "editor/section_admin_menu"
   
   events:
-    "click a.cms-menu": "toggleMenu"
-    "click div.properties": "containEvent"
+    "click a.cms-menu-head": "toggleMenu"
   
   modelEvents:
     "change:section_type": "setSelection"
   
-  bindings:
-    "input.show_title": "show_title"
-  
   onRender: () =>
     @stickit()
-    @_menu = @$el.find('.cms-menu')
+    @_menu = @$el.find('.cms-menu-body')
     @_typer = @$el.find('.section_types')
+    
     for type in CMS.Models.Section.types
       do (type) =>
-        a = $("<a class=\"section_type #{type}\" title=\"#{type}\"></a>").appendTo(@_typer)
+        a = $("<a class=\"cms-section-type #{type}\" title=\"#{type}\">#{type}</a>").appendTo(@_typer)
         a.click (e) =>
           e?.preventDefault()
           @setType(type)
@@ -29,21 +26,22 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.ItemView
     @_typer.find("a.#{type}").addClass('selected')
 
   toggleMenu: (e) =>
-    e?.preventDefault()
-    e?.stopPropagation()
     if @_menu.hasClass('open')
-      @closeMenu()
+      @closeMenu(e)
     else
-      @openMenu()
+      @openMenu(e)
 
-  openMenu: () =>
-    $('.cms-menu').not(@_menu).removeClass('open')
+  openMenu: (e) =>
+    e?.preventDefault()
     @_menu.addClass('open')
-    $(document).bind "click", @closeMenu
+    @_menu.parents('.cms-controls').addClass('open')
+    $(document).on "click", @closeMenu
     
-  closeMenu: () =>
-    $(document).unbind "click", @closeMenu
+  closeMenu: (e) =>
+    e?.preventDefault()
+    $(document).off "click", @closeMenu
     @_menu.removeClass('open')
+    @_menu.parents('.cms-controls').removeClass('open')
 
   setType: (type) =>
     @model.set 'section_type', type,

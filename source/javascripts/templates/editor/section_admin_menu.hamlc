@@ -1,4 +1,4 @@
-%a.button.cms-menu
+%a.button.cms-menu-head
   ☰
-.cms-menu
+.cms-menu-body
   .section_types

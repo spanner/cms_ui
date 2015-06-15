@@ -16,9 +16,15 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   getContentTemplate: () =>
     @getOption('content_template')
+    
+  wrapped: () =>
+
+  unWrapped: () =>
+    
 
 
-class CMS.Views.DefaultSection extends CMS.Views.ItemView
+
+class CMS.Views.DefaultSection extends CMS.Views.SectionView
   template: "section_types/default"
   tagName: "section"
 
@@ -39,7 +45,7 @@ class CMS.Views.DefaultSection extends CMS.Views.ItemView
       updateMethod: "html"
 
 
-class CMS.Views.TwocolSection extends CMS.Views.ItemView
+class CMS.Views.TwocolSection extends CMS.Views.SectionView
   template: "section_types/twocol"
   tagName: "section"
 
@@ -57,7 +63,7 @@ class CMS.Views.TwocolSection extends CMS.Views.ItemView
       updateMethod: "html"
 
 
-class CMS.Views.AsidedSection extends CMS.Views.ItemView
+class CMS.Views.AsidedSection extends CMS.Views.SectionView
   template: "section_types/asided"
   tagName: "section"
 
@@ -75,7 +81,7 @@ class CMS.Views.AsidedSection extends CMS.Views.ItemView
       updateMethod: "html"
 
 
-class CMS.Views.BigquoteSection extends CMS.Views.ItemView
+class CMS.Views.BigquoteSection extends CMS.Views.SectionView
   template: "section_types/bigquote"
   tagName: "section"
 
@@ -93,22 +99,17 @@ class CMS.Views.BigquoteSection extends CMS.Views.ItemView
       updateMethod: "text"
 
 
-class CMS.Views.BigtextSection extends CMS.Views.ItemView
+class CMS.Views.BigtextSection extends CMS.Views.SectionView
   template: "section_types/bigtext"
   tagName: "section"
 
   bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
 
 
-class CMS.Views.GridSection extends CMS.Views.ItemView
+class CMS.Views.GridSection extends CMS.Views.SectionView
   template: "section_types/grid"
   tagName: "section"
 
@@ -153,7 +154,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 
 
 
-class CMS.Views.CarouselSection extends CMS.Views.ItemView
+class CMS.Views.CarouselSection extends CMS.Views.SectionView
   template: "section_types/carousel"
   tagName: "section"
 
