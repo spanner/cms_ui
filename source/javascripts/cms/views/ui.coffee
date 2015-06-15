@@ -57,11 +57,15 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     # we have page object with sections collection
     site = page?.getSite()
     @_manager.setPage(page)
-    site.off "change:html change:js"
+
+    site.off "change:html change:js", @renderEditor
+
     @_editor = new CMS.Views.PageEditorLayout
       model: page
       el: @$el.find('#cms-editor')
-    @_editor.render()
+    @renderEditor()
 
-    site.on "change:html change:js", =>
-      @_editor.render()
+    site.on "change:html change:js", @renderEditor
+
+  renderEditor: =>
+    @_editor.render()

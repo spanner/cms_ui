@@ -148,17 +148,25 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     $.tv = tab_view
 
 
-class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
+class CMS.Views.SiteJS extends CMS.Views.ItemView
   @mixin 'text'
   template: "sites/js"
 
   events:
     "click a.preview": "previewJS"
     "click a.revert": "revertJS"
-    "paste .coffee": "paste"
+    "paste #js": "paste"
 
   bindings:
     "#js": "coffee"
+    "a.revert":
+      observe: ["original_js", "js"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
+    "a.preview":
+      observe: ["original_coffee", "coffee"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
 
   ui:
     textarea: "textarea#js"
@@ -177,7 +185,8 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewJS
-
+          "Cmd-S": @updateJS
+      console.log @editor
       @model.on "change:js_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
@@ -187,6 +196,10 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
 
   previewJS: =>
     @model.previewJS()
+
+  updateJS: =>
+    @model.previewJS().done =>
+      @model.save()
 
   revertJS: =>
     @model.revertJS()
@@ -200,7 +213,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
   events:
     "click a.preview": "previewCSS"
     "click a.revert": "revertCSS"
-    "paste .temp_css": "paste"
+    "paste #css": "paste"
 
   ui:
     textarea: "textarea#css"
@@ -231,6 +244,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewCSS
+          "Cmd-S": @updateCSS
       
       $.editor = @editor
       
@@ -243,6 +257,10 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
 
   previewCSS: =>
     @model.previewCSS()
+
+  updateCSS: =>
+    @model.previewCSS().done =>
+      @model.save()
 
   revertCSS: =>
     @model.revertCSS()

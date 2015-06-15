@@ -31,6 +31,7 @@ class CMS.Models.Site extends CMS.Model
     @set css: @get("original_css")
 
   previewCSS: =>
+    dfd = $.Deferred()
     $.ajax("#{@url()}/preview_css",
       type: "POST"
       data:
@@ -39,6 +40,7 @@ class CMS.Models.Site extends CMS.Model
       if errors = data?.errors
         console.error "SASS parsing errors:", errors
       @set data?.site
+      dfd.resolve()
 
   populateJS: =>
     @set original_coffee: @get("coffee")
@@ -49,6 +51,7 @@ class CMS.Models.Site extends CMS.Model
     @set js: @get("original_js")
 
   previewJS: =>
+    dfd = $.Deferred()
     $.ajax("#{@url()}/preview_js",
       type: "POST"
       data: 
@@ -57,6 +60,7 @@ class CMS.Models.Site extends CMS.Model
       if errors = data?.errors
         console.error "Coffeescript parsing errors:", errors
       @set data?.site
+      dfd.resolve()
 
   getWrapper: () =>
     if html = @get('html')
