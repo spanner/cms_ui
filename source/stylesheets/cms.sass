@@ -126,17 +126,20 @@ a[contenteditable]
   color: $shelf_text
   z-index: 10
   #site_tabs
-    position: relative
+    position: absolute
+    top: 0
+    left: 0
+    height: $cms_control_height
     width: $cms_left_width
     background: $shelf_head_bg
     color: $menu_text
+    text-align: center
     z-index: 100
-    height: $cms_control_height
     transition: left 0.5s ease
     a.tab
       +cms-font-light
       display: inline-block
-      padding: 6px 10px
+      padding: 8px 10px
       color: $shelf_text
       &.current
         background-color: $shelf_bg
