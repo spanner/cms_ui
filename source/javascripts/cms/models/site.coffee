@@ -20,8 +20,6 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages.reset(@pages.where(nav: true))
     @touch() if e
 
-  #TODO also for coffee -> js
-  #
   populateCSS: =>
     @set original_sass: @get("sass")
     @set original_css: @get("css")
@@ -59,6 +57,26 @@ class CMS.Models.Site extends CMS.Model
     ).done (data) =>
       if errors = data?.errors
         console.error "Coffeescript parsing errors:", errors
+      @set data?.site
+      dfd.resolve()
+
+  populateHTML: =>
+    @set original_haml: @get("haml")
+    @set original_html: @get("html")
+
+  revertHTML: =>
+    @set haml: @get("original_haml")
+    @set html: @get("original_html")
+
+  previewHTML: =>
+    dfd = $.Deferred()
+    $.ajax("#{@url()}/preview_html",
+      type: "POST"
+      data: 
+        haml: @get("haml")
+    ).done (data) =>
+      if errors = data?.errors
+        console.error "HAML parsing errors:", errors
       @set data?.site
       dfd.resolve()
 
