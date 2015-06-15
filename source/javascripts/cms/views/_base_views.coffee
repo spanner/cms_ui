@@ -22,7 +22,6 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
         el: @$el.find(".cms-menu-body")
         collection: @collection
       @_menu_view.render()
-    @setModel() if @collection
 
   toggleMenu: =>
     if @showing()

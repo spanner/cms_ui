@@ -51,6 +51,7 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   events:
     "click a.delete": "deleteModel"
+    "click a.preview": "select"
     "change input[type='file']": "getPickedFile"
 
   bindings:
@@ -112,6 +113,7 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       file: data
       file_type: data.type
       preview_url: preview_data
+    @select()
 
   getPreview: (data, file) =>
     data
@@ -130,6 +132,10 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   complain: (error, filename, filesize) =>
     console.log "error"
+    
+  select: (e) =>
+    e?.preventDefault()
+    @trigger 'selected'
   
 
   # drop event handlers
@@ -165,10 +171,16 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
 
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
+  childEvents:
+    'selected': 'select'
+
   addItem: =>
     @collection.add
       site_id: @collection.getSite().id
 
+  select: (view) =>
+    console.log "list select!", view
+    @trigger 'selected', view.model
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
@@ -186,6 +198,14 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
     @collection = @model.videos
     super
 
+  onRender: =>
+    super
+    @_menu_view.on "selected", @select
+
+  select: (model) =>
+    console.log "video picker select!", model
+    @trigger "selected", model
+
 
 class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"
@@ -199,9 +219,18 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   template: "images/picker"
   menuView: CMS.Views.ImagesList
 
-  initialize: ->
+  initialize: (data, options={}) ->
     @collection = @model.images
+    @target = options.targetEl
     super
-  
+
+  onRender: =>
+    super
+    @_menu_view.on "selected", @select
+
+  select: (model) =>
+    console.log "image picker select!", model
+    @trigger "selected", model
+
 
 

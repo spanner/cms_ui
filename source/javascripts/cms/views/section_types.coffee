@@ -131,10 +131,6 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
   content_template: "section_content/hero"
 
-  events: 
-    "click a.choose_video": "chooseVideo"
-    "click a.choose_image": "chooseImage"
-
   bindings:
     "h1":
       observe: "title"
@@ -155,26 +151,21 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       el: @$el.find('.cms-video-picker')
       targetEl: @$el.find('video')
     @_video_picker.render()
+    @_video_picker.on 'selected', @setVideo
 
     #nb image-picker knows what to do with video element
     @_image_picker = new CMS.Views.ImagePickerLayout
       model: @model.getSite()
       el: @$el.find('.cms-image-picker')
-      targetEl: @$el.find('video')
     @_image_picker.render()
+    @_image_picker.on 'selected', @setImage
     super
 
-  chooseVideo: (e) =>
-    e?.preventDefault()
-    @_video_picker.pick()
+  setImage: (image) =>
+    console.log "setImage", image
 
-  chooseImage: (e) =>
-    e?.preventDefault()
-    @_image_picker.pick()
-
-
-
-
+  setVideo: (video) =>
+    console.log "setVideo", video
 
 
 
