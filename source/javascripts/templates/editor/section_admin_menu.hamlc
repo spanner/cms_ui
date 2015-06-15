@@ -1,8 +1,4 @@
 %a.button.cms-menu
   ☰
 .cms-menu
-  .properties
-    %label
-      %input.show_title{type: "checkbox"} 
-      title
   .section_types
