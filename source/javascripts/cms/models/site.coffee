@@ -57,7 +57,6 @@ class CMS.Models.Site extends CMS.Model
       if errors = data?.errors
         console.error "Coffeescript parsing errors:", errors
       @set data?.site
-      $('iframe')[0].contentWindow.eval(@get("js"))
 
   getWrapper: () =>
     if html = @get('html')
