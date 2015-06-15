@@ -1,5 +1,4 @@
 .header
-  %a.title.arrowed
+  %a.title.arrowed.button
     Page...
 .cms-menu
-#page_controls

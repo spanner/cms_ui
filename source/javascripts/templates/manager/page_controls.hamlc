@@ -1,8 +1,4 @@
-%a.preview
-  preview mode
-%span.confirmation
-  hi
-%a.save_page
-  save page
-%a.publish_page
-  publish page
+%a.save_page.save.button
+  Save page
+%a.publish_page.publish.button
+  Publish page

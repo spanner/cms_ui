@@ -35,12 +35,12 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
   open: =>
     if @_menu_view?
       _cms.vent.trigger "reset" #nb. closes us too.
-      @$el.find('>.header').addClass('open')
+      @$el.find('.button').addClass('open')
       @_menu_view.show()
 
   close: =>
     if @_menu_view?
-      @$el.find('>.header').removeClass('open')
+      @$el.find('.button').removeClass('open')
       @_menu_view.hide()
     
   setModel: =>

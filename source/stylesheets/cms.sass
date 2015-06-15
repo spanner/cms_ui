@@ -19,7 +19,6 @@ body, html
   width: 100%
   height: 100%
 
-
 a
   text-decoration: none
   color: $warm
@@ -51,6 +50,42 @@ a.cms-save
   &:hover
     background-position: 0 -320px
 
+a.button
+  display: inline-block
+  vertical-align: top
+  margin: 0 0.5em 8px 0
+  padding: 12px 18px
+  background-color: $warmish
+  color: white
+  box-sizing: border-box
+  border-radius: 4px
+  cursor: pointer
+  &:hover
+    background-color: $warm
+  &.save
+    background-color: $greenish
+    &:hover
+      background-color: $green
+  &.publish
+    background-color: $blueish
+    &:hover
+      background-color: $blue
+  &.arrowed
+    &:before
+      content: "\025B8"
+      width: 8px
+      font-family: sans-serif
+      margin-right: 8px
+  &.open
+    margin-bottom: 0
+    padding-bottom: 20px
+    border-bottom-right-radius: 0
+    border-bottom-left-radius: 0
+    &.arrowed
+      &:before
+        content: "\025BE"
+        font-family: sans-serif
+        margin-right: 8px
 
 a[contenteditable]
   cursor: inherit
@@ -80,35 +115,23 @@ a[contenteditable]
     margin-left: $cms_left_width
     overflow: auto
     #cms-manager
-      position: fixed
-      top: 0
-      left: 0
-      right: 0
-      background: $menu_bg
-      color: $menu_text
+      position: absolute
+      top: 20px
+      left: 20px
       z-index: 100
-      height: $cms_control_height
       transition: left 0.5s ease
-  &.shelved
-    margin-left: 0
-    #cms-main
-      #cms-manager
-        left: $cms_left_width
 
 #cms-shelf
   background-color: $shelf_bg
   color: $shelf_text
   z-index: 10
   #site_tabs
-    position: fixed
-    left: 0
-    top: 0
+    position: relative
     width: $cms_left_width
     background: $shelf_head_bg
     color: $menu_text
     z-index: 100
     height: $cms_control_height
-    overflow: hidden
     transition: left 0.5s ease
     a.tab
       +cms-font-light
@@ -117,6 +140,10 @@ a[contenteditable]
       color: $shelf_text
       &.current
         background-color: $shelf_bg
+  #site_controls
+    position: absolute
+    top: 20px
+    right: 10px
 
   #cms-configuration
     #cms-config-body
@@ -167,36 +194,38 @@ a[contenteditable]
             +button($greenish)
             float: right
 
+
+#cms-ui.shelved
+  margin-left: 0
+
+#cms-ui.collapsed
+  margin-left: -$cms_left_width
+  #cms-main
+    #cms-manager
+      #pages_manager, #page_controls, #sections_manager, #rte
+        display: none
+      #site_manager
+        a.shelf
+          display: none
+
 #cms-main
   position: relative
   z-index: 20
+
   #cms-editor
     z-index: 50
-    margin-top: $cms_control_height
-    height: 100%
-    width: 100%
+    margin: 0
     border: 0
-    // margin: 0
     padding: 0
-  
-    [contenteditable]
-      outline: none
-      &:hover
-        background:
-          color: $editable_bg
-      &:focus
-        background:
-          color: transparent
+    width: 100%
+    height: 100%
 
   #cms-manager
-    position: fixed
+    position: absolute
+    +cms-font-light
     top: 0
     left: 0
-    right: 0
-    background: $menu_bg
-    color: $menu_text
     z-index: 100
-    height: $cms_control_height
     transition: left 0.5s ease
     &:empty
       display: none
@@ -207,6 +236,13 @@ a[contenteditable]
     #pages_manager
       margin: 0
       float: left
+      div.header
+        display: inline
+    #page_controls
+      margin: 0
+      float: left
+      div
+        display: inline
     #sections_manager
       position: relative
       margin: 0
@@ -215,90 +251,54 @@ a[contenteditable]
       position: relative
       float: left
       margin-left: 24px
-      min-width: 400px
-
 
     // general purpose menu setup
     
-    .header
-      position: relative
-      display: inline-block
-      height: $cms_control_height
-      background-color: $menu_bg
-      box-sizing: border-box
+    a.button
       float: left
-      padding: 0 12px 0 5px
-      margin-right: 5px
-      a
-        display: inline-block
-        vertical-align: middle
-      a.title
-        +cms-font-light
-        padding: 6px 0 0 0
-        color: $menu_text
-        &.site
-          padding: 6px 0 6px $cms_control_height
-          height: $cms_control_height
-          font-weight: bold
-          box-sizing: border-box
-          background:
-            image: image-url('spanner.svg')
-            position: 0 0
-            repeat: no-repeat
-          &.save_me
-            background-image: image-url('spanner_green.svg')
-            color: $green
-          &.publish_me
-            background-image: image-url('spanner_warm.svg')
-            color: $warm
-        &.arrowed
-          &:before
-            content: "\025B8"
-            width: 8px
-            font-family: sans-serif
-            margin-right: 8px
-      &:hover
-        background-color: $menu_hover_bg
-        a
-          color: $menu_hover_text
-      &.open
-        background-color: $menu_up_bg
-        +box-shadow(0 4px 6px rgba(0,0,0,0.4))
-        a
-          color: $menu_up_text
-        a.title.arrowed
-          &:before
-            content: "\025BE"
-            font-family: sans-serif
-            margin-right: 8px
+      &.ui
+        padding: 7px
+        polygon
+          fill: white
+          stroke: none
+        &.save_me
+          background-color: $greenish
+          &:hover
+            background-color: $green
+        &.publish_me
+          background-color: $blueish
+          &:hover
+            background-color: $blue
+          
+
     .cms-menu
       position: absolute
       display: none
-      top: $cms_control_height
-      background-color: $menu_bg
+      top: 54px
+      background-color: $warmish
       width: auto
-      +box-shadow(0 4px 6px rgba(0,0,0,0.4))
+      border-radius: 4px
+      border-top-left-radius: 0
       ul
         padding: 0
         margin: 0
-        background-color: $menu_up_bg
       li
         list-style: none
         position: relative
-        padding: 4px 6px 5px 12px
+        padding: 12px
         clear: left
         min-width: 200px
-        &.add
-          background-color: $coolgrey00
         a
-          color: $menu_up_text
+          color: white
           white-space: nowrap
-          +cms-font-light
+        a.title
+          opacity: 0.75
         a.nav
-          color: $verypale
+          color: white
+          opacity: 0.5
           margin-left: 4px
           &.selected
-            color: $menu_selected_bg
+            opacity: 1.0
         span[contenteditable]
           display: inline-block
           vertical-align: middle
@@ -318,7 +318,7 @@ a[contenteditable]
           min-width: 16px
           margin-right: 4px
           height: 16px
-          color: $menu_up_text
+          opacity: 0.75
           &:first-child
             min-width: 0
         span.controls
@@ -335,74 +335,33 @@ a[contenteditable]
           a
             margin: 10px 0 0 0
         &:hover
-          background-color: $menu_hover_bg
+          background-color: $warm
           a, span.a
-            color: $menu_hover_text
+            +glow
           .controls
             display: block
-            background-color: $menu_hover_bg
+            background-color: $warm
         &.changed
           a.title
-            color: $warm
+            font-weight: bold
         &.new
-          background-color: $warmish
-          color: $menu_hover_text
+          background-color: $green
           a.title
             display: none
           span.controls
             display: block
-            background-color: $menu_new_bg
+            background-color: $green
           span.slug
             display: inline-block
         &.selected
-          background-color: $menu_selected_bg
+          background-color: $warm
           color: white
-          a, span.a
+          a.title, span.a
             color: white
-          &:hover
-            background-color: $menu_selected_bg
-            a, span.a
-              color: white
-          span.controls
-            background-color: $menu_selected_bg
+            opacity: 1
         &.destroyed
           text-decoration: line-through
           opacity: 0.4
-
-
-#page_controls, #site_controls
-  position: absolute
-  right: 0
-  top: 0
-  a.save_page, a.publish_page, a.save_site, a.publish_site, span.confirmation, a.preview
-    display: inline-block
-    margin: 0
-    padding: 6px 10px
-    box-sizing: border-box
-    height: $cms_control_height
-    color: white
-    +cms-font-light
-  a.save_page, a.save_site
-    background-color: $greenish
-    &:hover
-      background-color: $green
-      +glow
-  a.publish_page, a.publish_site
-    background-color: $warmish
-    &:hover
-      background-color: $warm
-      +glow
-  span.confirmation
-    color: $green
-    display: none
-  a.preview
-    color: $pale
-    &.previewing
-      color: $green
-      &:before
-        content: '✓'
-    &:hover
-      color: $warm
 
 #cms-session-barrier
   position: fixed
@@ -517,25 +476,6 @@ a[contenteditable]
     a.sign_out
       color: $pale
       +small
-
-#cms-ui.previewing
-  #page_controls
-    a.preview
-      color: $green
-      &:before
-        content: '✓'
-
-  #cms-main #cms-editor main section
-    border-top: none
-    margin-top: 0
-    padding-top: 0
-    position: relative
-    border: 1px solid green
-    
-  .cms-section-menu
-    display: none
-
-
 
 
 // some svg experiments

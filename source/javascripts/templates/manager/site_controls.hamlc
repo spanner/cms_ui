@@ -1,6 +1,4 @@
-%span.confirmation
-  hi
-%a.save_site
-  Save
-%a.publish_site
-  Publish
+%a.save_site.save.button
+  Save site
+%a.publish_site.publish.button
+  Publish site

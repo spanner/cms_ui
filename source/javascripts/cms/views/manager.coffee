@@ -261,11 +261,13 @@ class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
 
 class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
   template: "manager/site"
-  
+
+  events:
+    "click a.shelf": "toggleShelf"
+    "click a.ui": "toggleUI"
+
   bindings:
-    '.header a.title':
-      observe: "title"
-      updateMethod: "html"
+    'a.ui':
       attributes: [
         name: "class"
         observe: ["changed", "published_at", "updated_at"]
@@ -276,20 +278,21 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
     showing = $('#cms-ui').hasClass('shelved')
     showing
 
-  open: =>
-    _cms.vent.trigger "reset" #nb. closes us too.
-    $('#cms-ui').addClass('shelved')
+  toggleUI: (e) =>
+    e?.preventDefault()
+    $('#cms-ui').toggleClass('collapsed')
 
-  close: =>
-    $('#cms-ui').removeClass('shelved')
+  toggleShelf: (e) =>
+    e?.preventDefault()
+    $('#cms-ui').toggleClass('shelved')
 
   siteStatus: ([changed, published_at, updated_at]=[]) =>
     if changed
-      "site title save_me"
+      "save_me"
     else if (updated_at > published_at)
-      "site title publish_me"
+      "publish_me"
     else
-      "site title"
+      ""
 
 
 class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
