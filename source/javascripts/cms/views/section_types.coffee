@@ -131,13 +131,16 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
   content_template: "section_content/hero"
 
+  ui:
+    built: ".built"
+
   bindings:
     "h1":
       observe: "title"
     ".built":
       observe: "built_html"
       updateMethod: "html"
-  
+
   onRender: =>
     @resetHtml() unless @model.get('built_html')
 
@@ -149,23 +152,30 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @_video_picker = new CMS.Views.VideoPickerLayout
       model: @model.getSite()
       el: @$el.find('.cms-video-picker')
-      targetEl: @$el.find('video')
     @_video_picker.render()
     @_video_picker.on 'selected', @setVideo
 
-    #nb image-picker knows what to do with video element
     @_image_picker = new CMS.Views.ImagePickerLayout
       model: @model.getSite()
       el: @$el.find('.cms-image-picker')
     @_image_picker.render()
     @_image_picker.on 'selected', @setImage
+    
     super
 
   setImage: (image) =>
-    console.log "setImage", image
+    
+    # this won't exactly work because we may not have thumb urls yet, and for a new file that's what we want to use.
+    
+    @ui.built.find('img').attr 'src', image.get('url')
+    @ui.built.find('video').attr 'poster', image.get('url')
+
+    # and this is silly. Find a way to bind to built_html, even if you have to nest yet another view.
+    @model.set 'built_html', @ui.built.html()
 
   setVideo: (video) =>
-    console.log "setVideo", video
+    @ui.built.find('source').attr 'src', video.get('url')
+    @ui.built.find('source').attr 'type', video.get('file_type')
 
 
 

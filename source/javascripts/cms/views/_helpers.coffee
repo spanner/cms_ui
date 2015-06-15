@@ -56,7 +56,7 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   bindings:
     "a.preview":
-      observe: "preview_url"
+      observe: "thumb_url"
       update: "setBackground"
     ".file_size":
       observe: "file_size"
@@ -108,15 +108,12 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
         reader.readAsDataURL(file)
 
   setFile: (data, file) =>
-    preview_data = @getPreview(data, file)
     @model.set
       file: data
-      file_type: data.type
-      preview_url: preview_data
+      file_name: file.name
+      file_size: file.size
+      file_type: file.type
     @select()
-
-  getPreview: (data, file) =>
-    data
 
   setBackground: ($el, val, m, opts) =>
     $el.css "background-image", "url(#{val})"
@@ -134,9 +131,8 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     console.log "error"
     
   select: (e) =>
-    e?.preventDefault()
+    e?.preventDefault?()
     @trigger 'selected'
-  
 
   # drop event handlers
   
@@ -179,7 +175,6 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
       site_id: @collection.getSite().id
 
   select: (view) =>
-    console.log "list select!", view
     @trigger 'selected', view.model
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
@@ -203,7 +198,6 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
     @_menu_view.on "selected", @select
 
   select: (model) =>
-    console.log "video picker select!", model
     @trigger "selected", model
 
 
@@ -211,9 +205,11 @@ class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"
   tagName: "li"
 
+
 class CMS.Views.ImagesList extends CMS.Views.AssetsListView
   template: "images/list"
   childView: CMS.Views.ListedImage
+
 
 class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   template: "images/picker"
@@ -229,7 +225,6 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @_menu_view.on "selected", @select
 
   select: (model) =>
-    console.log "image picker select!", model
     @trigger "selected", model
 
 

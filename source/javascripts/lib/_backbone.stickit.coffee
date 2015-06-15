@@ -1,1 +1,1 @@
-#= require ./backbone.stickit-0.9.0
+#= require ./backbone.stickit-0.9.2
