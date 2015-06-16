@@ -158,7 +158,7 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
 
   bindings:
     "#js": "coffee"
-    "a.save":
+    "a.preview":
       observe: ["original_coffee", "coffee"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
@@ -287,6 +287,7 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewHTML
+          "Cmd-S": @updateHTML
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
@@ -294,6 +295,10 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
 
   previewHTML: =>
     @model.previewHTML()
+
+  updateHTML: =>
+    @model.previewHTML().done =>
+      @model.save()
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
