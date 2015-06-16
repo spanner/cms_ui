@@ -12,12 +12,24 @@ class CMS.Models.Image extends CMS.Model
         @resizeImage(img, 48)
       img.src = @get('file')
 
+
+  # Image data is held in file.
+  # *url attributes are computed on the server when we save the asset.
+  # so we can anticipate those here with data urls, at visibly lower quality.
+  #
   resizeImage: (img, w=48) =>
-    unless @get('thumb_url')
-      h = w * (img.height / img.width)
+    unless @get('url')
+      if img.height > img.width
+        h = w * (img.height / img.width)
+      else
+        h = w
+        w = h * (img.width / img.height)
       canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
       ctx = canvas.getContext('2d')
-      ctx.drawImage(img, 0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h)
       preview = canvas.toDataURL('image/png')
+      @set "url", preview
       @set "preview_url", preview
       @set "thumb_url", preview

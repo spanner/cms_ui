@@ -73,6 +73,12 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     ".duration":
       observe: "duration"
       onGet: "inTime"
+    ".progress":
+      observe: "progressing"
+      visible: true
+    ".progress bar":
+      observe: "progress"
+      update: "showProgress"
 
   onRender: =>
     @stickit()
@@ -97,14 +103,14 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
   readLocalFile: (file) =>
     if file?
       if @fileOk(file.name, file.size)
-        job = _cms.job("Reading file")
+        @model.startProgress()
         #...and show a loading bar within the image box
         reader = new FileReader()
-        reader.onprogress = (e) -> 
-          job.setProgress(e)
+        reader.onprogress = (e) => 
+          @model.setProgress(e)
         reader.onloadend = () =>
+          @model.finishProgress()
           @setFile reader.result, file
-          job.complete()
         reader.readAsDataURL(file)
 
   setFile: (data, file) =>
@@ -114,6 +120,7 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       file_size: file.size
       file_type: file.type
     @select()
+    @model.save()
 
   setBackground: ($el, val, m, opts) =>
     $el.css "background-image", "url(#{val})"
@@ -226,6 +233,7 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
 
   select: (model) =>
     @trigger "selected", model
+    @close()
 
 
 

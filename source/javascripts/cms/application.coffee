@@ -22,9 +22,11 @@ class CMS.AppRouter extends Backbone.Marionette.AppRouter
 class CMS.Application extends Backbone.Marionette.Application
   initialize: ->
     root._cms = @
+    # @original_backbone_sync = Backbone.sync
+    # Backbone.sync = @sync
+    Backbone.Marionette.Renderer.render = @render
     @_config = new CMS.Config
     @_session = new CMS.Models.Session
-    @_jobs = new CMS.Collections.Jobs
     @_ui = new CMS.Views.UILayout
       model: @_session
       el: "#cms-ui"
@@ -60,9 +62,37 @@ class CMS.Application extends Backbone.Marionette.Application
         trigger: trigger
         replace: replace
 
-  job: (message) =>
-    @_jobs.add
-      message: message
+  ## Overrides
+  #
+  # Override sync to add a progress listener to every model save
+  #
+  sync: (method, model, opts) =>
+    console.log "sync", method, model?.constructor.name
+    
+    unless method is "read"
+      model.startProgress()
+      opts.beforeSend = (xhr, settings) ->
+        settings.xhr = () ->
+          xhr = new window.XMLHttpRequest()
+          xhr.upload.addEventListener "progress", (e) ->
+            model.setProgress e
+          , false
+          xhr
+      opts.success = ->
+        model.finishProgress(true)
+      # opts.error = ->
+      #  model.finishProgress(false)
+    @original_backbone_sync method, model, opts
 
-  jobQueue: () =>
-    @_jobs
+  # And render uses our hamlcoffee templates through JST
+  #
+  render: (template, data) ->
+    if template?
+      if JST[template]
+        JST[template](data)
+      else if _.isFunction(template)
+        template(data)
+      else
+        template
+    else
+      ""

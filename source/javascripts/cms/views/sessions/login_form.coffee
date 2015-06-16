@@ -29,6 +29,7 @@ class CMS.Views.SessionLoginForm extends CMS.Views.ItemView
     #   error: @fail
 
   succeed: (json) =>
+    console.log "got session", json
     @model.setUser(json)
 
   fail: (xhr, status, error) =>    

@@ -75,7 +75,6 @@ class CMS.Models.Session extends CMS.Model
       expires: 7
 
   clearToken: () =>
-    console.log "clearToken"
     @set "token", null
     $.removeCookie _cms.config('cookie_name'),
       domain: _cms.config('cookie_domain')
@@ -83,6 +82,7 @@ class CMS.Models.Session extends CMS.Model
 
   authenticateRequest: (e, request) =>
     # request.setRequestHeader("X-ClientID", _cms.clientID)
+    console.log "authenticateRequest", request, @get('token')
     if token = @get('token')
       request.setRequestHeader("Authorization", "Token token=#{token}")
 

@@ -1,2 +1,4 @@
 %input{type: "file"}
 %a.preview
+.progress
+  .bar

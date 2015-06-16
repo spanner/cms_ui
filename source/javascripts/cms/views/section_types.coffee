@@ -1,25 +1,55 @@
 class CMS.Views.SectionView extends CMS.Views.ItemView
   tagName: "section"
 
-  initialize: () =>
-    super
-    @on 'reset', @resetHtml
+  ui:
+    built: ".built"
+    image_picker: ".cms-image-picker"
+    video_picker: ".cms-video-picker"
+    admin_menu: ".cms-section-menu"
 
   onRender: =>
+    @sectionMenu()
     super
 
-  resetHtml: =>
-    @model.set "built_html", @renderContent()
-
-  renderContent: () =>
+  build: () =>
     if template = @getContentTemplate()
-      Marionette.Renderer.render template, {}, @
+      @ui.built.html _cms.render(template, {}, @)
     else
-      ""
+      @ui.built.html ""
 
   getContentTemplate: () =>
     @getOption('content_template')
-    
+
+  sectionMenu: =>
+    @_section_menu = new CMS.Views.SectionAdminMenu
+      model: @model
+      el: @ui.admin_menu
+    @_section_menu.render()
+
+  videoPicker: () =>
+    @_video_picker = new CMS.Views.VideoPickerLayout
+      model: @model.getSite()
+      el: @ui.video_picker
+    @_video_picker.render()
+    @_video_picker.on 'selected', @setVideo
+
+  setVideo: (video) =>
+    @_video = video
+    @showVideo()
+    @_video.on "change:url", @showVideo
+
+  imagePicker: () =>
+    @_image_picker = new CMS.Views.ImagePickerLayout
+      model: @model.getSite()
+      el: @ui.image_picker
+    @_image_picker.render()
+    @_image_picker.on 'selected', @setImage
+
+  setImage: (image) =>
+    @_image = image
+    @showImage()
+    @_image.on "change:url", @showImage
+
   wrapped: () =>
 
   unWrapped: () =>
@@ -127,12 +157,19 @@ class CMS.Views.GridSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
+# class CMS.Models.HeroContent extends Backbone.Model
+#   # has an image and a video
+#
+# class CMS.Models.HeroContentView extends Backbone.Marionette.ItemView
+#   template: () =>
+#     @model.get('built_html')
+#
+#   bindings:
+#
+
 class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
   content_template: "section_content/hero"
-
-  ui:
-    built: ".built"
 
   bindings:
     "h1":
@@ -142,42 +179,29 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       updateMethod: "html"
 
   onRender: =>
-    @resetHtml() unless @model.get('built_html')
-
-    @_section_menu = new CMS.Views.SectionAdminMenu
-      model: @model
-      el: @$el.find('.cms-section-menu')
-    @_section_menu.render()
-
-    @_video_picker = new CMS.Views.VideoPickerLayout
-      model: @model.getSite()
-      el: @$el.find('.cms-video-picker')
-    @_video_picker.render()
-    @_video_picker.on 'selected', @setVideo
-
-    @_image_picker = new CMS.Views.ImagePickerLayout
-      model: @model.getSite()
-      el: @$el.find('.cms-image-picker')
-    @_image_picker.render()
-    @_image_picker.on 'selected', @setImage
-    
     super
+    @videoPicker()
+    @imagePicker()
 
-  setImage: (image) =>
-    
-    # this won't exactly work because we may not have thumb urls yet, and for a new file that's what we want to use.
-    
-    @ui.built.find('img').attr 'src', image.get('url')
-    @ui.built.find('video').attr 'poster', image.get('url')
+  showImage: () =>
+    @build()
+    @ui.built.find('img').attr 'src', @_image.get('url')
+    @ui.built.find('video').attr 'poster', @_image.get('url')
+    @model.set 'built_html', @ui.built.html(), stickitChange: true
 
-    # and this is silly. Find a way to bind to built_html, even if you have to nest yet another view.
-    @model.set 'built_html', @ui.built.html()
+  showVideo: () =>
+    @build()
+    @ui.built.find('source').attr 'src', @_video.get('url')
+    @ui.built.find('source').attr 'type', @_video.get('file_type')
+    @model.set 'built_html', @ui.built.html(), stickitChange: true
 
-  setVideo: (video) =>
-    @ui.built.find('source').attr 'src', video.get('url')
-    @ui.built.find('source').attr 'type', video.get('file_type')
-
-
+  getContentTemplate: () =>
+    if @_video
+      "section_content/video_hero"
+    else if @_image
+      "section_content/image_hero"
+    else
+      ""
 
 
 

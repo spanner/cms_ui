@@ -50,7 +50,7 @@ class CMS.Model extends Backbone.Model
 
   notLoaded: () =>
     @_loaded.reject()
-    
+  
   parse: (data) =>
     # you can modify `data` in populate,
     # or return false to prevent the usual parse from being called at all.
@@ -83,6 +83,20 @@ class CMS.Model extends Backbone.Model
     else
       json = super
     json
+
+  startProgress: () =>
+    @set("progress", 0)
+    @set("progressing", true)
+
+  setProgress: (p) =>
+    if p.lengthComputable
+      perc = Math.round(10000 * p.loaded / p.total) / 100.0
+      console.log "progress", perc
+      @set("progress", perc)
+
+  finishProgress: () =>
+    @set("progress", 100)
+    @set("progressing", false)
 
   isDestroyed: () =>
     @get('deleted_at')
