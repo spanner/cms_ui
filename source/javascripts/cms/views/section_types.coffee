@@ -24,7 +24,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       @ui.built.html _cms.render(template, {}, @)
     else
       @ui.built.html ""
-    
+
   #TODO: this is working gradually towards another render-and-bind,
   # but the big question is what to bind to; content associates are 
   # arbitrary and defined by each section type. Perhaps we should push 

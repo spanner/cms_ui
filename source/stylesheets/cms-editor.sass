@@ -139,8 +139,6 @@ ul.assets
 
 main
   section
-    position: relative
-    +clearfix
     .cms-controls
       +cms-font-light
       position: absolute
@@ -188,7 +186,6 @@ main
               margin-bottom: 0
               padding-bottom: 20px
 
-
     &:hover
       .cms-controls
         display: block
@@ -228,152 +225,5 @@ main
       .cms-menu-body
         height: auto
         display: block
-    
-    .built
-      z-index: 10
 
-    .content
-      +central
-      z-index: 20
-
-    &.default
-      .section_body
-        min-height: 100px
-        max-width: 800px
-
-    &.twocol
-      .col
-        display: inline-block
-        vertical-align: top
-        float: left
-        min-height: 100px
-        width: 48%
-        &.second
-          float: right
-
-    &.asided
-      aside
-        float: right
-        width: 293px
-        min-height: 50px
-        margin: 0 0 16px 60px
-        color: $pale
-        p:first-child
-          margin-top: 0
-        img:first-child
-          margin-top: 0.4em
-      .section_body
-        min-height: 100px
-        max-width: 800px
-        border-top: 1px solid transparent
-        p
-          font-size: 1.6em
-        p:first-child
-          margin-top: 0
-        img:first-child
-          margin-top: 0.4em
-
-    &.bigtext
-      .content
-        display: block
-        font-size: 1.6rem
-        line-height: 1.6
-
-    &.bigquote
-      margin: 6em 0 3em 0
-      p
-        width: 75%
-        font-size: 1.75rem
-        line-height: 1.25
-        margin: 1.25em auto
-
-    &.grid
-      .block
-        width: 300px
-        margin: 20px
-        display: inline-block
-        float: left
-
-    &.hero
-      position: relative
-      top: 0
-      width: 100vw
-      margin: 0
-      max-height: 90vh
-      min-height: 50vh
-      overflow: hidden
-      .built
-        position: relative
-        overflow: hidden
-        img, video
-          width: 100%
-          height: auto
-          min-height: 50vh
-          position: relative
-          margin: 0 auto
-          background-color: $coolgrey11
-        img[src=""]
-          height: 90vh
-            
-      .content
-        position: absolute
-        bottom: 1.25em
-        left: 0
-        right: 0
-        h1
-          font-size: 5em
-          color: white
-          text-shadow: 0 0 10px rgba(0,0,0,0.6)
-          line-height: 1
-          text-transform: uppercase
-          margin: 0
-          min-width: 100px
-
-    &.carousel
-      .content
-        position: absolute
-        bottom: 0
-        left: 0
-        right: 0
-        text-shadow: 0 0 10px rgba(0,0,0,0.4)
-        h2
-          margin: 0
-          padding: 12px 20px
-          font-size: 3.4rem
-          line-height: 1
-          p
-            display: inline
-      .built
-        position: relative
-        width: 960px
-        height: 540px
-        overflow: hidden
-        background-color: $green
-        .carousel
-          .image
-            width: 960px
-            height: 540px
-            display: inline-block
-            float: left
-            margin: 0
-            background:
-              repeat: no-repeat
-              position: center center
-              size: cover
-      .captions
-        margin-top: 20px
-        p
-          width: 293px
-          margin: 20px
-          display: inline-block
-          float: left
-          opacity: 0.75
-          transition: opacity 0.3s ease
-          a
-            color: darken($yellow, 10)
-          &:last-child
-            margin-right: 0
-          &:first-child
-            margin-left: 0
-          &.current
-            opacity: 1.0
+@import lib/section_types

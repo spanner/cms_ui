@@ -3,6 +3,7 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
   tagName: "section"
 
   onRender: () =>
+    @$el.addClass(@model.get('section_type') or 'default')
     section_type = @model.get('section_type') or 'default'
     wrapper_class_name = 'Rendered' + section_type.charAt(0).toUpperCase() + section_type.substr(1).toLowerCase() + 'Section'
     wrapper_class = CMS.Views[wrapper_class_name] ? CMS.Views['RenderedDefaultSection']
@@ -13,10 +14,6 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
 
   id: -> 
     "section_#{@model.get('id')}"
-  
-  wrapperClass: (section_type) =>
-    section_type ?= 'default'
-    "wrapper #{section_type}"
 
 
 class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
@@ -60,8 +57,12 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.CollectionView
 
 class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
   tagName: "section"
+
   onRender: =>
     @stickit()
+
+  typeClass: (section_type) =>
+    section_type or 'default'
 
 
 class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
