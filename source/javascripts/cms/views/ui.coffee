@@ -35,9 +35,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
           @setSite(site)
           site.load() unless site.isReady()
           site.whenReady () =>
-            if page = site.pages.findWhere(path: "/#{page_path}")
-              @setPage(page)
-              page.load()
+            @setPage(site, page_path)
 
   setUser: (user) =>
     # we have user object with sites collection
@@ -52,19 +50,17 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       model: site
     @getRegion('configuration').show @_configurator
 
-  setPage: (page) =>
-    # we have page object with sections collection
-    site = page?.getSite()
-    @_manager.setPage(page)
+  setPage: (site, page_path) =>
+    @stopListening site, "change:html change:js"
 
-    site.off "change:html change:js", @renderEditor
+    if page = site.pages.findWhere(path: "/#{page_path}")
+      @_manager.setPage(page)
 
-    @_editor = new CMS.Views.PageEditorLayout
-      model: page
-      el: @$el.find('#cms-editor')
-    @renderEditor()
+      @_editor = new CMS.Views.PageEditorLayout
+        model: page
+        el: @$el.find('#cms-editor')
+      @_editor.render()
 
-    site.on "change:html change:js", @renderEditor
+      @listenTo site, "change:html change:js", () => @setPage(site, page_path)
 
-  renderEditor: =>
-    @_editor.render()
+      page.load()

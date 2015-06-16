@@ -154,16 +154,11 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
 
   events:
     "click a.preview": "previewJS"
-    "click a.revert": "revertJS"
     "paste #js": "paste"
 
   bindings:
     "#js": "coffee"
-    "a.revert":
-      observe: ["original_js", "js"]
-      visible: "notTheSame"
-      visibleFn: "visibleAsInlineBlock"
-    "a.preview":
+    "a.save":
       observe: ["original_coffee", "coffee"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"
@@ -211,7 +206,6 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
 
   events:
     "click a.preview": "previewCSS"
-    "click a.revert": "revertCSS"
     "paste #css": "paste"
 
   ui:
@@ -220,10 +214,6 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
 
   bindings:
     "#css": "sass"
-    "a.revert":
-      observe: ["original_css", "css"]
-      visible: "notTheSame"
-      visibleFn: "visibleAsInlineBlock"
     "a.preview":
       observe: ["original_sass", "sass"]
       visible: "notTheSame"
@@ -275,10 +265,6 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
 
   bindings:
     "#haml": "haml"
-    "a.revert":
-      observe: ["original_html", "html"]
-      visible: "notTheSame"
-      visibleFn: "visibleAsInlineBlock"
     "a.preview":
       observe: ["original_haml", "haml"]
       visible: "notTheSame"
@@ -308,8 +294,6 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
 
   previewHTML: =>
     @model.previewHTML()
-    # @ui.textarea.val @editor.getValue()
-    # @ui.textarea.trigger "change"
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView

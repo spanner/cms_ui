@@ -1,5 +1,4 @@
 %textarea#haml
 
 %p.buttons<
-  %a.button.revert ◂ revert
-  %a.button.preview.header preview ▸
+  %a.button.preview preview ▸

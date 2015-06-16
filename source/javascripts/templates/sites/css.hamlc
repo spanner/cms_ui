@@ -1,5 +1,4 @@
 %textarea#css
 
 %p.buttons<
-  %a.button.revert ◂ revert
   %a.button.preview preview ▸

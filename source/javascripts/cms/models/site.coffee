@@ -13,7 +13,9 @@ class CMS.Models.Site extends CMS.Model
     @page_types.reset(data.page_types)
     @pages.reset(data.pages)
     @populateDates(data)
-    @populateCSS()
+    @populateCSS(data)
+    @populateJS(data)
+    @populateHTML(data)
     @populateImages()
     @on "change:images", @populateImages
     @populateVideos()
@@ -32,64 +34,58 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages.reset(@pages.where(nav: true))
     @touch() if e
 
-  populateCSS: =>
-    @set original_sass: @get("sass")
-    @set original_css: @get("css")
-
-  revertCSS: =>
-    @set sass: @get("original_sass")
-    @set css: @get("original_css")
+  populateCSS: (data) =>
+    @set original_sass: data.sass
 
   previewCSS: =>
     dfd = $.Deferred()
-    $.ajax("#{@url()}/preview_css",
-      type: "POST"
-      data:
-        sass: @get("sass")
-    ).done (data) =>
-      if errors = data?.errors
-        console.error "SASS parsing errors:", errors
-      @set data?.site
+    if @get("sass") isnt @get("original_sass")
+      $.ajax("#{@url()}/preview_css",
+        type: "POST"
+        data:
+          sass: @get("sass")
+      ).done (data) =>
+        if errors = data?.errors
+          console.error "SASS parsing errors:", errors
+        @set data?.site
+        dfd.resolve()
+    else
       dfd.resolve()
 
-  populateJS: =>
-    @set original_coffee: @get("coffee")
-    @set original_js: @get("js")
-
-  revertJS: =>
-    @set coffee: @get("original_coffee")
-    @set js: @get("original_js")
+  populateJS: (data) =>
+    @set original_coffee: data.coffee
 
   previewJS: =>
     dfd = $.Deferred()
-    $.ajax("#{@url()}/preview_js",
-      type: "POST"
-      data: 
-        coffee: @get("coffee")
-    ).done (data) =>
-      if errors = data?.errors
-        console.error "Coffeescript parsing errors:", errors
-      @set data?.site
+    if @get("coffee") isnt @get("original_coffee")
+      $.ajax("#{@url()}/preview_js",
+        type: "POST"
+        data: 
+          coffee: @get("coffee")
+      ).done (data) =>
+        if errors = data?.errors
+          console.error "Coffeescript parsing errors:", errors
+        @set data?.site
+        dfd.resolve()
+    else
       dfd.resolve()
 
-  populateHTML: =>
-    @set original_haml: @get("haml")
-    @set original_html: @get("html")
-
-  revertHTML: =>
-    @set haml: @get("original_haml")
-    @set html: @get("original_html")
+  populateHTML: (data) =>
+    @set original_haml: data.haml
 
   previewHTML: =>
     dfd = $.Deferred()
-    $.ajax("#{@url()}/preview_html",
-      type: "POST"
-      data: 
-        haml: @get("haml")
-    ).done (data) =>
-      if errors = data?.errors
-        console.error "HAML parsing errors:", errors
-      @set data?.site
+    if @get("haml") isnt @get("original_haml")
+      $.ajax("#{@url()}/preview_html",
+        type: "POST"
+        data: 
+          haml: @get("haml")
+      ).done (data) =>
+        if errors = data?.errors
+          console.error "HAML parsing errors:", errors
+        @set data?.site
+        dfd.resolve()
+    else
       dfd.resolve()
 
   getWrapper: () =>
@@ -97,6 +93,9 @@ class CMS.Models.Site extends CMS.Model
       $(html)
     else
       $("<html><head><title /></head><body><main /></body></html>")
+
+  # save: =>
+  #   $.when(@previewHTML(),@previewCSS(),@previewJS()).done => super
 
   # Publish is a special save that sends up a snapshot of the current state of our html parts.
   #
