@@ -2,11 +2,13 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
   template: "section_types/listed"
   tagName: 'li'
   events:
-    "click a": "setSelected"
+    "click a": "select"
     
   bindings:
     "a":
       observe: "name"
+      classes: 
+        "selected": "selected"
       attributes: [
         name: "class"
         observe: "name"

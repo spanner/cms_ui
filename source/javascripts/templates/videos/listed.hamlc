@@ -1,3 +1,2 @@
 %input{type: "file"}
-%a
-  %img.preview
+%a.preview.video

@@ -9,10 +9,13 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   onRender: =>
     @sectionMenu()
+    @build() unless @model.get('built_html')
     super
 
   renderContent: () =>
+    console.log "section renderContent"
     if template = @getContentTemplate()
+      console.log "template:", template, @ui.built
       @ui.built.html _cms.render(template, {}, @)
     else
       @ui.built.html ""
@@ -25,6 +28,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   # For now we just rebuild when selections change.
   #
   build: () =>
+    console.log "section build", @_image, @_video
     @renderContent()
     # modify template-generated content using UI-selected values
 
@@ -201,6 +205,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @imagePicker()
 
   build: () =>
+    console.log "hero build", @_image, @_video
     super
     if @_image
       @ui.built.find('img').attr 'src', @_image.get('url')
@@ -214,10 +219,8 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   getContentTemplate: () =>
     if @_video
       "section_content/video_hero"
-    else if @_image
-      "section_content/image_hero"
     else
-      ""
+      "section_content/image_hero"
 
 
 

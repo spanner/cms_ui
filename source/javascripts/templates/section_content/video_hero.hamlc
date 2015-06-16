@@ -1,3 +1,3 @@
-%video
+%video{autoplay: true, loop: "loop", preload: 'auto'}
   %source
   %img

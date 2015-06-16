@@ -1,6 +1,6 @@
-.frame
-  .carousel
-  .section_title
-    %h2.section.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
-
-.captions.editable{contenteditable: "true"}
+.built
+.content
+  %h1.editable{contenteditable: "plaintext-only"}
+.cms-controls
+  .cms-buttons
+    .cms-section-menu

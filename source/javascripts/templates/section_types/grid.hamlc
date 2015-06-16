@@ -1,8 +1,5 @@
-.content
-  .section_body
+.built
 .cms-controls
   .cms-buttons
-    %a.button.choose_pages
-      Choose pages
+    .cms-page-picker
     .cms-section-menu
-     
