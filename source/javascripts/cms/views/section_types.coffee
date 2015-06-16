@@ -27,11 +27,17 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @_section_menu.render()
 
   videoPicker: () =>
+    @getVideo()
     @_video_picker = new CMS.Views.VideoPickerLayout
       model: @model.getSite()
+      selected: @_video
       el: @ui.video_picker
     @_video_picker.render()
     @_video_picker.on 'selected', @setVideo
+
+  getVideo: =>
+    if video_id = @ui.built.find('video').attr('data-video-id')
+      @_video = @model.getSite().videos.get(video_id)
 
   setVideo: (video) =>
     @_video = video
@@ -39,22 +45,22 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @_video.on "change:url", @showVideo
 
   imagePicker: () =>
+    @getImage()
     @_image_picker = new CMS.Views.ImagePickerLayout
       model: @model.getSite()
+      selected: @_image
       el: @ui.image_picker
     @_image_picker.render()
     @_image_picker.on 'selected', @setImage
+
+  getImage: =>
+    if image_id = @ui.built.find('img').attr('data-image-id')
+      @_image = @model.getSite().images.get(image_id)
 
   setImage: (image) =>
     @_image = image
     @showImage()
     @_image.on "change:url", @showImage
-
-  wrapped: () =>
-
-  unWrapped: () =>
-    
-
 
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
@@ -186,11 +192,13 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   showImage: () =>
     @build()
     @ui.built.find('img').attr 'src', @_image.get('url')
+    @ui.built.find('img').attr 'data-image-id', @_image.get('id')
     @ui.built.find('video').attr 'poster', @_image.get('url')
     @model.set 'built_html', @ui.built.html(), stickitChange: true
 
   showVideo: () =>
     @build()
+    @ui.built.find('video').attr 'data-video-id', @_video.get('id')
     @ui.built.find('source').attr 'src', @_video.get('url')
     @ui.built.find('source').attr 'type', @_video.get('file_type')
     @model.set 'built_html', @ui.built.html(), stickitChange: true
