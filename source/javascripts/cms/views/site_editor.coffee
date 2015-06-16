@@ -60,16 +60,12 @@ class CMS.Views.Navigation extends CMS.Views.CollectionView
 
 class CMS.Views.Header extends Backbone.Marionette.ItemView
   template: false
-  tagName: 'header'
-  
-  modelEvents:
-    "change:header": "renderNav"
 
   onRender: () =>
     @model.whenReady @renderNav
 
   renderNav: =>
-    @$el.html @model.get('header')
+    # @$el.html @model.get('header')
     @_nav = new CMS.Views.Navigation
       collection: @model.nav_pages
       el: @$el.find('nav')
@@ -78,10 +74,6 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
 
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
-  tagName: 'footer'
-
-  modelEvents:
-    "change:footer": "renderNav"
 
   onRender: () =>
     @model.whenReady @renderNav
