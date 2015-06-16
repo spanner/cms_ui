@@ -1,3 +1,5 @@
 %a.button.cms-menu-head
   ☰
+%a.button.delete.delete_section
+  X
 .section_types.cms-menu-body

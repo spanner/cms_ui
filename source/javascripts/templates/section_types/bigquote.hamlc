@@ -1,5 +1,5 @@
 .content
-  %p
+  %p.quote
     %span.quoted.editable{contenteditable: "plaintext-only", data: {placeholder: "Quoted text"}}
     %span.speaker.editable{contenteditable: "plaintext-only", data: {placeholder: "Speaker or circumstances"}}
 .cms-controls

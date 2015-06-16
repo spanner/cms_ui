@@ -1,0 +1,4 @@
+.content
+  %p.quote
+    %span.quoted
+    %span.speaker
