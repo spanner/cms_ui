@@ -1,0 +1,3 @@
+.built
+.content
+  %h1.editable{contenteditable: "plaintext-only"}

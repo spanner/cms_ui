@@ -1,0 +1,4 @@
+.content
+  %h2
+  .col.first
+  .col.second

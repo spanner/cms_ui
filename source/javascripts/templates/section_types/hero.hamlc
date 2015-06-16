@@ -1,6 +1,6 @@
 .built
 .content
-  %h1.editable{contenteditable: "plaintext-only"}
+  %h1.editable{contenteditable: "plaintext-only", data: {placeholder: "Block or page title"}}
 .cms-controls
   .cms-buttons
     .cms-video-picker

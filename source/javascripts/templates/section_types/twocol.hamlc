@@ -1,6 +1,7 @@
 .content
-  .col.first.editable{contenteditable: "true"}
-  .col.second.editable{contenteditable: "true"}
+  %h2.editable{contenteditable: "plaintext-only"}
+  .col.first.formattable{contenteditable: "true"}
+  .col.second.formattable{contenteditable: "true"}
 .cms-controls
   .cms-buttons
     .cms-section-menu

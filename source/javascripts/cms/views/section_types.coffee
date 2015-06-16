@@ -1,6 +1,9 @@
 class CMS.Views.SectionView extends CMS.Views.ItemView
   tagName: "section"
   
+  events:
+    "click a.delete": "deleteSection"
+  
   ui:
     built: ".built"
     image_picker: ".cms-image-picker"
@@ -78,6 +81,8 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @build()
     @_image.on "change:url", @build
 
+  deleteSection: () =>
+    @model?.destroyReversibly()
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
   template: "section_types/default"
@@ -125,15 +130,15 @@ class CMS.Views.AsidedSection extends CMS.Views.SectionView
   bindings:
     "h2.section":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".section_aside":
+    ".quoted":
       observe: "secondary_html"
-      updateMethod: "html"
+      updateMethod: "text"
+    ".speaker":
+      observe: "caption_html"
+      updateMethod: "text"
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView
@@ -150,7 +155,7 @@ class CMS.Views.BigquoteSection extends CMS.Views.SectionView
       observe: "main_html"
       updateMethod: "text"
     ".speaker":
-      observe: "secondary_html"
+      observe: "caption_html"
       updateMethod: "text"
 
 

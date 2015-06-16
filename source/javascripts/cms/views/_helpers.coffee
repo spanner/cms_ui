@@ -11,7 +11,7 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
         "selected": "selected"
       attributes: [
         name: "class"
-        observe: "name"
+        observe: "slug"
       ]
     
   onRender: () =>
@@ -35,15 +35,15 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
   bindings: {}
 
   initialize: ->
-    @collection = new CMS.Collections.SectionTypes
     name = @model.get('section_type') or 'default'
+    @collection = new CMS.Collections.SectionTypes
     @collection.findWhere(name: name)?.select()
     @collection?.on "change:selected", @setType
     _cms.vent.on "reset_menus", @close
 
   setType: =>
     if section_type = @collection.findWhere(selected: true)
-      @model.set 'section_type', section_type.get('name')
+      @model.set 'section_type', section_type.get('slug')
 
 
 class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView

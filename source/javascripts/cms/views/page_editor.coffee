@@ -1,5 +1,3 @@
-
-
 class CMS.Views.Section extends CMS.Views.ItemView
   template: false
   tagName: "section"

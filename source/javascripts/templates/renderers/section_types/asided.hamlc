@@ -1,0 +1,6 @@
+.content
+  %aside.section_aside
+    %p.quote
+      %span.quoted
+      %span.speaker
+  .section_body
