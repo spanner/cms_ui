@@ -1,2 +1,6 @@
-.col.first.editable{contenteditable: "true"}
-.col.second.editable{contenteditable: "true"}
+.content
+  .col.first.editable{contenteditable: "true"}
+  .col.second.editable{contenteditable: "true"}
+.cms-controls
+  .cms-buttons
+    .cms-section-menu
