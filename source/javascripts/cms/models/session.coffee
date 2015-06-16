@@ -82,7 +82,6 @@ class CMS.Models.Session extends CMS.Model
 
   authenticateRequest: (e, request) =>
     # request.setRequestHeader("X-ClientID", _cms.clientID)
-    console.log "authenticateRequest", request, @get('token')
     if token = @get('token')
       request.setRequestHeader("Authorization", "Token token=#{token}")
 

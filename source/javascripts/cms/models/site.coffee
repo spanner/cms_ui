@@ -3,7 +3,6 @@ class CMS.Models.Site extends CMS.Model
   savedAttributes: ["title", "domain", "template", "haml", "sass", "coffee"]
 
   build: =>
-    console.log "site build", @attributes
     @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
     @pages = new CMS.Collections.Pages @get('pages'), site: @
     @images = new CMS.Collections.Images @get('images'), site: @
@@ -14,21 +13,19 @@ class CMS.Models.Site extends CMS.Model
     @page_types.reset(data.page_types)
     @pages.reset(data.pages)
     @populateDates(data)
-    @populateNavigation()
     @populateCSS()
     @populateImages()
-    @populateVideos()
     @on "change:images", @populateImages
+    @populateVideos()
     @on "change:videos", @populateVideos
+    @populateNavigation()
     @pages.on "change:nav", @populateNavigation
     true
 
   populateImages: =>
-    console.log "site populateImages", @get("images")
     @images.reset @get("images")
 
   populateVideos: =>
-    console.log "site populateVideos", @get("videos")
     @videos.reset @get("videos")
 
   populateNavigation: (e) =>

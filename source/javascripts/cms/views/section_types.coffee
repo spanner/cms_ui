@@ -11,11 +11,22 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @sectionMenu()
     super
 
-  build: () =>
+  renderContent: () =>
     if template = @getContentTemplate()
       @ui.built.html _cms.render(template, {}, @)
     else
       @ui.built.html ""
+  
+  #TODO: this is working gradually towards another render-and-bind,
+  # but the big question is what to bind to; content associates are 
+  # arbitrary and defined by each section type. Perhaps we should push 
+  # all that through a section content model?
+  #
+  # For now we just rebuild when selections change.
+  #
+  build: () =>
+    @renderContent()
+    # modify template-generated content using UI-selected values
 
   getContentTemplate: () =>
     @getOption('content_template')
@@ -41,8 +52,8 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   setVideo: (video) =>
     @_video = video
-    @showVideo()
-    @_video.on "change:url", @showVideo
+    @build()
+    @_video.on "change:url", @build
 
   imagePicker: () =>
     @getImage()
@@ -59,8 +70,8 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   setImage: (image) =>
     @_image = image
-    @showImage()
-    @_image.on "change:url", @showImage
+    @build()
+    @_image.on "change:url", @build
 
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
@@ -189,18 +200,15 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @videoPicker()
     @imagePicker()
 
-  showImage: () =>
-    @build()
-    @ui.built.find('img').attr 'src', @_image.get('url')
-    @ui.built.find('img').attr 'data-image-id', @_image.get('id')
-    @ui.built.find('video').attr 'poster', @_image.get('url')
-    @model.set 'built_html', @ui.built.html(), stickitChange: true
-
-  showVideo: () =>
-    @build()
-    @ui.built.find('video').attr 'data-video-id', @_video.get('id')
-    @ui.built.find('source').attr 'src', @_video.get('url')
-    @ui.built.find('source').attr 'type', @_video.get('file_type')
+  build: () =>
+    super
+    if @_image
+      @ui.built.find('img').attr 'src', @_image.get('url')
+      @ui.built.find('img').attr 'data-image-id', @_image.get('id')
+      @ui.built.find('video').attr 'poster', @_image.get('url')
+    if @_video
+      @ui.built.find('video').attr 'data-video-id', @_video.get('id')
+      @ui.built.find('source').attr 'src', @_video.get('url')
     @model.set 'built_html', @ui.built.html(), stickitChange: true
 
   getContentTemplate: () =>
