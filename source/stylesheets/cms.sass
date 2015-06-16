@@ -187,7 +187,7 @@ a[contenteditable]
             +button($mid)
             float: left
             z-index: 10
-          &.preview, &.save
+          &.preview
             +button($greenish)
             float: right
 
@@ -199,6 +199,7 @@ a[contenteditable]
   margin-left: -$cms_left_width
   #cms-main
     #cms-manager
+      width: auto
       #pages_manager, #page_controls, #sections_manager
         display: none
       #site_manager
@@ -250,7 +251,7 @@ a[contenteditable]
       top: 0
       right: 0
       width: 320px
-
+      
     // general purpose menu setup
 
     a.button
