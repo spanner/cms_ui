@@ -1144,7 +1144,7 @@ var editorDefaults;
         contentWindow: window,
         ownerDocument: document,
         firstHeader: 'h3',
-        placeholder: 'Type your text',
+        placeholder: false,
         secondHeader: 'h4',
         targetBlank: false,
         anchorTarget: false,

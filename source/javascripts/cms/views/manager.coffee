@@ -25,6 +25,15 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
     "span.slug":
       observe: "slug"
+    "span.page_type":
+      observe: 'page_type_id'
+      onGet: 'pageTypeName'
+    "select.page_type":
+      observe: 'page_type_id'
+      selectOptions: 
+        collection: "this.site.page_types"
+        labelPath: 'title'
+        valuePath: 'id'
     "a.title":
       observe: ["dir", "slug"]
       onGet: "pageSlug"
@@ -49,6 +58,16 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         name: "class"
         onGet: "liClass"
       ]
+    ".ifnew":
+      observe: 'id'
+      visible: "untrue"
+    ".unlessnew":
+      observe: 'id'
+      visible: true
+  
+  initialize: () =>
+    @site = @model.getSite()
+    super
 
   onRender: () =>
     super
@@ -59,6 +78,12 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   pageSlug: ([dir, slug]=[]) =>
     slug or "Home"
+
+  pageTypeName: (page_type_id) =>
+    if page_type = @model.getSite().page_types.get(page_type_id)
+      page_type.get('title')
+    else
+      "page type..."
 
   liClass: (id) =>
     if id then "branch" else "branch new"

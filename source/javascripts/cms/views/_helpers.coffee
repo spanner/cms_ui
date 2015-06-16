@@ -37,7 +37,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
   initialize: ->
     @collection = new CMS.Collections.SectionTypes
     name = @model.get('section_type') or 'default'
-    @collection.findWhere(name: name).select()
+    @collection.findWhere(name: name)?.select()
     @collection?.on "change:selected", @setType
     _cms.vent.on "reset_menus", @close
 

@@ -55,24 +55,23 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   
   childViewOptions: () =>
     toolbar: @_toolbar
+    
+  ui:
+    title: "h1.pagetitle"
+    intro: "#standfirst"
 
   bindings:
     "h1.pagetitle":
       observe: "title"
-      updateMethod: "html"
-      classes: 
-        "hidden": "hide_title"
-    ".hide_title": "hide_title"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
-      classes:
-        "hidden": "hide_introduction"
-    ".hide_introduction": "hide_introduction"
 
   onRender: () =>
-    @stickit()
+    @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
+    @ui.intro.attr('data-placeholder', 'Optional introduction to the page')
     $.page = @model
+    @stickit()
 
 
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView
@@ -85,6 +84,7 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
     @model.whenReady =>
       @$el.append('<style />')
       @$el.append '<link rel="stylesheet" href="/stylesheets/cms-base.css" type="text/css" />',
+      @$el.append '<script src="/javascripts/cms-base.js" type="text/javascript" />',
       @stickit()
 
 
@@ -93,10 +93,10 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   template: false
 
   onRender: =>
-    # @_toolbar?.destroy()
     @model.whenReady =>
       html = @model.getSite()?.get('html')
-      doc = @el.contentWindow.document
+      iwindow = @el.contentWindow
+      doc = iwindow.document
       doc.open()
       doc.write(html)
       $(doc.head).append("<script>#{@model.getSite()?.get("js")}</script>")
@@ -123,10 +123,8 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         el: $(doc.body).find('main')
       @_page_view.render()
 
-      # @_toolbar = new MediumEditor '.editable',
-      #   elementsContainer: $("#rte").get(0)
-      #   fixedToolbar: true
-      #   updateOnEmptySelection: true
-      #   disablePlaceholders: true
-      #   updateOnEmptySelection: true
-
+      @_toolbar = new MediumEditor '.formattable',
+        contentWindow: iwindow
+        ownerDocument: doc
+        disablePlaceholders: true
+        updateOnEmptySelection: true
