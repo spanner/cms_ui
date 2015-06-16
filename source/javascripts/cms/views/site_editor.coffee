@@ -158,7 +158,7 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
 
   bindings:
     "#js": "coffee"
-    "a.save":
+    "a.preview":
       observe: ["original_coffee", "coffee"]
       visible: "notTheSame"
       visibleFn: "visibleAsInlineBlock"

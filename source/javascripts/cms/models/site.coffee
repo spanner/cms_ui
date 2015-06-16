@@ -94,9 +94,6 @@ class CMS.Models.Site extends CMS.Model
     else
       $("<html><head><title /></head><body><main /></body></html>")
 
-  # save: =>
-  #   $.when(@previewHTML(),@previewCSS(),@previewJS()).done => super
-
   # Publish is a special save that sends up a snapshot of the current state of our html parts.
   #
   publish: () =>

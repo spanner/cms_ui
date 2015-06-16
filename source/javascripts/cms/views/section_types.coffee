@@ -13,9 +13,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     super
 
   renderContent: () =>
-    console.log "section renderContent"
     if template = @getContentTemplate()
-      console.log "template:", template, @ui.built
       @ui.built.html _cms.render(template, {}, @)
     else
       @ui.built.html ""
@@ -28,7 +26,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   # For now we just rebuild when selections change.
   #
   build: () =>
-    console.log "section build", @_image, @_video
     @renderContent()
     # modify template-generated content using UI-selected values
 
