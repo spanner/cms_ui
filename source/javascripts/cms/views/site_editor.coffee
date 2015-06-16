@@ -148,8 +148,25 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     $.tv = tab_view
 
 
-class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
+class CMS.Views.SiteJS extends CMS.Views.ItemView
+  @mixin 'text'
   template: "sites/js"
+
+  events:
+    "click a.preview": "previewJS"
+    "click a.revert": "revertJS"
+    "paste #js": "paste"
+
+  bindings:
+    "#js": "coffee"
+    "a.revert":
+      observe: ["original_js", "js"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
+    "a.preview":
+      observe: ["original_coffee", "coffee"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
 
   ui:
     textarea: "textarea#js"
@@ -161,20 +178,31 @@ class CMS.Views.SiteJS extends Backbone.Marionette.ItemView
   show: =>
     unless @editor
       @editor = CodeMirror.fromTextArea @ui.textarea[0],
-        mode: @model.get("js_preprocessor") ? "javascript"
+        mode: @model.get("js_preprocessor") ? "coffeescript"
         theme: "spanner"
         showCursorWhenSelecting: true
         lineNumbers: true
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewJS
-
+          "Cmd-S": @updateJS
       @model.on "change:js_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
+
+  previewJS: =>
+    @model.previewJS()
+
+  updateJS: =>
+    @model.previewJS().done =>
+      @model.save()
+
+  revertJS: =>
+    @model.revertJS()
+    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteCSS extends CMS.Views.ItemView
@@ -184,7 +212,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
   events:
     "click a.preview": "previewCSS"
     "click a.revert": "revertCSS"
-    "paste .temp_css": "paste"
+    "paste #css": "paste"
 
   ui:
     textarea: "textarea#css"
@@ -215,6 +243,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewCSS
+          "Cmd-S": @updateCSS
       
       $.editor = @editor
       
@@ -228,20 +257,32 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
   previewCSS: =>
     @model.previewCSS()
 
+  updateCSS: =>
+    @model.previewCSS().done =>
+      @model.save()
+
   revertCSS: =>
     @model.revertCSS()
     @editor?.setValue @ui.textarea.val()
 
 
-class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
+class CMS.Views.SiteHtml extends CMS.Views.ItemView
   @mixin 'text'
   template: "sites/html"
 
   events:
-    "click a.preview.html": "previewHTML"
+    "click a.preview": "previewHTML"
 
   bindings:
     "#haml": "haml"
+    "a.revert":
+      observe: ["original_html", "html"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
+    "a.preview":
+      observe: ["original_haml", "haml"]
+      visible: "notTheSame"
+      visibleFn: "visibleAsInlineBlock"
 
   ui:
     textarea: "textarea#haml"
@@ -266,8 +307,9 @@ class CMS.Views.SiteHtml extends Backbone.Marionette.ItemView
         @ui.textarea.trigger "change"
 
   previewHTML: =>
-    @ui.textarea.val @editor.getValue()
-    @ui.textarea.trigger "change"
+    @model.previewHTML()
+    # @ui.textarea.val @editor.getValue()
+    # @ui.textarea.trigger "change"
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView

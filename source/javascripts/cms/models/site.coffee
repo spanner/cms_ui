@@ -32,8 +32,6 @@ class CMS.Models.Site extends CMS.Model
     @nav_pages.reset(@pages.where(nav: true))
     @touch() if e
 
-  #TODO also for coffee -> js
-  #
   populateCSS: =>
     @set original_sass: @get("sass")
     @set original_css: @get("css")
@@ -43,14 +41,56 @@ class CMS.Models.Site extends CMS.Model
     @set css: @get("original_css")
 
   previewCSS: =>
+    dfd = $.Deferred()
     $.ajax("#{@url()}/preview_css",
       type: "POST"
-      data: 
+      data:
         sass: @get("sass")
     ).done (data) =>
       if errors = data?.errors
         console.error "SASS parsing errors:", errors
       @set data?.site
+      dfd.resolve()
+
+  populateJS: =>
+    @set original_coffee: @get("coffee")
+    @set original_js: @get("js")
+
+  revertJS: =>
+    @set coffee: @get("original_coffee")
+    @set js: @get("original_js")
+
+  previewJS: =>
+    dfd = $.Deferred()
+    $.ajax("#{@url()}/preview_js",
+      type: "POST"
+      data: 
+        coffee: @get("coffee")
+    ).done (data) =>
+      if errors = data?.errors
+        console.error "Coffeescript parsing errors:", errors
+      @set data?.site
+      dfd.resolve()
+
+  populateHTML: =>
+    @set original_haml: @get("haml")
+    @set original_html: @get("html")
+
+  revertHTML: =>
+    @set haml: @get("original_haml")
+    @set html: @get("original_html")
+
+  previewHTML: =>
+    dfd = $.Deferred()
+    $.ajax("#{@url()}/preview_html",
+      type: "POST"
+      data: 
+        haml: @get("haml")
+    ).done (data) =>
+      if errors = data?.errors
+        console.error "HAML parsing errors:", errors
+      @set data?.site
+      dfd.resolve()
 
   getWrapper: () =>
     if html = @get('html')

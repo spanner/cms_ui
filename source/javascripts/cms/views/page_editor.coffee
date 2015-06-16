@@ -94,12 +94,12 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
 
   onRender: =>
     # @_toolbar?.destroy()
-
     @model.whenReady =>
       html = @model.getSite()?.get('html')
       doc = @el.contentWindow.document
       doc.open()
       doc.write(html)
+      $(doc.head).append("<script>#{@model.getSite()?.get("js")}</script>")
       doc.close()
 
       @_page_head_view = new CMS.Views.PageHead

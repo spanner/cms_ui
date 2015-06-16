@@ -12,3 +12,5 @@
 
 # require ./codemirror_components/htmlmixed
 # require ./codemirror_components/haml
+
+# require ./codemirror_components/coffeescript
