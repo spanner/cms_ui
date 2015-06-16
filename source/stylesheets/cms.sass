@@ -4,8 +4,6 @@
 @import lib/codemirror/codemirror
 @import lib/codemirror/spanner
 @import lib/medium
-@import lib/slick
-@import lib/slick_theme
 
 $cms_control_height: 36px
 $cms_left_width: 480px
@@ -51,14 +49,10 @@ a.cms-save
     background-position: 0 -320px
 
 a.button
+  +buttony
+  cursor: pointer
   display: inline-block
   vertical-align: top
-  margin: 0 0.5em 8px 0
-  padding: 12px 18px
-  background-color: $warmish
-  color: white
-  box-sizing: border-box
-  cursor: pointer
   &:hover
     background-color: $warm
   &.save
@@ -83,6 +77,7 @@ a.button
         content: "\025BE"
         font-family: sans-serif
         margin-right: 8px
+
 
 a[contenteditable]
   cursor: inherit
@@ -204,7 +199,7 @@ a[contenteditable]
   margin-left: -$cms_left_width
   #cms-main
     #cms-manager
-      #pages_manager, #page_controls, #sections_manager, #rte
+      #pages_manager, #page_controls, #sections_manager
         display: none
       #site_manager
         a.shelf
@@ -227,6 +222,7 @@ a[contenteditable]
     +cms-font-light
     top: 0
     left: 0
+    width: 100%
     z-index: 100
     transition: left 0.5s ease
     &:empty
@@ -250,12 +246,13 @@ a[contenteditable]
       margin: 0
       float: left
     #rte
-      position: relative
-      float: left
-      margin-left: 24px
+      position: absolute
+      top: 0
+      right: 0
+      width: 320px
 
     // general purpose menu setup
-    
+
     a.button
       float: left
       &.ui
@@ -287,8 +284,10 @@ a[contenteditable]
         list-style: none
         position: relative
         padding: 12px
+        box-sizing: border-box
         clear: left
-        min-width: 200px
+        min-width: 260px
+        height: 48px
         a
           color: white
           white-space: nowrap
@@ -308,7 +307,6 @@ a[contenteditable]
           border: 0
           min-width: 40px
           padding: 3px
-          margin-right: 40px
         span.slug
           display: none
           padding: 0
@@ -321,17 +319,24 @@ a[contenteditable]
           opacity: 0.75
           &:first-child
             min-width: 0
+        span.page_type
+          float: right
+          opacity: 0.5
+        select.page_type
+          float: right
         span.controls
           position: absolute
           top: 0
           right: -54px
-          width: 45px
-          height: 34px
+          width: 56px
+          height: 48px
           padding-left: 2px
           padding-right: 8px
+          padding-top: 6px
           background-color: $menu_hover_bg
-          +border-right-radius(20px)
+          +border-right-radius(32px)
           display: none
+          box-sizing: border-box
           a
             margin: 10px 0 0 0
         &:hover

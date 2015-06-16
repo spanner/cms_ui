@@ -5,6 +5,7 @@ class CMS.Models.Page extends CMS.Model
     nav: false
 
   build: =>
+    @setPageType()
     if @get('path')
       @splitPath()
     else if @get('dir')
@@ -22,8 +23,10 @@ class CMS.Models.Page extends CMS.Model
     @sections.reset(data.sections)
     @populateDates(data)
     @set "changed", false
-    if @isNew() and not @sections.length
-      @sections.add({})
+    if @page_type and not @sections.length
+      for type in @page_type.defaultSectionsList()
+        @sections.add
+          section_type: type
     true
 
   splitPath: =>
@@ -45,13 +48,8 @@ class CMS.Models.Page extends CMS.Model
     @getSite()?.populateNavigation()
 
   setPageType: () =>
+    console.log "setPageType", @get('page_type_id')
     @page_type = @getSite().page_types.get(@get('page_type_id'))
-    types = @getSite().page_types
-    id = @get('page_type_id')
-    unless @sections.size()
-      for type in @page_type.defaultSectionsList()
-        @sections.add
-          section_type: type
 
   getSite: =>
     @collection.getSite()

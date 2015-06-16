@@ -1,6 +1,6 @@
 .content
-  %aside.section_aside.editable{contenteditable: "true"}
-  .section_body.editable{contenteditable: "true"}
+  %aside.section_aside.editable{contenteditable: "true", data: {placeholder: "Marginal text is optional here"}}
+  .section_body.editable{contenteditable: "true", data: {placeholder: "Main body text"}}
 .cms-controls
   .cms-buttons
     .cms-section-menu

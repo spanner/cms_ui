@@ -1,25 +1,27 @@
 class CMS.Views.SectionView extends CMS.Views.ItemView
   tagName: "section"
-
+  
   ui:
     built: ".built"
     image_picker: ".cms-image-picker"
     video_picker: ".cms-video-picker"
     admin_menu: ".cms-section-menu"
+    editable: ".editable"
+    formattable: ".formattable"
 
   onRender: =>
     @sectionMenu()
     @build() unless @model.get('built_html')
+    @ui.editable.attr("contenteditable", "plaintext-only")
+    @ui.formattable.attr("contenteditable", "true")
     super
 
   renderContent: () =>
-    console.log "section renderContent"
     if template = @getContentTemplate()
-      console.log "template:", template, @ui.built
       @ui.built.html _cms.render(template, {}, @)
     else
       @ui.built.html ""
-  
+    
   #TODO: this is working gradually towards another render-and-bind,
   # but the big question is what to bind to; content associates are 
   # arbitrary and defined by each section type. Perhaps we should push 
@@ -28,7 +30,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   # For now we just rebuild when selections change.
   #
   build: () =>
-    console.log "section build", @_image, @_video
     @renderContent()
     # modify template-generated content using UI-selected values
 
@@ -178,16 +179,6 @@ class CMS.Views.GridSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
-# class CMS.Models.HeroContent extends Backbone.Model
-#   # has an image and a video
-#
-# class CMS.Models.HeroContentView extends Backbone.Marionette.ItemView
-#   template: () =>
-#     @model.get('built_html')
-#
-#   bindings:
-#
-
 class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
   content_template: "section_content/hero"
@@ -205,7 +196,6 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @imagePicker()
 
   build: () =>
-    console.log "hero build", @_image, @_video
     super
     if @_image
       @ui.built.find('img').attr 'src', @_image.get('url')

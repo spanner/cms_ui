@@ -1,7 +1,7 @@
 .content
   %p
-    %span.quoted.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
-    %span.speaker.editable{contenteditable: "plaintext-only", data: {"disable-return" => true}}
+    %span.quoted.editable{contenteditable: "plaintext-only", data: {placeholder: "Quoted text"}}
+    %span.speaker.editable{contenteditable: "plaintext-only", data: {placeholder: "Speaker or circumstances"}}
 .cms-controls
   .cms-buttons
     .cms-section-menu
