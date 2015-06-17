@@ -69,7 +69,10 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         if errors = data?.errors
           console.error "Coffeescript parsing errors:", errors
-        @set data?.site
+        else if @get("js") is data?.site.js
+          @trigger "change:js"
+        else
+          @set data?.site
         dfd.resolve()
     else
       dfd.resolve()
@@ -91,7 +94,8 @@ class CMS.Models.Site extends CMS.Model
           console.error "HAML parsing errors:", errors
         else if @get("html") is data?.site.html
           @trigger "change:html"
-        @set data?.site
+        else
+          @set data?.site
         dfd.resolve()
     else
       dfd.resolve()

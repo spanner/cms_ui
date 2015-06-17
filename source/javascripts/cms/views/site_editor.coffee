@@ -149,6 +149,10 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
 
   bindings:
     "#js": "coffee"
+    "a.preview":
+      observe: ["original_coffee", "coffee", "original_js", "js"]
+      visible: "notTheSameOrNotTheSame"
+      visibleFn: "visibleAsInlineBlock"
 
   ui:
     textarea: "textarea#js"
@@ -166,6 +170,8 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
           "Cmd-S": @save
           "Ctrl-S": @save
       @model.on "change:js_preprocessor", (model, value) ->
@@ -174,6 +180,9 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
+
+  preview: =>
+    @model.previewJS()
 
 
 class CMS.Views.SiteCSS extends CMS.Views.ItemView
@@ -208,8 +217,8 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewCSS
-          "Ctrl-Enter": @previewCSS
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
           "Cmd-S": @save
           "Ctrl-S": @save
 
@@ -220,7 +229,7 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "input"
 
-  previewCSS: =>
+  preview: =>
     @model.previewCSS()
 
 
@@ -254,8 +263,8 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewHTML
-          "Ctrl-Enter": @previewHTML
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
           "Cmd-S": @save
           "Ctrl-S": @save
 
@@ -263,7 +272,7 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
 
-  previewHTML: =>
+  preview: =>
     @model.previewHTML()
 
 

@@ -1,1 +1,4 @@
 %textarea#js
+
+%p.buttons<
+  %a.button.preview preview ▸
