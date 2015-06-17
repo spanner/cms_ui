@@ -1,0 +1,9 @@
+.content
+  %aside
+    .built
+    .caption.formattable{data: {placeholder: "Optional marginal text"}}
+  .section_body.formattable{data: {placeholder: "Main body text"}}
+.cms-controls
+  .cms-buttons
+    .cms-image-picker
+    .cms-section-menu

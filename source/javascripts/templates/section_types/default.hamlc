@@ -1,5 +1,5 @@
 .content
-  .section_body.editable.formattable{contenteditable: "true", data: {placeholder: "Basic text block."}}
+  .section_body.editable.formattable{data: {placeholder: "Main section text."}}
 .cms-controls
   .cms-buttons
     .cms-section-menu

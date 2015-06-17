@@ -1,7 +1,7 @@
 .content
-  %h2.editable{contenteditable: "plaintext-only", data: {placeholder: "Optional header"}}
-  .col.first.formattable{contenteditable: "true"}
-  .col.second.formattable{contenteditable: "true"}
+  %h2.editable{data: {placeholder: "Optional header"}}
+  .col.first.formattable{data: {placeholder: "First column of text"}}
+  .col.second.formattable{data: {placeholder: "Second column of text"}}
 .cms-controls
   .cms-buttons
     .cms-section-menu

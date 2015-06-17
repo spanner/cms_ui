@@ -2,7 +2,8 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   tagName: "section"
   
   events:
-    "click a.delete": "deleteSection"
+    "click a.delete_section": "deleteSection"
+    "click a.add_section": "addSection"
   
   ui:
     built: ".built"
@@ -89,6 +90,17 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   deleteSection: () =>
     @model?.destroyReversibly()
 
+  addSection: () =>
+    pos = (@model.get('position') ? 0)
+    above = @model.collection.filter (s) -> s.get('position') > pos
+    _.each above, (s, i) ->
+      s.set('position', s.get('position') + 1)
+    @model.collection.add
+      page_id: @model.get('page_id')
+      position: pos + 1
+      section_type: 'default'
+    
+
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
   template: "section_types/default"
   tagName: "section"
@@ -125,9 +137,8 @@ class CMS.Views.TwocolSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
-class CMS.Views.AsidedSection extends CMS.Views.SectionView
-  template: "section_types/asided"
-  tagName: "section"
+class CMS.Views.AsidequoteSection extends CMS.Views.SectionView
+  template: "section_types/asidequote"
 
   bindings:
     "h2.section":
@@ -141,6 +152,36 @@ class CMS.Views.AsidedSection extends CMS.Views.SectionView
     ".speaker":
       observe: "caption_html"
       updateMethod: "text"
+
+
+class CMS.Views.AsideimageSection extends CMS.Views.SectionView
+  template: "section_types/asideimage"
+  content_template: "section_content/image_aside"
+
+  bindings:
+    "h2.section":
+      observe: "title"
+    ".section_body":
+      observe: "main_html"
+      updateMethod: "html"
+    ".caption":
+      observe: "caption_html"
+      updateMethod: "html"
+    ".built":
+      observe: "built_html"
+      updateMethod: "html"
+
+  onRender: =>
+    super
+    @imagePicker()
+
+  build: () =>
+    @renderContent()
+    if @_image
+      @ui.built.find('img').attr 'src', @_image.get('preview_url')
+      @ui.built.find('img').attr 'data-image-id', @_image.get('id')
+    @saveBuiltHtml()
+
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView

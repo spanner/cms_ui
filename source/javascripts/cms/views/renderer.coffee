@@ -18,7 +18,7 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
 
 class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   childView: CMS.Views.SectionRenderer
-  childViewContainer: "main"
+  childViewContainer: "#sections"
   tagName: "body"
 
   bindings:
@@ -97,20 +97,37 @@ class CMS.Views.RenderedTwocolSection extends CMS.Views.RenderedSectionView
       updateMethod: "html"
 
 
-class CMS.Views.RenderedAsidedSection extends CMS.Views.RenderedSectionView
-  template: "renderers/section_types/asided"
+class CMS.Views.RenderedAsidequoteSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/asidequote"
 
   bindings:
     "h2.section":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".section_aside":
+    ".quoted":
       observe: "secondary_html"
+      updateMethod: "text"
+    ".speaker":
+      observe: "caption_html"
+      updateMethod: "text"
+
+
+class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/asideimage"
+
+  bindings:
+    "h2.section":
+      observe: "title"
+    ".section_body":
+      observe: "main_html"
+      updateMethod: "html"
+    ".caption":
+      observe: "caption_html"
+      updateMethod: "html"
+    ".built":
+      observe: "built_html"
       updateMethod: "html"
 
 

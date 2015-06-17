@@ -1,3 +1,5 @@
-%a.title.arrowed.button.cms-menu-head
+%a.title.arrowed.button.cms-menu-head>
   Page...
 .cms-menu-body
+%a.page-options.button.cms-menu-head>
+  ☰

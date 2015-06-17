@@ -82,13 +82,21 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       observe: "progress"
       update: "showProgress"
 
+  initialize: =>
+    super
+    @model._clicked = false
+    debugger if @model.isNew()
+
   onRender: =>
     @stickit()
-    @clickFileField() if @model.isNew()
+    @popIfnew()
 
   deleteModel: (e) =>
     e?.preventDefault()
     @model.remove()
+
+  popIfnew: () =>
+    @clickFileField() if @model.isNew() and not @model.get('file')
 
   clickFileField: (e) =>
     @ui.filefield.trigger('click')
@@ -186,13 +194,16 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
   select: (view) =>
     @trigger 'selected', view.model
 
+
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
   tagName: "li"
 
+
 class CMS.Views.VideosList extends CMS.Views.AssetsListView
   template: "videos/list"
   childView: CMS.Views.ListedVideo
+
 
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
   template: "videos/picker"
@@ -226,7 +237,6 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
 
   initialize: (data, options={}) ->
     @collection = @model.images
-    @target = options.targetEl
     super
 
   onRender: =>

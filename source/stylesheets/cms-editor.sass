@@ -16,6 +16,7 @@
     content: attr(data-placeholder)
     display: block
     color: $mid
+    padding: 20px
 
 
 /* Section types will end up with a nice place to live */
@@ -55,10 +56,14 @@ a.cms-section-type
     background-position: 0 0
     &.selected, &:hover
       background-position: -400px 0
-  &.asided
+  &.asidequote
     background-position: 0 -32px
     &.selected, &:hover
       background-position: -400px -32px
+  &.asideimage
+    background-position: 0 -288px
+    &.selected, &:hover
+      background-position: -400px -288px
   &.twocol
     background-position: 0 -64px
     &.selected, &:hover
@@ -168,7 +173,7 @@ main
           cursor: pointer
           &:hover
             background-color: $control_over
-          &.save
+          &.save, &.add
             background-color: $greenish
             &:hover
               background-color: $green
@@ -196,7 +201,7 @@ main
       display: block
       position: absolute
       right: 0
-      top: 54px
+      top: 56px
       width: 180px
       height: 0
       max-height: 500px

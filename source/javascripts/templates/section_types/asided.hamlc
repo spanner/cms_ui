@@ -1,9 +1,0 @@
-.content
-  %aside.section_aside
-    %p.quote
-      %span.quoted.editable{contenteditable: "plaintext-only", data: {placeholder: "Quoted text"}}
-      %span.speaker.editable{contenteditable: "plaintext-only", data: {placeholder: "Speaker or circumstances"}}
-  .section_body.formattable{contenteditable: "true", data: {placeholder: "Main body text"}}
-.cms-controls
-  .cms-buttons
-    .cms-section-menu
