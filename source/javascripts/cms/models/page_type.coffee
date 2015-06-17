@@ -1,5 +1,5 @@
 class CMS.Models.PageType extends CMS.Model
-  savedAttributes: ['title', 'template', 'default_sections']
+  savedAttributes: ['id', 'title', 'html', 'default_sections']
 
   defaults:
     default_sections: ""

@@ -30,7 +30,7 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
       updateMethod: "html"
 
   template: (data) =>
-    @model.page_type?.get('template') or "<header /><main /><footer />"
+    @model.get('page_type')?.get('html') or "<header /><main /><footer />"
 
   onRender: () =>
     @stickit()

@@ -67,7 +67,6 @@ class CMS.Application extends Backbone.Marionette.Application
   # Override sync to add a progress listener to every save
   #
   sync: (method, model, opts) =>
-    console.log "sync", method, model?.constructor.name
     unless method is "read"
       original_success = opts.success
       model.startProgress()
