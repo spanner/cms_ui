@@ -55,20 +55,6 @@ a.button
   vertical-align: top
   box-sizing: border-box
   height: 48px
-  &:hover
-    background-color: $warm
-  &.save
-    background-color: $greenish
-    &:hover
-      background-color: $green
-  &.publish
-    background-color: $purpleish
-    &:hover
-      background-color: $purple
-  &.delete
-    background-color: $reddish
-    &:hover
-      background-color: $red
   &.arrowed
     &:before
       content: "\025B8"
@@ -119,6 +105,7 @@ a[contenteditable]
       transition: left 0.5s ease
 
 #cms-shelf
+  +cms-font-light
   background-color: $shelf_bg
   color: $shelf_text
   z-index: 10
@@ -188,12 +175,15 @@ a[contenteditable]
         position: relative
         a.button
           display: inline-block
+          +buttony
+          font-size: 1rem
+          padding: 5px 10px
           &.revert
-            +button($mid)
+            background-color: $darkish
             float: left
             z-index: 10
           &.preview
-            +button($greenish)
+            background-color: $greenish
             float: right
 
 
@@ -294,12 +284,12 @@ a[contenteditable]
         min-width: 260px
         height: 48px
         a
-          color: white
+          color: $control_fg
           white-space: nowrap
         a.title
           opacity: 0.75
         a.nav
-          color: white
+          color: $control_fg
           opacity: 0.5
           margin-left: 4px
           &.selected
@@ -322,6 +312,7 @@ a[contenteditable]
           margin-right: 4px
           height: 16px
           opacity: 0.75
+          color: $control_fg
           &:first-child
             min-width: 0
         span.page_type
@@ -329,6 +320,7 @@ a[contenteditable]
           opacity: 0.5
         select.page_type
           float: right
+          color: white
         span.controls
           position: absolute
           top: 0
@@ -365,9 +357,9 @@ a[contenteditable]
             display: inline-block
         &.selected
           background-color: $control_selected
-          color: white
+          color: $control_fg
           a.title, span.a
-            color: white
+            color: $control_fg
             opacity: 1
         &.destroyed
           text-decoration: line-through

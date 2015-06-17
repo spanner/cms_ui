@@ -51,13 +51,15 @@ $greyish: rgba(189,189,189,0.5)
 $darkish: rgba(16,24,32,0.5)
 $reddish: rgba(237,28,36,0.5)
 $purpleish: rgba(207,57,212,0.5)
+$yellowish: rgba(255,215,0,0.5)
 
 $editable_bg: rgba(255,255,255,0.1)
 $editable_over: rgba(255,255,255,0.2)
 
-$control_bg: rgba(189,189,189,0.6)
-$control_over: $pale
-$control_selected: $coolgrey7
+$control_bg: rgba(242,240,237,0.75)
+$control_over: white
+$control_selected: white
+$control_fg: $dark
 
 $menu_bg: $coolgrey1
 $menu_text: $dark
@@ -133,39 +135,6 @@ $shelf_text: $coolgrey10
   &:hover
     background-color: $sislight
 
-=button($color: $mid, $textcolor: white)
-  +cms-font-light
-  +spaced
-  display: inline-block
-  position: relative
-  outline: none
-  cursor: pointer
-  text-align: center
-  text-decoration: none
-  font-size: 12px
-  padding: 5px 8px 4px 8px
-  height: 32px
-  box-sizing: border-box
-  background-color: $color
-  color: $textcolor
-  border: solid 1px darken($color, 10)
-  background-color: $color
-  &:hover
-    text-decoration: none
-    color: white
-    background-color: lighten($color, 15)
-  &:active
-    position: relative
-    top: 1px
-    +box-shadow(0 1px 2px rgba(0,0,0,0.6) inset)
-    background-color: darken($color, 15)
-  &.unavailable, &[disabled]
-    color: $pale
-    background-color: $verypale
-    cursor: not-allowed
-    pointer-events: none
-  &.waiting
-    +opacity(0.25)
 
 =icon_link($filename, $offset: 0, $hover_offset: -32px)
   display: inline-block
@@ -220,8 +189,20 @@ $shelf_text: $coolgrey10
   margin: 0 0.5em 8px 0
   padding: 12px 18px
   background-color: $control_bg
-  color: white
+  color: $control_fg
   box-sizing: border-box
-
-
+  &:hover
+    background-color: $control_over
+  &.save
+    background-color: $greenish
+    &:hover
+      background-color: $green
+  &.publish
+    background-color: $purpleish
+    &:hover
+      background-color: $purple
+  &.delete
+    background-color: $reddish
+    &:hover
+      background-color: $red
 
