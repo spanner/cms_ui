@@ -161,7 +161,6 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
 
   savePage: (e) =>
-    console.log "savePage"
     e?.preventDefault()
     @model.save().done () =>
       @confirm "saved"
