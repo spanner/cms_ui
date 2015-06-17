@@ -35,11 +35,13 @@ class CMS.Models.Site extends CMS.Model
     @touch() if e
 
   populateCSS: (data) =>
-    @set original_sass: data.sass
+    @set
+      original_sass: data.sass
+      original_css: data.css
 
   previewCSS: =>
     dfd = $.Deferred()
-    if @get("sass") isnt @get("original_sass")
+    if @get("sass") isnt @get("original_sass") or @get("css") isnt @get("original_css")
       $.ajax("#{@url()}/preview_css",
         type: "POST"
         data:
@@ -53,11 +55,13 @@ class CMS.Models.Site extends CMS.Model
       dfd.resolve()
 
   populateJS: (data) =>
-    @set original_coffee: data.coffee
+    @set
+      original_coffee: data.coffee
+      original_js: data.js
 
   previewJS: =>
     dfd = $.Deferred()
-    if @get("coffee") isnt @get("original_coffee")
+    if @get("coffee") isnt @get("original_coffee") or @get("js") isnt @get("original_js")
       $.ajax("#{@url()}/preview_js",
         type: "POST"
         data: 
@@ -71,11 +75,13 @@ class CMS.Models.Site extends CMS.Model
       dfd.resolve()
 
   populateHTML: (data) =>
-    @set original_haml: data.haml
+    @set
+      original_haml: data.haml
+      original_html: data.html
 
   previewHTML: =>
     dfd = $.Deferred()
-    if @get("haml") isnt @get("original_haml")
+    if @get("haml") isnt @get("original_haml") or @get("html") isnt @get("original_html")
       $.ajax("#{@url()}/preview_html",
         type: "POST"
         data: 
@@ -83,6 +89,8 @@ class CMS.Models.Site extends CMS.Model
       ).done (data) =>
         if errors = data?.errors
           console.error "HAML parsing errors:", errors
+        else if @get("html") is data?.site.html
+          @trigger "change:html"
         @set data?.site
         dfd.resolve()
     else

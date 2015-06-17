@@ -40,6 +40,8 @@ CMS.Mixins.CommonBindings =
   notTheSame: ([value, other_value]=[]) ->
     value isnt other_value
 
+  notTheSameOrNotTheSame: ([value1, other_value1, value2, other_value2]=[]) ->
+    value1 isnt other_value1 or value2 isnt other_value2
 
   #onGets
 

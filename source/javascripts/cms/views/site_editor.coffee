@@ -145,15 +145,10 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
   template: "sites/js"
 
   events:
-    "click a.preview": "previewJS"
     "paste #js": "paste"
 
   bindings:
     "#js": "coffee"
-    "a.preview":
-      observe: ["original_coffee", "coffee"]
-      visible: "notTheSame"
-      visibleFn: "visibleAsInlineBlock"
 
   ui:
     textarea: "textarea#js"
@@ -171,25 +166,14 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewJS
-          "Cmd-S": @updateJS
+          "Cmd-S": @save
+          "Ctrl-S": @save
       @model.on "change:js_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
-
-  previewJS: =>
-    @model.previewJS()
-
-  updateJS: =>
-    @model.previewJS().done =>
-      @model.save()
-
-  revertJS: =>
-    @model.revertJS()
-    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteCSS extends CMS.Views.ItemView
@@ -207,8 +191,8 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
   bindings:
     "#css": "sass"
     "a.preview":
-      observe: ["original_sass", "sass"]
-      visible: "notTheSame"
+      observe: ["original_sass", "sass", "original_css", "css"]
+      visible: "notTheSameOrNotTheSame"
       visibleFn: "visibleAsInlineBlock"
 
   onRender: =>
@@ -225,10 +209,10 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewCSS
-          "Cmd-S": @updateCSS
-      
-      $.editor = @editor
-      
+          "Ctrl-Enter": @previewCSS
+          "Cmd-S": @save
+          "Ctrl-S": @save
+
       @model.on "change:css_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
@@ -238,14 +222,6 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
 
   previewCSS: =>
     @model.previewCSS()
-
-  updateCSS: =>
-    @model.previewCSS().done =>
-      @model.save()
-
-  revertCSS: =>
-    @model.revertCSS()
-    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteHtml extends CMS.Views.ItemView
@@ -258,8 +234,8 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
   bindings:
     "#haml": "haml"
     "a.preview":
-      observe: ["original_haml", "haml"]
-      visible: "notTheSame"
+      observe: ["original_haml", "haml", "original_html", "html"]
+      visible: "notTheSameOrNotTheSame"
       visibleFn: "visibleAsInlineBlock"
 
   ui:
@@ -279,7 +255,9 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
         tabSize: 2
         extraKeys:
           "Cmd-Enter": @previewHTML
-          "Cmd-S": @updateHTML
+          "Ctrl-Enter": @previewHTML
+          "Cmd-S": @save
+          "Ctrl-S": @save
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
@@ -287,10 +265,6 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
 
   previewHTML: =>
     @model.previewHTML()
-
-  updateHTML: =>
-    @model.previewHTML().done =>
-      @model.save()
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
