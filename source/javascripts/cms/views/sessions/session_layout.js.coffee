@@ -7,7 +7,6 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   onRender: () =>
     @wait()
-    @home()
     @model.whenUserReady @goAway
     if @model.token
       @model.once "change:token", @home
@@ -15,10 +14,10 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
       @home()
 
   wait: () =>
-    @$el.find('.loading').show()
+    @$el.find('.waiter').show()
 
   unwait: () =>
-    @$el.find('.loading').hide()
+    @$el.find('.waiter').hide()
 
   goAway: () =>
     @unwait()
@@ -42,6 +41,7 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
     @unwait()
     @getRegion('form').show(view)
   
-  # the standard name for a default action doesn't fit well here.
+  # our standard name for a default action doesn't fit well here.
   home: () =>
+    @unwait()
     @showForm('SessionLoginForm') unless @model.userIsReady()

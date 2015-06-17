@@ -22,8 +22,8 @@ class CMS.AppRouter extends Backbone.Marionette.AppRouter
 class CMS.Application extends Backbone.Marionette.Application
   initialize: ->
     root._cms = @
-    # @original_backbone_sync = Backbone.sync
-    # Backbone.sync = @sync
+    @original_backbone_sync = Backbone.sync
+    Backbone.sync = @sync
     Backbone.Marionette.Renderer.render = @render
     @_config = new CMS.Config
     @_session = new CMS.Models.Session
@@ -64,12 +64,12 @@ class CMS.Application extends Backbone.Marionette.Application
 
   ## Overrides
   #
-  # Override sync to add a progress listener to every model save
+  # Override sync to add a progress listener to every save
   #
   sync: (method, model, opts) =>
     console.log "sync", method, model?.constructor.name
-    
     unless method is "read"
+      original_success = opts.success
       model.startProgress()
       opts.beforeSend = (xhr, settings) ->
         settings.xhr = () ->
@@ -78,10 +78,9 @@ class CMS.Application extends Backbone.Marionette.Application
             model.setProgress e
           , false
           xhr
-      opts.success = ->
+      opts.success = (data, status, request) ->
         model.finishProgress(true)
-      # opts.error = ->
-      #  model.finishProgress(false)
+        original_success(data, status, request)
     @original_backbone_sync method, model, opts
 
   # And render uses our hamlcoffee templates through JST

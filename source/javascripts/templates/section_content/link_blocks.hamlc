@@ -1,0 +1,19 @@
+.block.first
+  %a
+    %img
+    %span.caption.editable
+
+.block.second
+  %a
+    %img
+    %span.caption.editable
+
+.block.third
+  %a
+    %img
+    %span.caption.editable
+
+.block.fourth
+  %a
+    %img
+    %span.caption.editable

@@ -6,7 +6,7 @@ class CMS.Collections.SectionTypes extends CMS.Collection
       default: 'Standard'
       twocol: "Two columns"
       asided: "Text and quote"
-      grid: "Blocks"
+      links: "Link blocks"
       hero: "Hero"
       bigquote: "Big quote"
       bigtext: "Big text"
