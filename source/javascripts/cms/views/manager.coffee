@@ -28,12 +28,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "span.page_type":
       observe: 'page_type_id'
       onGet: 'pageTypeName'
-    "select.page_type":
-      observe: 'page_type_id'
-      selectOptions: 
-        collection: "this.site.page_types"
-        labelPath: 'title'
-        valuePath: 'id'
     "a.title":
       observe: ["dir", "slug"]
       onGet: "pageSlug"
@@ -64,7 +58,15 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     ".unlessnew":
       observe: 'id'
       visible: true
-  
+    "select.page_type":
+      observe: 'page_type_id'
+      selectOptions: 
+        collection: "this.site.page_types"
+        labelPath: 'title'
+        valuePath: 'id'
+        defaultOption:
+          label: 'Page type...'
+
   initialize: () =>
     @site = @model.getSite()
     super
@@ -106,7 +108,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   addPage: (e) =>
     e?.preventDefault()
-    @model.collection.add
+    $.a = @model.collection.add
       dir: @model.get('path')
     @model.collection.sort()
 

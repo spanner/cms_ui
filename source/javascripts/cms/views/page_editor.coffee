@@ -49,7 +49,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childViewContainer: "#sections"
 
   template: () =>
-    @model.page_type.get('html')
+    @model.get('page_type')?.get('html')
   
   childViewOptions: () =>
     toolbar: @_toolbar

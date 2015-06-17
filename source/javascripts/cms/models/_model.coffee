@@ -91,7 +91,6 @@ class CMS.Model extends Backbone.Model
   setProgress: (p) =>
     if p.lengthComputable
       perc = Math.round(10000 * p.loaded / p.total) / 100.0
-      console.log "progress", perc
       @set("progress", perc)
 
   finishProgress: () =>

@@ -48,8 +48,9 @@ class CMS.Models.Page extends CMS.Model
     @getSite()?.populateNavigation()
 
   setPageType: () =>
-    console.log "setPageType", @get('page_type_id')
-    @page_type = @getSite().page_types.get(@get('page_type_id'))
+    console.log "setPageType", @get('id'), @get('page_type_id')
+    if ptid = @get('page_type_id')
+      @set 'page_type', @getSite().page_types.get(ptid)
 
   getSite: =>
     @collection.getSite()

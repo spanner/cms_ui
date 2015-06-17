@@ -2,8 +2,10 @@
 %a.title
 %span.slug{contenteditable: "true"}
 %a.nav ⚑
-%span.page_type.unlessnew
-%select.page_type.ifnew
+%span.unlessnew
+  %span.page_type
+%span.ifnew
+  %select.page_type
 %span.controls>
   %a.cms-save.save_page √
   %a.cms-add.add_page +
