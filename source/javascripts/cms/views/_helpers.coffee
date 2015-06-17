@@ -94,6 +94,7 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     @clickFileField() if @model.isNew() and not @model.get('file')
 
   clickFileField: (e) =>
+    
     @ui.filefield.trigger('click')
 
   getPickedFile: (e) =>
@@ -243,4 +244,5 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @close()
 
 
-
+class CMS.Views.MediumBig
+  parent: true

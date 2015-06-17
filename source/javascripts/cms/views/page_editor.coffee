@@ -127,3 +127,5 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         ownerDocument: doc
         disablePlaceholders: true
         updateOnEmptySelection: true
+        buttons: ['bold', 'italic', 'underline', 'anchor', 'quote', 'big']
+        extensions: big: new CMS.Views.MediumBig
