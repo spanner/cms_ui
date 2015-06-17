@@ -126,7 +126,7 @@ class CMS.Models.Site extends CMS.Model
   renderNavigation: () =>
     renderer = new CMS.Views.SiteNavigationRenderer
       model: @
-      collection: @sections
-    renderer.render()
-    renderer.$el.get(0).outerHTML
+      collection: @pages
+    renderer.rendered()
+  
 
