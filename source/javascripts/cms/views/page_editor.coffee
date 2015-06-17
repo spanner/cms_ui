@@ -66,8 +66,9 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       updateMethod: "html"
 
   onRender: () =>
+    console.log "rendering introduction", @model.get('introduction')
     @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
-    @ui.intro.attr('data-placeholder', 'Optional introduction to the page')
+    @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional introduction to the page')
     $.page = @model
     @stickit()
 

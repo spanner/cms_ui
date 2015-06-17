@@ -99,7 +99,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       page_id: @model.get('page_id')
       position: pos + 1
       section_type: 'default'
-    
+
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
   template: "section_types/default"
@@ -278,48 +278,48 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 
 
 
-class CMS.Views.CarouselSection extends CMS.Views.SectionView
-  template: "section_types/carousel"
-  tagName: "section"
-
-  events: 
-    "click a.add_slide": "addSlide"
-    "click .captions p": "setSlide"
-
-  ui:
-    carousel: ".carousel"
-    captions: ".captions"
-
-  bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
-    ".carousel":
-      observe: "main_html"
-      updateMethod: "html"
-    ".captions":
-      observe: "secondary_html"
-      updateMethod: "html"
-
-  onRender: () =>
-    super
-    @_slick = @ui.carousel.slick
-      autoplay: true
-      autoplaySpeed: 10000
-    @_slick.on 'beforeChange', @setCaption
-
-  addSlide: () =>
-    # pick image
-    # add picture block to slides
-    # add caption block to captions
-
-  setSlide: (e) =>
-    e?.preventDefault()
-    if clicked = e.target
-      @ui.carousel.slick 'slickGoTo', $(clicked).index()
-
-  setCaption: (e, slick, current_slide, next_slide) =>
-    @ui.captions.find('p').removeClass('current').eq(next_slide).addClass('current')
-
+# class CMS.Views.CarouselSection extends CMS.Views.SectionView
+#   template: "section_types/carousel"
+#   tagName: "section"
+#
+#   events:
+#     "click a.add_slide": "addSlide"
+#     "click .captions p": "setSlide"
+#
+#   ui:
+#     carousel: ".carousel"
+#     captions: ".captions"
+#
+#   bindings:
+#     "h2.section":
+#       observe: "title"
+#     ".section_title":
+#       classes:
+#         showing: "show_title"
+#     ".carousel":
+#       observe: "main_html"
+#       updateMethod: "html"
+#     ".captions":
+#       observe: "secondary_html"
+#       updateMethod: "html"
+#
+#   onRender: () =>
+#     super
+#     @_slick = @ui.carousel.slick
+#       autoplay: true
+#       autoplaySpeed: 10000
+#     @_slick.on 'beforeChange', @setCaption
+#
+#   addSlide: () =>
+#     # pick image
+#     # add picture block to slides
+#     # add caption block to captions
+#
+#   setSlide: (e) =>
+#     e?.preventDefault()
+#     if clicked = e.target
+#       @ui.carousel.slick 'slickGoTo', $(clicked).index()
+#
+#   setCaption: (e, slick, current_slide, next_slide) =>
+#     @ui.captions.find('p').removeClass('current').eq(next_slide).addClass('current')
+#

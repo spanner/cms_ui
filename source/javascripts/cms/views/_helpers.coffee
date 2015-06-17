@@ -84,13 +84,13 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   onRender: =>
     @stickit()
-    @popIfnew()
+    @popIfNewAndShowing()
 
   deleteModel: (e) =>
     e?.preventDefault()
     @model.remove()
 
-  popIfnew: () =>
+  popIfNewAndShowing: () =>
     @clickFileField() if @model.isNew() and not @model.get('file')
 
   clickFileField: (e) =>
