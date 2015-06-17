@@ -159,6 +159,7 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
 
   savePage: (e) =>
+    console.log "savePage"
     e?.preventDefault()
     @model.save().done () =>
       @confirm "saved"
@@ -284,7 +285,7 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
     "click a.ui": "toggleUI"
 
   bindings:
-    'a.ui':
+    'a.shelf':
       attributes: [
         name: "class"
         observe: ["changed", "published_at", "updated_at"]

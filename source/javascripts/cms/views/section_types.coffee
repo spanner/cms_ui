@@ -26,15 +26,20 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       @ui.built.html ""
 
   #TODO: this is working gradually towards another render-and-bind,
-  # but the big question is what to bind to; content associates are 
-  # arbitrary and defined by each section type. Perhaps we should push 
+  # but the big question is what to bind to; content associates are
+  # arbitrary and defined by each section type. Perhaps we should push
   # all that through a section content model?
   #
   # For now we just rebuild when selections change.
   #
   build: () =>
     @renderContent()
-    # modify template-generated content using UI-selected values
+    @saveBuiltHtml()
+
+  saveBuiltHtml: () =>
+    if html = @ui.built.html()
+      $(html).find('.cms-control').remove()
+      @model.set 'built_html', html, stickitChange: true
 
   getContentTemplate: () =>
     @getOption('content_template')
@@ -110,11 +115,8 @@ class CMS.Views.TwocolSection extends CMS.Views.SectionView
   tagName: "section"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".col.first":
       observe: "main_html"
       updateMethod: "html"
@@ -146,11 +148,6 @@ class CMS.Views.BigquoteSection extends CMS.Views.SectionView
   tagName: "section"
 
   bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".quoted":
       observe: "main_html"
       updateMethod: "text"
@@ -169,28 +166,49 @@ class CMS.Views.BigtextSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
-class CMS.Views.GridSection extends CMS.Views.SectionView
-  template: "section_types/grid"
-  tagName: "section"
+
+# This one is a pure html editor, with helpers
+# html is already defaulted if missing
+# --> apply editing controls to existing html
+# including a save button.
+# nb. saveBuiltHtml will strip out .cms-control
+#
+class CMS.Views.LinksSection extends CMS.Views.SectionView
+  template: "section_types/links"
+  content_template: "section_content/link_blocks"
+
+  events:
+    "click a.save": "saveBuiltHtml"
 
   bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
-    ".section_body":
-      observe: "main_html"
+    ".built":
+      observe: "built_html"
       updateMethod: "html"
 
+  onRender: =>
+    super
 
+
+
+
+  build: () =>
+    @renderContent()
+    @saveBuiltHtml()
+
+
+
+
+
+# This is an HTML constructor: it holds data properties (image and video)
+# and builds new html whenever one of them changes.
+#
 class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
-  content_template: "section_content/hero"
 
   bindings:
     "h1":
       observe: "title"
+      updateMethod: "html"
     ".built":
       observe: "built_html"
       updateMethod: "html"
@@ -201,7 +219,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @imagePicker()
 
   build: () =>
-    super
+    @renderContent()
     if @_image
       @ui.built.find('img').attr 'src', @_image.get('url')
       @ui.built.find('img').attr 'data-image-id', @_image.get('id')
@@ -209,7 +227,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     if @_video
       @ui.built.find('video').attr 'data-video-id', @_video.get('id')
       @ui.built.find('source').attr 'src', @_video.get('url')
-    @model.set 'built_html', @ui.built.html(), stickitChange: true
+    @saveBuiltHtml()
 
   getContentTemplate: () =>
     if @_video

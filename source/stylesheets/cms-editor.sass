@@ -83,7 +83,7 @@ a.cms-section-type
     background-position: 0 -224px
     &.selected, &:hover
       background-position: -400px -224px
-  &.grid
+  &.links
     background-position: 0 -256px
     &.selected, &:hover
       background-position: -400px -256px
@@ -139,6 +139,8 @@ ul.assets
 
 main
   section
+    .built
+      min-height: 100px
     .cms-controls
       +cms-font-light
       position: absolute
@@ -160,12 +162,12 @@ main
           pointer-events: auto
           margin: 0 0 8px 0.5em
           padding: 12px 18px
-          background-color: $warmish
+          background-color: $control_bg
           color: white
           box-sizing: border-box
           cursor: pointer
           &:hover
-            background-color: $warm
+            background-color: $control_over
           &.save
             background-color: $greenish
             &:hover
@@ -200,7 +202,7 @@ main
       max-height: 500px
       overflow: hidden
       padding: 0
-      background-color: $warmish
+      background-color: $control_bg
       color: white
       box-sizing: border-box
       pointer-events: auto
@@ -212,7 +214,7 @@ main
         &.assets
           margin: 20px
       &.wide
-        width: 400px
+        width: 480px
       a.cms-section-type
         color: white
         opacity: 0.6
@@ -225,5 +227,9 @@ main
       .cms-menu-body
         height: auto
         display: block
+
+    &.links
+      .block
+        background-color: $editable_bg
 
 @import lib/section_types

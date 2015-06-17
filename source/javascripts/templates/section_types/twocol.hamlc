@@ -1,5 +1,5 @@
 .content
-  %h2.editable{contenteditable: "plaintext-only"}
+  %h2.editable{contenteditable: "plaintext-only", data: {placeholder: "Optional header"}}
   .col.first.formattable{contenteditable: "true"}
   .col.second.formattable{contenteditable: "true"}
 .cms-controls

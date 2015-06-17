@@ -16,20 +16,9 @@ class CMS.Views.SessionLoginForm extends CMS.Views.ItemView
     e.preventDefault()
     @$el.find('.error').empty()
     @$el.find('input[type="submit"]').addClass('waiting')
-    
     @model.save().done @succeed
-    
-    # $.ajax
-    #   url: "#{_cms.apiUrl()}sessions"
-    #   type: "post"
-    #   data:
-    #     email: @model.get('email')
-    #     password: @model.get('password')
-    #   success: @succeed
-    #   error: @fail
 
   succeed: (json) =>
-    console.log "got session", json
     @model.setUser(json)
 
   fail: (xhr, status, error) =>    
