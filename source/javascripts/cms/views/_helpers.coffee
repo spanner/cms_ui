@@ -82,11 +82,6 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       observe: "progress"
       update: "showProgress"
 
-  initialize: =>
-    super
-    @model._clicked = false
-    debugger if @model.isNew()
-
   onRender: =>
     @stickit()
     @popIfnew()
