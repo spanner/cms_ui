@@ -82,7 +82,7 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
     @model.whenReady =>
       @$el.append('<style />')
       @$el.append '<link rel="stylesheet" href="/stylesheets/cms-editor.css" type="text/css" />',
-      @$el.append '<script src="/javascripts/cms-editor.js" type="text/javascript" />',
+      @$el.append '<script src="/javascripts/cms-base.js" type="text/javascript" />',
       @stickit()
 
 

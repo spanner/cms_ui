@@ -60,16 +60,12 @@ class CMS.Views.Navigation extends CMS.Views.CollectionView
 
 class CMS.Views.Header extends Backbone.Marionette.ItemView
   template: false
-  tagName: 'header'
-  
-  modelEvents:
-    "change:header": "renderNav"
 
   onRender: () =>
     @model.whenReady @renderNav
 
   renderNav: =>
-    @$el.html @model.get('header')
+    # @$el.html @model.get('header')
     @_nav = new CMS.Views.Navigation
       collection: @model.nav_pages
       el: @$el.find('nav')
@@ -78,10 +74,6 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
 
 class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
-  tagName: 'footer'
-
-  modelEvents:
-    "change:footer": "renderNav"
 
   onRender: () =>
     @model.whenReady @renderNav
@@ -153,14 +145,13 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
   template: "sites/js"
 
   events:
-    "click a.preview": "previewJS"
     "paste #js": "paste"
 
   bindings:
     "#js": "coffee"
     "a.preview":
-      observe: ["original_coffee", "coffee"]
-      visible: "notTheSame"
+      observe: ["original_coffee", "coffee", "original_js", "js"]
+      visible: "notTheSameOrNotTheSame"
       visibleFn: "visibleAsInlineBlock"
 
   ui:
@@ -179,8 +170,10 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewJS
-          "Cmd-S": @updateJS
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
+          "Cmd-S": @save
+          "Ctrl-S": @save
       @model.on "change:js_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
@@ -188,16 +181,8 @@ class CMS.Views.SiteJS extends CMS.Views.ItemView
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
 
-  previewJS: =>
+  preview: =>
     @model.previewJS()
-
-  updateJS: =>
-    @model.previewJS().done =>
-      @model.save()
-
-  revertJS: =>
-    @model.revertJS()
-    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteCSS extends CMS.Views.ItemView
@@ -215,8 +200,8 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
   bindings:
     "#css": "sass"
     "a.preview":
-      observe: ["original_sass", "sass"]
-      visible: "notTheSame"
+      observe: ["original_sass", "sass", "original_css", "css"]
+      visible: "notTheSameOrNotTheSame"
       visibleFn: "visibleAsInlineBlock"
 
   onRender: =>
@@ -232,11 +217,11 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewCSS
-          "Cmd-S": @updateCSS
-      
-      $.editor = @editor
-      
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
+          "Cmd-S": @save
+          "Ctrl-S": @save
+
       @model.on "change:css_preprocessor", (model, value) ->
         @editor.setOption mode: value
 
@@ -244,16 +229,8 @@ class CMS.Views.SiteCSS extends CMS.Views.ItemView
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "input"
 
-  previewCSS: =>
+  preview: =>
     @model.previewCSS()
-
-  updateCSS: =>
-    @model.previewCSS().done =>
-      @model.save()
-
-  revertCSS: =>
-    @model.revertCSS()
-    @editor?.setValue @ui.textarea.val()
 
 
 class CMS.Views.SiteHtml extends CMS.Views.ItemView
@@ -266,8 +243,8 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
   bindings:
     "#haml": "haml"
     "a.preview":
-      observe: ["original_haml", "haml"]
-      visible: "notTheSame"
+      observe: ["original_haml", "haml", "original_html", "html"]
+      visible: "notTheSameOrNotTheSame"
       visibleFn: "visibleAsInlineBlock"
 
   ui:
@@ -286,19 +263,17 @@ class CMS.Views.SiteHtml extends CMS.Views.ItemView
         lineNumbers: true
         tabSize: 2
         extraKeys:
-          "Cmd-Enter": @previewHTML
-          "Cmd-S": @updateHTML
+          "Cmd-Enter": @preview
+          "Ctrl-Enter": @preview
+          "Cmd-S": @save
+          "Ctrl-S": @save
 
       @editor.on "change", =>
         @ui.textarea.val @editor.getValue()
         @ui.textarea.trigger "change"
 
-  previewHTML: =>
+  preview: =>
     @model.previewHTML()
-
-  updateHTML: =>
-    @model.previewHTML().done =>
-      @model.save()
 
 
 class CMS.Views.SiteConfig extends Backbone.Marionette.ItemView
