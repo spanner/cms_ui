@@ -32,27 +32,22 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   template: (data) =>
     @model.get('page_type')?.get('html') or "<header /><main /><footer />"
 
-  onRender: () =>
-    @stickit()
 
 
-class CMS.Views.PageLinkRenderer extends CMS.Views.ItemView
+class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
   template: false
-  tagName: "a"
-  className: "nav"
-  bindings: 
-    ':el':
-      observe: ["nav_name", "title"]
-      onGet: "thisOrThat"
-      attributes: [
-        name: 'href'
-        observe: 'path'
-      ]
-
-
-class CMS.Views.SiteNavigationRenderer extends CMS.Views.CollectionView
   tagName: "nav"
-  childView: CMS.Views.PageLinkRenderer
+
+  onRender: =>
+    for p in @model.pages.where(nav: true)
+      a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
+      a.attr('href', p.get('path'))
+      a.text(p.get('nav_name') or p.get('title'))
+      @$el.append(a)
+  
+  rendered: =>
+    @render()
+    @$el.get(0).outerHTML
 
 
 class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
