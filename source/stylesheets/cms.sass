@@ -53,6 +53,8 @@ a.button
   cursor: pointer
   display: inline-block
   vertical-align: top
+  box-sizing: border-box
+  height: 48px
   &:hover
     background-color: $warm
   &.save
@@ -75,7 +77,6 @@ a.button
       margin-right: 8px
   &.open
     margin-bottom: 0
-    padding-bottom: 20px
     &.arrowed
       &:before
         content: "\025BE"
@@ -261,19 +262,18 @@ a[contenteditable]
     a.button
       float: left
       &.ui
-        padding: 7px
+        padding: 8px
         polygon
           fill: white
           stroke: none
-        &.save_me
-          background-color: $greenish
-          &:hover
-            background-color: $green
-        &.publish_me
-          background-color: $blueish
-          &:hover
-            background-color: $blue
-          
+      &.save_me
+        background-color: $greenish
+        &:hover
+          background-color: $green
+      &.publish_me
+        background-color: $purpleish
+        &:hover
+          background-color: $purple
 
     .cms-menu-body
       position: absolute
@@ -375,7 +375,7 @@ a[contenteditable]
 
     .open
       .cms-menu-head
-        padding-bottom: 20px
+        height: 56px
         margin-bottom: 0
         border-bottom-left-radius: 0
         border-bottom-right-radius: 0

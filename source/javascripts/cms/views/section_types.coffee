@@ -38,7 +38,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   saveBuiltHtml: () =>
     if html = @ui.built.html()
-      html.find('.cms-control').remove()
+      $(html).find('.cms-control').remove()
       @model.set 'built_html', html, stickitChange: true
 
   getContentTemplate: () =>
@@ -115,11 +115,8 @@ class CMS.Views.TwocolSection extends CMS.Views.SectionView
   tagName: "section"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".col.first":
       observe: "main_html"
       updateMethod: "html"
@@ -151,11 +148,6 @@ class CMS.Views.BigquoteSection extends CMS.Views.SectionView
   tagName: "section"
 
   bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".quoted":
       observe: "main_html"
       updateMethod: "text"
@@ -189,13 +181,8 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
     "click a.save": "saveBuiltHtml"
 
   bindings:
-    "h2.section":
-      observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
-    ".section_body":
-      observe: "main_html"
+    ".built":
+      observe: "built_html"
       updateMethod: "html"
 
   onRender: =>
@@ -221,6 +208,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
   bindings:
     "h1":
       observe: "title"
+      updateMethod: "html"
     ".built":
       observe: "built_html"
       updateMethod: "html"

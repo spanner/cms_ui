@@ -22,7 +22,7 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   tagName: "body"
 
   bindings:
-    "h1":
+    "h1.pagetitle":
       observe: "title"
       updateMethod: "html"
     "#standfirst":
@@ -83,15 +83,12 @@ class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
       updateMethod: "html"
 
 
-class CMS.Views.TwocolSection extends CMS.Views.RenderedSectionView
+class CMS.Views.RenderedTwocolSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/twocol"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".col.first":
       observe: "main_html"
       updateMethod: "html"
@@ -100,7 +97,7 @@ class CMS.Views.TwocolSection extends CMS.Views.RenderedSectionView
       updateMethod: "html"
 
 
-class CMS.Views.AsidedSection extends CMS.Views.RenderedSectionView
+class CMS.Views.RenderedAsidedSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/asided"
 
   bindings:
@@ -125,7 +122,7 @@ class CMS.Views.RenderedBigquoteSection extends CMS.Views.RenderedSectionView
       observe: "main_html"
       updateMethod: "text"
     ".speaker":
-      observe: "secondary_html"
+      observe: "caption_html"
       updateMethod: "text"
 
 
@@ -153,6 +150,7 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
   bindings:
     "h1":
       observe: "title"
+      updateMethod: "html"
     ".built":
       observe: "built_html"
       updateMethod: "html"

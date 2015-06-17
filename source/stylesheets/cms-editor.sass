@@ -139,6 +139,8 @@ ul.assets
 
 main
   section
+    .built
+      min-height: 100px
     .cms-controls
       +cms-font-light
       position: absolute
@@ -225,5 +227,9 @@ main
       .cms-menu-body
         height: auto
         display: block
+
+    &.links
+      .block
+        background-color: $editable_bg
 
 @import lib/section_types
