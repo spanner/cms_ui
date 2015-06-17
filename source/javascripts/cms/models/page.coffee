@@ -23,8 +23,8 @@ class CMS.Models.Page extends CMS.Model
     @sections.reset(data.sections)
     @populateDates(data)
     @set "changed", false
-    if @page_type and not @sections.length
-      for type in @page_type.defaultSectionsList()
+    if !@sections.length and @get('page_type')
+      for type in @get('page_type').defaultSectionsList()
         @sections.add
           section_type: type
     true
