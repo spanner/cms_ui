@@ -244,5 +244,25 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @close()
 
 
-class CMS.Views.MediumBig
-  parent: true
+class CMS.Views.MediumBig extends MediumEditor.Extension
+  constructor: (iframe) ->
+    @_iframe = iframe
+
+  init: =>
+    @button()
+    @_applier = rangy.createClassApplier("bigtext")
+
+  button: =>
+    @_button = $(document.createElement("button"))
+    @_button.text "big"
+    @_button.on "click", @buttonClicked
+
+  getButton: =>
+    @_button[0]
+
+  getSelection: =>
+    rangy.getSelection(@_iframe)
+
+  buttonClicked: (e) =>
+    @_applier.toggleSelection(@getSelection())
+
