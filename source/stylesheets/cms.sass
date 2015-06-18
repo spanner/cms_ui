@@ -69,6 +69,12 @@ a.button
         font-family: sans-serif
         margin-right: 8px
 
+[contenteditable]
+  outline: none
+  &:empty:before
+    content: attr(data-placeholder)
+    display: block
+    color: $pale
 
 a[contenteditable]
   cursor: inherit
@@ -195,7 +201,7 @@ a[contenteditable]
   #cms-main
     #cms-manager
       width: auto
-      #pages_manager, #page_controls, #sections_manager
+      #pages_manager, #page_manager, #page_controls, #sections_manager
         display: none
       #site_manager
         a.shelf
@@ -223,29 +229,10 @@ a[contenteditable]
     transition: left 0.5s ease
     &:empty
       display: none
-    #site_manager
+    #site_manager, #pages_manager, #page_manager, #sections_manager, #page_controls
       position: relative
       margin: 0
       float: left
-    #pages_manager
-      margin: 0
-      float: left
-      div.header
-        display: inline
-    #page_controls
-      margin: 0
-      float: left
-      div
-        display: inline
-    #sections_manager
-      position: relative
-      margin: 0
-      float: left
-    #rte
-      position: absolute
-      top: 0
-      right: 0
-      width: 320px
       
     // general purpose menu setup
 
@@ -254,14 +241,16 @@ a[contenteditable]
       &.ui
         padding: 8px
         polygon
-          fill: white
+          fill: $control_fg
           stroke: none
       &.save_me
         background-color: $greenish
+        color: white
         &:hover
           background-color: $green
       &.publish_me
         background-color: $purpleish
+        color: white
         &:hover
           background-color: $purple
 
@@ -272,6 +261,28 @@ a[contenteditable]
       background-color: $control_bg
       width: auto
       min-width: 120px
+      [contenteditable]
+        background-color: white
+        color: $dark
+        padding: 5px
+      .cms-menu-content
+        padding: 10px
+        color: $control_fg
+        width: auto
+        min-width: 240px
+        font-size: 0.9rem
+        span.label
+          display: inline-block
+          vertical-align: middle
+          width: 80px
+          margin-right: 10px
+        span.dir
+          display: inline-block
+          vertical-align: middle
+        span[contenteditable]
+          display: inline-block
+          vertical-align: middle
+          min-width: 40px
       ul
         padding: 0
         margin: 0
@@ -290,21 +301,19 @@ a[contenteditable]
           opacity: 0.75
         a.nav
           color: $control_fg
-          opacity: 0.5
+          opacity: 0.25
           margin-left: 4px
           &.selected
             opacity: 1.0
+            color: $green
         span[contenteditable]
           display: inline-block
           vertical-align: middle
-          background-color: white
-          color: $dark
-          border: 0
           min-width: 40px
-          padding: 3px
+          padding: 5px
+          font-size: 0.8rem
         span.slug
           display: none
-          padding: 0
         span.d, span.a
           display: inline-block
           vertical-align: middle
@@ -315,7 +324,7 @@ a[contenteditable]
           color: $control_fg
           &:first-child
             min-width: 0
-        span.page_type
+        sub.page_type
           float: right
           opacity: 0.5
         select.page_type
@@ -329,7 +338,7 @@ a[contenteditable]
           height: 48px
           padding-left: 2px
           padding-right: 8px
-          padding-top: 6px
+          padding-top: 8px
           background-color: $menu_hover_bg
           +border-right-radius(32px)
           display: none
@@ -337,12 +346,10 @@ a[contenteditable]
           a
             margin: 10px 0 0 0
         &:hover
-          background-color: $warm
-          a, span.a
-            +glow
+          background-color: $control_over
           .controls
             display: block
-            background-color: $warm
+            background-color: $control_over
         &.changed
           a.title
             font-weight: bold

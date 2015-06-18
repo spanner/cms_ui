@@ -41,58 +41,6 @@ p.quote
   span.speaker
     display: block
 
-a.cms-section-type
-  display: block
-  white-space: nowrap
-  height: 36px
-  text-indent: 34px
-  line-height: 36px
-  cursor: pointer
-  background:
-    position: 0 0
-    repeat: no-repeat
-    image: image-url('sectionsprite.png')
-  &.default
-    background-position: 0 0
-    &.selected, &:hover
-      background-position: -400px 0
-  &.asidequote
-    background-position: 0 -32px
-    &.selected, &:hover
-      background-position: -400px -32px
-  &.asideimage
-    background-position: 0 -288px
-    &.selected, &:hover
-      background-position: -400px -288px
-  &.twocol
-    background-position: 0 -64px
-    &.selected, &:hover
-      background-position: -400px -64px
-  &.bigtext
-    background-position: 0 -96px
-    &.selected, &:hover
-      background-position: -400px -96px
-  &.hero
-    background-position: 0 -128px
-    &.selected, &:hover
-      background-position: -400px -128px
-  &.bigquote
-    background-position: 0 -160px
-    &.selected, &:hover
-      background-position: -400px -160px
-  &.carousel
-    background-position: 0 -192px
-    &.selected, &:hover
-      background-position: -400px -192px
-  &.video
-    background-position: 0 -224px
-    &.selected, &:hover
-      background-position: -400px -224px
-  &.links
-    background-position: 0 -256px
-    &.selected, &:hover
-      background-position: -400px -256px
-
 ul.assets
   padding: 0
   margin: 20px
@@ -109,14 +57,25 @@ ul.assets
       display: block
       width: 48px
       height: 48px
+      box-sizing: border-box
+      padding: 6px
+      text-align: right
+      font-size: 2em
       cursor: pointer
+      color: white
       background:
         color: $pale
         position: center center
         size: cover
         repeat: no-repeat
       &.add
-        background-color: $green
+        background-color: $greenish
+        &:hover
+          background-color: $green
+      &.remove
+        background-color: $darkish
+        &:hover
+          background-color: $dark
     input
       position: absolute
       left: 1000px
@@ -160,7 +119,7 @@ main
       pointer-events: none
       .cms-buttons
         position: absolute
-        bottom: 10%
+        top: 10%
         right: 10%
         .cms-section-menu
           display: inline
@@ -170,7 +129,7 @@ main
           margin: 0 0 8px 0.5em
           padding: 12px 18px
           background-color: $control_bg
-          color: white
+          color: $control_fg
           box-sizing: border-box
           cursor: pointer
           &:hover
@@ -194,7 +153,11 @@ main
             .button.cms-menu-head
               margin-bottom: 0
               padding-bottom: 20px
-
+    &.hero, &.bigpicture
+      .cms-controls
+        .cms-buttons
+          top: auto
+          bottom: 10%
     &:hover
       .cms-controls
         display: block

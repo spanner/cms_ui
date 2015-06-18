@@ -34,7 +34,7 @@ CMS.Mixins.CommonBindings =
   thisAndThat: ([value, other_value]=[]) ->
     value and other_value
 
-  thisAndNotThat: ([value, other_value]=[]) ->
+  thisButNotThat: ([value, other_value]=[]) ->
     value and not other_value
   
   notTheSame: ([value, other_value]=[]) ->

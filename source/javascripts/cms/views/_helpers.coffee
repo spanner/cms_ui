@@ -180,6 +180,9 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
 
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
+  events:
+    "click a.remove": "detachAsset"
+
   childEvents:
     'selected': 'select'
 
@@ -189,6 +192,9 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
 
   select: (view) =>
     @trigger 'selected', view.model
+
+  detachAsset: =>
+    @trigger "selected", null
 
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
@@ -215,7 +221,7 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
 
   select: (model) =>
     @trigger "selected", model
-
+    @close()
 
 class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"

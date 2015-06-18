@@ -1,4 +1,7 @@
 %ul.cms-menu-items.assets.images
   %li
     %a.add.add_item
-      \+
+      ✚
+  %li
+    %a.remove.remove_item
+      ✖

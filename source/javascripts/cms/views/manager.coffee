@@ -11,13 +11,23 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "keydown span.slug": "catchControlKeys"
 
   bindings:
+    ":el":
+      classes:
+        selected: "selected"
+        destroyed: "deleted_at"
+        changed: "changed"
+      attributes: [
+        observe: "id"
+        name: "class"
+        onGet: "liClass"
+      ]
     "span.descent":
       observe: "path"
       onGet: "showDescent"
       updateMethod: "html"
     "a.add_page":
       observe: ["id", "changed"]
-      visible: "thisAndNotThat"
+      visible: "thisButNotThat"
       visibleFn: "visibleAsInlineBlock"
     "a.save_page":
       observe: ["changed", "id"]
@@ -25,7 +35,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
     "span.slug":
       observe: "slug"
-    "span.page_type":
+    "sub.page_type":
       observe: 'page_type_id'
       onGet: 'pageTypeName'
     "a.title":
@@ -42,16 +52,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "a.nav":
       classes:
         selected: "nav"
-    ":el":
-      classes:
-        selected: "selected"
-        destroyed: "deleted_at"
-        changed: "changed"
-      attributes: [
-        observe: "id"
-        name: "class"
-        onGet: "liClass"
-      ]
     ".ifnew":
       observe: 'id'
       visible: "untrue"
@@ -139,13 +139,58 @@ class CMS.Views.PagesTree extends CMS.Views.MenuView
       dir: "/"
 
 
+class CMS.Views.PagePropertiesMenu extends CMS.Views.ItemView
+  template: "pages/properties"
+
+  events:
+    "click a.nav": "toggleNav"
+
+  bindings:
+    "h3.title":
+      observe: "title"
+    "span.dir":
+      observe: "dir"
+      onGet: "rootedDir"
+    "span.slug":
+      observe: "slug"
+    "a.nav":
+      classes:
+        selected: "nav"
+    "select.page_type":
+      observe: 'page_type_id'
+      selectOptions: 
+        collection: "this.site.page_types"
+        labelPath: 'title'
+        valuePath: 'id'
+        defaultOption:
+          label: 'Page type...'
+
+  initialize: =>
+    @site = @model.getSite()
+
+  onRender: =>
+    super
+    @_controls = new CMS.Views.PageControls
+      model: @model
+      el: @$el.find('.controls')
+    @_controls.render()
+
+  toggleNav: (e) =>
+    e?.preventDefault()
+    @model.save
+      nav: not @model.get("nav")
+
+  rootedDir: (value) =>
+    "#{value}/"
+
+
+
 class CMS.Views.PageControls extends CMS.Views.ItemView
   template: "manager/page_controls"
   
   events:
     "click a.save_page": "savePage"
     "click a.publish_page": "publishPage"
-    "click a.preview": "togglePreview"
 
   ui:
     confirmation: "span.confirmation"
@@ -176,10 +221,41 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
   confirm: (message) =>
     @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
 
-  togglePreview: (e) =>
-    e?.preventDefault()
-    $('#cms-ui').toggleClass('previewing')
-    $('iframe').contents().find('body').toggleClass('previewing')
+
+
+class CMS.Views.PageManagerLayout extends CMS.Views.MenuLayout
+  template: "manager/page"
+  menuView: CMS.Views.PagePropertiesMenu
+
+
+class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
+  template: "manager/pages"
+  menuView: CMS.Views.PagesTree
+
+  bindings:
+    'a.cms-menu-head':
+      observe: "path"
+      onGet: "pathOrHome"
+
+  initialize: ->
+    super
+    @collection.on "change:selected", @render
+
+  remove: =>
+    @collection.off "change:selected", @render
+    super
+
+  onRender: =>
+    super
+    @model = @collection?.findWhere(selected: true)
+    @stickit() if @model
+
+  pathOrHome: (path) =>
+    if !path or path is "/"
+      "Home"
+    else
+      path
+
 
 
 class CMS.Views.ListedSection extends  CMS.Views.ItemView
@@ -239,6 +315,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
   titleOrType: ([title, section_type]=[]) =>
     _.stripTags(title or section_type).replace(/&nbsp;/g, ' ').replace(/(\r|\n)+/gm, " ")
 
+
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   template: "sections/menu"
   childView: CMS.Views.ListedSection
@@ -265,17 +342,6 @@ class CMS.Views.SectionsManagerLayout extends CMS.Views.MenuLayout
     _.stripTags(title or section_type).replace(/&nbsp;/g, ' ')
 
 
-class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
-  template: "manager/pages"
-  menuView: CMS.Views.PagesTree
-
-  bindings:
-    '.header a.title':
-      observe: "slug"
-      onGet: "slugOrHome"
-
-  slugOrHome: (slug) =>
-    slug or "Home"
 
 
 class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
@@ -321,6 +387,7 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
   regions:
     site: "#site_manager"
     pages: "#pages_manager"
+    page: "#page_manager"
     sections: "#sections_manager"
     controls: "#page_controls"
 
@@ -342,9 +409,14 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
   setPage: (page) =>
     page.select()
     page.whenReady () =>
-      @_sections_manager = new CMS.Views.SectionsManagerLayout
-        collection: page.sections
-      @getRegion('sections').show(@_sections_manager)
+      @_page_manager = new CMS.Views.PageManagerLayout
+        model: page
+      @getRegion('page').show(@_page_manager)
+
+      # @_sections_manager = new CMS.Views.SectionsManagerLayout
+      #   collection: page.sections
+      # @getRegion('sections').show(@_sections_manager)
+
       @_page_controls = new CMS.Views.PageControls
         model: page
       @getRegion('controls').show(@_page_controls)

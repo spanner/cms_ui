@@ -11,6 +11,7 @@ class CMS.Collections.SectionTypes extends CMS.Collection
       hero: "Hero"
       bigquote: "Big quote"
       bigtext: "Big text"
+      bigpicture: "Big picture"
 
     for slug, name of section_types
       @add 
