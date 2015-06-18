@@ -1,3 +1,59 @@
+a.cms-section-type
+  display: block
+  white-space: nowrap
+  height: 36px
+  text-indent: 34px
+  line-height: 36px
+  cursor: pointer
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: image-url('sectionsprite.png')
+  &.default
+    background-position: 0 0
+    &.selected, &:hover
+      background-position: -400px 0
+  &.asidequote
+    background-position: 0 -32px
+    &.selected, &:hover
+      background-position: -400px -32px
+  &.asideimage
+    background-position: 0 -288px
+    &.selected, &:hover
+      background-position: -400px -288px
+  &.twocol
+    background-position: 0 -64px
+    &.selected, &:hover
+      background-position: -400px -64px
+  &.bigtext
+    background-position: 0 -96px
+    &.selected, &:hover
+      background-position: -400px -96px
+  &.hero
+    background-position: 0 -128px
+    &.selected, &:hover
+      background-position: -400px -128px
+  &.bigquote
+    background-position: 0 -160px
+    &.selected, &:hover
+      background-position: -400px -160px
+  &.carousel
+    background-position: 0 -192px
+    &.selected, &:hover
+      background-position: -400px -192px
+  &.video
+    background-position: 0 -224px
+    &.selected, &:hover
+      background-position: -400px -224px
+  &.links
+    background-position: 0 -256px
+    &.selected, &:hover
+      background-position: -400px -256px
+  &.bigpicture
+    background-position: 0 -320px
+    &.selected, &:hover
+      background-position: -400px -320px
+
 main
   section
     position: relative
@@ -86,6 +142,38 @@ main
         line-height: 1.25
         margin: 1.25em auto
 
+    &.bigpicture
+      position: relative
+      top: 0
+      width: 100vw
+      margin: 0
+      max-height: 90vh
+      min-height: 50vh
+      overflow: hidden
+      .picture
+        position: relative
+        overflow: hidden
+        img
+          width: 100%
+          height: auto
+          min-height: 50vh
+          position: relative
+          margin: 0 auto
+          background-color: $coolgrey11
+          &[src=""]
+            height: 90vh
+      .content
+        position: absolute
+        bottom: 1.25em
+        left: 0
+        right: 0
+        .caption
+          max-width: 300px
+          font-size: 1rem
+          color: white
+          text-shadow: 0 0 10px rgba(0,0,0,0.6)
+          min-width: 100px
+
     &.links
       .built
         +central
@@ -107,7 +195,7 @@ main
       max-height: 90vh
       min-height: 50vh
       overflow: hidden
-      .built
+      .picture
         position: relative
         overflow: hidden
         img, video

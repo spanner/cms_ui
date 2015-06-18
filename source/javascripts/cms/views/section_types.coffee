@@ -52,40 +52,30 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @_section_menu.render()
 
   videoPicker: () =>
-    @getVideo()
     @_video_picker = new CMS.Views.VideoPickerLayout
       model: @model.getSite()
-      selected: @_video
       el: @ui.video_picker
     @_video_picker.render()
     @_video_picker.on 'selected', @setVideo
 
-  getVideo: =>
-    if video_id = @ui.built.find('video').attr('data-video-id')
-      @_video = @model.getSite().videos.get(video_id)
-
   setVideo: (video) =>
-    @_video = video
-    @build()
-    @_video.on "change:url", @build
+    @model.set('video', video)
+    
+  videoSrc: (video) =>
+    video?.get('url')
 
   imagePicker: () =>
-    @getImage()
     @_image_picker = new CMS.Views.ImagePickerLayout
       model: @model.getSite()
-      selected: @_image
       el: @ui.image_picker
     @_image_picker.render()
     @_image_picker.on 'selected', @setImage
 
-  getImage: =>
-    if image_id = @ui.built.find('img').attr('data-image-id')
-      @_image = @model.getSite().images.get(image_id)
-
   setImage: (image) =>
-    @_image = image
-    @build()
-    @_image.on "change:url", @build
+    @model.set('image', image)
+
+  imageSrc: (image) =>
+    image?.get('url')
 
   deleteSection: () =>
     @model?.destroyReversibly()
@@ -164,24 +154,19 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".caption":
+    "aside .caption":
       observe: "caption_html"
       updateMethod: "html"
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
+    "aside img":
+      attributes: [
+        name: "src"
+        observe: "image"
+        onGet: "imageSrc"
+      ]
 
   onRender: =>
     super
     @imagePicker()
-
-  build: () =>
-    @renderContent()
-    if @_image
-      @ui.built.find('img').attr 'src', @_image.get('preview_url')
-      @ui.built.find('img').attr 'data-image-id', @_image.get('id')
-    @saveBuiltHtml()
-
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView
@@ -190,7 +175,7 @@ class CMS.Views.BigquoteSection extends CMS.Views.SectionView
 
   bindings:
     ".quoted":
-      observe: "main_html"
+      observe: "secondary_html"
       updateMethod: "text"
     ".speaker":
       observe: "caption_html"
@@ -207,7 +192,72 @@ class CMS.Views.BigtextSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
+# This is an HTML constructor: it holds data properties (image and video)
+# and builds new html whenever one of them changes.
+#
+class CMS.Views.BigpictureSection extends CMS.Views.SectionView
+  template: "section_types/bigpicture"
 
+  bindings:
+    "img":
+      attributes: [
+        name: "src"
+        observe: "image"
+        onGet: "imageSrc"
+      ]
+    ".caption":
+      observe: "main_html"
+      updateMethod: "html"
+
+  onRender: =>
+    super
+    @imagePicker()
+
+
+# This is an HTML constructor: it holds data properties (image and video)
+# and builds new html whenever one of them changes.
+#
+class CMS.Views.HeroSection extends CMS.Views.SectionView
+  template: "section_types/hero"
+
+  bindings:
+    "h1":
+      observe: "title"
+      updateMethod: "html"
+    "img.main":
+      observe: "image"
+      visible: true
+      attributes: [
+        name: "src"
+        observe: "image"
+        onGet: "imageSrc"
+      ]
+    "video":
+      observe: "video"
+      visible: true
+      attributes: [
+        name: "src"
+        observe: "video"
+        onGet: "videoSrc"
+      ]
+    "img.alt":
+      observe: ["image", "video"]
+      visible: "imageButNoVideo"
+      attributes: [
+        name: "src"
+        observe: "image"
+        onGet: "imageSrc"
+      ]
+
+  onRender: =>
+    super
+    @videoPicker()
+    @imagePicker()
+
+  imageButNoVideo: ([image, video]=[]) ->
+    image and not video
+  
+    
 # This one is a pure html editor, with helpers
 # html is already defaulted if missing
 # --> apply editing controls to existing html
@@ -226,100 +276,9 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
       observe: "built_html"
       updateMethod: "html"
 
-  onRender: =>
-    super
+  # build: () =>
+  #   @renderContent()
+  #   @saveBuiltHtml()
 
 
 
-
-  build: () =>
-    @renderContent()
-    @saveBuiltHtml()
-
-
-
-
-
-# This is an HTML constructor: it holds data properties (image and video)
-# and builds new html whenever one of them changes.
-#
-class CMS.Views.HeroSection extends CMS.Views.SectionView
-  template: "section_types/hero"
-
-  bindings:
-    "h1":
-      observe: "title"
-      updateMethod: "html"
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
-
-  onRender: =>
-    super
-    @videoPicker()
-    @imagePicker()
-
-  build: () =>
-    @renderContent()
-    if @_image
-      @ui.built.find('img').attr 'src', @_image.get('url')
-      @ui.built.find('img').attr 'data-image-id', @_image.get('id')
-      @ui.built.find('video').attr 'poster', @_image.get('url')
-    if @_video
-      @ui.built.find('video').attr 'data-video-id', @_video.get('id')
-      @ui.built.find('source').attr 'src', @_video.get('url')
-    @saveBuiltHtml()
-
-  getContentTemplate: () =>
-    if @_video
-      "section_content/video_hero"
-    else
-      "section_content/image_hero"
-
-
-
-# class CMS.Views.CarouselSection extends CMS.Views.SectionView
-#   template: "section_types/carousel"
-#   tagName: "section"
-#
-#   events:
-#     "click a.add_slide": "addSlide"
-#     "click .captions p": "setSlide"
-#
-#   ui:
-#     carousel: ".carousel"
-#     captions: ".captions"
-#
-#   bindings:
-#     "h2.section":
-#       observe: "title"
-#     ".section_title":
-#       classes:
-#         showing: "show_title"
-#     ".carousel":
-#       observe: "main_html"
-#       updateMethod: "html"
-#     ".captions":
-#       observe: "secondary_html"
-#       updateMethod: "html"
-#
-#   onRender: () =>
-#     super
-#     @_slick = @ui.carousel.slick
-#       autoplay: true
-#       autoplaySpeed: 10000
-#     @_slick.on 'beforeChange', @setCaption
-#
-#   addSlide: () =>
-#     # pick image
-#     # add picture block to slides
-#     # add caption block to captions
-#
-#   setSlide: (e) =>
-#     e?.preventDefault()
-#     if clicked = e.target
-#       @ui.carousel.slick 'slickGoTo', $(clicked).index()
-#
-#   setCaption: (e, slick, current_slide, next_slide) =>
-#     @ui.captions.find('p').removeClass('current').eq(next_slide).addClass('current')
-#

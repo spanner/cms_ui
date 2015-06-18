@@ -11,13 +11,23 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "keydown span.slug": "catchControlKeys"
 
   bindings:
+    ":el":
+      classes:
+        selected: "selected"
+        destroyed: "deleted_at"
+        changed: "changed"
+      attributes: [
+        observe: "id"
+        name: "class"
+        onGet: "liClass"
+      ]
     "span.descent":
       observe: "path"
       onGet: "showDescent"
       updateMethod: "html"
     "a.add_page":
       observe: ["id", "changed"]
-      visible: "thisAndNotThat"
+      visible: "thisButNotThat"
       visibleFn: "visibleAsInlineBlock"
     "a.save_page":
       observe: ["changed", "id"]
@@ -42,16 +52,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "a.nav":
       classes:
         selected: "nav"
-    ":el":
-      classes:
-        selected: "selected"
-        destroyed: "deleted_at"
-        changed: "changed"
-      attributes: [
-        observe: "id"
-        name: "class"
-        onGet: "liClass"
-      ]
     ".ifnew":
       observe: 'id'
       visible: "untrue"
@@ -146,7 +146,7 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.ItemView
     "click a.nav": "toggleNav"
 
   bindings:
-    ".title":
+    "h3.title":
       observe: "title"
     "span.dir":
       observe: "dir"
@@ -233,12 +233,28 @@ class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
   menuView: CMS.Views.PagesTree
 
   bindings:
-    '.header a.title':
-      observe: "slug"
-      onGet: "slugOrHome"
+    'a.cms-menu-head':
+      observe: "path"
+      onGet: "pathOrHome"
 
-  slugOrHome: (slug) =>
-    slug or "Home"
+  initialize: ->
+    super
+    @collection.on "change:selected", @render
+
+  remove: =>
+    @collection.off "change:selected", @render
+    super
+
+  onRender: =>
+    super
+    @model = @collection?.findWhere(selected: true)
+    @stickit() if @model
+
+  pathOrHome: (path) =>
+    if !path or path is "/"
+      "Home"
+    else
+      path
 
 
 
@@ -298,6 +314,7 @@ class CMS.Views.ListedSection extends  CMS.Views.ItemView
 
   titleOrType: ([title, section_type]=[]) =>
     _.stripTags(title or section_type).replace(/&nbsp;/g, ' ').replace(/(\r|\n)+/gm, " ")
+
 
 class CMS.Views.SectionsList extends CMS.Views.MenuView
   template: "sections/menu"
@@ -396,9 +413,9 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
         model: page
       @getRegion('page').show(@_page_manager)
 
-      @_sections_manager = new CMS.Views.SectionsManagerLayout
-        collection: page.sections
-      @getRegion('sections').show(@_sections_manager)
+      # @_sections_manager = new CMS.Views.SectionsManagerLayout
+      #   collection: page.sections
+      # @getRegion('sections').show(@_sections_manager)
 
       @_page_controls = new CMS.Views.PageControls
         model: page
