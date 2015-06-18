@@ -1,0 +1,10 @@
+.cms-menu-content
+  %h3.title{contenteditable: "plaintext-only", data: {placeholder: "Page title"}}
+  %p
+    %span.dir
+    %span.slug{contenteditable: "true", data: {placeholder: "slug..."}}
+  %p
+    %span.label
+      Page type:
+    %select.page_type
+  .controls

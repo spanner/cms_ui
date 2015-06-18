@@ -1,9 +1,9 @@
 %span.descent
 %a.title
-%span.slug{contenteditable: "true"}
+%span.slug{contenteditable: "true", data: {placeholder: "slug..."}}
 %a.nav ⚑
 %span.unlessnew
-  %span.page_type
+  %sub.page_type
 %span.ifnew
   %select.page_type
 %span.controls>

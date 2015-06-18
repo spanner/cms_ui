@@ -20,6 +20,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     if menu_view_class = @getOption('menuView')
       @_menu_view = new menu_view_class
         el: @$el.find(".cms-menu-body")
+        model: @model
         collection: @collection
       @_menu_view.render()
 

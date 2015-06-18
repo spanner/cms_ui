@@ -22,6 +22,7 @@ class CMS.Model extends Backbone.Model
     @_loaded = $.Deferred()
     @build()
     @load() if @autoload
+    @_original_attributes = _.pick @attributes, @savedAttributes
     @on "change", @changedIfSignificant
     @on "sync", @markAsUnchanged
 
@@ -54,7 +55,9 @@ class CMS.Model extends Backbone.Model
   parse: (data) =>
     # you can modify `data` in populate,
     # or return false to prevent the usual parse from being called at all.
-    super if data and @populate(data)
+    if @populate(data)
+      @_original_attributes = _.pick @attributes, @savedAttributes
+      data
 
   populate: (data) =>
     # @things.reset(data.things)
@@ -113,8 +116,13 @@ class CMS.Model extends Backbone.Model
   
   changedIfSignificant: (model, options) =>
     if options.stickitChange?
-      significant_changes = _.pick @changedAttributes(), @savedAttributes
-      @markAsChanged() unless _.isEmpty(significant_changes)
+      @set "changed", not _.isEmpty @significantChangedAttributes()
+
+  significantChangedAttributes: () =>
+    significantly_changed = _.pick @changedAttributes(), @savedAttributes
+    actually_changed_keys = _.filter _.keys(significantly_changed), (k) =>
+      significantly_changed[k] isnt @_original_attributes[k]
+    _.pick significantly_changed, actually_changed_keys
 
   saveAndResume: () =>
     @save().done =>
