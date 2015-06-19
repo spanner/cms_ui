@@ -51,6 +51,12 @@ CMS.Mixins.CommonBindings =
   thisOrThat: ([value, other_value]=[]) ->
     value or other_value
 
+  assetUrl: (asset) =>
+    asset?.get('url') ? ""
+
+  assetPreviewUrl: (asset) =>
+    asset?.get('preview_url') ? ""
+
   # useful
   
   containEvent: (e) ->

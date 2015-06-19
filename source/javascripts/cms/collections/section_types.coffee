@@ -5,13 +5,14 @@ class CMS.Collections.SectionTypes extends CMS.Collection
     section_types = 
       default: 'Standard'
       twocol: "Two columns"
-      asideimage: "Text and image"
-      asidequote: "Text and quote"
-      links: "Link blocks"
-      hero: "Hero"
-      bigquote: "Big quote"
       bigtext: "Big text"
+      asideimage: "Text and image"
       bigpicture: "Big picture"
+      asidequote: "Text and quote"
+      bigquote: "Big quote"
+      hero: "Hero"
+      contents: "Contents"
+      links: "Link blocks"
 
     for slug, name of section_types
       @add 

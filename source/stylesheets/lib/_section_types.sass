@@ -17,10 +17,6 @@ a.cms-section-type
     background-position: 0 -32px
     &.selected, &:hover
       background-position: -400px -32px
-  &.asideimage
-    background-position: 0 -288px
-    &.selected, &:hover
-      background-position: -400px -288px
   &.twocol
     background-position: 0 -64px
     &.selected, &:hover
@@ -49,10 +45,18 @@ a.cms-section-type
     background-position: 0 -256px
     &.selected, &:hover
       background-position: -400px -256px
+  &.asideimage
+    background-position: 0 -288px
+    &.selected, &:hover
+      background-position: -400px -288px
   &.bigpicture
     background-position: 0 -320px
     &.selected, &:hover
       background-position: -400px -320px
+  &.contents
+    background-position: 0 -362px
+    &.selected, &:hover
+      background-position: -400px -362px
 
 main
   section
@@ -222,6 +226,31 @@ main
           text-transform: uppercase
           margin: 0
           min-width: 100px
+
+    &.contents
+      .built
+        .child-page
+          clear: both
+          .picture
+            position: relative
+            display: inline-block
+            width: 23.2%
+            min-height: 160px
+            margin-right: 2%
+            vertical-align: top
+            img
+              width: 100%
+              height: auto
+          .summary
+            h2
+              margin-top: 0
+              margin-bottom: 0.1em
+            position: relative
+            display: inline-block
+            width: 74%
+            min-height: 160px
+            margin: 0
+            vertical-align: top
 
     &.carousel
       .content

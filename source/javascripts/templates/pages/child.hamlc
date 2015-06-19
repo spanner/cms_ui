@@ -1,0 +1,8 @@
+.child-page
+  .picture
+    %a
+      %img
+  .summary
+    %h2
+      %a.title
+    .precis

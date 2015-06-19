@@ -15,11 +15,17 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   onRender: =>
     @sectionMenu()
-    @build() unless @model.get('built_html')
+    if @model.get('built_html')
+      @readBuiltHtml()
+    else
+      @build()
     @ui.editable.attr("contenteditable", "plaintext-only")
     @ui.formattable.attr("contenteditable", "true")
     super
 
+  # returning false from renderContent, eg because there is no content template
+  # will short-circuit the building procedure.
+  #
   renderContent: () =>
     if template = @getContentTemplate()
       @ui.built.html _cms.render(template, {}, @)
@@ -34,8 +40,12 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   # For now we just rebuild when selections change.
   #
   build: () =>
-    @renderContent()
-    @saveBuiltHtml()
+    @renderContent() and @saveBuiltHtml()
+
+  readBuiltHtml: () =>
+    # noop here
+    # this is the place to retrieve data attributes (sort order, image selection)
+    # from the built html and restore UI state for onward editing.
 
   saveBuiltHtml: () =>
     if html = @ui.built.html()
@@ -60,9 +70,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   setVideo: (video) =>
     @model.set('video', video)
-    
-  videoSrc: (video) =>
-    video?.get('url')
 
   imagePicker: () =>
     @_image_picker = new CMS.Views.ImagePickerLayout
@@ -73,9 +80,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   setImage: (image) =>
     @model.set('image', image)
-
-  imageSrc: (image) =>
-    image?.get('url')
 
   deleteSection: () =>
     @model?.destroyReversibly()
@@ -161,7 +165,7 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "imageSrc"
+        onGet: "assetUrl"
       ]
 
   onRender: =>
@@ -203,7 +207,7 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "imageSrc"
+        onGet: "assetUrl"
       ]
     ".caption":
       observe: "main_html"
@@ -230,7 +234,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "imageSrc"
+        onGet: "assetUrl"
       ]
     "video":
       observe: "video"
@@ -238,7 +242,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "video"
-        onGet: "videoSrc"
+        onGet: "assetUrl"
       ]
     "img.alt":
       observe: ["image", "video"]
@@ -246,7 +250,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "imageSrc"
+        onGet: "assetUrl"
       ]
 
   onRender: =>
@@ -262,7 +266,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 # html is already defaulted if missing
 # --> apply editing controls to existing html
 # including a save button.
-# nb. saveBuiltHtml will strip out .cms-control
+# nb. saveBuiltHtml will strip out any .cms-control
 #
 class CMS.Views.LinksSection extends CMS.Views.SectionView
   template: "section_types/links"
@@ -281,4 +285,30 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
   #   @saveBuiltHtml()
 
 
+class CMS.Views.ContentsSection extends CMS.Views.SectionView
+  template: "section_types/contents"
+  content_template: "section_content/link_blocks"
+
+  events:
+    "click a.save": "saveBuiltHtml"
+
+  bindings:
+    ".built":
+      observe: "built_html"
+      updateMethod: "html"
+
+  readBuiltHtml: () =>
+    # get sort order from an element data attribute
+    # @_comparator = (i) -> -i.get('created_at')
+
+  renderContent: =>
+    for page in @model.getPage().childPages()
+      container = @$el.find('.built')
+      child_view = new CMS.Views.ChildPage
+        model: page
+      page.load().done () =>
+        page.setDefaults()
+        rendered = child_view.render()
+        console.log "rendered", child_view.$el.html()
+        container.append(child_view.el)
 
