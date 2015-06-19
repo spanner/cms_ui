@@ -1,3 +1,7 @@
+%p.importer
+  %input.remote_url{placeholder: "From URL..."}>
+  %a.button.import>
+    Import
 %ul.cms-menu-items.assets.images
   %li
     %a.add.add_item

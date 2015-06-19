@@ -43,7 +43,7 @@ p.quote
 
 ul.assets
   padding: 0
-  margin: 20px
+  margin: 10px 20px
   list-style: none
   li
     position: relative
@@ -70,12 +70,26 @@ ul.assets
         repeat: no-repeat
       &.add
         background-color: $greenish
+        color: white
         &:hover
           background-color: $green
       &.remove
         background-color: $darkish
+        color: white
         &:hover
           background-color: $dark
+      &.yt
+        &:after
+          content: ""
+          position: absolute
+          top: 18px
+          right: 5px
+          width: 20px
+          height: 20px
+          background:
+            image: image-url('mediasprite.png')
+            position: 0 0
+            repeat: no-repeat
     input
       position: absolute
       left: 1000px
@@ -121,6 +135,21 @@ main
         right: 10%
         .cms-section-menu
           display: inline
+        p.importer
+          margin: 20px 0 0 20px
+          input, a.button
+            display: inline-block
+            vertical-align: top
+            box-sizing: border-box
+            padding: 8px
+            height: 36px
+            font-size: 0.9rem
+            margin: 0
+          input
+            width: 388px
+            margin-right: 20px
+            +cms-font-light
+            color: $dark
         .button
           display: inline-block
           pointer-events: auto
@@ -134,14 +163,17 @@ main
             background-color: $control_over
           &.save, &.add
             background-color: $greenish
+            color: white
             &:hover
               background-color: $green
           &.publish
             background-color: $purpleish
+            color: white
             &:hover
               background-color: $purple
           &.delete
             background-color: $reddish
+            color: white
             &:hover
               background-color: $red
         .cms-video-picker, .cms-image-picker, .cms-section-menu
@@ -182,7 +214,7 @@ main
         &.assets
           margin: 20px
       &.wide
-        width: 480px
+        width: 520px
       a.cms-section-type
         color: $control_fg
         opacity: 0.6

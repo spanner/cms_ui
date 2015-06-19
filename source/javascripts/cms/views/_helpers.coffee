@@ -46,7 +46,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
       @model.set 'section_type', section_type.get('slug')
 
 
-class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
+class CMS.Views.ListedAssetView extends CMS.Views.ItemView
   ui:
     filefield: 'input[type="file"]'
     img: 'img'
@@ -60,12 +60,16 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     "a.preview":
       observe: "thumb_url"
       update: "setBackground"
+      attributes: [
+        name: "class"
+        observe: "provider"
+        onGet: "providerClass"
+      ]
     ".file_size":
       observe: "file_size"
       onGet: "inBytes"
     ".file_type":
-      observe: "filet_ype"
-      onGet: "inBytes"
+      observe: "file_type"
     ".width":
       observe: "width"
       onGet: "inPixels"
@@ -177,11 +181,13 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     else
       [Math.floor(seconds / 60), seconds % 60].join(':')
 
-
+  providerClass: (provider) =>
+    "yt" if provider is "YouTube"
 
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   events:
     "click a.remove": "detachAsset"
+    "click a.import": "importAsset"
 
   childEvents:
     'selected': 'select'
@@ -195,6 +201,13 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
 
   detachAsset: =>
     @trigger "selected", null
+
+  importAsset: =>
+    if remote_url = @$el.find('input.remote_url').val()
+      console.log "import", remote_url
+      @collection.create
+        site_id: @collection.getSite().id
+        remote_url: remote_url
 
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView

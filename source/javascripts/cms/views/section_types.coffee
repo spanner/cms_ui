@@ -9,6 +9,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     built: ".built"
     image_picker: ".cms-image-picker"
     video_picker: ".cms-video-picker"
+    picture: ".picture"
     admin_menu: ".cms-section-menu"
     editable: ".editable"
     formattable: ".formattable"
@@ -55,6 +56,13 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   getContentTemplate: () =>
     @getOption('content_template')
 
+  imageOrVideo: () =>
+    @ui.picture.empty()
+    image_or_video = new CMS.Views.ImageOrVideo
+      model: @model
+      el: @ui.picture
+    image_or_video.render()
+
   sectionMenu: =>
     @_section_menu = new CMS.Views.SectionAdminMenu
       model: @model
@@ -62,21 +70,21 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @_section_menu.render()
 
   videoPicker: () =>
-    @_video_picker = new CMS.Views.VideoPickerLayout
+    video_picker = new CMS.Views.VideoPickerLayout
       model: @model.getSite()
       el: @ui.video_picker
-    @_video_picker.render()
-    @_video_picker.on 'selected', @setVideo
+    video_picker.render()
+    video_picker.on 'selected', @setVideo
 
   setVideo: (video) =>
     @model.set('video', video)
 
   imagePicker: () =>
-    @_image_picker = new CMS.Views.ImagePickerLayout
+    image_picker = new CMS.Views.ImagePickerLayout
       model: @model.getSite()
       el: @ui.image_picker
-    @_image_picker.render()
-    @_image_picker.on 'selected', @setImage
+    image_picker.render()
+    image_picker.on 'selected', @setImage
 
   setImage: (image) =>
     @model.set('image', image)
@@ -93,6 +101,69 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       page_id: @model.get('page_id')
       position: pos + 1
       section_type: 'default'
+
+
+# Media display subviews are quite elaborate in order to accommodate the various
+# image, video and embed tags that might be occupying the same space.
+#
+class CMS.Views.Image extends CMS.Views.ItemView
+  template: "images/image"
+  bindings:
+    "img":
+      attributes: [
+        name: "src"
+        observe: "url"
+      ]
+
+class CMS.Views.Video extends CMS.Views.ItemView
+  template: "videos/video"
+  bindings:
+    "video":
+      observe: "embed_code"
+      visible: "untrue"
+      attributes: [
+        name: "poster"
+        observe: "preview_url"
+      ]
+    "img":
+      attributes: [
+        name: "src"
+        observe: "preview_url"
+      ]
+    "source":
+      attributes: [
+        name: "src"
+        observe: "url"
+      ]
+    ".embed":
+      observe: "embed_code"
+      visible: true
+      updateView: true
+      updateMethod: "html"
+
+  onRender: =>
+    console.log "video render", @model.get('embed_code')
+    super
+
+
+class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
+  template: false
+
+  initialize: ->
+    @model.on "change:image change:video", @render
+
+  onRender: () =>
+    @$el.empty()
+    if video = @model.get('video')
+      video_viewer = new CMS.Views.Video
+        model: video
+      video_viewer.render()
+      @$el.append(video_viewer.el)
+    else if image = @model.get('image')
+      image_viewer = new CMS.Views.Image
+        model: image
+      image_viewer.render()
+      @$el.append(image_viewer.el)
 
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
@@ -170,7 +241,9 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
 
   onRender: =>
     super
+    @imageOrVideo()
     @imagePicker()
+    @videoPicker()
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView
@@ -203,18 +276,13 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
   template: "section_types/bigpicture"
 
   bindings:
-    "img":
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "assetUrl"
-      ]
     ".caption":
       observe: "main_html"
       updateMethod: "html"
 
   onRender: =>
     super
+    @imageOrVideo()
     @imagePicker()
 
 
@@ -228,40 +296,14 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     "h1":
       observe: "title"
       updateMethod: "html"
-    "img.main":
-      observe: "image"
-      visible: true
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "assetUrl"
-      ]
-    "video":
-      observe: "video"
-      visible: true
-      attributes: [
-        name: "src"
-        observe: "video"
-        onGet: "assetUrl"
-      ]
-    "img.alt":
-      observe: ["image", "video"]
-      visible: "imageButNoVideo"
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "assetUrl"
-      ]
 
   onRender: =>
     super
+    @imageOrVideo()
     @videoPicker()
     @imagePicker()
-
-  imageButNoVideo: ([image, video]=[]) ->
-    image and not video
-  
     
+
 # This one is a pure html editor, with helpers
 # html is already defaulted if missing
 # --> apply editing controls to existing html

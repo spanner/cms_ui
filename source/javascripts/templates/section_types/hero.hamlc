@@ -1,8 +1,4 @@
 .picture
-  %img.alt
-  %video{autoplay: true, loop: "loop", preload: 'auto'}
-    %img.main
-    %source
 .content
   %h1.editable{contenteditable: "plaintext-only", data: {placeholder: "Block or page title"}}
 .cms-controls

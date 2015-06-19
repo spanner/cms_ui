@@ -56,6 +56,9 @@ CMS.Mixins.CommonBindings =
 
   assetPreviewUrl: (asset) =>
     asset?.get('preview_url') ? ""
+  
+  downcase: (string) =>
+    string?.toLowerCase() ? ""
 
   # useful
   

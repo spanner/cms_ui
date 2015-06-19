@@ -75,7 +75,7 @@ class CMS.Models.Session extends CMS.Model
       expires: 7
 
   clearToken: () =>
-    @set "token", null
+    @unset "token"
     $.removeCookie _cms.config('cookie_name'),
       domain: _cms.config('cookie_domain')
       path: "/"
