@@ -115,8 +115,11 @@ class CMS.Views.Image extends CMS.Views.ItemView
         observe: "url"
       ]
 
+
 class CMS.Views.Video extends CMS.Views.ItemView
   template: "videos/video"
+  className: "videobox"
+
   bindings:
     "video":
       observe: "embed_code"
@@ -140,10 +143,6 @@ class CMS.Views.Video extends CMS.Views.ItemView
       visible: true
       updateView: true
       updateMethod: "html"
-
-  onRender: =>
-    console.log "video render", @model.get('embed_code')
-    super
 
 
 class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
