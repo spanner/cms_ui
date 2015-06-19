@@ -128,9 +128,12 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         placeholder: false
         toolbar:
           updateOnEmptySelection: true
-          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'h2', 'h3', 'h4']
+          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'h2', 'h3', 'h4', 'fontsize']
         extensions:
           big: new CMS.Views.MediumBig(doc)
+
+      # @_toolbar.subscribe 'editableInput', (event, editorElement) =>
+      #   $(editorElement).trigger "change"
 
       console.log "@_toolbar", @_toolbar
 
