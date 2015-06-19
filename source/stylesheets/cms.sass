@@ -344,11 +344,6 @@ a[contenteditable]
           box-sizing: border-box
           a
             margin: 10px 0 0 0
-        &:hover
-          background-color: $control_over
-          .controls
-            display: block
-            background-color: $control_over
         &.changed
           a.title
             font-weight: bold
@@ -370,6 +365,11 @@ a[contenteditable]
         &.destroyed
           text-decoration: line-through
           opacity: 0.4
+        &:hover
+          background-color: $control_over
+          .controls
+            display: block
+            background-color: $control_over
 
     .open
       .cms-menu-head

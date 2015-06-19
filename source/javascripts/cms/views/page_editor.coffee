@@ -72,6 +72,35 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     @stickit()
 
 
+class CMS.Views.ChildPage extends CMS.Views.ItemView
+  template: "pages/child"
+  bindings: 
+    "a":
+      attributes: [
+        name: "href"
+        observe: "path"
+      ]
+    ".title":
+      observe: "link_title"
+    ".precis":
+      observe: "precis"
+      updateMethod: "html"
+    "img":
+      attributes: [
+        name: "src"
+        observe: "image"
+        onGet: "assetPreviewUrl"
+      ]
+
+
+class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
+  template: "pages/none"
+
+
+class CMS.Views.PageChildren extends Backbone.Marionette.CollectionView
+  childView: CMS.Views.ChildPage
+
+
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView
   template: false
 
@@ -131,6 +160,4 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
           buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'h2', 'h3', 'h4']
         extensions:
           big: new CMS.Views.MediumBig(doc)
-
-      console.log "@_toolbar", @_toolbar
 

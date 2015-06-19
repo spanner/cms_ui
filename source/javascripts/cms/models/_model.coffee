@@ -43,7 +43,8 @@ class CMS.Model extends Backbone.Model
     # @things = new CMS.Collections.Things
 
   load: =>
-    @fetch(error: @notLoaded).done(@loaded)
+    unless @isReady()
+      @fetch(error: @notLoaded).done(@loaded)
     @_loaded.promise()
   
   loaded: (data) =>
@@ -69,6 +70,30 @@ class CMS.Model extends Backbone.Model
       if string = data[col]
         @set col, new Date(string)
         delete data[col]
+
+  # belongsTo sets up the listeners involved in maintaining a one-to-one association.
+  # It allows us to fetch and save an object_id while working in the UI with the instantiated object.
+  # The object has to be gettable from the supplied collection using the object_id.
+  #
+  # The UI and any view bindings should always use the object_attribute
+  # (eg set or bind to 'video', not 'video_id').
+  # The id_attribute is only for use upwards, to and from the API.
+  #
+  belongsTo: (object_attribute, id_attribute, collection) =>
+    # turn received object_id into associated object
+    if object_id = @get(id_attribute)
+      @set object_attribute, collection.get(object_id), silent: true
+
+    # on any change, turn associated object back into an object_id
+    @on "change:#{object_attribute}", (me, it, options) =>
+      if it
+        if id = it.get('id')
+          @set id_attribute, id, stickitChange: true
+        else
+          it.once "change:id", (it_again, new_id) =>
+            @set id_attribute, new_id, stickitChange: true
+      else
+        @set id_attribute, null, stickitChange: true
 
   select: =>
     unless @get("selected")
@@ -129,5 +154,5 @@ class CMS.Model extends Backbone.Model
       @markAsUnchanged()
 
   touch: () =>
-    @set 'updated_at', new Date(), 
+    @set 'updated_at', new Date(),
       stickitChange: true

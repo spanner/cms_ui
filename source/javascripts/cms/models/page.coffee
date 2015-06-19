@@ -1,20 +1,22 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'nav', 'nav_name', 'nav_position', 'nav_heading']
+  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'link_title', 'precis', 'image_id', 'nav', 'nav_name', 'nav_position', 'nav_heading']
 
   defaults:
     nav: false
 
   build: =>
-    @setPageType()
+    @belongsTo 'page_type', 'page_type_id', @getSite().page_types
+    @belongsTo 'image', 'image_id', @getSite().images
+
     if @get('path')
       @splitPath()
     else if @get('dir')
       @joinPath()
     @on "change:slug", @joinPath
     @on "change:dir", @joinPath
-    @on "change:nav", @updateSiteNav
-    @on "change:page_type_id", @setPageType
     @on "sync", @splitPath
+
+    @on "change:nav", @updateSiteNav
     @sections = new CMS.Collections.Sections @get('sections'), page: @
     @sections.on "add reset remove", @markAsChanged
     @sections.on "change", @changedIfAnySectionChanged
@@ -46,10 +48,6 @@ class CMS.Models.Page extends CMS.Model
 
   updateSiteNav: =>
     @getSite()?.populateNavigation()
-
-  setPageType: () =>
-    if ptid = @get('page_type_id')
-      @set 'page_type', @getSite().page_types.get(ptid)
 
   getSite: =>
     @collection.getSite()
@@ -87,4 +85,34 @@ class CMS.Models.Page extends CMS.Model
     renderer.render()
     renderer.$el.get(0).outerHTML
 
+  # our child pages have a path that starts with our path then a /, and includes no later /
+  childPages: () =>
+    path = @get('path')
+    path = "" if path is "/"
+    escaped_path = path.replace('/', '\/')
+    stemmer = new RegExp("^#{escaped_path}\/[^\/]+$", "i")
+    pages = @getSite().pages.select (p) ->
+      stemmer.test(p.get('path'))
+
+  # our descendants only need to have a path that starts with our path/
+  descendantPages: () =>
+    path = @get('path')
+    path = "" if path is "/"
+    escaped_path = path.replace('/', '\/')
+    stemmer = new RegExp("^#{escaped_path}\/", "i")
+    @getSite().pages.select (p) ->
+      stemmer.test(p.get('path'))
+
+  loadAndSetDefaults: () =>
+    @load().done @setDefaults
+
+  setDefaults: () =>
+    unless @get('link_title')
+      @set('link_title', @get('title'), stickitChange: true)
+    unless @get('precis')
+      @set('precis', @get('introduction'), stickitChange: true)
+    unless @get('image')
+      image = @sections.pluck('image')[0]
+      console.log "setDefaults", image
+      @set('image', image, stickitChange: true)
 
