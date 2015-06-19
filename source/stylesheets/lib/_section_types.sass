@@ -121,10 +121,10 @@ main
         width: 48.5%
         min-height: 50px
         margin: 0 0 16px 60px
-        img
+        img, video, iframe
           width: 100%
           height: auto
-          min-height: 200px
+          min-height: 300px
         .caption
           color: $pale
           margin-top: 1em
@@ -160,15 +160,15 @@ main
         position: relative
         overflow: hidden
         max-height: 80vh
-        img
+        img, video, iframe
           width: 100%
           height: auto
           min-height: 50vh
           position: relative
           margin: 0 auto
           background-color: $coolgrey11
-          &[src=""]
-            height: 90vh
+        img[src=""]
+          height: 90vh
       .content
         position: absolute
         bottom: 1.25em
