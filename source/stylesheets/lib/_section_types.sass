@@ -1,3 +1,10 @@
+=bigtext
+  font-size: 1.6rem
+  line-height: 1.3
+
+span.bigtext
+  +bigtext
+
 a.cms-section-type
   display: block
   white-space: nowrap
@@ -133,15 +140,13 @@ main
     &.bigtext
       .content
         display: block
-        font-size: 1.6rem
-        line-height: 1.6
+        +bigtext
 
     &.bigquote
       margin: 6em 0 3em 0
       p
         width: 75%
-        font-size: 1.75rem
-        line-height: 1.25
+        +bigtext
         margin: 1.25em auto
 
     &.bigpicture
