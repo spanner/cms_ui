@@ -21,6 +21,8 @@ class CMS.AppRouter extends Backbone.Marionette.AppRouter
 
 class CMS.Application extends Backbone.Marionette.Application
   initialize: ->
+    rangy.init()
+
     root._cms = @
     @original_backbone_sync = Backbone.sync
     Backbone.sync = @sync

@@ -1,1 +1,1 @@
-#= require ./medium-editor-4.8.0
+#= require ./medium-editor-5.0.0-rc1

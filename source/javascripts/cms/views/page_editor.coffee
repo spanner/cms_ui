@@ -121,8 +121,16 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         el: $(doc.body).find('main')
       @_page_view.render()
 
+
       @_toolbar = new MediumEditor '.formattable',
         contentWindow: iwindow
         ownerDocument: doc
-        disablePlaceholders: true
-        updateOnEmptySelection: true
+        placeholder: false
+        toolbar:
+          updateOnEmptySelection: true
+          buttons: ['bold', 'italic', 'underline', 'anchor', 'quote', 'big']
+        extensions:
+          big: new CMS.Views.MediumBig(doc)
+
+      console.log "@_toolbar", @_toolbar
+
