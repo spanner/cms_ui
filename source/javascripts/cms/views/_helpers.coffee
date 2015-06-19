@@ -271,4 +271,5 @@ class CMS.Views.MediumBig extends MediumEditor.Extension
 
   buttonClicked: (e) =>
     @_applier.toggleSelection(@getSelection())
+    $(@base.getFocusedElement()).trigger "change"
 
