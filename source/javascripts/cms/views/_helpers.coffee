@@ -250,26 +250,33 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @close()
 
 
-class CMS.Views.MediumBig extends MediumEditor.Extension
+class CMS.Views.MediumBig extends MediumEditor.extensions.button
+  aria: "big"
+  name: "big"
+  klass: "bigtext"
+  contentDefault: '<span>Big</span>'
+  style:
+    prop: "font-size"
+    value: "1.3em"
+
   constructor: (iframe) ->
+    super
     @_iframe = iframe
+    @_applier = rangy.createClassApplier(@klass)
 
-  init: =>
-    @button()
-    @_applier = rangy.createClassApplier("bigtext")
-
-  button: =>
-    @_button = $(document.createElement("button"))
-    @_button.text "big"
-    @_button.on "click", @buttonClicked
-
-  getButton: =>
-    @_button[0]
-
-  getSelection: =>
-    rangy.getSelection(@_iframe)
-
-  buttonClicked: (e) =>
-    @_applier.toggleSelection(@getSelection())
+  action: (e) =>
+    selection = rangy.getSelection(@_iframe)
+    @_applier.toggleSelection(selection)
     $(@base.getFocusedElement()).trigger "change"
 
+    if @button
+      nodes = MediumEditor.selection.getSelectedElements(@_iframe)
+      if @isAlreadyApplied()
+        @setActive()
+      else
+        @setInactive()
+    null
+
+  isAlreadyApplied: (node) =>
+    nodes = MediumEditor.selection.getSelectedElements(@_iframe)
+    _.filter(nodes, (node) => $(node).hasClass(@klass)).length > 0
