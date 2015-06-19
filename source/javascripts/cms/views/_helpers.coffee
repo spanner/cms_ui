@@ -266,16 +266,15 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
 class CMS.Views.MediumBig extends MediumEditor.extensions.button
   aria: "big"
   name: "big"
-  klass: "bigtext"
+  _class: "bigtext"
   contentDefault: '<span>Big</span>'
   style:
     prop: "font-size"
     value: "1.3em"
 
-  constructor: (iframe) ->
+  constructor: (@_iframe) ->
     super
-    @_iframe = iframe
-    @_applier = rangy.createClassApplier(@klass)
+    @_applier = rangy.createClassApplier(@_class)
 
   action: (e) =>
     selection = rangy.getSelection(@_iframe)
@@ -292,4 +291,4 @@ class CMS.Views.MediumBig extends MediumEditor.extensions.button
 
   isAlreadyApplied: (node) =>
     nodes = MediumEditor.selection.getSelectedElements(@_iframe)
-    _.filter(nodes, (node) => $(node).hasClass(@klass)).length > 0
+    _.filter(nodes, (node) => $(node).hasClass(@_class)).length > 0
