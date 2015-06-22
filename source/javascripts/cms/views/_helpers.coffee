@@ -23,7 +23,6 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
 
 class CMS.Views.SectionTypeList extends CMS.Views.MenuView
   template: "section_types/picker"
-  tagName: 'ul'
   childView: CMS.Views.ListedSectionType
 
 
@@ -94,7 +93,6 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
     @clickFileField() if @model.isNew() and not @model.get('file')
 
   clickFileField: (e) =>
-    
     @ui.filefield.trigger('click')
 
   getPickedFile: (e) =>
@@ -181,20 +179,21 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   events:
-    "click a.remove": "detachAsset"
+    "click a.detach": "detachAsset"
+    "click a.add_item": "addAsset"
 
   childEvents:
     'selected': 'select'
-
-  addItem: =>
+    
+  addAsset: =>
     @collection.add
       site_id: @collection.getSite().id
 
-  select: (view) =>
-    @trigger 'selected', view.model
-
   detachAsset: =>
     @trigger "selected", null
+
+  select: (view) =>
+    @trigger 'selected', view.model
 
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
@@ -205,6 +204,10 @@ class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
 class CMS.Views.VideosList extends CMS.Views.AssetsListView
   template: "videos/list"
   childView: CMS.Views.ListedVideo
+  bindings:
+    "li.detach":
+      observe: "video"
+      visible: true
 
 
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
@@ -215,7 +218,7 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
     @collection = @model.videos
     super
 
-  onRender: =>
+  onOpen: =>
     super
     @_menu_view.on "selected", @select
 
@@ -231,6 +234,10 @@ class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
 class CMS.Views.ImagesList extends CMS.Views.AssetsListView
   template: "images/list"
   childView: CMS.Views.ListedImage
+  bindings:
+    "li.detach":
+      observe: "image"
+      visible: true
 
 
 class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
@@ -241,7 +248,7 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @collection = @model.images
     super
 
-  onRender: =>
+  onOpen: =>
     super
     @_menu_view.on "selected", @select
 

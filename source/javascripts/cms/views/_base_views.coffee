@@ -11,13 +11,8 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     @collection?.on "change:selected", @setModel
     _cms.vent.on "reset_menus", @close
 
-  onRender: =>
-    if menu_view_class = @getOption('menuView')
-      @_menu_view = new menu_view_class
-        el: @$el.find(".cms-menu-body")
-        model: @model
-        collection: @collection
-      @_menu_view.render()
+  onRender: () =>
+    #noop
 
   toggleMenu: =>
     if @showing()
@@ -30,10 +25,24 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
 
   open: =>
     _cms.vent.trigger "reset_menus"
+    @_menu_view?.remove()
+    if menu_view_class = @getOption('menuView')
+      @_menu_view = new menu_view_class
+        model: @model
+        collection: @collection
+      @_menu_view.render()
+    @$el.find(".cms-menu-body").append(@_menu_view.el)
+    @_menu_view.open()
+    @triggerMethod 'open', this
+  
+  onOpen: () =>
     @$el.addClass('open')
+    @$el.parents('section').addClass('open')
 
   close: =>
-    @$el.removeClass('open')
+    @_menu_view?.closeAndRemove () =>
+      @$el.removeClass('open')
+      @$el.parents('section').removeClass('open')
     
   setModel: =>
     @model = @collection.findWhere(selected: true)
@@ -42,14 +51,28 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
 
 class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
   @mixin "collection", "toggle", "bindings"
+  tagName: "div"
+  className: "cms-menu-content"
   childViewContainer: ".cms-menu-items"
   
   events:
     "click a.add_item": "addItem"
 
+  onRender: =>
+    console.log "menuview render", @constructor.name
+    @stickit()
+
   addItem: =>
     @collection.add({})
 
+  open: =>
+    @$el.slideDown 'fast'
+    
+  closeAndRemove: (callback) =>
+    @$el.slideUp 'fast', =>
+      @remove()
+      callback?()
+    
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
   @mixin "collection", "toggle", "bindings"

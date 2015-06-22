@@ -139,7 +139,7 @@ class CMS.Views.PagesTree extends CMS.Views.MenuView
       dir: "/"
 
 
-class CMS.Views.PagePropertiesMenu extends CMS.Views.ItemView
+class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
   template: "pages/properties"
 
   events:

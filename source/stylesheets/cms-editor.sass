@@ -60,7 +60,7 @@ ul.assets
       box-sizing: border-box
       padding: 6px
       text-align: right
-      font-size: 2em
+      font-size: 1rem
       cursor: pointer
       color: white
       background:
@@ -72,7 +72,7 @@ ul.assets
         background-color: $greenish
         &:hover
           background-color: $green
-      &.remove
+      &.detach
         background-color: $darkish
         &:hover
           background-color: $dark
@@ -126,6 +126,7 @@ main
           pointer-events: auto
           margin: 0 0 8px 0.5em
           padding: 12px 18px
+          line-height: 24px
           background-color: $control_bg
           color: $control_fg
           box-sizing: border-box
@@ -156,7 +157,7 @@ main
         .cms-buttons
           top: auto
           bottom: 10%
-    &:hover
+    &:hover, &.open
       .cms-controls
         display: block
 
@@ -166,15 +167,12 @@ main
       right: 0
       top: 56px
       width: 180px
-      height: 0
-      max-height: 500px
       overflow: hidden
       padding: 0
       background-color: $control_bg
       color: white
       box-sizing: border-box
       pointer-events: auto
-      transition: height 1s ease
       ul
         padding: 0
         margin: 10px
@@ -193,7 +191,6 @@ main
       .cms-menu-head
         padding-bottom: 20px
       .cms-menu-body
-        height: auto
         display: block
 
     &.links
