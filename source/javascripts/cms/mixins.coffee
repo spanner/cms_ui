@@ -57,6 +57,30 @@ CMS.Mixins.CommonBindings =
   assetPreviewUrl: (asset) =>
     asset?.get('preview_url') ? ""
 
+  backgroundPreviewImage: (image) =>
+    if image
+      if url = image.get('preview_url')
+        "background-image: url('#{url}')"
+      else
+        ""
+  backgroundThumbImage: (image) =>
+    if image
+      if url = image.get('thumb_url')
+        "background-image: url('#{url}')"
+      else
+        ""
+
+  showDescent: (path) =>
+    if path is "/"
+      ""
+    else
+      depth = (path.match(/\//g) || []).length
+      trail = ''
+      if depth > 0
+        trail += '<span class="d"></span>' for [1..depth]
+        trail += '<span class="a">↳</span>'
+      trail
+
   # useful
   
   containEvent: (e) ->

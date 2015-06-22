@@ -1,2 +1,3 @@
-%a.title
-%a.cms-delete.delete_page x
+%a.page
+  %span.descent
+  %span.title

@@ -119,8 +119,6 @@ main
         position: absolute
         top: 10%
         right: 10%
-        .cms-section-menu
-          display: inline
         .button
           display: inline-block
           pointer-events: auto
@@ -145,7 +143,7 @@ main
             background-color: $reddish
             &:hover
               background-color: $red
-        .cms-video-picker, .cms-image-picker, .cms-section-menu
+        .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
           display: inline-block
           float: left
           &.open
@@ -181,12 +179,26 @@ main
           margin: 20px
       &.wide
         width: 480px
-      a.cms-section-type
+      span.d, span.a
+        display: inline-block
+        vertical-align: middle
+        min-width: 16px
+        margin-right: 4px
+        height: 16px
+        opacity: 0.75
+        &:first-child
+          min-width: 0
+      a
         color: $control_fg
         opacity: 0.6
         &.selected, &:hover
           opacity: 1
           +glow
+        &.page
+          display: block
+          white-space: nowrap
+          padding: 5px
+          cursor: pointer
     .open
       .cms-menu-head
         padding-bottom: 20px

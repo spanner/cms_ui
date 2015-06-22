@@ -97,10 +97,6 @@ class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
   template: "pages/none"
 
 
-class CMS.Views.PageChildren extends Backbone.Marionette.CollectionView
-  childView: CMS.Views.ChildPage
-
-
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView
   template: false
 
@@ -113,6 +109,24 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
       @$el.append '<link rel="stylesheet" href="/stylesheets/cms-editor.css" type="text/css" />',
       @$el.append '<script src="/javascripts/cms-base.js" type="text/javascript" />',
       @stickit()
+
+
+class CMS.Views.BlockPage extends CMS.Views.ItemView
+  template: "pages/block"
+  tagName: "div"
+  className: "block"
+  bindings: 
+    "a.page":
+      attributes: [
+        name: "href"
+        observe: "path"
+      ,
+        name: "style"
+        observe: "image"
+        onGet: "backgroundThumbImage"
+      ]
+    "span.caption":
+      observe: "link_title"
 
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView

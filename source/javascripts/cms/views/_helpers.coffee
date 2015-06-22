@@ -176,7 +176,6 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       [Math.floor(seconds / 60), seconds % 60].join(':')
 
 
-
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   events:
     "click a.detach": "detachAsset"
@@ -246,6 +245,51 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
 
   initialize: (data, options={}) ->
     @collection = @model.images
+    super
+
+  onOpen: =>
+    super
+    @_menu_view.on "selected", @select
+
+  select: (model) =>
+    @trigger "selected", model
+    @close()
+
+
+class CMS.Views.ListedPage extends CMS.Views.ItemView
+  template: "pages/listed"
+  tagName: "li"
+  
+  events: "click a": "select"
+  bindings: 
+    "span.title": "title"
+    "span.path": "path"
+    "span.descent":
+      observe: "path"
+      onGet: "showDescent"
+      updateMethod: 'html'
+
+  select: () =>
+    @trigger('selected')
+
+
+class CMS.Views.PagesList extends CMS.Views.MenuView
+  template: "pages/list"
+  childView: CMS.Views.ListedPage
+
+  childEvents:
+    'selected': 'select'
+
+  select: (view) =>
+    @trigger('selected', view.model)
+
+
+class CMS.Views.PagePickerLayout extends CMS.Views.MenuLayout
+  template: "pages/picker"
+  menuView: CMS.Views.PagesList
+
+  initialize: (data, options={}) ->
+    @collection = @model.pages
     super
 
   onOpen: =>

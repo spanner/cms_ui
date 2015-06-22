@@ -9,6 +9,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     built: ".built"
     image_picker: ".cms-image-picker"
     video_picker: ".cms-video-picker"
+    page_picker: ".cms-page-picker"
     admin_menu: ".cms-section-menu"
     editable: ".editable"
     formattable: ".formattable"
@@ -44,7 +45,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   readBuiltHtml: () =>
     # noop here
-    # this is the place to retrieve data attributes (sort order, image selection)
+    # this is the place to retrieve data attributes (sort order, page selection)
     # from the built html and restore UI state for onward editing.
 
   saveBuiltHtml: () =>
@@ -60,6 +61,17 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       model: @model
       el: @ui.admin_menu
     @_section_menu.render()
+
+  pagePicker: () =>
+    unless @_page_picker
+      @_page_picker = new CMS.Views.PagePickerLayout
+        model: @model.getSite()
+        el: @ui.page_picker
+      @_page_picker.render()
+      @_page_picker.on 'selected', @setPage
+
+  setPage: (page) =>
+    @model.set('page', page)
 
   videoPicker: () =>
     @_video_picker = new CMS.Views.VideoPickerLayout
@@ -196,9 +208,6 @@ class CMS.Views.BigtextSection extends CMS.Views.SectionView
       updateMethod: "html"
 
 
-# This is an HTML constructor: it holds data properties (image and video)
-# and builds new html whenever one of them changes.
-#
 class CMS.Views.BigpictureSection extends CMS.Views.SectionView
   template: "section_types/bigpicture"
 
@@ -218,9 +227,6 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
     @imagePicker()
 
 
-# This is an HTML constructor: it holds data properties (image and video)
-# and builds new html whenever one of them changes.
-#
 class CMS.Views.HeroSection extends CMS.Views.SectionView
   template: "section_types/hero"
 
@@ -272,17 +278,41 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
   template: "section_types/links"
   content_template: "section_content/link_blocks"
 
-  events:
-    "click a.save": "saveBuiltHtml"
-
   bindings:
     ".built":
       observe: "built_html"
       updateMethod: "html"
 
-  # build: () =>
-  #   @renderContent()
-  #   @saveBuiltHtml()
+  initialize: ->
+    super
+    @_pages = new CMS.Collections.Pages
+
+  readBuiltHtml: =>
+    @_pages.reset()
+    if html = @model.get('built_html')
+      site = @model.getSite()
+      $(html).find('div.page').each (i, page) =>
+        if page_id = page.attr('data-page-id')
+          @_pages.add site.pages.get(page_id)
+
+  onRender: =>
+    super
+    @pagePicker()
+    
+  setPage: (page) =>
+    @_pages?.add(page)
+    @build()
+
+  renderContent: =>
+    @ui.built.empty()
+    @_pages.each (page, i) =>
+      container = @$el.find('.built')
+      child_view = new CMS.Views.BlockPage
+        model: page
+      page.load().done () ->
+        page.setDefaults()
+        rendered = child_view.render()
+        container.append(child_view.el)
 
 
 class CMS.Views.ContentsSection extends CMS.Views.SectionView
@@ -302,8 +332,9 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
     # @_comparator = (i) -> -i.get('created_at')
 
   renderContent: =>
+    @ui.built.empty()
     for page in @model.getPage().childPages()
-      container = @$el.find('.built')
+      container = @ui.built
       child_view = new CMS.Views.ChildPage
         model: page
       page.load().done () =>
