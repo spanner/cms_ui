@@ -57,6 +57,13 @@ CMS.Mixins.CommonBindings =
   assetPreviewUrl: (asset) =>
     asset?.get('preview_url') ? ""
 
+  dayMonthYear: (date) =>
+    if date
+      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      [date.getDate(), months[date.getMonth()], date.getYear()].join(' ')
+    else
+      ""
+
   backgroundPreviewImage: (image) =>
     if image
       if url = image.get('preview_url')

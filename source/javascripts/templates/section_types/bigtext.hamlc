@@ -1,5 +1,5 @@
 .content
-  .section_body
+  .section_body.formattable{data: {placeholder: "Your text here"}}
 .cms-controls
   .cms-buttons
     .cms-section-menu

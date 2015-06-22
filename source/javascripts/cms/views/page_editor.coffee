@@ -44,7 +44,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
 
 
-class CMS.Views.Page extends Backbone.Marionette.CompositeView
+class CMS.Views.Page extends CMS.Views.ItemView
   childView: CMS.Views.Section
   childViewContainer: "#sections"
 
@@ -63,6 +63,9 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   bindings:
     "h1.pagetitle":
       observe: "title"
+    "date":
+      observe: "published_at"
+      onGet: "dayMonthYear"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
@@ -130,12 +133,16 @@ class CMS.Views.BlockPage extends CMS.Views.ItemView
         name: "style"
         observe: "image"
         onGet: "backgroundThumbImage"
+      ,
+        name: "data-page-id"
+        observe: "id"
       ]
     "span.caption":
       observe: "link_title"
       
   onRender: =>
     super
+    $.v = @
     unless @_page_picker
       @_page_picker = new CMS.Views.PagePickerLayout
         model: @model.getSite()
@@ -187,7 +194,6 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         collection: @model.sections
         el: $(doc.body).find('main')
       @_page_view.render()
-
 
       @_toolbar = new MediumEditor '.formattable',
         contentWindow: iwindow

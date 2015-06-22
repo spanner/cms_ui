@@ -66,7 +66,7 @@ class CMS.Model extends Backbone.Model
     true
 
   populateDates: (data) =>
-    for col in ["updated_at", "published_at", "deleted_at"]
+    for col in ["created_at", "updated_at", "published_at", "deleted_at"]
       if string = data[col]
         @set col, new Date(string)
         delete data[col]

@@ -21,23 +21,31 @@
 
 /* Section types will end up with a nice place to live */
 
+=quoted
+  color: $pale
+  &:before
+    content: '“'
+    font-size: 180%
+    position: absolute
+    width: 12px
+    text-align: right
+    margin-left: -0.5em
+    margin-top: -0.1em
+  &:after
+    content: '”'
+    font-size: 180%
+    position: absolute
+    margin-left: 0.1em
+    margin-top: -0.1em
+
+blockquote
+  +quoted
+  margin: 0
+
 p.quote
   span.quoted
+    +quoted
     display: block
-    &:before
-      content: '“'
-      font-size: 180%
-      position: absolute
-      width: 12px
-      text-align: right
-      margin-left: -0.5em
-      margin-top: -0.1em
-    &:after
-      content: '”'
-      font-size: 180%
-      position: absolute
-      margin-left: 0.1em
-      margin-top: -0.1em
   span.speaker
     display: block
 
