@@ -207,6 +207,15 @@ main
 
     &.links
       .block
+        position: relative
         background-color: $editable_bg
+        .cms-block-buttons
+          +cms-font-light
+          position: absolute
+          display: none
+          top: 10px
+          right: 10px
+          z-index: 50
+       
 
 @import lib/section_types

@@ -57,6 +57,8 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   ui:
     title: "h1.pagetitle"
     intro: "#standfirst"
+    editable: ".editable"
+    formattable: ".formattable"
 
   bindings:
     "h1.pagetitle":
@@ -66,8 +68,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       updateMethod: "html"
 
   onRender: () =>
-    @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
-    @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional introduction to the page')
+    @ui.editable.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Link text')
     $.page = @model
     @stickit()
 
@@ -115,6 +116,11 @@ class CMS.Views.BlockPage extends CMS.Views.ItemView
   template: "pages/block"
   tagName: "div"
   className: "block"
+
+  ui:
+    image_picker: ".cms-image-picker"
+    page_picker: ".cms-page-picker"
+
   bindings: 
     "a.page":
       attributes: [
@@ -127,6 +133,24 @@ class CMS.Views.BlockPage extends CMS.Views.ItemView
       ]
     "span.caption":
       observe: "link_title"
+      
+  onRender: =>
+    super
+    unless @_page_picker
+      @_page_picker = new CMS.Views.PagePickerLayout
+        model: @model.getSite()
+        el: @ui.page_picker
+      @_page_picker.render()
+      @_page_picker.on 'selected', @setPage
+    unless @_image_picker
+      @_image_picker = new CMS.Views.ImagePickerLayout
+        model: @model.getSite()
+        el: @ui.page_picker
+      @_image_picker.render()
+      @_image_picker.on 'selected', @setImage
+
+  setImage: (image) =>
+    @model.set 'image', image
 
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView

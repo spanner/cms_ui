@@ -1,2 +1,5 @@
 %a.page
-  %span.caption.editable
+  %span.caption.ineditable
+.cms-block-buttons
+  .cms-block-image
+  .cms-block-page
