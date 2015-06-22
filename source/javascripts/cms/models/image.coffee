@@ -12,7 +12,6 @@ class CMS.Models.Image extends CMS.Model
         @resizeImage(img, 48)
       img.src = @get('file')
 
-
   # Image data is held in file.
   # *url attributes are computed on the server when we save the asset.
   # so we can anticipate those here with data urls, at visibly lower quality.

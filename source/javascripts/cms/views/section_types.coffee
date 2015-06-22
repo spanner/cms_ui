@@ -177,12 +177,13 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetUrl"
+        onGet: "halfUrl"
       ]
 
   onRender: =>
     super
     @imagePicker()
+    @videoPicker()
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView
@@ -198,8 +199,8 @@ class CMS.Views.BigquoteSection extends CMS.Views.SectionView
       updateMethod: "text"
 
 
-class CMS.Views.BigtextSection extends CMS.Views.SectionView
-  template: "section_types/bigtext"
+class CMS.Views.OnecolSection extends CMS.Views.SectionView
+  template: "section_types/onecol"
   tagName: "section"
 
   bindings:
@@ -216,7 +217,7 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetUrl"
+        onGet: "heroUrl"
       ]
     ".caption":
       observe: "main_html"
@@ -240,7 +241,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetUrl"
+        onGet: "heroUrl"
       ]
     "video":
       observe: "video"
@@ -256,7 +257,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetUrl"
+        onGet: "heroUrl"
       ]
 
   onRender: =>

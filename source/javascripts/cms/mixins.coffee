@@ -54,28 +54,53 @@ CMS.Mixins.CommonBindings =
   assetUrl: (asset) =>
     asset?.get('url') ? ""
 
-  assetPreviewUrl: (asset) =>
-    asset?.get('preview_url') ? ""
-
-  dayMonthYear: (date) =>
-    if date
-      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      [date.getDate(), months[date.getMonth()], date.getYear()].join(' ')
+  heroUrl: (asset) =>
+    if asset?
+      asset.get('hero_url') ? asset.get('url')
     else
       ""
 
-  backgroundPreviewImage: (image) =>
-    if image
-      if url = image.get('preview_url')
-        "background-image: url('#{url}')"
-      else
-        ""
-  backgroundThumbImage: (image) =>
-    if image
-      if url = image.get('thumb_url')
-        "background-image: url('#{url}')"
-      else
-        ""
+  fullUrl: (asset) =>
+    if asset?
+      asset.get('full_url') ? asset.get('url')
+    else
+      ""
+
+  halfUrl: (asset) =>
+    if asset?
+      asset.get('half_url') ? asset.get('url')
+    else
+      ""
+
+  thumbUrl: (asset) =>
+    if asset?
+      asset.get('thumb_url') ? asset.get('url')
+    else
+      ""
+
+  heroBackground: (asset) =>
+    if url = @heroUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  fullBackground: (asset) =>
+    if url = @fullUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  halfBackground: (asset) =>
+    if url = @halfUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  thumbBackground: (asset) =>
+    if url = @thumbUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
 
   showDescent: (path) =>
     if path is "/"
@@ -89,9 +114,14 @@ CMS.Mixins.CommonBindings =
       trail
 
   # useful
-  
+  #
   containEvent: (e) ->
     e?.stopImmediatePropagation()
+
+  # updates
+  #
+  backgroundStyle: (url) =>
+     "background-image: url(#{url})"
 
 
 CMS.Mixins.Text =

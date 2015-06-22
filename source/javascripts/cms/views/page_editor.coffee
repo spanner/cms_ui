@@ -44,7 +44,7 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
 
 
-class CMS.Views.Page extends CMS.Views.ItemView
+class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childView: CMS.Views.Section
   childViewContainer: "#sections"
 
@@ -75,6 +75,14 @@ class CMS.Views.Page extends CMS.Views.ItemView
     $.page = @model
     @stickit()
 
+  dayMonthYear: (date) =>
+    if date
+      console.log "date is", date
+      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
+    else
+      ""
+
 
 class CMS.Views.ChildPage extends CMS.Views.ItemView
   template: "pages/child"
@@ -93,7 +101,7 @@ class CMS.Views.ChildPage extends CMS.Views.ItemView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetPreviewUrl"
+        onGet: "halfUrl"
       ]
 
 
@@ -142,7 +150,6 @@ class CMS.Views.BlockPage extends CMS.Views.ItemView
       
   onRender: =>
     super
-    $.v = @
     unless @_page_picker
       @_page_picker = new CMS.Views.PagePickerLayout
         model: @model.getSite()
@@ -201,7 +208,7 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         placeholder: false
         toolbar:
           updateOnEmptySelection: true
-          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'h2', 'h3', 'h4']
+          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'justifyCenter', 'h2', 'h3', 'h4']
         extensions:
           big: new CMS.Views.MediumBig(doc)
 

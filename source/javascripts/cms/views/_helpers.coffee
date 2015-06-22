@@ -5,10 +5,11 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
     "click a": "select"
     
   bindings:
-    "a":
-      observe: "name"
+    ":el":
       classes: 
         "selected": "selected"
+    "a":
+      observe: "name"
       attributes: [
         name: "class"
         observe: "slug"
@@ -45,7 +46,7 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
       @model.set 'section_type', section_type.get('slug')
 
 
-class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
+class CMS.Views.ListedAssetView extends CMS.Views.ItemView
   ui:
     filefield: 'input[type="file"]'
     img: 'img'
@@ -57,8 +58,11 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
 
   bindings:
     "a.preview":
-      observe: "thumb_url"
-      update: "setBackground"
+      attributes: [
+        name: 'style'
+        observe: 'thumb_url'
+        onGet: "backgroundStyle"
+      ]
     ".file_size":
       observe: "file_size"
       onGet: "inBytes"
@@ -125,9 +129,6 @@ class CMS.Views.ListedAssetView extends Backbone.Marionette.ItemView
       file_type: file.type
     @select()
     @model.save()
-
-  setBackground: ($el, val, m, opts) =>
-    $el.css "background-image", "url(#{val})"
 
   fileOk: (filename, filesize) =>
     @fileNameOk(filename, filesize) and @fileSizeOk(filename, filesize)

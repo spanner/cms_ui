@@ -3,10 +3,10 @@ class CMS.Collections.SectionTypes extends CMS.Collection
 
   initialize: ->
     section_types = 
-      default: 'Standard'
+      default: 'Long text'
+      onecol: "One column"
       twocol: "Two columns"
-      bigtext: "Big text"
-      asideimage: "Text and image"
+      asideimage: "Text & picture"
       bigpicture: "Big picture"
       asidequote: "Text and quote"
       bigquote: "Big quote"
