@@ -7,13 +7,13 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   
   ui:
     built: ".built"
+    picture: ".picture"
+    editable: ".editable"
+    formattable: ".formattable"
     image_picker: ".cms-image-picker"
     video_picker: ".cms-video-picker"
     page_picker: ".cms-page-picker"
-    picture: ".picture"
     admin_menu: ".cms-section-menu"
-    editable: ".editable"
-    formattable: ".formattable"
 
   onRender: =>
     @sectionMenu()
@@ -57,11 +57,12 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   getContentTemplate: () =>
     @getOption('content_template')
 
-  imageOrVideo: () =>
+  imageOrVideo: (size) =>
     @ui.picture.empty()
     image_or_video = new CMS.Views.ImageOrVideo
       model: @model
       el: @ui.picture
+      size: size
     image_or_video.render()
 
   sectionMenu: =>
@@ -118,17 +119,32 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 # Media display subviews are quite elaborate in order to accommodate the various
 # image, video and embed tags that might be occupying the same space.
 #
-class CMS.Views.Image extends CMS.Views.ItemView
+class CMS.Views.AssetView extends CMS.Views.ItemView
+  initialize: (options={}) ->
+    console.log "init AssetView", options
+    @_size = options.size ? "full"
+
+  # These views tend to observe the url for change notification
+  # but will then call another value to get an image at the right size.
+  #
+  urlAtSize: (url) =>
+    console.log "urlAtSize", @_size
+    @model.get("#{@_size}_url") ? url
+
+
+class CMS.Views.Image extends CMS.Views.AssetView
   template: "images/image"
+  className: "imagebox"
   bindings:
     "img":
       attributes: [
         name: "src"
         observe: "url"
+        onGet: "urlAtSize"
       ]
 
 
-class CMS.Views.Video extends CMS.Views.ItemView
+class CMS.Views.Video extends CMS.Views.AssetView
   template: "videos/video"
   className: "videobox"
 
@@ -138,12 +154,14 @@ class CMS.Views.Video extends CMS.Views.ItemView
       visible: "untrue"
       attributes: [
         name: "poster"
-        observe: "preview_url"
+        observe: "url"
+        onGet: "urlAtSize"
       ]
     "img":
       attributes: [
         name: "src"
-        observe: "preview_url"
+        observe: "url"
+        onGet: "urlAtSize"
       ]
     "source":
       attributes: [
@@ -157,10 +175,13 @@ class CMS.Views.Video extends CMS.Views.ItemView
       updateMethod: "html"
 
 
+# Initializes with a size and uses the appropriate url.
+
 class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
   template: false
 
-  initialize: ->
+  initialize: (options) ->
+    @_size = options.size ? "full"
     @model.on "change:image change:video", @render
 
   onRender: () =>
@@ -168,13 +189,21 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
     if video = @model.get('video')
       video_viewer = new CMS.Views.Video
         model: video
+        size: @_size
       video_viewer.render()
       @$el.append(video_viewer.el)
     else if image = @model.get('image')
       image_viewer = new CMS.Views.Image
         model: image
+        size: @_size
       image_viewer.render()
       @$el.append(image_viewer.el)
+
+
+# displays controls for size, sets url and applies class accordingly.
+class CMS.Views.InlineImageOrVideo extends CMS.Views.ImageOrVideo
+
+
 
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
@@ -252,7 +281,7 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
 
   onRender: =>
     super
-    @imageOrVideo()
+    @imageOrVideo('half')
     @imagePicker()
     @videoPicker()
 
@@ -296,7 +325,7 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
 
   onRender: =>
     super
-    @imageOrVideo()
+    @imageOrVideo('hero')
     @imagePicker()
     @videoPicker()
 
@@ -311,7 +340,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 
   onRender: =>
     super
-    @imageOrVideo()
+    @imageOrVideo('hero')
     @videoPicker()
     @imagePicker()
     

@@ -51,56 +51,23 @@ CMS.Mixins.CommonBindings =
   thisOrThat: ([value, other_value]=[]) ->
     value or other_value
 
-  assetUrl: (asset) =>
-    asset?.get('url') ? ""
-
-  heroUrl: (asset) =>
+  # for observed attributes that are assets:
+  assetUrl: (asset, style) =>
     if asset?
-      asset.get('hero_url') ? asset.get('url')
+      asset.get("#{style}_url") ? asset.get('url')
     else
       ""
 
-  fullUrl: (asset) =>
-    if asset?
-      asset.get('full_url') ? asset.get('url')
-    else
-      ""
-
-  halfUrl: (asset) =>
-    if asset?
-      asset.get('half_url') ? asset.get('url')
-    else
-      ""
-
-  thumbUrl: (asset) =>
-    if asset?
-      asset.get('thumb_url') ? asset.get('url')
-    else
-      ""
-
-  heroBackground: (asset) =>
-    if url = @heroUrl(asset)
+  assetBackgroundUrl: (asset, style) =>
+    if url = @assetUrl(asset, style)
       "background-image: url('#{url}')"
     else
       ""
+      
+  # for observed asset attributes:
 
-  fullBackground: (asset) =>
-    if url = @fullUrl(asset)
-      "background-image: url('#{url}')"
-    else
-      ""
-
-  halfBackground: (asset) =>
-    if url = @halfUrl(asset)
-      "background-image: url('#{url}')"
-    else
-      ""
-
-  thumbBackground: (asset) =>
-    if url = @thumbUrl(asset)
-      "background-image: url('#{url}')"
-    else
-      ""
+  backgroundUrl: (url) =>
+     "background-image: url(#{url})"
 
   showDescent: (path) =>
     if path is "/"
@@ -118,10 +85,6 @@ CMS.Mixins.CommonBindings =
   containEvent: (e) ->
     e?.stopImmediatePropagation()
 
-  # updates
-  #
-  backgroundStyle: (url) =>
-     "background-image: url(#{url})"
 
 
 CMS.Mixins.Text =

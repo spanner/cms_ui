@@ -61,8 +61,8 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
       attributes: [
         name: 'style'
         observe: 'thumb_url'
-        onGet: "backgroundStyle"
-      , 
+        onGet: "backgroundUrl"
+      ,
         name: "class"
         observe: "provider"
         onGet: "providerClass"
