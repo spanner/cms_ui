@@ -1,7 +1,5 @@
-%p.importer
-  %input.remote_url{placeholder: "From URL..."}>
-  %a.button.import>
-    Import
+%h3.menu
+  Choose or add image
 %ul.cms-menu-items.assets.images
   %li.detach
     %a.detach.detach_item
@@ -9,3 +7,7 @@
   %li
     %a.add.add_item
       ✚
+%p.importer
+  %input.remote_url{placeholder: "From URL..."}>
+  %a.button.import>
+    Import

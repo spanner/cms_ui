@@ -84,7 +84,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   videoPicker: () =>
     video_picker = new CMS.Views.VideoPickerLayout
-      model: @model.getSite()
+      model: @model
       el: @ui.video_picker
     video_picker.render()
     video_picker.on 'selected', @setVideo
@@ -94,7 +94,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   imagePicker: () =>
     image_picker = new CMS.Views.ImagePickerLayout
-      model: @model.getSite()
+      model: @model
       el: @ui.image_picker
     image_picker.render()
     image_picker.on 'selected', @setImage

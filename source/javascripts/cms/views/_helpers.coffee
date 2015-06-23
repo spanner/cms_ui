@@ -186,6 +186,7 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
   providerClass: (provider) =>
     "yt" if provider is "YouTube"
 
+
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   events:
     "click a.detach": "detachAsset"
@@ -213,6 +214,7 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
         site_id: @collection.getSite().id
         remote_url: remote_url
 
+
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
   tagName: "li"
@@ -226,13 +228,17 @@ class CMS.Views.VideosList extends CMS.Views.AssetsListView
       observe: "video"
       visible: true
 
+  onRender: =>
+    console.log "render videoslist with model", @model
+    super
+
 
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
   template: "videos/picker"
   menuView: CMS.Views.VideosList
 
   initialize: ->
-    @collection = @model.videos
+    @collection = @model.getSite().videos
     super
 
   onOpen: =>
@@ -262,7 +268,7 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   menuView: CMS.Views.ImagesList
 
   initialize: (data, options={}) ->
-    @collection = @model.images
+    @collection = @model.getSite().images
     super
 
   onOpen: =>

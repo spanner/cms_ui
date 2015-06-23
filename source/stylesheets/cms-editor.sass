@@ -48,16 +48,15 @@ p.quote
   span.speaker
     display: block
 
-p.importer
+h3.menu
+  color: $control_fg
+  +cms-font-subheading
   margin: 10px 20px
-  input[type="text"]
-    padding: 8px
-    width: 240px
-  input[type="text"]
+  font-size: 1rem
 
 ul.assets
   padding: 0
-  margin: 10px 20px
+  margin-left: 20px
   list-style: none
   li
     position: relative
@@ -143,6 +142,27 @@ main
       height: 100%
       z-index: 50
       pointer-events: none
+      p.importer
+        margin: 6px 0 20px 20px
+        input, a.button
+          display: inline-block
+          vertical-align: top
+          box-sizing: border-box
+          padding: 8px
+          height: 36px
+          font-size: 0.9rem
+          line-height: 20px
+          margin: 0
+        input
+          width: 388px
+          margin-right: 20px
+          +cms-font-light
+          color: $dark
+          border: none
+          outline: none
+          background-color: $translucent
+          &:focus
+            background-color: white
       .cms-buttons
         position: absolute
         top: 10%
@@ -158,8 +178,6 @@ main
           box-sizing: border-box
           height: 48px
           cursor: pointer
-          &:hover
-            background-color: $control_over
           &.save, &.add
             background-color: $greenish
             color: white
@@ -197,6 +215,8 @@ main
               margin-bottom: 0
               padding-bottom: 20px
               height: 56px
+              &:hover
+                background-color: $control_bg
     &.hero, &.bigpicture
       .cms-controls
         .cms-buttons
@@ -226,6 +246,8 @@ main
           padding: 4px 10px
           &.selected
             background-color: $control_over
+            a:hover
+              color: $control_fg
         &.assets
           margin: 20px
           li
