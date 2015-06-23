@@ -138,8 +138,8 @@ class CMS.Views.RenderedBigquoteSection extends CMS.Views.RenderedSectionView
       updateMethod: "text"
 
 
-class CMS.Views.RenderedBigtextSection extends CMS.Views.RenderedSectionView
-  template: "renderers/section_types/bigtext"
+class CMS.Views.RenderedOnecolSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/onecol"
 
   bindings:
     ".section_body":

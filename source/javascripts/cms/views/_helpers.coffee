@@ -5,10 +5,11 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
     "click a": "select"
     
   bindings:
-    "a":
-      observe: "name"
+    ":el":
       classes: 
         "selected": "selected"
+    "a":
+      observe: "name"
       attributes: [
         name: "class"
         observe: "slug"
@@ -23,7 +24,6 @@ class CMS.Views.ListedSectionType extends Backbone.Marionette.ItemView
 
 class CMS.Views.SectionTypeList extends CMS.Views.MenuView
   template: "section_types/picker"
-  tagName: 'ul'
   childView: CMS.Views.ListedSectionType
 
 
@@ -58,9 +58,11 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
 
   bindings:
     "a.preview":
-      observe: "thumb_url"
-      update: "setBackground"
       attributes: [
+        name: 'style'
+        observe: 'thumb_url'
+        onGet: "backgroundStyle"
+      , 
         name: "class"
         observe: "provider"
         onGet: "providerClass"
@@ -70,6 +72,7 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
       onGet: "inBytes"
     ".file_type":
       observe: "file_type"
+      onGet: "inBytes"
     ".width":
       observe: "width"
       onGet: "inPixels"
@@ -98,7 +101,6 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
     @clickFileField() if @model.isNew() and not @model.get('file')
 
   clickFileField: (e) =>
-    
     @ui.filefield.trigger('click')
 
   getPickedFile: (e) =>
@@ -131,9 +133,6 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
       file_type: file.type
     @select()
     @model.save()
-
-  setBackground: ($el, val, m, opts) =>
-    $el.css "background-image", "url(#{val})"
 
   fileOk: (filename, filesize) =>
     @fileNameOk(filename, filesize) and @fileSizeOk(filename, filesize)
@@ -186,21 +185,23 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
 
 class CMS.Views.AssetsListView extends CMS.Views.MenuView
   events:
-    "click a.remove": "detachAsset"
+    "click a.detach": "detachAsset"
+    "click a.add_item": "addAsset"
     "click a.import": "importAsset"
 
   childEvents:
     'selected': 'select'
-
-  addItem: =>
+    
+  addAsset: =>
     @collection.add
       site_id: @collection.getSite().id
+
+  detachAsset: =>
+    @trigger "selected", null
 
   select: (view) =>
     @trigger 'selected', view.model
 
-  detachAsset: =>
-    @trigger "selected", null
 
   importAsset: =>
     if remote_url = @$el.find('input.remote_url').val()
@@ -208,7 +209,6 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
       @collection.create
         site_id: @collection.getSite().id
         remote_url: remote_url
-
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
@@ -218,6 +218,10 @@ class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
 class CMS.Views.VideosList extends CMS.Views.AssetsListView
   template: "videos/list"
   childView: CMS.Views.ListedVideo
+  bindings:
+    "li.detach":
+      observe: "video"
+      visible: true
 
 
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
@@ -228,7 +232,7 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
     @collection = @model.videos
     super
 
-  onRender: =>
+  onOpen: =>
     super
     @_menu_view.on "selected", @select
 
@@ -244,6 +248,10 @@ class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
 class CMS.Views.ImagesList extends CMS.Views.AssetsListView
   template: "images/list"
   childView: CMS.Views.ListedImage
+  bindings:
+    "li.detach":
+      observe: "image"
+      visible: true
 
 
 class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
@@ -254,7 +262,52 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @collection = @model.images
     super
 
-  onRender: =>
+  onOpen: =>
+    super
+    @_menu_view.on "selected", @select
+
+  select: (model) =>
+    @trigger "selected", model
+    @close()
+
+
+class CMS.Views.ListedPage extends CMS.Views.ItemView
+  template: "pages/listed"
+  tagName: "li"
+  
+  events: "click a": "select"
+  bindings: 
+    "span.title": "title"
+    "span.path": "path"
+    "span.descent":
+      observe: "path"
+      onGet: "showDescent"
+      updateMethod: 'html'
+
+  select: () =>
+    @trigger('selected')
+
+
+class CMS.Views.PagesList extends CMS.Views.MenuView
+  template: "pages/list"
+  childView: CMS.Views.ListedPage
+
+  childEvents:
+    'selected': 'select'
+
+  select: (view) =>
+    @trigger('selected', view.model)
+
+
+class CMS.Views.PagePickerLayout extends CMS.Views.MenuLayout
+  template: "pages/picker"
+  menuView: CMS.Views.PagesList
+
+  initialize: (data, options={}) ->
+    @collection = @model.pages
+    super
+
+  onOpen: =>
     super
     @_menu_view.on "selected", @select
 

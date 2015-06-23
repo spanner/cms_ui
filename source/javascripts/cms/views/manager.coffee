@@ -89,17 +89,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   liClass: (id) =>
     if id then "branch" else "branch new"
-    
-  showDescent: (path) =>
-    if path is "/"
-      ""
-    else
-      depth = (path.match(/\//g) || []).length
-      trail = ''
-      if depth > 0
-        trail += '<span class="d"></span>' for [1..depth]
-        trail += '<span class="a">↳</span>'
-      trail
 
   toggleNav: (e) =>
     e?.preventDefault()
@@ -139,7 +128,7 @@ class CMS.Views.PagesTree extends CMS.Views.MenuView
       dir: "/"
 
 
-class CMS.Views.PagePropertiesMenu extends CMS.Views.ItemView
+class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
   template: "pages/properties"
 
   events:

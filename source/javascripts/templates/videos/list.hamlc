@@ -3,9 +3,9 @@
   %a.button.import>
     Import
 %ul.cms-menu-items.assets.videos
+  %li.detach
+    %a.detach.detach_item
+      ✖
   %li
     %a.add.add_item
       ✚
-  %li
-    %a.remove.remove_item
-      ✖

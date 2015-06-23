@@ -21,23 +21,31 @@
 
 /* Section types will end up with a nice place to live */
 
+=quoted
+  color: $pale
+  &:before
+    content: '“'
+    font-size: 180%
+    position: absolute
+    width: 12px
+    text-align: right
+    margin-left: -0.5em
+    margin-top: -0.1em
+  &:after
+    content: '”'
+    font-size: 180%
+    position: absolute
+    margin-left: 0.1em
+    margin-top: -0.1em
+
+blockquote
+  +quoted
+  margin: 0
+
 p.quote
   span.quoted
+    +quoted
     display: block
-    &:before
-      content: '“'
-      font-size: 180%
-      position: absolute
-      width: 12px
-      text-align: right
-      margin-left: -0.5em
-      margin-top: -0.1em
-    &:after
-      content: '”'
-      font-size: 180%
-      position: absolute
-      margin-left: 0.1em
-      margin-top: -0.1em
   span.speaker
     display: block
 
@@ -60,7 +68,7 @@ ul.assets
       box-sizing: border-box
       padding: 6px
       text-align: right
-      font-size: 2em
+      font-size: 1rem
       cursor: pointer
       color: white
       background:
@@ -73,7 +81,7 @@ ul.assets
         color: white
         &:hover
           background-color: $green
-      &.remove
+      &.detach
         background-color: $darkish
         color: white
         &:hover
@@ -133,28 +141,12 @@ main
         position: absolute
         top: 10%
         right: 10%
-        .cms-section-menu
-          display: inline
-        p.importer
-          margin: 20px 0 0 20px
-          input, a.button
-            display: inline-block
-            vertical-align: top
-            box-sizing: border-box
-            padding: 8px
-            height: 36px
-            font-size: 0.9rem
-            margin: 0
-          input
-            width: 388px
-            margin-right: 20px
-            +cms-font-light
-            color: $dark
         .button
           display: inline-block
           pointer-events: auto
           margin: 0 0 8px 0.5em
           padding: 12px 18px
+          line-height: 24px
           background-color: $control_bg
           color: $control_fg
           box-sizing: border-box
@@ -176,7 +168,7 @@ main
             color: white
             &:hover
               background-color: $red
-        .cms-video-picker, .cms-image-picker, .cms-section-menu
+        .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
           display: inline-block
           float: left
           &.open
@@ -188,7 +180,7 @@ main
         .cms-buttons
           top: auto
           bottom: 10%
-    &:hover
+    &:hover, &.open
       .cms-controls
         display: block
 
@@ -198,38 +190,63 @@ main
       right: 0
       top: 56px
       width: 180px
-      height: 0
-      max-height: 500px
       overflow: hidden
       padding: 0
       background-color: $control_bg
       color: white
       box-sizing: border-box
       pointer-events: auto
-      transition: height 1s ease
       ul
         padding: 0
-        margin: 10px
+        margin: 0
         list-style: none
+        li
+          padding: 4px 10px
+          &.selected
+            background-color: $control_over
         &.assets
           margin: 20px
+          li
+            padding: 0
       &.wide
         width: 520px
-      a.cms-section-type
+      span.d, span.a
+        display: inline-block
+        vertical-align: middle
+        min-width: 16px
+        margin-right: 4px
+        height: 16px
+        opacity: 0.75
+        &:first-child
+          min-width: 0
+      a
         color: $control_fg
         opacity: 0.6
-        &.selected, &:hover
+        &:hover
           opacity: 1
           +glow
+        &.page
+          display: block
+          white-space: nowrap
+          padding: 5px
+          cursor: pointer
     .open
       .cms-menu-head
         padding-bottom: 20px
       .cms-menu-body
-        height: auto
         display: block
 
     &.links
       .block
+        position: relative
         background-color: $editable_bg
+        .cms-block-buttons
+          +cms-font-light
+          position: absolute
+          display: none
+          top: 10px
+          right: 10px
+          z-index: 50
+       
 
 @import lib/section_types

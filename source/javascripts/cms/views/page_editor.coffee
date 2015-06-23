@@ -57,19 +57,31 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   ui:
     title: "h1.pagetitle"
     intro: "#standfirst"
+    editable: ".editable"
+    formattable: ".formattable"
 
   bindings:
     "h1.pagetitle":
       observe: "title"
+    "date":
+      observe: "published_at"
+      onGet: "dayMonthYear"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
 
   onRender: () =>
-    @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
-    @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional introduction to the page')
+    @ui.editable.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Link text')
     $.page = @model
     @stickit()
+
+  dayMonthYear: (date) =>
+    if date
+      console.log "date is", date
+      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
+    else
+      ""
 
 
 class CMS.Views.ChildPage extends CMS.Views.ItemView
@@ -89,16 +101,12 @@ class CMS.Views.ChildPage extends CMS.Views.ItemView
       attributes: [
         name: "src"
         observe: "image"
-        onGet: "assetPreviewUrl"
+        onGet: "halfUrl"
       ]
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
   template: "pages/none"
-
-
-class CMS.Views.PageChildren extends Backbone.Marionette.CollectionView
-  childView: CMS.Views.ChildPage
 
 
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView
@@ -113,6 +121,50 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
       @$el.append '<link rel="stylesheet" href="/stylesheets/cms-editor.css" type="text/css" />',
       @$el.append '<script src="/javascripts/cms-base.js" type="text/javascript" />',
       @stickit()
+
+
+class CMS.Views.BlockPage extends CMS.Views.ItemView
+  template: "pages/block"
+  tagName: "div"
+  className: "block"
+
+  ui:
+    image_picker: ".cms-image-picker"
+    page_picker: ".cms-page-picker"
+
+  bindings: 
+    "a.page":
+      attributes: [
+        name: "href"
+        observe: "path"
+      ,
+        name: "style"
+        observe: "image"
+        onGet: "backgroundThumbImage"
+      ,
+        name: "data-page-id"
+        observe: "id"
+      ]
+    "span.caption":
+      observe: "link_title"
+      
+  onRender: =>
+    super
+    unless @_page_picker
+      @_page_picker = new CMS.Views.PagePickerLayout
+        model: @model.getSite()
+        el: @ui.page_picker
+      @_page_picker.render()
+      @_page_picker.on 'selected', @setPage
+    unless @_image_picker
+      @_image_picker = new CMS.Views.ImagePickerLayout
+        model: @model.getSite()
+        el: @ui.page_picker
+      @_image_picker.render()
+      @_image_picker.on 'selected', @setImage
+
+  setImage: (image) =>
+    @model.set 'image', image
 
 
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
@@ -150,14 +202,13 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         el: $(doc.body).find('main')
       @_page_view.render()
 
-
       @_toolbar = new MediumEditor '.formattable',
         contentWindow: iwindow
         ownerDocument: doc
         placeholder: false
         toolbar:
           updateOnEmptySelection: true
-          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'h2', 'h3', 'h4']
+          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'justifyCenter', 'h2', 'h3', 'h4']
         extensions:
           big: new CMS.Views.MediumBig(doc)
 

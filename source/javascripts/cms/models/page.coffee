@@ -113,6 +113,5 @@ class CMS.Models.Page extends CMS.Model
       @set('precis', @get('introduction'), stickitChange: true)
     unless @get('image')
       image = @sections.pluck('image')[0]
-      console.log "setDefaults", image
       @set('image', image, stickitChange: true)
 

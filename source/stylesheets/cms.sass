@@ -60,8 +60,8 @@ a.button
       width: 8px
       font-family: sans-serif
       margin-right: 8px
-  &.open
-    margin-bottom: 0
+.open
+  a.button
     &.arrowed
       &:before
         content: "\025BE"
@@ -79,6 +79,7 @@ a[contenteditable]
   cursor: inherit
 
 #cms-shelf, #cms-manager
+  font-size: 1rem
   a
     cursor: pointer
     text-decoration: none
@@ -128,7 +129,7 @@ a[contenteditable]
     a.tab
       +cms-font-light
       display: inline-block
-      padding: 8px 10px
+      padding: 10px
       color: $shelf_text
       &.current
         background-color: $shelf_bg
@@ -264,7 +265,7 @@ a[contenteditable]
         background-color: white
         color: $dark
         padding: 5px
-      .cms-menu-content
+      .page-properties
         padding: 10px
         color: $control_fg
         width: auto

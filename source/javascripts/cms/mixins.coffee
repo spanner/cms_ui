@@ -54,16 +54,74 @@ CMS.Mixins.CommonBindings =
   assetUrl: (asset) =>
     asset?.get('url') ? ""
 
-  assetPreviewUrl: (asset) =>
-    asset?.get('preview_url') ? ""
-  
-  downcase: (string) =>
-    string?.toLowerCase() ? ""
+  heroUrl: (asset) =>
+    if asset?
+      asset.get('hero_url') ? asset.get('url')
+    else
+      ""
+
+  fullUrl: (asset) =>
+    if asset?
+      asset.get('full_url') ? asset.get('url')
+    else
+      ""
+
+  halfUrl: (asset) =>
+    if asset?
+      asset.get('half_url') ? asset.get('url')
+    else
+      ""
+
+  thumbUrl: (asset) =>
+    if asset?
+      asset.get('thumb_url') ? asset.get('url')
+    else
+      ""
+
+  heroBackground: (asset) =>
+    if url = @heroUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  fullBackground: (asset) =>
+    if url = @fullUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  halfBackground: (asset) =>
+    if url = @halfUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  thumbBackground: (asset) =>
+    if url = @thumbUrl(asset)
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  showDescent: (path) =>
+    if path is "/"
+      ""
+    else
+      depth = (path.match(/\//g) || []).length
+      trail = ''
+      if depth > 0
+        trail += '<span class="d"></span>' for [1..depth]
+        trail += '<span class="a">↳</span>'
+      trail
 
   # useful
-  
+  #
   containEvent: (e) ->
     e?.stopImmediatePropagation()
+
+  # updates
+  #
+  backgroundStyle: (url) =>
+     "background-image: url(#{url})"
 
 
 CMS.Mixins.Text =
