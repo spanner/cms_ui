@@ -216,6 +216,7 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
       imported.save().done =>
         @$el.find('a.import').removeClass('waiting')
         @$el.find('input.remote_url').val("")
+        @trigger 'selected', imported
         
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
