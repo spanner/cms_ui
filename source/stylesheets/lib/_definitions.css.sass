@@ -186,10 +186,13 @@ $shelf_text: $coolgrey10
   height: $control_height
 
 =buttony
+  display: inline-block
+  pointer-events: auto
   margin: 0 0.5em 8px 0
   padding: 16px
   background-color: $control_bg
   color: $control_fg
+  cursor: pointer
   box-sizing: border-box
   &:hover
     background-color: $control_over
@@ -212,7 +215,7 @@ $shelf_text: $coolgrey10
     padding-left: 30px
     color: white
     background:
-      color: $mid
+      color: $pale
       position: 8px 10px
       repeat: no-repeat
       image: image-url('spinner_on_grey.gif')

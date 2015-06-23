@@ -8,6 +8,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   ui:
     built: ".built"
     picture: ".picture"
+    content: ".content"
     editable: ".editable"
     formattable: ".formattable"
     image_picker: ".cms-image-picker"
@@ -205,6 +206,36 @@ class CMS.Views.InlineImageOrVideo extends CMS.Views.ImageOrVideo
 
 
 
+class CMS.Views.AssetInserter extends CMS.Views.ItemView
+  template: "sections/asset_inserter"
+  tagName: "div"
+  className: "cms-asset-inserter"
+    
+  ui:
+    image_picker: ".cms-image-picker"
+    video_picker: ".cms-video-picker"
+    
+  onRender: () =>
+    image_picker = new CMS.Views.ImagePickerLayout
+      model: @model
+      el: @ui.image_picker
+    image_picker.render()
+    image_picker.on 'selected', @addImage
+    video_picker = new CMS.Views.VideoPickerLayout
+      model: @model
+      el: @ui.video_picker
+    video_picker.render()
+    video_picker.on 'selected', @addVideo
+
+  addImage: (image) =>
+    console.log "addImage", image
+
+  addVideo: (video) =>
+    console.log "addVideo", video
+
+
+
+
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView
   template: "section_types/default"
@@ -213,18 +244,30 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
   bindings:
     "h2.section":
       observe: "title"
-    ".section_title":
-      classes:
-        showing: "show_title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".section_aside":
-      observe: "secondary_html"
-      updateMethod: "html"
-    ".section_note":
-      observe: "caption_html"
-      updateMethod: "html"
+
+
+  onRender: =>
+    super
+    @assetInserter()
+
+  assetInserter: =>
+    @_inserter = new CMS.Views.AssetInserter
+      model: @model
+    @_inserter.render()
+    @_inserter.$el.appendTo @ui.content
+
+  readBuiltHtml: =>
+    
+  postprocessHtml: =>
+    @ui.built.find('img').each (img, i) =>
+      # apply an image-positioning and replacing control to each inline image.
+
+
+
+
 
 
 class CMS.Views.TwocolSection extends CMS.Views.SectionView

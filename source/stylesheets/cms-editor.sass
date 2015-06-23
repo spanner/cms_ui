@@ -142,83 +142,70 @@ main
       height: 100%
       z-index: 50
       pointer-events: none
-      p.importer
-        margin: 6px 0 20px 20px
-        a.button
-          +buttony
-        input, a.button
-          display: inline-block
-          vertical-align: top
-          box-sizing: border-box
-          padding: 8px
-          height: 36px
-          font-size: 0.9rem
-          line-height: 20px
-          margin: 0
-        input
-          width: 388px
-          margin-right: 20px
-          +cms-font-light
-          color: $dark
-          border: none
-          outline: none
-          background-color: $translucent
-          &:focus
-            background-color: white
       .cms-buttons
         position: absolute
         top: 10%
         right: 10%
-        .button
-          display: inline-block
-          pointer-events: auto
-          margin: 0 0 8px 0.5em
-          padding: 12px 18px
-          line-height: 26px
-          background-color: $control_bg
-          color: $control_fg
-          box-sizing: border-box
-          height: 48px
-          cursor: pointer
-          &.save, &.add
-            background-color: $greenish
-            color: white
-            &:hover
-              background-color: $green
-          &.publish
-            background-color: $purpleish
-            color: white
-            &:hover
-              background-color: $purple
-          &.delete
-            background-color: $reddish
-            color: white
-            &:hover
-              background-color: $red
-          &.video, &.image
-            background:
-              repeat: no-repeat
-              image: image-url('buttonsprite.png')
-            min-width: 44px
-          &.image
-            background-position: 8px 10px
-            &:hover
-              background-position: -392px 10px
-          &.video
-            background-position: 8px -54px
-            &:hover
-              background-position: -392px -54px
 
-        .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
-          display: inline-block
-          float: left
-          &.open
-            .button.cms-menu-head
-              margin-bottom: 0
-              padding-bottom: 20px
-              height: 56px
-              &:hover
-                background-color: $control_bg
+    .cms-asset-inserter
+      position: absolute
+      width: 120px
+      top: 0
+      left: -120px  
+      .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+        .cms-buttons
+          float: right
+      .cms-menu-body
+        right: auto
+        left: -50px
+
+    .cms-buttons
+      .button
+        +buttony
+        margin: 0 0 8px 0.5em
+        padding: 12px 18px
+        line-height: 26px
+        box-sizing: border-box
+        height: 48px
+        &.save, &.add
+          background-color: $greenish
+          color: white
+          &:hover
+            background-color: $green
+        &.publish
+          background-color: $purpleish
+          color: white
+          &:hover
+            background-color: $purple
+        &.delete
+          background-color: $reddish
+          color: white
+          &:hover
+            background-color: $red
+        &.video, &.image
+          background:
+            repeat: no-repeat
+            image: image-url('buttonsprite.png')
+          min-width: 44px
+        &.image
+          background-position: 8px 10px
+          &:hover
+            background-position: -392px 10px
+        &.video
+          background-position: 8px -54px
+          &:hover
+            background-position: -392px -54px
+
+      .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+        display: inline-block
+        float: left
+        &.open
+          .button.cms-menu-head
+            margin-bottom: 0
+            padding-bottom: 20px
+            height: 56px
+            &:hover
+              background-color: $control_bg
     &.hero, &.bigpicture
       .cms-controls
         .cms-buttons
@@ -240,6 +227,30 @@ main
       color: white
       box-sizing: border-box
       pointer-events: auto
+      p.importer
+        margin: 6px 0 20px 20px
+        clear: both
+        a.button
+          +buttony
+        input, a.button
+          display: inline-block
+          vertical-align: top
+          box-sizing: border-box
+          padding: 8px
+          height: 36px
+          font-size: 0.9rem
+          line-height: 20px
+          margin: 0
+        input
+          width: 300px
+          margin-right: 20px
+          +cms-font-light
+          color: $dark
+          border: none
+          outline: none
+          background-color: $translucent
+          &:focus
+            background-color: white
       ul
         padding: 0
         margin: 0
