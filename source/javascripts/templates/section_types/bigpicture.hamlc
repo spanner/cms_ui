@@ -3,5 +3,6 @@
   .caption.formattable{data: {placeholder: "Optional image caption or other banner text."}}
 .cms-controls
   .cms-buttons
+    .cms-video-picker
     .cms-image-picker
     .cms-section-menu

@@ -452,10 +452,12 @@ a[contenteditable]
           color: $mid
           +hover
         input[type="text"],input[type="email"],input[type="password"]
+          -webkit-appearance: none
           padding: 16px
           width: 600px
           font-size: 1.2em
           border: none
+          border-radius: 0
           outline: none
           +cms-font-light
           background:
@@ -480,6 +482,7 @@ a[contenteditable]
           &.invalid
             background-position: right 22px top -178px
         input[type="submit"]
+          -webkit-appearance: none
           padding: 12px 20px 10px 15px
           margin: 0
           border: none
@@ -488,6 +491,7 @@ a[contenteditable]
           outline: none
           font-size: 0.8rem
           border: none
+          border-radius: 0
           +cms-font-light
           &:active
             +box-shadow(inset 0 1px 3px $shadow)

@@ -66,6 +66,9 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
         name: "class"
         observe: "provider"
         onGet: "providerClass"
+      ,
+        name: "title"
+        observe: "title"
       ]
     ".file_size":
       observe: "file_size"
@@ -319,15 +322,16 @@ class CMS.Views.PagePickerLayout extends CMS.Views.MenuLayout
 class CMS.Views.MediumBig extends MediumEditor.extensions.button
   aria: "big"
   name: "big"
-  _class: "bigtext"
+  klass: "bigtext"
   contentDefault: '<span>Big</span>'
   style:
     prop: "font-size"
     value: "1.3em"
 
-  constructor: (@_iframe) ->
+  constructor: (iframe) ->
     super
-    @_applier = rangy.createClassApplier(@_class)
+    @_iframe = iframe
+    @_applier = rangy.createClassApplier(@klass)
 
   action: (e) =>
     selection = rangy.getSelection(@_iframe)
@@ -344,4 +348,4 @@ class CMS.Views.MediumBig extends MediumEditor.extensions.button
 
   isAlreadyApplied: (node) =>
     nodes = MediumEditor.selection.getSelectedElements(@_iframe)
-    _.filter(nodes, (node) => $(node).hasClass(@_class)).length > 0
+    _.filter(nodes, (node) => $(node).hasClass(@klass)).length > 0

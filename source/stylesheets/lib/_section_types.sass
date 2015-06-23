@@ -1,6 +1,6 @@
 =bigtext
-  font-size: 1.6rem
-  line-height: 1.4
+  font-size: 1.5rem
+  line-height: 1.5
 
 span.bigtext
   +bigtext
@@ -15,8 +15,7 @@ date
 .videobox
   .embed
     position: relative
-    width: 100%
-    padding-bottom: 56.25% /* 16:9 */
+    padding: 0 0 56.25% 0
     iframe
       position: absolute
       top: 0
@@ -156,8 +155,10 @@ main
 
     &.onecol
       .content
-        display: block
-        width: 50%
+        .section_body
+          width: 75%
+          margin: 1.25em auto
+          +bigtext
 
     &.bigquote
       margin: 6em 0 3em 0

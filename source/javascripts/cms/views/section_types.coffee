@@ -298,6 +298,7 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
     super
     @imageOrVideo()
     @imagePicker()
+    @videoPicker()
 
 
 class CMS.Views.HeroSection extends CMS.Views.SectionView
