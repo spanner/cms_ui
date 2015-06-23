@@ -30,5 +30,3 @@ class CMS.Models.Image extends CMS.Model
       ctx.drawImage(img, 0, 0, w, h)
       preview = canvas.toDataURL('image/png')
       @set "url", preview
-      @set "preview_url", preview
-      @set "thumb_url", preview
