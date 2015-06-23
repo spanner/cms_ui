@@ -101,7 +101,7 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
     @model.remove()
 
   popIfNewAndShowing: () =>
-    @clickFileField() if @model.isNew() and not @model.get('file')
+    @clickFileField() if @model.isNew() and not @model.get('file') and not @model.get('remote_url')
 
   clickFileField: (e) =>
     @ui.filefield.trigger('click')
@@ -206,14 +206,17 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
   select: (view) =>
     @trigger 'selected', view.model
 
-
   importAsset: =>
     if remote_url = @$el.find('input.remote_url').val()
-      console.log "import", remote_url
-      @collection.create
+      @$el.find('a.import').addClass('waiting')
+      imported = @collection.add
         site_id: @collection.getSite().id
         remote_url: remote_url
-
+      console.log "imported", imported
+      imported.save().done =>
+        @$el.find('a.import').removeClass('waiting')
+        @$el.find('input.remote_url').val("")
+        
 
 class CMS.Views.ListedVideo extends CMS.Views.ListedAssetView
   template: "videos/listed"
@@ -227,10 +230,6 @@ class CMS.Views.VideosList extends CMS.Views.AssetsListView
     "li.detach":
       observe: "video"
       visible: true
-
-  onRender: =>
-    console.log "render videoslist with model", @model
-    super
 
 
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
@@ -248,6 +247,7 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
   select: (model) =>
     @trigger "selected", model
     @close()
+
 
 class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"
