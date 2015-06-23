@@ -48,6 +48,13 @@ p.quote
   span.speaker
     display: block
 
+p.importer
+  margin: 10px 20px
+  input[type="text"]
+    padding: 8px
+    width: 240px
+  input[type="text"]
+
 ul.assets
   padding: 0
   margin: 10px 20px
@@ -145,10 +152,11 @@ main
           pointer-events: auto
           margin: 0 0 8px 0.5em
           padding: 12px 18px
-          line-height: 24px
+          line-height: 26px
           background-color: $control_bg
           color: $control_fg
           box-sizing: border-box
+          height: 48px
           cursor: pointer
           &:hover
             background-color: $control_over
@@ -167,6 +175,20 @@ main
             color: white
             &:hover
               background-color: $red
+          &.video, &.image
+            background:
+              repeat: no-repeat
+              image: image-url('buttonsprite.png')
+            min-width: 44px
+          &.image
+            background-position: 8px 10px
+            &:hover
+              background-position: -392px 10px
+          &.video
+            background-position: 8px -54px
+            &:hover
+              background-position: -392px -54px
+
         .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
           display: inline-block
           float: left
@@ -174,6 +196,7 @@ main
             .button.cms-menu-head
               margin-bottom: 0
               padding-bottom: 20px
+              height: 56px
     &.hero, &.bigpicture
       .cms-controls
         .cms-buttons

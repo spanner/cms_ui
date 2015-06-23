@@ -208,7 +208,7 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
         placeholder: false
         toolbar:
           updateOnEmptySelection: true
-          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'justifyCenter', 'h2', 'h3', 'h4']
+          buttons: ['bold', 'italic', 'underline', 'big', 'anchor', 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', 'h2', 'h3', 'h4']
         extensions:
           big: new CMS.Views.MediumBig(doc)
 
