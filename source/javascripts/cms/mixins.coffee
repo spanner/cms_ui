@@ -63,6 +63,9 @@ CMS.Mixins.CommonBindings =
       "background-image: url('#{url}')"
     else
       ""
+  
+  truncate12: (value) =>
+    _.truncate value, 12
       
   # for observed asset attributes:
 

@@ -79,7 +79,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     "/sites/#{@model.getSite().get "slug"}#{path}"
 
   pageSlug: ([dir, slug]=[]) =>
-    slug or "Home"
+    _.truncate(slug or "Home", 40)
 
   pageTypeName: (page_type_id) =>
     if page_type = @model.getSite().page_types.get(page_type_id)

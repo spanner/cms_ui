@@ -230,7 +230,6 @@ a[contenteditable]
     &:empty
       display: none
     #site_manager, #pages_manager, #page_manager, #sections_manager, #page_controls
-      position: relative
       margin: 0
       float: left
       
@@ -258,9 +257,13 @@ a[contenteditable]
       position: absolute
       display: none
       top: 56px
+      left: 0
       background-color: $control_bg
       width: auto
-      min-width: 120px
+      min-width: 400px
+      max-height: 480px
+      overflow-x: visible
+      overflow-y: auto
       [contenteditable]
         background-color: white
         color: $dark
