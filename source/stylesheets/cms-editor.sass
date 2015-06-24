@@ -172,6 +172,7 @@ section
       line-height: 26px
       box-sizing: border-box
       height: 48px
+      vertical-align: top
       &.save, &.add
         background-color: $greenish
         color: white
@@ -187,11 +188,13 @@ section
         color: white
         &:hover
           background-color: $red
-      &.video, &.image
+      &.video, &.image, &.left, &.full, &.right
         background:
           repeat: no-repeat
           image: image-url('buttonsprite.png')
-        min-width: 44px
+        width: 44px
+        text-indent: 100px
+        overflow: hidden
       &.image
         background-position: 8px 10px
         &:hover
@@ -200,6 +203,18 @@ section
         background-position: 8px -54px
         &:hover
           background-position: -392px -54px
+      &.left
+        background-position: 8px -118px
+        &:hover
+          background-position: -392px -118px
+      &.right
+        background-position: 8px -182px
+        &:hover
+          background-position: -392px -182px
+      &.full
+        background-position: 8px -246px
+        &:hover
+          background-position: -392px -246px
 
     .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
       display: inline-block
@@ -211,6 +226,15 @@ section
           height: 56px
           &:hover
             background-color: $control_bg
+
+  .cms-asset-styler
+    .cms-buttons
+      top: 20px
+      right: 20px
+      a.left
+        
+
+
   &.hero, &.bigpicture
     .cms-controls
       .cms-buttons

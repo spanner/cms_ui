@@ -53,6 +53,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   saveBuiltHtml: () =>
     if html = @ui.built.html()
+      console.log "saveBuiltHtml", html
       $(html).find('.cms-control').remove()
       @model.set 'built_html', html, stickitChange: true
 
@@ -149,6 +150,10 @@ class CMS.Views.Image extends CMS.Views.AssetView
         onGet: "urlAtSize"
       ]
 
+  onRender: () =>
+    super
+    @$el.attr('data-image-id', @model.get('id'))
+
 
 class CMS.Views.Video extends CMS.Views.AssetView
   template: "videos/video"
@@ -182,6 +187,10 @@ class CMS.Views.Video extends CMS.Views.AssetView
       visible: true
       updateView: true
       updateMethod: "html"
+
+  onRender: () =>
+    super
+    @$el.attr('data-video-id', @model.get('id'))
 
 
 # Initializes with a size and uses the appropriate url.
@@ -227,9 +236,11 @@ class CMS.Views.InlineImage extends CMS.Views.Image
     @_styler.on "remove", @removeImage
 
   setStyle: (style) =>
+    console.log "setStyle", style
     @_size = if style is "full" then "full" else "half"
     @$el.removeClass('right left full').addClass(style)
-    @stickit()
+    @$el.parent().trigger 'input'
+    # @stickit()
 
   removeImage: () =>
     @$el.slideUp 'fast', =>
@@ -255,11 +266,14 @@ class CMS.Views.InlineVideo extends CMS.Views.Video
   setStyle: (style) =>
     @_size = if style is "full" then "full" else "half"
     @$el.removeClass('right left full').addClass(style)
-    @stickit()
+    @$el.parent().trigger 'input'
+    # @stickit()
 
   removeVideo: () =>
+    parent = @$el.parent()
     @$el.slideUp 'fast', =>
       @remove()
+      parent.trigger 'input'
 
 
 class CMS.Views.AssetInserter extends CMS.Views.ItemView
@@ -314,8 +328,10 @@ class CMS.Views.AssetInserter extends CMS.Views.ItemView
     inline_img.render()
     if @_p
       @_p.before inline_img.el
+      @_p.remove() if _.isBlank(@_p.text())
     else
-      @$el.append inline_img.el
+      @_target_el.append inline_img.el
+    @_target_el.trigger 'input'
     @hide()
 
   addVideo: (video) =>
@@ -324,8 +340,10 @@ class CMS.Views.AssetInserter extends CMS.Views.ItemView
     inline_vid.render()
     if @_p
       @_p.before inline_vid.el
+      @_p.remove() if _.isBlank(@_p.text())
     else
-      @$el.append inline_vid.el
+      @_target_el.append inline_vid.el
+    @_target_el.trigger 'input'
     @hide()
 
 
@@ -339,10 +357,19 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
+      onSet: "saveHtml"
 
   onRender: =>
     super
     @assetInserter()
+    @ui.body.find('figure.image').each (i, fig) =>
+      if img_id = $(fig).data('image-id')
+        if image = @model.getSite().images.get(img_id)
+          new CMS.Views.InlineImage(model: image, el: fig).render()
+    @ui.body.find('figure.video').each (i, fig) =>
+      if vid_id = $(fig).data('video-id')
+        if video = @model.getSite().videos.get(vid_id)
+          new CMS.Views.InlineVideo(model: video, el: fig).render()
 
   assetInserter: =>
     @_inserter = new CMS.Views.AssetInserter
@@ -350,13 +377,14 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
     @_inserter.render()
     @_inserter.attachTo(@ui.body)
 
-  postprocessHtml: =>
-    @ui.built.find('img').each (img, i) =>
-      # apply an image-positioning and replacing control to each inline image.
-
-
-
-
+  saveHtml: (html, options) =>
+    @_cleaner ?= $('<div>')
+    @_cleaner.html(html)
+    @_cleaner.find('.cms-controls').remove()
+    @_cleaner.find('.editable').removeClass('editable')
+    @_cleaner.find('[contenteditable]').removeAttr('contenteditable')
+    cleaned = @_cleaner.html()
+    cleaned
 
 
 class CMS.Views.TwocolSection extends CMS.Views.SectionView

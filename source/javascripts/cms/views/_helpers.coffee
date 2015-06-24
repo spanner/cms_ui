@@ -307,9 +307,7 @@ class CMS.Views.ImageStyler extends CMS.Views.ItemView
 
   setFull: () => @trigger "styled", "full"
   setLeft: () => @trigger "styled", "left"
-  setRight: () =>
-    console.log "setRight!"
-    @trigger "styled", "right"
+  setRight: () => @trigger "styled", "right"
 
   removeImage: () =>
     @trigger "remove"
