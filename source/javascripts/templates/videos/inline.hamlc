@@ -2,7 +2,7 @@
   %source
   %img
 .embed.inline
-%figcaption
+%figcaption{data: {placeholder: "Optional video caption"}}
 .cms-controls
   .cms-buttons
     .cms-asset-styler

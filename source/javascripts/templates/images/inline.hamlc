@@ -1,5 +1,5 @@
 %img.inline
-%figcaption.editable
+%figcaption{data: {placeholder: "Optional image caption"}}
 .cms-controls{contenteditable: "false"}
   .cms-buttons
     .cms-asset-styler

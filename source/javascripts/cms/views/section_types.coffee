@@ -118,6 +118,16 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       position: pos + 1
       section_type: 'default'
 
+  cleanHtml: (html, options) =>
+    @_cleaner ?= $('<div>')
+    @_cleaner.html(html)
+    @_cleaner.find('.cms-controls').remove()
+    @_cleaner.find('.editable').removeClass('editable')
+    @_cleaner.find('[data-placeholder]').removeAttr('data-placeholder')
+    @_cleaner.find('[contenteditable]').removeAttr('contenteditable')
+    cleaned = @_cleaner.html()
+    cleaned
+
 
 # Media display subviews are quite elaborate in order to accommodate the various
 # image, video and embed tags that might be occupying the same space.
@@ -141,8 +151,6 @@ class CMS.Views.Image extends CMS.Views.AssetView
   className: "image"
 
   bindings:
-    "figcaption":
-      observe: "caption"
     "img":
       attributes: [
         name: "src"
@@ -161,8 +169,6 @@ class CMS.Views.Video extends CMS.Views.AssetView
   className: "video"
 
   bindings:
-    "figcaption":
-      observe: "caption"
     "video":
       observe: "embed_code"
       visible: "untrue"
@@ -225,7 +231,8 @@ class CMS.Views.InlineImage extends CMS.Views.Image
   className: "image"
   ui:
     style_menu: ".cms-asset-styler"
-    
+    caption: "figcaption"
+
   onRender: () =>
     super
     @_styler = new CMS.Views.ImageStyler
@@ -234,13 +241,16 @@ class CMS.Views.InlineImage extends CMS.Views.Image
     @_styler.render()
     @_styler.on "styled", @setStyle
     @_styler.on "remove", @removeImage
+    @$el.find('.editable').attr('contenteditable', true)
 
   setStyle: (style) =>
-    console.log "setStyle", style
     @_size = if style is "full" then "full" else "half"
     @$el.removeClass('right left full').addClass(style)
     @$el.parent().trigger 'input'
     # @stickit()
+
+  setCaption: (text) =>
+    @ui.caption.text(text)
 
   removeImage: () =>
     @$el.slideUp 'fast', =>
@@ -253,6 +263,7 @@ class CMS.Views.InlineVideo extends CMS.Views.Video
   className: "video"
   ui:
     style_menu: ".cms-asset-styler"
+    caption: "figcaption"
     
   onRender: () =>
     super
@@ -268,6 +279,9 @@ class CMS.Views.InlineVideo extends CMS.Views.Video
     @$el.removeClass('right left full').addClass(style)
     @$el.parent().trigger 'input'
     # @stickit()
+    
+  setCaption: (text) =>
+    @ui.caption.text(text)
 
   removeVideo: () =>
     parent = @$el.parent()
@@ -357,34 +371,31 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-      onSet: "saveHtml"
+      onSet: "cleanHtml"
 
   onRender: =>
     super
     @assetInserter()
     @ui.body.find('figure.image').each (i, fig) =>
       if img_id = $(fig).data('image-id')
+        caption = $(fig).find('figcaption').text()
         if image = @model.getSite().images.get(img_id)
-          new CMS.Views.InlineImage(model: image, el: fig).render()
+          img = new CMS.Views.InlineImage(model: image, el: fig)
+          img.render()
+          img.setCaption(caption)
     @ui.body.find('figure.video').each (i, fig) =>
       if vid_id = $(fig).data('video-id')
+        caption = $(fig).find('figcaption').text()
         if video = @model.getSite().videos.get(vid_id)
-          new CMS.Views.InlineVideo(model: video, el: fig).render()
+          vid = new CMS.Views.InlineVideo(model: video, el: fig)
+          vid.render()
+          vid.setCaption(caption)
 
   assetInserter: =>
     @_inserter = new CMS.Views.AssetInserter
       model: @model
     @_inserter.render()
     @_inserter.attachTo(@ui.body)
-
-  saveHtml: (html, options) =>
-    @_cleaner ?= $('<div>')
-    @_cleaner.html(html)
-    @_cleaner.find('.cms-controls').remove()
-    @_cleaner.find('.editable').removeClass('editable')
-    @_cleaner.find('[contenteditable]').removeAttr('contenteditable')
-    cleaned = @_cleaner.html()
-    cleaned
 
 
 class CMS.Views.TwocolSection extends CMS.Views.SectionView
