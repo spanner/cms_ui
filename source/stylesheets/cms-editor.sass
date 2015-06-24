@@ -120,7 +120,6 @@ ul.assets
         height: 4px
         background-color: $greenish
 
-
 #rte
   position: absolute
   +cms-font-light
@@ -128,184 +127,188 @@ ul.assets
   right: 0
   z-index: 200
 
-main
-  section
-    .built
-      min-height: 100px
+figure, section
+  &:hover, &.open
     .cms-controls
-      +cms-font-light
-      position: absolute
-      display: none
-      top: 0
-      left: 0
-      width: 100%
-      height: 100%
-      z-index: 50
-      pointer-events: none
-      .cms-buttons
-        position: absolute
-        top: 10%
-        right: 10%
+      display: block
 
-    .cms-asset-inserter
-      position: absolute
-      display: none
-      width: 120px
-      top: 0
-      left: -120px
-      transition: top 0.25s ease-out
-      .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
-        .cms-buttons
-          float: right
-      .cms-menu-body
-        right: auto
-        left: -50px
-
+section
+  .built
+    min-height: 100px
+  .cms-controls
+    +cms-font-light
+    position: absolute
+    display: none
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 50
+    pointer-events: none
     .cms-buttons
-      .button
+      position: absolute
+      top: 10%
+      right: 10%
+
+  .cms-asset-inserter
+    position: absolute
+    display: none
+    width: 120px
+    top: 0
+    left: -120px
+    transition: top 0.25s ease-out
+    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+      .cms-buttons
+        float: right
+    .cms-menu-body
+      right: auto
+      left: -50px
+
+  .cms-buttons
+    .button
+      +buttony
+      margin: 0 0 8px 0.5em
+      padding: 12px 18px
+      line-height: 26px
+      box-sizing: border-box
+      height: 48px
+      &.save, &.add
+        background-color: $greenish
+        color: white
+        &:hover
+          background-color: $green
+      &.publish
+        background-color: $purpleish
+        color: white
+        &:hover
+          background-color: $purple
+      &.delete
+        background-color: $reddish
+        color: white
+        &:hover
+          background-color: $red
+      &.video, &.image
+        background:
+          repeat: no-repeat
+          image: image-url('buttonsprite.png')
+        min-width: 44px
+      &.image
+        background-position: 8px 10px
+        &:hover
+          background-position: -392px 10px
+      &.video
+        background-position: 8px -54px
+        &:hover
+          background-position: -392px -54px
+
+    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+      display: inline-block
+      float: left
+      &.open
+        .button.cms-menu-head
+          margin-bottom: 0
+          padding-bottom: 20px
+          height: 56px
+          &:hover
+            background-color: $control_bg
+  &.hero, &.bigpicture
+    .cms-controls
+      .cms-buttons
+        top: auto
+        bottom: 10%
+  &:hover, &.open
+    .cms-controls
+      display: block
+
+  .cms-menu-body
+    display: block
+    position: absolute
+    right: 0
+    top: 56px
+    width: 180px
+    overflow: hidden
+    padding: 0
+    background-color: $control_bg
+    color: white
+    box-sizing: border-box
+    pointer-events: auto
+    p.importer
+      margin: 6px 0 20px 20px
+      clear: both
+      a.button
         +buttony
-        margin: 0 0 8px 0.5em
-        padding: 12px 18px
-        line-height: 26px
-        box-sizing: border-box
-        height: 48px
-        &.save, &.add
-          background-color: $greenish
-          color: white
-          &:hover
-            background-color: $green
-        &.publish
-          background-color: $purpleish
-          color: white
-          &:hover
-            background-color: $purple
-        &.delete
-          background-color: $reddish
-          color: white
-          &:hover
-            background-color: $red
-        &.video, &.image
-          background:
-            repeat: no-repeat
-            image: image-url('buttonsprite.png')
-          min-width: 44px
-        &.image
-          background-position: 8px 10px
-          &:hover
-            background-position: -392px 10px
-        &.video
-          background-position: 8px -54px
-          &:hover
-            background-position: -392px -54px
-
-      .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+      input, a.button
         display: inline-block
-        float: left
-        &.open
-          .button.cms-menu-head
-            margin-bottom: 0
-            padding-bottom: 20px
-            height: 56px
-            &:hover
-              background-color: $control_bg
-    &.hero, &.bigpicture
-      .cms-controls
-        .cms-buttons
-          top: auto
-          bottom: 10%
-    &:hover, &.open
-      .cms-controls
+        vertical-align: top
+        box-sizing: border-box
+        padding: 8px
+        height: 36px
+        font-size: 0.9rem
+        line-height: 20px
+        margin: 0
+      input
+        width: 300px
+        margin-right: 20px
+        +cms-font-light
+        color: $dark
+        border: none
+        outline: none
+        background-color: $translucent
+        &:focus
+          background-color: white
+    ul
+      padding: 0
+      margin: 0
+      list-style: none
+      li
+        padding: 4px 10px
+        &.selected
+          background-color: $control_over
+          a:hover
+            color: $control_fg
+      &.assets
+        margin: 20px
+        li
+          padding: 0
+    &.wide
+      width: 520px
+    span.d, span.a
+      display: inline-block
+      vertical-align: middle
+      min-width: 16px
+      margin-right: 4px
+      height: 16px
+      opacity: 0.75
+      &:first-child
+        min-width: 0
+    a
+      color: $control_fg
+      opacity: 0.6
+      &:hover
+        opacity: 1
+        +glow
+      &.page
         display: block
-
+        white-space: nowrap
+        padding: 5px
+        cursor: pointer
+  .open
+    .cms-menu-head
+      padding-bottom: 20px
     .cms-menu-body
       display: block
-      position: absolute
-      right: 0
-      top: 56px
-      width: 180px
-      overflow: hidden
-      padding: 0
-      background-color: $control_bg
-      color: white
-      box-sizing: border-box
-      pointer-events: auto
-      p.importer
-        margin: 6px 0 20px 20px
-        clear: both
-        a.button
-          +buttony
-        input, a.button
-          display: inline-block
-          vertical-align: top
-          box-sizing: border-box
-          padding: 8px
-          height: 36px
-          font-size: 0.9rem
-          line-height: 20px
-          margin: 0
-        input
-          width: 300px
-          margin-right: 20px
-          +cms-font-light
-          color: $dark
-          border: none
-          outline: none
-          background-color: $translucent
-          &:focus
-            background-color: white
-      ul
-        padding: 0
-        margin: 0
-        list-style: none
-        li
-          padding: 4px 10px
-          &.selected
-            background-color: $control_over
-            a:hover
-              color: $control_fg
-        &.assets
-          margin: 20px
-          li
-            padding: 0
-      &.wide
-        width: 520px
-      span.d, span.a
-        display: inline-block
-        vertical-align: middle
-        min-width: 16px
-        margin-right: 4px
-        height: 16px
-        opacity: 0.75
-        &:first-child
-          min-width: 0
-      a
-        color: $control_fg
-        opacity: 0.6
-        &:hover
-          opacity: 1
-          +glow
-        &.page
-          display: block
-          white-space: nowrap
-          padding: 5px
-          cursor: pointer
-    .open
-      .cms-menu-head
-        padding-bottom: 20px
-      .cms-menu-body
-        display: block
 
-    &.links
-      .block
-        position: relative
-        background-color: $editable_bg
-        .cms-block-buttons
-          +cms-font-light
-          position: absolute
-          display: none
-          top: 10px
-          right: 10px
-          z-index: 50
-       
+  &.links
+    .block
+      position: relative
+      background-color: $editable_bg
+      .cms-block-buttons
+        +cms-font-light
+        position: absolute
+        display: none
+        top: 10px
+        right: 10px
+        z-index: 50
+     
 
 @import lib/section_types

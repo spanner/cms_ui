@@ -250,6 +250,22 @@ class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
     @close()
 
 
+class CMS.Views.VideoStyler extends CMS.Views.ItemView
+  template: "videos/styler"
+  events:
+    "click a.full": "setFull"
+    "click a.left": "setLeft"
+    "click a.right": "setRight"
+    "click a.delete": "removeVideo"
+
+  setFull: () => @trigger "styled", "full"
+  setLeft: () => @trigger "styled", "left"
+  setRight: () => @trigger "styled", "right"
+
+  removeVideo: () =>
+    @trigger "remove"
+
+
 class CMS.Views.ListedImage extends CMS.Views.ListedAssetView
   template: "images/listed"
   tagName: "li"
@@ -280,6 +296,23 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
     @trigger "selected", model
     @close()
 
+
+class CMS.Views.ImageStyler extends CMS.Views.ItemView
+  template: "images/styler"
+  events:
+    "click a.full": "setFull"
+    "click a.left": "setLeft"
+    "click a.right": "setRight"
+    "click a.delete": "removeImage"
+
+  setFull: () => @trigger "styled", "full"
+  setLeft: () => @trigger "styled", "left"
+  setRight: () =>
+    console.log "setRight!"
+    @trigger "styled", "right"
+
+  removeImage: () =>
+    @trigger "remove"
 
 class CMS.Views.ListedPage extends CMS.Views.ItemView
   template: "pages/listed"

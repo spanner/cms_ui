@@ -121,6 +121,8 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 # Media display subviews are quite elaborate in order to accommodate the various
 # image, video and embed tags that might be occupying the same space.
 #
+#TODO: asset views need refactoring into base classes and mixins.
+#
 class CMS.Views.AssetView extends CMS.Views.ItemView
   initialize: (options={}) ->
     @_size = options.size ? "full"
@@ -134,8 +136,12 @@ class CMS.Views.AssetView extends CMS.Views.ItemView
 
 class CMS.Views.Image extends CMS.Views.AssetView
   template: "images/image"
-  className: "imagebox"
+  tagName: "figure"
+  className: "image"
+
   bindings:
+    "figcaption":
+      observe: "caption"
     "img":
       attributes: [
         name: "src"
@@ -146,9 +152,12 @@ class CMS.Views.Image extends CMS.Views.AssetView
 
 class CMS.Views.Video extends CMS.Views.AssetView
   template: "videos/video"
-  className: "videobox"
+  tagName: "figure"
+  className: "video"
 
   bindings:
+    "figcaption":
+      observe: "caption"
     "video":
       observe: "embed_code"
       visible: "untrue"
@@ -201,8 +210,56 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
 
 
 # displays controls for size, sets url and applies class accordingly.
-class CMS.Views.InlineImageOrVideo extends CMS.Views.ImageOrVideo
+class CMS.Views.InlineImage extends CMS.Views.Image
+  template: "images/inline"
+  tagName: "figure"
+  className: "image"
+  ui:
+    style_menu: ".cms-asset-styler"
+    
+  onRender: () =>
+    super
+    @_styler = new CMS.Views.ImageStyler
+      model: @model
+      el: @ui.style_menu
+    @_styler.render()
+    @_styler.on "styled", @setStyle
+    @_styler.on "remove", @removeImage
 
+  setStyle: (style) =>
+    @_size = if style is "full" then "full" else "half"
+    @$el.removeClass('right left full').addClass(style)
+    @stickit()
+
+  removeImage: () =>
+    @$el.slideUp 'fast', =>
+      @remove()
+
+
+class CMS.Views.InlineVideo extends CMS.Views.Video
+  template: "videos/inline"
+  tagName: "figure"
+  className: "video"
+  ui:
+    style_menu: ".cms-asset-styler"
+    
+  onRender: () =>
+    super
+    @_styler = new CMS.Views.VideoStyler
+      model: @model
+      el: @ui.style_menu
+    @_styler.render()
+    @_styler.on "styled", @setStyle
+    @_styler.on "remove", @removeVideo
+
+  setStyle: (style) =>
+    @_size = if style is "full" then "full" else "half"
+    @$el.removeClass('right left full').addClass(style)
+    @stickit()
+
+  removeVideo: () =>
+    @$el.slideUp 'fast', =>
+      @remove()
 
 
 class CMS.Views.AssetInserter extends CMS.Views.ItemView
@@ -215,6 +272,7 @@ class CMS.Views.AssetInserter extends CMS.Views.ItemView
     video_picker: ".cms-video-picker"
     
   onRender: () =>
+    @_p = null
     image_picker = new CMS.Views.ImagePickerLayout
       model: @model
       el: @ui.image_picker
@@ -226,37 +284,49 @@ class CMS.Views.AssetInserter extends CMS.Views.ItemView
     video_picker.render()
     video_picker.on 'selected', @addVideo
 
-  addImage: (image) =>
-    console.log "addImage", image
-
-  addVideo: (video) =>
-    console.log "addVideo", video
-
   attachTo: ($el) =>
     @_target_el = $el
     @$el.insertAfter @_target_el
     @_target_el.on "click keyup", @followCaret
 
   followCaret: (e)=>
-    $el = $(e.target)
     selection = @el.ownerDocument.getSelection()
     if !selection or selection.rangeCount is 0
-      $current = $el
+      current = $(e.target)
     else
       range = selection.getRangeAt(0)
-      $current = $(range.commonAncestorContainer)
-    $p = $current.closest('p')
-    if $p.length and _.isBlank($p.text())
-      top = $p.position().top - 10
-      @$el.css('top', top).show()
+      current = $(range.commonAncestorContainer)
+    @_p = current.closest('p')
+    if @_p.length and _.isBlank(@_p.text())
+      @show(@_p.position().top - 10)
     else
-      @$el.hide()
+      @hide()
 
-  show: () =>
-    @$el.show()
+  show: (top=0) =>
+    @$el.css(top: top).show()
 
+  hide: () =>
+    @$el.hide()
 
+  addImage: (image) =>
+    inline_img = new CMS.Views.InlineImage
+      model: image
+    inline_img.render()
+    if @_p
+      @_p.before inline_img.el
+    else
+      @$el.append inline_img.el
+    @hide()
 
+  addVideo: (video) =>
+    inline_vid = new CMS.Views.InlineVideo
+      model: video
+    inline_vid.render()
+    if @_p
+      @_p.before inline_vid.el
+    else
+      @$el.append inline_vid.el
+    @hide()
 
 
 class CMS.Views.DefaultSection extends CMS.Views.SectionView

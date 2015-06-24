@@ -1,0 +1,8 @@
+%video.inline{autoplay: true, loop: "loop", preload: 'auto'}
+  %source
+  %img
+.embed.inline
+%figcaption
+.cms-controls
+  .cms-buttons
+    .cms-asset-styler

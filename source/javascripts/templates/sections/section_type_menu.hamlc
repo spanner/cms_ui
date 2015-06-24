@@ -1,7 +1,7 @@
 %a.button.cms-menu-head>
   ☰
 %a.button.delete.delete_section>
-  X
+  x
 %a.button.add.add_section>
   \+
 .section_types.cms-menu-body

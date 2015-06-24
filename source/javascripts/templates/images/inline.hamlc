@@ -1,0 +1,5 @@
+%img.inline
+%figcaption.editable
+.cms-controls{contenteditable: "false"}
+  .cms-buttons
+    .cms-asset-styler
