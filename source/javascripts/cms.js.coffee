@@ -9,8 +9,6 @@
 #= require lib/_backbone.stickit
 #= require lib/_codemirror
 #= require lib/_medium
-#= require lib/_rangy
-#= require lib/_slick
 
 #= require lib/utilities
 #= require lib/components

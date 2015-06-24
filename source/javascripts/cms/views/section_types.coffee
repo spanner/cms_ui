@@ -9,6 +9,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     built: ".built"
     picture: ".picture"
     content: ".content"
+    body: ".section_body"
     editable: ".editable"
     formattable: ".formattable"
     image_picker: ".cms-image-picker"
@@ -122,14 +123,12 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 #
 class CMS.Views.AssetView extends CMS.Views.ItemView
   initialize: (options={}) ->
-    console.log "init AssetView", options
     @_size = options.size ? "full"
 
   # These views tend to observe the url for change notification
   # but will then call another value to get an image at the right size.
   #
   urlAtSize: (url) =>
-    console.log "urlAtSize", @_size
     @model.get("#{@_size}_url") ? url
 
 
@@ -233,6 +232,29 @@ class CMS.Views.AssetInserter extends CMS.Views.ItemView
   addVideo: (video) =>
     console.log "addVideo", video
 
+  attachTo: ($el) =>
+    @_target_el = $el
+    @$el.insertAfter @_target_el
+    @_target_el.on "click keyup", @followCaret
+
+  followCaret: (e)=>
+    $el = $(e.target)
+    selection = @el.ownerDocument.getSelection()
+    if !selection or selection.rangeCount is 0
+      $current = $el
+    else
+      range = selection.getRangeAt(0)
+      $current = $(range.commonAncestorContainer)
+    $p = $current.closest('p')
+    if $p.length and _.isBlank($p.text())
+      top = $p.position().top - 10
+      @$el.css('top', top).show()
+    else
+      @$el.hide()
+
+  show: () =>
+    @$el.show()
+
 
 
 
@@ -248,7 +270,6 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
       observe: "main_html"
       updateMethod: "html"
 
-
   onRender: =>
     super
     @assetInserter()
@@ -257,10 +278,8 @@ class CMS.Views.DefaultSection extends CMS.Views.SectionView
     @_inserter = new CMS.Views.AssetInserter
       model: @model
     @_inserter.render()
-    @_inserter.$el.appendTo @ui.content
+    @_inserter.attachTo(@ui.body)
 
-  readBuiltHtml: =>
-    
   postprocessHtml: =>
     @ui.built.find('img').each (img, i) =>
       # apply an image-positioning and replacing control to each inline image.
