@@ -51,10 +51,11 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
 
   onRender: =>
     for p in @model.pages.where(nav: true)
-      a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
-      a.attr('href', p.get('path'))
-      a.text(p.get('nav_name') or p.get('title'))
-      @$el.append(a)
+      if p.published()
+        a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
+        a.attr('href', p.get('path'))
+        a.text(p.get('nav_name') or p.get('title'))
+        @$el.append(a)
   
   rendered: =>
     @render()
@@ -95,12 +96,13 @@ class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".section_aside":
-      observe: "secondary_html"
-      updateMethod: "html"
-    ".section_note":
-      observe: "caption_html"
-      updateMethod: "html"
+      onSet: "cleanHtml"
+
+  assetInserter: =>
+    @_inserter = new CMS.Views.AssetInserter
+      model: @model
+    @_inserter.render()
+    @_inserter.attachTo(@ui.body)
 
 
 class CMS.Views.RenderedTwocolSection extends CMS.Views.RenderedSectionView

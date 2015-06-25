@@ -1,10 +1,53 @@
 .page-properties
-  %h3.title{contenteditable: "plaintext-only", data: {placeholder: "Page title"}}
   %p
-    %span.dir
-    %span.slug{contenteditable: "true", data: {placeholder: "slug..."}}
+    Please handle with care.
+
+  %p
+    %span.label
+      Page title:
+    %strong
+      %span.title{contenteditable: "true", data: {placeholder: "Not always shown on page"}}
+
+  %p
+    %span.label
+      Page path:
+    %span.path{contenteditable: "true", data: {placeholder: "with initial /"}}
+
+  %p
+    %span.label
+      Block link:
+    %span.link_title{contenteditable: "true", data: {placeholder: "Quite short"}}
+
+  %p
+    %span.label
+      Site nav?
+    %a.nav
+      ⚑
+    %span.note
+      shortcut: click flag in menu
+
+  .nav_properties
+    %p
+      %span.label
+        Nav link:
+      %span.nav_name{contenteditable: "true", data: {placeholder: "Very short"}}
+
+    %p
+      %span.label
+        Nav section:
+      %span.nav_heading{contenteditable: "true", data: {placeholder: "Very short"}}
+
+    %p
+      %span.label
+        Nav position:
+      %span.nav_position{contenteditable: "true", data: {placeholder: "Integer"}}
+
+  %p
+    %span.label
+      Key image:
+    %img.preview
+
   %p
     %span.label
       Page type:
     %select.page_type
-  .controls

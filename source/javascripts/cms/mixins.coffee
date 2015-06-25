@@ -12,6 +12,7 @@
 
 # ### View Mixins
 CMS.Mixins.CommonBindings = 
+
   #visibleFns
   
   visibleAsInlineBlock: ($el, isVisible, options) ->
@@ -25,6 +26,16 @@ CMS.Mixins.CommonBindings =
       $el.css display: "inline-block"
     else
       $el.hide()
+
+  slideVisibility: ($el, isVisible, options) ->
+    console.log "slideVisibility", $el, isVisible, options
+    if isVisible
+      $el.slideDown()
+    else
+      console.log "sliding Up"
+      $el.slideUp () =>
+        $el.hide()
+
 
   #visibility controls
   

@@ -49,6 +49,9 @@ class CMS.Models.Page extends CMS.Model
   updateSiteNav: =>
     @getSite()?.populateNavigation()
 
+  published: () =>
+    @get('published_at')?
+
   getSite: =>
     @collection.getSite()
 

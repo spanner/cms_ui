@@ -47,6 +47,14 @@ a.cms-save
   &:hover
     background-position: 0 -320px
 
+a.nav
+  color: $control_fg
+  opacity: 0.25
+  margin-left: 4px
+  &.selected
+    opacity: 1.0
+    color: $green
+
 a.button
   +buttony
   cursor: pointer
@@ -265,6 +273,7 @@ a[contenteditable]
         background-color: white
         color: $dark
         padding: 5px
+        box-sizing: border-box
       .page-properties
         padding: 10px
         color: $control_fg
@@ -274,15 +283,34 @@ a[contenteditable]
         span.label
           display: inline-block
           vertical-align: middle
-          width: 80px
+          width: 92px
           margin-right: 10px
-        span.dir
+        span.note
+          color: $mid
+          margin-left: 0.5em
           display: inline-block
           vertical-align: middle
         span[contenteditable]
           display: inline-block
+          vertical-align: top
+          min-width: 216px
+          max-width: 270px
+        a.nav
+          font-size: 1.5rem
+          display: inline-block
           vertical-align: middle
-          min-width: 40px
+        img.thumb
+          display: inline-block
+          vertical-align: top
+          width: 48px
+          height: 48px
+          background-color: $mid
+        img.preview
+          display: inline-block
+          vertical-align: top
+          width: 216px
+          height: 121px
+          background-color: $mid
       ul
         padding: 0
         margin: 0
@@ -305,13 +333,6 @@ a[contenteditable]
           white-space: nowrap
         a.title
           opacity: 0.75
-        a.nav
-          color: $control_fg
-          opacity: 0.25
-          margin-left: 4px
-          &.selected
-            opacity: 1.0
-            color: $green
         span[contenteditable]
           display: inline-block
           vertical-align: middle

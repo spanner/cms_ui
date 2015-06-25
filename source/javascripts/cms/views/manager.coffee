@@ -196,13 +196,27 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
     "click a.nav": "toggleNav"
 
   bindings:
-    "h3.title":
+    "span.title":
       observe: "title"
     "span.dir":
       observe: "dir"
       onGet: "rootedDir"
-    "span.slug":
-      observe: "slug"
+    "span.path":
+      observe: "path"
+    "input.nav":
+      observe: "nav"
+    ".nav_properties":
+      observe: "nav"
+      visible: true
+      visibleFn: "slideVisibility"
+    "span.nav_name":
+      observe: "nav_name"
+    "span.nav_heading":
+      observe: "nav_heading"
+    "span.nav_position":
+      observe: "nav_position"
+    "span.link_title":
+      observe: "link_title"
     "a.nav":
       classes:
         selected: "nav"
@@ -217,13 +231,6 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
 
   initialize: =>
     @site = @model.getSite()
-
-  onRender: =>
-    super
-    @_controls = new CMS.Views.PageControls
-      model: @model
-      el: @$el.find('.controls')
-    @_controls.render()
 
   toggleNav: (e) =>
     e?.preventDefault()
