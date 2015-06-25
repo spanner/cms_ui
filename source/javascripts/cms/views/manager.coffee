@@ -335,7 +335,7 @@ class CMS.Views.PagesManagerLayout extends CMS.Views.MenuLayout
     if !path or path is "/"
       "Home"
     else
-      path
+      _.truncate path, 28
 
 
 
