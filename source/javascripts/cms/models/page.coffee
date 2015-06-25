@@ -53,7 +53,7 @@ class CMS.Models.Page extends CMS.Model
     @get('published_at')?
 
   publishedUrl: () =>
-    path = @get('path') + ".html"
+    path = @get('path')
     @getSite().publishedUrl(path)
   
   getSite: =>

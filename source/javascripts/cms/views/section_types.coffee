@@ -483,12 +483,6 @@ class CMS.Views.BigpictureSection extends CMS.Views.SectionView
   template: "section_types/bigpicture"
 
   bindings:
-    "img":
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "heroUrl"
-      ]
     ".caption":
       observe: "main_html"
       updateMethod: "html"

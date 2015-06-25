@@ -98,12 +98,6 @@ class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
       updateMethod: "html"
       onSet: "cleanHtml"
 
-  assetInserter: =>
-    @_inserter = new CMS.Views.AssetInserter
-      model: @model
-    @_inserter.render()
-    @_inserter.attachTo(@ui.body)
-
 
 class CMS.Views.RenderedTwocolSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/twocol"
@@ -173,6 +167,19 @@ class CMS.Views.RenderedOnecolSection extends CMS.Views.RenderedSectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
+
+
+class CMS.Views.RenderedBigpictureSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/bigpicture"
+
+  bindings:
+    ".caption":
+      observe: "main_html"
+      updateMethod: "html"
+
+  onRender: =>
+    super
+    @imageOrVideo('hero')
 
 
 class CMS.Views.RenderedGridSection extends CMS.Views.RenderedSectionView

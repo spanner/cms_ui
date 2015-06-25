@@ -62,7 +62,7 @@ configure :build do
   # activate :minify_javascript
 
   # Enable cache buster
-  activate :asset_hash, ignore: "invictus/*"
+  activate :asset_hash, ignore: ["invictus/*", "stylesheets/cms-public.css"]
 
   # Use relative URLs
   # activate :relative_assets
