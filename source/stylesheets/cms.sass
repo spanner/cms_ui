@@ -299,6 +299,10 @@ a[contenteditable]
           font-size: 1.5rem
           display: inline-block
           vertical-align: middle
+        a.pub
+          color: $dark
+          &.publish_me
+            color: $purple
         img.thumb
           display: inline-block
           vertical-align: top
@@ -333,6 +337,14 @@ a[contenteditable]
           white-space: nowrap
         a.title
           opacity: 0.75
+        a.pub
+          float: right
+          color: $pale
+          font-size: 1.5rem
+          line-height: 1
+          &:hover
+            color: $warm
+            opacity: 1
         span[contenteditable]
           display: inline-block
           vertical-align: middle

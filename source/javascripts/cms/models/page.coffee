@@ -52,6 +52,10 @@ class CMS.Models.Page extends CMS.Model
   published: () =>
     @get('published_at')?
 
+  publishedUrl: () =>
+    path = @get('path') + ".html"
+    @getSite().publishedUrl(path)
+  
   getSite: =>
     @collection.getSite()
 

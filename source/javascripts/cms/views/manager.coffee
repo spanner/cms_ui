@@ -48,9 +48,6 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       visibleFn: "visibleAsInlineBlock"
     "span.slug":
       observe: "slug"
-    "sub.page_type":
-      observe: 'page_type_id'
-      onGet: 'pageTypeName'
     "a.title":
       observe: ["dir", "slug"]
       onGet: "pageSlug"
@@ -61,6 +58,16 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       ,
         name: "title"
         observe: "title"
+      ]
+    ".published":
+      observe: "published_at"
+      visible: true
+      visibleFn: "slideVisibility"
+    "a.pub":
+      attributes: [
+        name: "href"
+        observe: "path"
+        onGet: "publishedUrl"
       ]
     "a.nav":
       classes:
@@ -171,6 +178,9 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       when 13 then @savePage(e)
       when 27 then @deletePage(e)
 
+  publishedUrl: (path) =>
+    @model.publishedUrl(path)
+
 
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
@@ -205,6 +215,18 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
       observe: "path"
     "input.nav":
       observe: "nav"
+    ".published":
+      observe: "published_at"
+      visible: true
+      visibleFn: "slideVisibility"
+    "a.pub":
+      observe: "path"
+      onGet: "publishedUrl"
+      attributes: [
+        name: "href"
+        observe: "path"
+        onGet: "publishedUrl"
+      ]
     ".nav_properties":
       observe: "nav"
       visible: true
@@ -240,6 +262,8 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
   rootedDir: (value) =>
     "#{value}/"
 
+  publishedUrl: (path) =>
+    @model.publishedUrl(path)
 
 
 class CMS.Views.PageControls extends CMS.Views.ItemView

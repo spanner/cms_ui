@@ -4,8 +4,8 @@
 %span.ifnew
   %span.slug{contenteditable: "true", data: {placeholder: "slug..."}}
 %a.nav ⚑
-%span.unlessnew
-  %sub.page_type
+%span.published
+  %a.pub{target: "_published"} ☛
 %span.ifnew
   %select.page_type
 %span.controls>

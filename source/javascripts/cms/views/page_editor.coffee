@@ -43,6 +43,8 @@ class CMS.Views.Section extends CMS.Views.ItemView
 
 
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
+  @mixin "bindings"
+  
   childView: CMS.Views.Section
   childViewContainer: "#sections"
 
@@ -67,6 +69,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
+      onSet: "emptyIfEmpty"
 
   onRender: () =>
     @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
@@ -80,6 +83,12 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
     else
       ""
+      
+  emptyIfEmpty: (value) =>
+    if value
+      $html = $(value)
+      value = "" if _.isBlank($html.text())
+    value
 
 
 class CMS.Views.ChildPage extends CMS.Views.ItemView

@@ -10,13 +10,19 @@
 
   %p
     %span.label
-      Page path:
-    %span.path{contenteditable: "true", data: {placeholder: "with initial /"}}
+      Block link:
+    %span.link_title{contenteditable: "true", data: {placeholder: "Quite short"}}
 
   %p
     %span.label
-      Block link:
-    %span.link_title{contenteditable: "true", data: {placeholder: "Quite short"}}
+      Page path:
+    %span.path{contenteditable: "true", data: {placeholder: "with initial /"}}
+
+  .published
+    %p
+      %span.label
+        Published page:
+      %a.pub{target: "_published"}
 
   %p
     %span.label

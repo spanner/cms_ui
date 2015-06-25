@@ -100,6 +100,10 @@ class CMS.Models.Site extends CMS.Model
     else
       dfd.resolve()
 
+  publishedUrl: (path="") =>
+    path = "/#{path}" unless path[0] = '/'
+    "#{_cms.config('published_protocol')}://#{@get('slug')}.#{_cms.config('published_domain')}#{path}"
+
   getWrapper: () =>
     if html = @get('html')
       $(html)

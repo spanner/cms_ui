@@ -6,12 +6,16 @@ class CMS.Config
     api_url: "http://api.cupboard.org/api/1/"
     cookie_domain: ".cupboard.org"
     cookie_name: "cms_blah"
+    published_domain: "cupboard.org"
+    published_protocol: "http"
     logging: false
 
   development:
     api_url: "http://api.cms.dev/api/1/"#"http://localhost:9292/"#
     cookie_domain: ".cms.dev"
     cookie_name: "cms_blah"
+    published_domain: "cms.dev"
+    published_protocol: "http"
     logging: true
 
   constructor: (options={}) ->
