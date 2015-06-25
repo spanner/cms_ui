@@ -1,6 +1,13 @@
-=bigtext
-  font-size: 1.5rem
-  line-height: 1.5
+blockquote
+  +quoted
+  margin: 0
+
+p.quote
+  span.quoted
+    +quoted
+    display: block
+  span.speaker
+    display: block
 
 span.bigtext
   +bigtext

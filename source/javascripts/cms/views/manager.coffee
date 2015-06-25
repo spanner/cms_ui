@@ -303,7 +303,6 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
 
 
-
 class CMS.Views.PageManagerLayout extends CMS.Views.MenuLayout
   template: "manager/page"
   menuView: CMS.Views.PagePropertiesMenu

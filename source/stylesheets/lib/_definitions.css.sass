@@ -222,3 +222,24 @@ $shelf_text: $coolgrey10
       repeat: no-repeat
       image: image-url('spinner_on_grey.gif')
 
+=quoted
+  color: $pale
+  &:before
+    content: '“'
+    font-size: 180%
+    position: absolute
+    width: 12px
+    text-align: right
+    margin-left: -0.5em
+    margin-top: -0.1em
+  &:after
+    content: '”'
+    font-size: 180%
+    position: absolute
+    margin-left: 0.1em
+    margin-top: -0.1em
+
+=bigtext
+  font-size: 1.5rem
+  line-height: 1.5
+
