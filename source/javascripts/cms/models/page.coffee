@@ -85,6 +85,7 @@ class CMS.Models.Page extends CMS.Model
     renderer.render()
     renderer.$el.get(0).outerHTML
 
+
   # our child pages have a path that starts with our path then a /, and includes no later /
   childPages: () =>
     path = @get('path')
@@ -102,6 +103,13 @@ class CMS.Models.Page extends CMS.Model
     stemmer = new RegExp("^#{escaped_path}\/", "i")
     @getSite().pages.select (p) ->
       stemmer.test(p.get('path'))
+
+  pathDepth: () =>
+    path = @get('path')
+    depth = 0
+    if (path isnt "/") and (matches = path.match(/\//g))
+      depth = matches.length
+    depth
 
   loadAndSetDefaults: () =>
     @load().done @setDefaults

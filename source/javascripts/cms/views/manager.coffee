@@ -2,11 +2,20 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
   template: "pages/branch"
   tagName: "li"
   className: "branch"
-    
+  
+  ui:
+    descent: "span.descent"
+    shower: "a.shower"
+    link: "a.title"
+    controls: "span.controls"
+    ifnew: ".ifnew"
+    ifold: ".ifold"
+
   events:
     "click a.delete_page": "deletePage"
     "click a.add_page": "addPage"
     "click a.save_page": "savePage"
+    "click a.shower": "toggleChildren"
     "click a.nav": "toggleNav"
     "keydown span.slug": "catchControlKeys"
 
@@ -16,6 +25,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
         selected: "selected"
         destroyed: "deleted_at"
         changed: "changed"
+        hidden: "hide_in_nav"
       attributes: [
         observe: "id"
         name: "class"
@@ -25,6 +35,9 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
       observe: "path"
       onGet: "showDescent"
       updateMethod: "html"
+    "a.shower":
+      observe: "child_count"
+      onGet: "showerState"
     "a.add_page":
       observe: ["id", "changed"]
       visible: "thisButNotThat"
@@ -69,9 +82,13 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   initialize: () =>
     @site = @model.getSite()
+    # cascade hide status so that hiding a whole branch works
+    @model.on "change:hide_in_nav", @resetHiding
     super
 
   onRender: () =>
+    @model.set "child_count", @model.childPages().length
+    @hideDescendants() if @model.pathDepth() > 2
     super
     @$el.find('span.slug').get(0).focus() if @model.isNew()
 
@@ -89,6 +106,42 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 
   liClass: (id) =>
     if id then "branch" else "branch new"
+  
+  # The _children_hidden view property tracks the hide_in_nav model property
+  # so that collapsed status cascades down a branch of the page tree and 
+  # each branch displays the right expansion arrow when we reopen.
+  resetHiding: (value) =>
+    @_children_hidden = value
+    @stickit()
+
+  showerState: (children) =>
+    if children
+      if @_children_hidden then "▸ " else "▾ "
+    else
+      "↳ "
+    
+  # toggleChildren controls the visibility in navigation of the descendants of this page;
+  # that is, of any page whose path starts with our path.
+  # You can specify a state (true for hidden, false for visible). If no argument is given,
+  # we flip the existing state.
+  #
+  # In order to mimic tree behaviour, we close all descendant pages but open only our
+  # immediate children.
+  #
+  toggleChildren: (e) =>
+    if @_children_hidden
+      @showChildren()
+    else
+      @hideDescendants()
+    @stickit()
+    
+  hideDescendants: () =>
+    _.each @model.descendantPages(), (page) -> page.set("hide_in_nav", true)
+    @_children_hidden = true
+
+  showChildren: () =>
+    _.each @model.childPages(), (page) -> page.set("hide_in_nav", false)
+    @_children_hidden = false
 
   toggleNav: (e) =>
     e?.preventDefault()
@@ -122,6 +175,14 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
   template: "pages/menu"
+
+  initialize: () ->
+    super
+    @prepareVisibility()
+
+  prepareVisibility: =>
+    # @collection.each (page) =>
+    #   page.set "hide_in_nav", @page.depth > 3 and @page.child_count > 3
 
   addItem: =>
     @collection.add

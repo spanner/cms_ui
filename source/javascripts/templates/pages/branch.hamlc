@@ -1,4 +1,5 @@
 %span.descent
+%a.shower
 %a.title
 %span.ifnew
   %span.slug{contenteditable: "true", data: {placeholder: "slug..."}}
