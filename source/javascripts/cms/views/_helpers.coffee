@@ -32,7 +32,12 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
   menuView: CMS.Views.SectionTypeList
   
   # we could bind a section type icon here
-  bindings: {}
+  bindings:
+    "a.section-type":
+      attributes: [
+        name: "class"
+        observe: "section_type"
+      ]
 
   initialize: ->
     slug = @model.get('section_type') or 'default'
@@ -40,6 +45,9 @@ class CMS.Views.SectionAdminMenu extends CMS.Views.MenuLayout
     @collection.findWhere(slug: slug)?.select()
     @collection?.on "change:selected", @setType
     _cms.vent.on "reset_menus", @close
+
+  onRender: () =>
+    @stickit()
 
   setType: =>
     if section_type = @collection.findWhere(selected: true)
