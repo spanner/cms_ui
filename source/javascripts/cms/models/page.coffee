@@ -83,7 +83,7 @@ class CMS.Models.Page extends CMS.Model
       model: @
       collection: @sections
     renderer.render()
-    renderer.$el.get(0).outerHTML
+    renderer.el.innerHTML
 
 
   # our child pages have a path that starts with our path then a /, and includes no later /

@@ -53,7 +53,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   saveBuiltHtml: () =>
     if html = @ui.built.html()
-      console.log "saveBuiltHtml", html
       $(html).find('.cms-control').remove()
       @model.set 'built_html', html, stickitChange: true
 

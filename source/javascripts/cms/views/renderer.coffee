@@ -19,19 +19,30 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
 class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   childView: CMS.Views.SectionRenderer
   childViewContainer: "#sections"
-  tagName: "body"
 
   bindings:
     "h1.pagetitle":
       observe: "title"
-      updateMethod: "html"
+    "date":
+      observe: "published_at"
+      onGet: "dayMonthYear"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
+      
+  onRender: () =>
+    @stickit()
 
   template: (data) =>
     @model.get('page_type')?.get('html') or "<header /><main /><footer />"
 
+  dayMonthYear: (date) =>
+    if date
+      console.log "date is", date
+      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
+    else
+      ""
 
 
 class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
@@ -53,11 +64,25 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
 class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
   tagName: "section"
 
+  ui:
+    built: ".built"
+    picture: ".picture"
+    content: ".content"
+    body: ".section_body"
+
   onRender: =>
     @stickit()
 
   typeClass: (section_type) =>
     section_type or 'default'
+
+  imageOrVideo: (size) =>
+    @ui.picture.empty()
+    image_or_video = new CMS.Views.ImageOrVideo
+      model: @model
+      el: @ui.picture
+      size: size
+    image_or_video.render()
 
 
 class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
@@ -118,12 +143,13 @@ class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
-    ".caption":
+    "aside .caption":
       observe: "caption_html"
       updateMethod: "html"
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
+
+  onRender: =>
+    super
+    @imageOrVideo('half')
 
 
 class CMS.Views.RenderedBigquoteSection extends CMS.Views.RenderedSectionView
@@ -163,9 +189,11 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
     "h1":
       observe: "title"
       updateMethod: "html"
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
+
+  onRender: =>
+    super
+    @imageOrVideo('hero')
+
 
 
 class CMS.Views.RenderedCarouselSection extends CMS.Views.RenderedSectionView

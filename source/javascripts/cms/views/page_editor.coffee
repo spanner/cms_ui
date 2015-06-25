@@ -42,8 +42,6 @@ class CMS.Views.Section extends CMS.Views.ItemView
     section_type or 'default'
 
 
-
-
 class CMS.Views.Page extends Backbone.Marionette.CompositeView
   childView: CMS.Views.Section
   childViewContainer: "#sections"
@@ -71,13 +69,13 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       updateMethod: "html"
 
   onRender: () =>
-    @ui.editable.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Link text')
+    @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
+    @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional page introduction')
     $.page = @model
     @stickit()
 
   dayMonthYear: (date) =>
     if date
-      console.log "date is", date
       months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
     else
