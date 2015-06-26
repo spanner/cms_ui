@@ -1,6 +1,7 @@
 @import lib/definitions
 @import lib/fonts
 @import lib/medium
+@import lib/buttons
 
 [contenteditable]
   outline: none
@@ -127,7 +128,7 @@ section
     top: 0
     left: -120px
     transition: top 0.25s ease-out
-    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+    .cms-video-picker, .cms-image-picker
       .cms-buttons
         float: right
     .cms-menu-body
@@ -135,49 +136,7 @@ section
       left: -50px
 
   .cms-buttons
-    .button
-      +buttony
-      margin: 0 0 8px 0.5em
-      padding: 12px 18px
-      line-height: 26px
-      box-sizing: border-box
-      height: 48px
-      vertical-align: top
-      &.save, &.add
-        background-color: $greenish
-        color: white
-        &:hover
-          background-color: $green
-      &.publish
-        background-color: $purpleish
-        color: white
-        &:hover
-          background-color: $purple
-      &.delete
-        background-color: $reddish
-        color: white
-        &:hover
-          background-color: $red
-      &.video, &.image, &.left, &.full, &.right
-        background:
-          repeat: no-repeat
-          image: image-url('buttonsprite.png')
-        width: 48px
-        height: 48px
-        text-indent: 100px
-        overflow: hidden
-      &.image
-        background-position: 10px 10px
-      &.video
-        background-position: 10px -54px
-      &.left
-        background-position: 10px -118px
-      &.right
-        background-position: 10px -182px
-      &.full
-        background-position: 10px -246px
-
-    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu
+    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu, .cms-style-menu
       display: inline-block
       float: left
       &.open
@@ -219,6 +178,11 @@ section
     color: white
     box-sizing: border-box
     pointer-events: auto
+    &.section-types
+      background-color: $yellowish
+    &.pages
+      max-height: 320px
+      overflow: scroll
     p.importer
       margin: 6px 0 20px 20px
       clear: both

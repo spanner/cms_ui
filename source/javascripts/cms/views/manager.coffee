@@ -185,14 +185,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
 class CMS.Views.PagesTree extends CMS.Views.MenuView
   childView: CMS.Views.PageBranch
   template: "pages/menu"
-
-  initialize: () ->
-    super
-    @prepareVisibility()
-
-  prepareVisibility: =>
-    # @collection.each (page) =>
-    #   page.set "hide_in_nav", @page.depth > 3 and @page.child_count > 3
+  viewComparator: 'path'
 
   addItem: =>
     @collection.add
@@ -215,18 +208,16 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
       observe: "path"
     "input.nav":
       observe: "nav"
-    ".published":
-      observe: "published_at"
-      visible: true
-      visibleFn: "slideVisibility"
     "a.pub":
-      observe: "path"
-      onGet: "publishedUrl"
+      observe: ["path", "published_at"]
+      onGet: "publishedLink"
       attributes: [
         name: "href"
-        observe: "path"
+        observe: ["path", "published_at"]
         onGet: "publishedUrl"
       ]
+      classes:
+        published: "published_at"
     ".nav_properties":
       observe: "nav"
       visible: true
@@ -262,8 +253,14 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
   rootedDir: (value) =>
     "#{value}/"
 
-  publishedUrl: (path) =>
+  publishedLink: ([path, published_at]=[]) =>
     @model.publishedUrl(path)
+
+  publishedUrl: ([path, published_at]=[]) =>
+    if published_at
+      @model.publishedUrl(path)
+    else
+      '#'
 
 
 class CMS.Views.PageControls extends CMS.Views.ItemView

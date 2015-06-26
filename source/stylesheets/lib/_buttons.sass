@@ -1,0 +1,80 @@
+.button
+  +buttony
+  margin: 0 0 8px 0.5em
+  padding: 12px 18px
+  line-height: 26px
+  box-sizing: border-box
+  height: 48px
+  vertical-align: top
+  &.ui
+    padding: 8px
+    polygon
+      fill: none
+      stroke: $control_fg
+      stroke-weight: 1
+  &.save, &.save_me, &.add
+    background-color: $greenish
+    color: white
+    &:hover
+      background-color: $green
+  &.publish, &.publish_me
+    background-color: $purpleish
+    color: white
+    &:hover
+      background-color: $purple
+  &.delete
+    background-color: $reddish
+    color: white
+    &:hover
+      background-color: $red
+  &.video, &.image, &.left, &.full, &.right, &.settings, &.list, &.blocks, &.previews, &.refresh, &.page
+    background:
+      repeat: no-repeat
+      image: image-url('buttonsprite.png')
+    width: 48px
+    height: 48px
+    text-indent: 100px
+    overflow: hidden
+  &.image
+    background-position: 10px 10px
+  &.video
+    background-position: 10px -54px
+  &.left
+    background-position: 10px -118px
+  &.right
+    background-position: 10px -182px
+  &.full
+    background-position: 10px -246px
+  &.settings
+    background-position: 10px -310px
+  &.blocks
+    background-position: 10px -374px
+  &.list
+    background-position: 10px -438px
+  &.previews
+    background-position: 10px -502px
+  &.refresh
+    background-position: 10px -566px
+  &.page
+    background-position: 10px -630px
+  &.arrowed
+    &:before
+      content: "\025B8"
+      width: 8px
+      font-family: sans-serif
+      margin-right: 8px
+
+.open
+  .button.arrowed
+    &:before
+      content: "\025BE"
+      font-family: sans-serif
+      margin-right: 8px
+  > .button.cms-menu-head
+    margin-bottom: 0
+    padding-bottom: 20px
+    height: 56px
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+    &:hover
+      background-color: $control_bg

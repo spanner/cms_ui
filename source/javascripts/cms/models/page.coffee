@@ -92,7 +92,6 @@ class CMS.Models.Page extends CMS.Model
     renderer.render()
     renderer.el.innerHTML
 
-
   # our child pages have a path that starts with our path then a /, and includes no later /
   childPages: () =>
     path = @get('path')
@@ -125,7 +124,12 @@ class CMS.Models.Page extends CMS.Model
     unless @get('link_title')
       @set('link_title', @get('title'), stickitChange: true)
     unless @get('precis')
-      @set('precis', @get('introduction'), stickitChange: true)
+      precis = $('<p/>')
+      unless intro = @get('introduction')
+        intro = @sections.pluck('main_html')[0]
+      clean_intro = $(intro).text() or intro
+      precis.text(_.prune clean_intro, 380)
+      @set('precis', precis, stickitChange: true)
     unless @get('image')
       image = @sections.pluck('image')[0]
       @set('image', image, stickitChange: true)

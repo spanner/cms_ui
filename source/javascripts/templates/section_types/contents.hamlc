@@ -1,5 +1,8 @@
 .content
+  %h2.title{contenteditable: "plaintext-only", data: {placeholder: "Optional heading for contents list"}}
   .built
 .cms-controls
   .cms-buttons
+    .cms-style-menu
+    .cms-page-picker
     .cms-section-menu

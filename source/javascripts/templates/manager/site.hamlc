@@ -1,6 +1,6 @@
 %a.button.ui
   %svg{version: "1.2", x: "0", y: "0", width: "32", height: "32", viewBox: "0 0 32 32"}
-    %polygon.nut{points: "24.855,22.333 15.342,26.545 6.938,20.413 8.047,10.068 17.56,5.857 25.964,11.989"}
+    %polygon.nut{points: "23.9,22.3 14.3,26.5 5.9,20.4 7,10.1 16.6,5.9 25,12"}
       %animateTransform{attributeType: "xml", attributeName: "transform", type: "rotate", from: "0 16 16", to: "360 16 16", dur: "30s", repeatCount: "indefinite"}
 %a.button.shelf
   ◧ Site

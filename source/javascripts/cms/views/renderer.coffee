@@ -204,6 +204,26 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
     @imageOrVideo('hero')
 
 
+class CMS.Views.RenderedContentsSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/contents"
+
+  bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
+    ".built":
+      observe: "built_html"
+      updateMethod: "html"
+    "h2.title":
+      observe: "title"
+      updateMethod: "html"
+
+  onRender: () =>
+    super
+    @$el.find('h2.title').remove unless @model.get('title')
+
 
 class CMS.Views.RenderedCarouselSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/carousel"

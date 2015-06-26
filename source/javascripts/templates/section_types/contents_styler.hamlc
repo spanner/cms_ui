@@ -1,0 +1,8 @@
+%a.button.previews{title: "Show as excerpts"}>
+  E
+%a.button.blocks{title: "Show as blocks"}>
+  B
+%a.button.list{title: "Show as list"}>
+  L
+%a.button.refresh{title: "Refresh list"}>
+  R

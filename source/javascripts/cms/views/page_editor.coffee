@@ -91,31 +91,6 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     value
 
 
-class CMS.Views.ChildPage extends CMS.Views.ItemView
-  template: "pages/child"
-  bindings: 
-    "a":
-      attributes: [
-        name: "href"
-        observe: "path"
-      ]
-    ".title":
-      observe: "link_title"
-    ".precis":
-      observe: "precis"
-      updateMethod: "html"
-    "img":
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "halfUrl"
-      ]
-
-
-class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
-  template: "pages/none"
-
-
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView
   template: false
 

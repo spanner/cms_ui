@@ -16,6 +16,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     video_picker: ".cms-video-picker"
     page_picker: ".cms-page-picker"
     admin_menu: ".cms-section-menu"
+    style_menu: ".cms-style-menu"
 
   onRender: =>
     @sectionMenu()
@@ -36,13 +37,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     else
       @ui.built.html ""
 
-  #TODO: this is working gradually towards another render-and-bind,
-  # but the big question is what to bind to; content associates are
-  # arbitrary and defined by each section type. Perhaps we should push
-  # all that through a section content model?
-  #
-  # For now we just rebuild when selections change.
-  #
   build: () =>
     @renderContent() and @saveBuiltHtml()
 
@@ -82,7 +76,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
       @_page_picker.on 'selected', @setPage
 
   setPage: (page) =>
-    @model.set('page', page)
+    @model.set('subject_page', page)
 
   videoPicker: () =>
     video_picker = new CMS.Views.VideoPickerLayout
@@ -103,6 +97,17 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   setImage: (image) =>
     @model.set('image', image)
+
+  styleMenu: () =>
+    if style_menu_class = @getOption('styleMenuView')
+      @_styler = new style_menu_class
+        model: @model
+        el: @ui.style_menu
+      @_styler.render()
+      @_styler.on "styled", @setStyle
+  
+  setStyle: (style) =>
+    @model.set('style', style)
 
   deleteSection: () =>
     @model?.destroyReversibly()
@@ -223,7 +228,15 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
       @$el.append(image_viewer.el)
 
 
-# displays controls for size, sets url and applies class accordingly.
+class CMS.Views.ImageStyler extends CMS.Views.ItemView
+  template: "images/styler"
+  events:
+    "click a.full": () => @trigger "styled", "full"
+    "click a.left": () => @trigger "styled", "left"
+    "click a.right": () => @trigger "styled", "right"
+    "click a.delete": () => @trigger "remove"
+
+
 class CMS.Views.InlineImage extends CMS.Views.Image
   template: "images/inline"
   tagName: "figure"
@@ -254,6 +267,15 @@ class CMS.Views.InlineImage extends CMS.Views.Image
   removeImage: () =>
     @$el.slideUp 'fast', =>
       @remove()
+
+
+class CMS.Views.VideoStyler extends CMS.Views.ItemView
+  template: "videos/styler"
+  events:
+    "click a.full": () => @trigger "styled", "full"
+    "click a.left": () => @trigger "styled", "left"
+    "click a.right": () => @trigger "styled", "right"
+    "click a.delete": () => @trigger "remove"
 
 
 class CMS.Views.InlineVideo extends CMS.Views.Video
@@ -442,12 +464,6 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
     "aside .caption":
       observe: "caption_html"
       updateMethod: "html"
-    "aside img":
-      attributes: [
-        name: "src"
-        observe: "image"
-        onGet: "halfUrl"
-      ]
 
   onRender: =>
     super
@@ -556,31 +572,127 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
         container.append(child_view.el)
 
 
+
+## Contents block
+#
+# This is purely an html-builder: it uses a helper collection view to assemble a list of link blocks
+# in a given style. The link blocks will probably show editable features that bind to the individual page,
+# but the built block in the section view is only built, not bound.
+#
+class CMS.Views.ChildPage extends CMS.Views.ItemView
+  template: "pages/child"
+  tagName: "div"
+  className: "child-page"
+  bindings: 
+    "a":
+      attributes: [
+        name: "href"
+        observe: "path"
+      ]
+    ".title":
+      observe: "link_title"
+      onGet: "cleanText"
+    ".precis":
+      observe: "precis"
+      updateMethod: "html"
+
+  ui:
+    picture: ".picture"
+
+  onRender: =>
+    # @fetchAndStick()
+
+  # returns a promise that will be resolved when stick finishes
+  fetchAndStick: =>
+    @_render_promise = $.Deferred()
+    @model.load().then(@stick)
+    @_render_promise
+
+  stick: =>
+     @model.setDefaults()
+     @stickit()
+     if image = @model.get('image')
+       image_viewer = new CMS.Views.Image
+         model: image
+         size: 'half'
+         el: @ui.picture
+       image_viewer.render()
+     @_render_promise.resolve(@el)
+     console.log "stuck"
+     
+
+
+class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
+  template: "pages/none"
+
+
+class CMS.Views.PageChildren extends CMS.Views.CollectionView
+  tagName: "div"
+  className: "child_pages"
+  childView: CMS.Views.ChildPage
+  
+  #TODO: pagination.
+  initialize: () ->
+    @collection = new CMS.Collections.Pages(@model.childPages())
+  
+  onRender: () =>
+    promises = @children.map (child) ->
+      child.fetchAndStick()
+    $.when(promises...).done (results...) =>
+      @trigger "complete", results
+
+
+class CMS.Views.ContentsStyler extends CMS.Views.ItemView
+  template: "section_types/contents_styler"
+  events:
+    "click a.previews": "setPreview"
+    "click a.blocks": "setBlocks"
+    "click a.list": "setList"
+    "click a.refresh": "refresh"
+
+  setPreview: () => 
+    @model.set "style", "previews", stickitChange: true
+  setBlocks: () => 
+    @model.set "style", "blocks", stickitChange: true
+  setList: () => 
+    @model.set "style", "list", stickitChange: true
+  refresh: () =>
+    @trigger "refresh"
+
+
 class CMS.Views.ContentsSection extends CMS.Views.SectionView
   template: "section_types/contents"
-  content_template: "section_content/link_blocks"
-
-  events:
-    "click a.save": "saveBuiltHtml"
+  styleMenuView: CMS.Views.ContentsStyler
 
   bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
     ".built":
       observe: "built_html"
       updateMethod: "html"
+    "h2.title":
+      observe: "title"
+      updateMethod: "html"
 
-  readBuiltHtml: () =>
-    # get sort order from an element data attribute
-    # @_comparator = (i) -> -i.get('created_at')
-
-  renderContent: =>
+  onRender: () =>
+    $.s = @
+    super
+    @pagePicker()
+    @styleMenu()
+    @_styler.on "refresh", @build
+  
+  renderContent: () =>
+    @_children_view = new CMS.Views.PageChildren
+      model: @model.get('subject_page') or @model.getPage()
+    @_children_view.on "complete", () =>
+      @saveBuiltHtml()
+    @_children_view.render()
     @ui.built.empty()
-    for page in @model.getPage().childPages()
-      container = @ui.built
-      child_view = new CMS.Views.ChildPage
-        model: page
-      page.load().done () =>
-        page.setDefaults()
-        rendered = child_view.render()
-        console.log "rendered", child_view.$el.html()
-        container.append(child_view.el)
+    @ui.built.append(@_children_view.el)
 
+  setPage: (page) =>
+    super
+    @build()

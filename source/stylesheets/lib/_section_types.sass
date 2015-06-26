@@ -140,9 +140,12 @@ a.button.section-type
   width: 48px
   overflow: hidden
   background:
+    color: $yellowish
     position: 0 0
     repeat: no-repeat
     image: image-url('sectionsprite.png')
+  &:hover
+    background-color: $yellow
   &.default
     background-position: 8px 6px
   &.asidequote
@@ -368,29 +371,76 @@ main
           min-width: 100px
 
     &.contents
-      .built
-        .child-page
-          clear: both
-          .picture
+      &.previews
+        .built
+          .child-page
+            clear: both
+            margin-bottom: 2em
+            .picture
+              position: relative
+              display: inline-block
+              width: 23.2%
+              min-height: 160px
+              margin-right: 2%
+              vertical-align: top
+              img
+                width: 100%
+                height: auto
+                background-color: $mid
+            .summary
+              h2
+                margin-top: 0
+                margin-bottom: 0.1em
+              position: relative
+              display: inline-block
+              width: 74%
+              min-height: 160px
+              margin: 0
+              vertical-align: top
+            &:first-child
+              .picture
+                width: 74%
+              .summary
+                width: 23.2%
+      &.blocks
+        .built
+          .child-page
             position: relative
-            display: inline-block
-            width: 23.2%
+            width: 23%
             min-height: 160px
-            margin-right: 2%
+            margin-right: 1%
+            margin-bottom: 2em
+            display: inline-block
             vertical-align: top
-            img
-              width: 100%
-              height: auto
-          .summary
-            h2
-              margin-top: 0
-              margin-bottom: 0.1em
+            overflow: hidden
+            .picture
+              img
+                width: 100%
+                height: auto
+            .summary
+              width: auto
+              height: 120px
+              h2, p
+                font-size: 1rem
+                margin: 0
+      &.list
+        .built
+          .child-page
             position: relative
-            display: inline-block
-            width: 74%
-            min-height: 160px
-            margin: 0
-            vertical-align: top
+            width: auto
+            height: auto
+            margin-bottom: 1em
+            .picture
+              display: none
+            .summary
+              width: auto
+              h2, p
+                margin: 0
+              p
+                display: none
+              h2
+                a:before
+                  content: "◼ "
 
     &.carousel
       .content

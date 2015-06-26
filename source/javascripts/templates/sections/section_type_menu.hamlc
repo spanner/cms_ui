@@ -1,7 +1,7 @@
-%a.button.section-type.cms-menu-head>
+%a.button.section-type.cms-menu-head{title: "Section layout"}>
   ☰
-%a.button.delete.delete_section>
+%a.button.delete.delete_section{title: "Delete section"}>
   x
-%a.button.add.add_section>
+%a.button.add.add_section{title: "Add section below"}>
   \+
-.section_types.cms-menu-body
+.section-types.cms-menu-body

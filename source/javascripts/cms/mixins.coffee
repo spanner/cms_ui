@@ -77,7 +77,10 @@ CMS.Mixins.CommonBindings =
   
   truncate12: (value) =>
     _.truncate value, 12
-      
+  
+  cleanText: (value) =>
+    $(value).text() or value
+    
   # for observed asset attributes:
 
   backgroundUrl: (url) =>

@@ -1,5 +1,6 @@
 @import lib/fonts
 @import lib/definitions
+@import lib/buttons
 @import lib/loader
 @import lib/codemirror/codemirror
 @import lib/codemirror/spanner
@@ -55,27 +56,6 @@ a.nav
     opacity: 1.0
     color: $green
 
-a.button
-  +buttony
-  cursor: pointer
-  display: inline-block
-  vertical-align: top
-  box-sizing: border-box
-  height: 48px
-  &.arrowed
-    &:before
-      content: "\025B8"
-      width: 8px
-      font-family: sans-serif
-      margin-right: 8px
-.open
-  a.button
-    &.arrowed
-      &:before
-        content: "\025BE"
-        font-family: sans-serif
-        margin-right: 8px
-
 [contenteditable]
   outline: none
   &:empty:before
@@ -91,6 +71,13 @@ a[contenteditable]
   a
     cursor: pointer
     text-decoration: none
+
+h2.menu
+  font-size: 1rem
+  font-weight: 700
+  margin-top: 0
+  text-transform: uppercase
+  letter-spacing: 0.01em
 
 // Page construction
 
@@ -246,21 +233,6 @@ a[contenteditable]
 
     a.button
       float: left
-      &.ui
-        padding: 8px
-        polygon
-          fill: $control_fg
-          stroke: none
-      &.save_me
-        background-color: $greenish
-        color: white
-        &:hover
-          background-color: $green
-      &.publish_me
-        background-color: $purpleish
-        color: white
-        &:hover
-          background-color: $purple
 
     .cms-menu-body
       position: absolute
@@ -301,8 +273,10 @@ a[contenteditable]
           display: inline-block
           vertical-align: middle
         a.pub
-          color: $dark
-          &.publish_me
+          color: $mid
+          cursor: not-allowed
+          &.published
+            cursor: pointer
             color: $purple
         img.thumb
           display: inline-block

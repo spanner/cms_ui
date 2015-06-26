@@ -1,6 +1,6 @@
 .page-properties
-  %p
-    Please handle with care.
+  %h2.menu
+    Page settings
 
   %p
     %span.label
@@ -10,19 +10,18 @@
 
   %p
     %span.label
-      Block link:
-    %span.link_title{contenteditable: "true", data: {placeholder: "Quite short"}}
-
-  %p
-    %span.label
       Page path:
     %span.path{contenteditable: "true", data: {placeholder: "with initial /"}}
 
-  .published
-    %p
-      %span.label
-        Published page:
-      %a.pub{target: "_published"}
+  %p
+    %span.label
+      Page type:
+    %select.page_type
+
+  %p
+    %span.label
+      Published:
+    %a.pub{target: "_published"}
 
   %p
     %span.label
@@ -30,18 +29,18 @@
     %a.nav
       ⚑
     %span.note
-      shortcut: click flag in menu
+      page saved on click
 
   .nav_properties
     %p
       %span.label
         Nav link:
-      %span.nav_name{contenteditable: "true", data: {placeholder: "Very short"}}
+      %span.nav_name{contenteditable: "true", data: {placeholder: "One word title"}}
 
     %p
       %span.label
         Nav section:
-      %span.nav_heading{contenteditable: "true", data: {placeholder: "Very short"}}
+      %span.nav_heading{contenteditable: "true", data: {placeholder: "Very short heading"}}
 
     %p
       %span.label
@@ -50,10 +49,10 @@
 
   %p
     %span.label
-      Key image:
-    %img.preview
+      Block link:
+    %span.link_title{contenteditable: "true", data: {placeholder: "Short link text"}}
 
   %p
     %span.label
-      Page type:
-    %select.page_type
+      Key image:
+    %img.preview

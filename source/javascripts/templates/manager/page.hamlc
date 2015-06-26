@@ -1,3 +1,3 @@
-%a.page-options.button.cms-menu-head>
-  ☰
+%a.button.settings.cms-menu-head{title: "Page settings"}>
+  #
 .cms-menu-body

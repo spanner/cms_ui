@@ -1,6 +1,7 @@
 class CMS.Collections.Pages extends CMS.Collection
   model: CMS.Models.Page
-  comparator: "path"
+  comparator: (model) ->
+    -model.get('created_at')
 
   initialize: (array, opts) ->
     super
