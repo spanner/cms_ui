@@ -96,7 +96,6 @@ ul.assets
   +cms-font-light
   top: 0
   right: 0
-  z-index: 200
 
 figure, section
   &:hover, &.open
@@ -119,6 +118,7 @@ figure, section
   top: 10%
   right: 10%
   display: none
+  z-index: 100
   .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu, .cms-style-menu
     display: inline-block
     float: left
@@ -155,7 +155,11 @@ figure, section
 section
   .built
     min-height: 100px
-
+  &:hover
+    .cms-controls
+      display: block
+      .cms-buttons 
+        display: block
 
   &.hero, &.bigpicture
     .cms-controls
