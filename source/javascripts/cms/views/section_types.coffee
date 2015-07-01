@@ -20,6 +20,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   onRender: =>
     @sectionMenu()
+    @styleMenu()
     if @model.get('built_html')
       @readBuiltHtml()
     else
@@ -55,11 +56,11 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   imageOrVideo: (size) =>
     @ui.picture.empty()
-    image_or_video = new CMS.Views.ImageOrVideo
+    @_image_or_video = new CMS.Views.ImageOrVideo
       model: @model
       el: @ui.picture
       size: size
-    image_or_video.render()
+    @_image_or_video.render()
 
   sectionMenu: =>
     @_section_menu = new CMS.Views.SectionAdminMenu
@@ -99,6 +100,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @model.set('image', image)
 
   styleMenu: () =>
+    console.log "styleMenu", @getOption('styleMenuView')
     if style_menu_class = @getOption('styleMenuView')
       @_styler = new style_menu_class
         model: @model
@@ -147,6 +149,10 @@ class CMS.Views.AssetView extends CMS.Views.ItemView
   #
   urlAtSize: (url) =>
     @model.get("#{@_size}_url") ? url
+
+  setSize: (size) =>
+    @_size = size
+    @stickit()
 
 
 class CMS.Views.Image extends CMS.Views.AssetView
@@ -215,17 +221,21 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
   onRender: () =>
     @$el.empty()
     if video = @model.get('video')
-      video_viewer = new CMS.Views.Video
+      @_video_viewer = new CMS.Views.Video
         model: video
         size: @_size
-      video_viewer.render()
-      @$el.append(video_viewer.el)
+      @_video_viewer.render()
+      @$el.append(@_video_viewer.el)
     else if image = @model.get('image')
-      image_viewer = new CMS.Views.Image
+      @_image_viewer = new CMS.Views.Image
         model: image
         size: @_size
-      image_viewer.render()
-      @$el.append(image_viewer.el)
+      @_image_viewer.render()
+      @$el.append(@_image_viewer.el)
+
+  setSize: (size) =>
+    @_image_viewer?.setSize(size)
+    @_video_viewer?.setSize(size)
 
 
 class CMS.Views.ImageStyler extends CMS.Views.ItemView
@@ -451,11 +461,32 @@ class CMS.Views.AsidequoteSection extends CMS.Views.SectionView
       updateMethod: "text"
 
 
+class CMS.Views.AsideimageStyler extends CMS.Views.ItemView
+  template: "section_types/asideimage_styler"
+  events:
+    "click a.right": "setRight"
+    "click a.left": "setLeft"
+    "click a.full": "setFull"
+
+  setRight: () => 
+    @model.set "style", "right", stickitChange: true
+  setLeft: () => 
+    @model.set "style", "left", stickitChange: true
+  setFull: () => 
+    @model.set "style", "full", stickitChange: true
+
+
 class CMS.Views.AsideimageSection extends CMS.Views.SectionView
   template: "section_types/asideimage"
   content_template: "section_content/image_aside"
+  styleMenuView: CMS.Views.AsideimageStyler
 
   bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
     "h2.section":
       observe: "title"
     ".section_body":
@@ -466,10 +497,16 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
       updateMethod: "html"
 
   onRender: =>
+    @model.set('style', 'right') unless @model.get('style')
     super
     @imageOrVideo('half')
     @imagePicker()
     @videoPicker()
+    @model.on "change:style", @setStyleSize
+
+  setStyleSize: (model, style) =>
+    size = if style is "full" then "full" else "half"
+    @_image_or_video.setSize(size)
 
 
 class CMS.Views.BigquoteSection extends CMS.Views.SectionView
@@ -678,10 +715,8 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
       updateMethod: "html"
 
   onRender: () =>
-    $.s = @
     super
     @pagePicker()
-    @styleMenu()
     @_styler.on "refresh", @build
   
   renderContent: () =>

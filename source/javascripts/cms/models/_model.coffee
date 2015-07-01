@@ -56,6 +56,7 @@ class CMS.Model extends Backbone.Model
   parse: (data) =>
     # you can modify `data` in populate,
     # or return false to prevent the usual parse from being called at all.
+    # but you don't really want to override `parse`
     if @populate(data)
       @_original_attributes = _.pick @attributes, @savedAttributes
       data

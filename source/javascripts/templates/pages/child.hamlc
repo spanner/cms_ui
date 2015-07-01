@@ -3,5 +3,5 @@
     %img
 .summary
   %h2
-    %a.title
-  .precis
+    %a.title{contenteditable: "plaintext-only", data: {placeholder: "Link title"}}
+  .precis{contenteditable: "true", data: {placeholder: "Summary of page"}}

@@ -39,6 +39,10 @@ CMS.Mixins.CommonBindings =
 
   #visibility controls
   
+
+  untrue: (val) ->
+    not val
+
   thisOrNotThat: ([value, other_value]=[]) ->
     value or not other_value
 
@@ -55,9 +59,6 @@ CMS.Mixins.CommonBindings =
     value1 isnt other_value1 or value2 isnt other_value2
 
   #onGets
-
-  untrue: (val) ->
-    not val
   
   thisOrThat: ([value, other_value]=[]) ->
     value or other_value
