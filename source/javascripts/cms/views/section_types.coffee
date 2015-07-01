@@ -100,7 +100,6 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @model.set('image', image)
 
   styleMenu: () =>
-    console.log "styleMenu", @getOption('styleMenuView')
     if style_menu_class = @getOption('styleMenuView')
       @_styler = new style_menu_class
         model: @model
@@ -556,53 +555,115 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @imageOrVideo('hero')
     @videoPicker()
     @imagePicker()
-    
 
-# This one is a pure html editor, with helpers
-# html is already defaulted if missing
-# --> apply editing controls to existing html
-# including a save button.
-# nb. saveBuiltHtml will strip out any .cms-control
+
+
+## Link blocks and highlights
 #
+# This is an html-builder: it uses a helper collection view to assemble a list of link blocks
+# in a given style. The link blocks will probably show editable features that bind to the individual page,
+# but the built block in the section view is only built, not bound.
+#
+
+class CMS.Views.EmbeddedPageView extends CMS.Views.ItemView
+
+  onRender: =>
+    @model.setDefaults()
+    @stickit()
+
+
+class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
+  template: "pages/block"
+  tagName: "div"
+  className: "block"
+
+  ui:
+    controls: ".cms-buttons"
+
+  bindings: 
+    "span.block, a.block":
+      attributes: [
+        name: "style"
+        observe: "image"
+        onGet: "assetBackgroundHalfUrl"
+      ,
+        name: "data-page-id"
+        observe: "id"
+      ]
+    "span.caption":
+      observe: "block_title"
+
+  onRender: =>
+    $.bpl ?= @
+    super
+    unless @_page_picker
+      @_page_picker = new CMS.Views.PagePickerLayout
+        model: @model.getSite()
+      @_page_picker.render()
+      @_page_picker.on 'selected', @setPage
+      @_page_picker.$el.appendTo(@ui.controls)
+    unless @_image_picker
+      @_image_picker = new CMS.Views.ImagePickerLayout
+        model: @model
+      @_image_picker.render()
+      @_image_picker.on 'selected', @setImage
+      @_image_picker.$el.appendTo(@ui.controls)
+
+  setImage: (image) =>
+    @model.set 'image', image
+    @stickit()
+
+  setPage: (page) =>
+    page.setDefaults()
+    @model = page
+    @stickit()
+
+
+class CMS.Views.NoBlockPages extends Backbone.Marionette.ItemView
+  template: "pages/none"
+
+
+class CMS.Views.PageLinkBlocks extends CMS.Views.CollectionView
+  tagName: "div"
+  className: "block_pages"
+  childView: CMS.Views.BlockPageLink
+  childEvents:
+    "remove": "removePage"
+
+  removePage: (e, page) =>
+    @collection.remove(page)
+
+  onRender: () =>
+    $.plb = @
+
+
 class CMS.Views.LinksSection extends CMS.Views.SectionView
   template: "section_types/links"
   content_template: "section_content/link_blocks"
 
-  bindings:
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
-
   initialize: ->
-    super
+    $.s = @
     @_pages = new CMS.Collections.Pages
+    super
 
   readBuiltHtml: =>
     @_pages.reset()
     if html = @model.get('built_html')
       site = @model.getSite()
-      $(html).find('div.page').each (i, page) =>
-        if page_id = page.attr('data-page-id')
-          @_pages.add site.pages.get(page_id)
-
-  onRender: =>
-    super
-    @pagePicker()
-    
-  setPage: (page) =>
-    @_pages?.add(page)
-    @build()
+      # $(html).find('div.block').each (i, page) =>
+      #   if page_id = page.attr('data-page-id')
+      #     if page = site.pages.get(page_id)
+      #       @_pages.add page
 
   renderContent: =>
     @ui.built.empty()
-    @_pages.each (page, i) =>
-      container = @$el.find('.built')
-      child_view = new CMS.Views.BlockPage
-        model: page
-      page.load().done () ->
-        page.setDefaults()
-        rendered = child_view.render()
-        container.append(child_view.el)
+    unless @_pages.length
+      pages = @model.getPage().childPages()
+      @_pages.reset(pages[0..3])
+    @_page_blocks = new CMS.Views.PageLinkBlocks
+      collection: @_pages
+    @_page_blocks.render()
+    @_page_blocks.$el.appendTo @$el.find('.built')
 
 
 
@@ -612,7 +673,7 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
 # in a given style. The link blocks will probably show editable features that bind to the individual page,
 # but the built block in the section view is only built, not bound.
 #
-class CMS.Views.ChildPage extends CMS.Views.ItemView
+class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
   template: "pages/child"
   tagName: "div"
   className: "child-page"
@@ -633,26 +694,14 @@ class CMS.Views.ChildPage extends CMS.Views.ItemView
     picture: ".picture"
 
   onRender: =>
-    # @fetchAndStick()
-
-  # returns a promise that will be resolved when stick finishes
-  fetchAndStick: =>
-    @_render_promise = $.Deferred()
-    @model.load().then(@stick)
-    @_render_promise
-
-  stick: =>
-     @model.setDefaults()
-     @stickit()
-     if image = @model.get('image')
-       image_viewer = new CMS.Views.Image
-         model: image
-         size: 'half'
-         el: @ui.picture
-       image_viewer.render()
-     @_render_promise.resolve(@el)
-     console.log "stuck"
-     
+    super
+    if image = @model.get('image')
+      image_viewer = new CMS.Views.Image
+        model: image
+        size: 'half'
+        el: @ui.picture
+      image_viewer.render()
+    
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
@@ -719,10 +768,10 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
     @_children_view = new CMS.Views.PageChildren
       model: @model.get('subject_page') or @model.getPage()
     @_children_view.on "complete", () =>
+      @ui.built.empty()
+      @ui.built.append(@_children_view.el)
       @saveBuiltHtml()
     @_children_view.render()
-    @ui.built.empty()
-    @ui.built.append(@_children_view.el)
 
   setPage: (page) =>
     super

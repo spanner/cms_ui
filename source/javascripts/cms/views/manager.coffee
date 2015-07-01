@@ -62,7 +62,7 @@ class CMS.Views.PageBranch extends CMS.Views.ItemView
     ".published":
       observe: "published_at"
       visible: true
-      visibleFn: "slideVisibility"
+      visibleFn: "visibleWithSlide"
     "a.pub":
       attributes: [
         name: "href"
@@ -221,7 +221,7 @@ class CMS.Views.PagePropertiesMenu extends CMS.Views.MenuView
     ".nav_properties":
       observe: "nav"
       visible: true
-      visibleFn: "slideVisibility"
+      visibleFn: "visibleWithSlide"
     "span.nav_name":
       observe: "nav_name"
     "span.nav_heading":

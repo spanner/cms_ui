@@ -105,50 +105,6 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
       @stickit()
 
 
-class CMS.Views.BlockPage extends CMS.Views.ItemView
-  template: "pages/block"
-  tagName: "div"
-  className: "block"
-
-  ui:
-    image_picker: ".cms-image-picker"
-    page_picker: ".cms-page-picker"
-
-  bindings: 
-    "a.page":
-      attributes: [
-        name: "href"
-        observe: "path"
-      ,
-        name: "style"
-        observe: "image"
-        onGet: "backgroundThumbImage"
-      ,
-        name: "data-page-id"
-        observe: "id"
-      ]
-    "span.caption":
-      observe: "link_title"
-      
-  onRender: =>
-    super
-    unless @_page_picker
-      @_page_picker = new CMS.Views.PagePickerLayout
-        model: @model.getSite()
-        el: @ui.page_picker
-      @_page_picker.render()
-      @_page_picker.on 'selected', @setPage
-    unless @_image_picker
-      @_image_picker = new CMS.Views.ImagePickerLayout
-        model: @model.getSite()
-        el: @ui.page_picker
-      @_image_picker.render()
-      @_image_picker.on 'selected', @setImage
-
-  setImage: (image) =>
-    @model.set 'image', image
-
-
 class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   tagName: "iframe"
   template: false

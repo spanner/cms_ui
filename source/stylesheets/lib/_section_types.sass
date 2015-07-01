@@ -12,6 +12,10 @@ p.quote
 span.bigtext
   +bigtext
 
+h1,h2,h3,h4
+  &:empty
+    display: none
+
 date
   float: left
   color: $mid
@@ -193,18 +197,19 @@ main
         vertical-align: top
         float: left
         min-height: 100px
-        width: 48.7%
+        width: 48%
+        margin-right: 4%
         &.second
-          float: right
+          margin-right: 0
         &:empty
           height: 400px
 
     &.asidequote
       aside
         float: right
-        width: 293px
+        width: 22%
         min-height: 50px
-        margin: 0 0 16px 60px
+        margin: 0 0 16px 4%
         color: $pale
         p:first-child
           margin-top: 0
@@ -212,7 +217,7 @@ main
           margin-top: 0.4em
       .section_body
         min-height: 100px
-        max-width: 800px
+        max-width: 830px
         border-top: 1px solid transparent
         *:first-child
           margin-top: 0
@@ -297,21 +302,27 @@ main
           min-width: 100px
 
     &.links
+      padding-bottom: 2em
       .built
         +central
-        .block
+        div.block
           position: relative
-          width: 23%
-          min-height: 160px
-          margin-right: 2%
+          width: 22%
+          min-height: 220px
+          margin-right: 4%
           display: inline-block
           vertical-align: top
           &:last-child
             margin: 0
-          a
+          a.block, span.block
+            position: relative
             display: block
             width: 100%
-            height: 100%
+            height: 220px
+            background:
+              position: center center
+              repeat: no-repeat
+              size: cover
             span.caption
               position: absolute
               bottom: 8%
@@ -319,7 +330,7 @@ main
               right: 20%
               height: 1.25em
               padding: 10px
-              background-color: rgba(255,215,0, 0.9)
+              background-color: rgba(255,215,0, 0.75)
               color: black
               font-size: 1.2rem
               line-height: 1.1

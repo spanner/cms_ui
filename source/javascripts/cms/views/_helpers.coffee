@@ -244,6 +244,7 @@ class CMS.Views.VideosList extends CMS.Views.AssetsListView
 class CMS.Views.VideoPickerLayout extends CMS.Views.MenuLayout
   template: "videos/picker"
   menuView: CMS.Views.VideosList
+  className: "cms-video-picker"
 
   initialize: ->
     @collection = @model.getSite().videos
@@ -275,9 +276,13 @@ class CMS.Views.ImagesList extends CMS.Views.AssetsListView
 class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   template: "images/picker"
   menuView: CMS.Views.ImagesList
+  className: "cms-image-picker"
 
   initialize: (data, options={}) ->
     @collection = @model.getSite().images
+    super
+
+  onRender: =>
     super
 
   onOpen: =>
@@ -320,6 +325,7 @@ class CMS.Views.PagesList extends CMS.Views.MenuView
 class CMS.Views.PagePickerLayout extends CMS.Views.MenuLayout
   template: "pages/picker"
   menuView: CMS.Views.PagesList
+  className: "cms-page-picker"
 
   initialize: (data, options={}) ->
     @collection = @model.pages

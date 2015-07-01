@@ -1,5 +1,3 @@
-%a.page
-  %span.caption.ineditable
-.cms-block-buttons
-  .cms-block-image
-  .cms-block-page
+%span.block
+  %span.caption{contenteditable: "true"}
+.cms-buttons

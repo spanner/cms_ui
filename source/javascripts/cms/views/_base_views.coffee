@@ -15,6 +15,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
     #noop
 
   toggleMenu: =>
+    console.log "toggleMenu"
     if @showing()
       @close()
     else
@@ -24,6 +25,7 @@ class CMS.Views.MenuLayout extends CMS.Views.LayoutView
       @$el.hasClass('open')
 
   open: =>
+    console.log "open menu"
     _cms.vent.trigger "reset_menus"
     @_menu_view?.remove()
     if menu_view_class = @getOption('menuView')
@@ -96,3 +98,4 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
 
   save: =>
     @model?.save()
+

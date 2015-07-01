@@ -25,23 +25,29 @@ CMS.Mixins.CommonBindings =
     if isVisible
       $el.css display: "inline-block"
     else
-      $el.hide()
+      $el.css "display", "none"
 
-  slideVisibility: ($el, isVisible, options) ->
-    console.log "slideVisibility", $el, isVisible, options
+  visibleAsInline: ($el, isVisible, options) ->
+    if isVisible
+      $el.css display: "inline"
+    else
+      $el.css "display", "none"
+
+  visibleWithSlide: ($el, isVisible, options) ->
     if isVisible
       $el.slideDown()
     else
-      console.log "sliding Up"
       $el.slideUp () =>
         $el.hide()
 
 
-  #visibility controls
-  
+  #visibility booleans
 
   untrue: (val) ->
     not val
+
+  thisOrThat: ([value, other_value]=[]) ->
+    value or other_value
 
   thisOrNotThat: ([value, other_value]=[]) ->
     value or not other_value
@@ -58,31 +64,41 @@ CMS.Mixins.CommonBindings =
   notTheSameOrNotTheSame: ([value1, other_value1, value2, other_value2]=[]) ->
     value1 isnt other_value1 or value2 isnt other_value2
 
-  #onGets
-  
-  thisOrThat: ([value, other_value]=[]) ->
-    value or other_value
 
-  # for observed attributes that are assets:
+  #onGets
+
+  # for observed attributes that are assets objects, eg binding a page img src to the image asset.
   assetUrl: (asset, style) =>
     if asset?
       asset.get("#{style}_url") ? asset.get('url')
     else
       ""
 
-  assetBackgroundUrl: (asset, style) =>
+  assetBackgroundUrl: (asset, style) ->
     if url = @assetUrl(asset, style)
       "background-image: url('#{url}')"
     else
       ""
-  
+
+  assetBackgroundThumbUrl: (asset) ->
+    if url = @assetUrl(asset, 'thumb')
+      "background-image: url('#{url}')"
+    else
+      ""
+
+  assetBackgroundHalfUrl: (asset) ->
+    if url = @assetUrl(asset, 'half')
+      "background-image: url('#{url}')"
+    else
+      ""
+
   truncate12: (value) =>
     _.truncate value, 12
   
   cleanText: (value) =>
     $(value).text() or value
-    
-  # for observed asset attributes:
+
+  # for observed attributes of assets, eg binding the img src in a view of the asset.
 
   backgroundUrl: (url) =>
      "background-image: url(#{url})"

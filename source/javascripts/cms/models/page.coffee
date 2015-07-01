@@ -1,5 +1,5 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'link_title', 'precis', 'image_id', 'nav', 'nav_name', 'nav_position', 'nav_heading']
+  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'link_title', 'block_title', 'precis', 'image_id', 'nav', 'nav_name', 'nav_position', 'nav_heading']
 
   defaults:
     nav: false
@@ -123,6 +123,8 @@ class CMS.Models.Page extends CMS.Model
   setDefaults: () =>
     unless @get('link_title')
       @set('link_title', @get('title'), stickitChange: true)
+    unless @get('block_title')
+      @set('block_title', @get('title'), stickitChange: true)
     unless @get('precis')
       precis = $('<p/>')
       unless intro = @get('introduction')

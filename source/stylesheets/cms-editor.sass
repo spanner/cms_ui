@@ -103,58 +103,58 @@ figure, section
     .cms-controls
       display: block
 
+.cms-controls
+  +cms-font-light
+  position: absolute
+  display: none
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: 50
+  pointer-events: none
+
+.cms-buttons
+  position: absolute
+  top: 10%
+  right: 10%
+  display: none
+  .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu, .cms-style-menu
+    display: inline-block
+    float: left
+    &.open
+      .button.cms-menu-head
+        margin-bottom: 0
+        padding-bottom: 20px
+        height: 56px
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+        &:hover
+          background-color: $control_bg
+
+.cms-asset-styler
+  .cms-buttons
+    top: 20px
+    right: 20px
+    a.left
+
+.cms-asset-inserter
+  position: absolute
+  display: none
+  width: 120px
+  top: 0
+  left: -120px
+  transition: top 0.25s ease-out
+  .cms-video-picker, .cms-image-picker
+    .cms-buttons
+      float: right
+  .cms-menu-body
+    right: auto
+    left: -50px
+
 section
   .built
     min-height: 100px
-  .cms-controls
-    +cms-font-light
-    position: absolute
-    display: none
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    z-index: 50
-    pointer-events: none
-    .cms-buttons
-      position: absolute
-      top: 10%
-      right: 10%
-
-  .cms-asset-inserter
-    position: absolute
-    display: none
-    width: 120px
-    top: 0
-    left: -120px
-    transition: top 0.25s ease-out
-    .cms-video-picker, .cms-image-picker
-      .cms-buttons
-        float: right
-    .cms-menu-body
-      right: auto
-      left: -50px
-
-  .cms-buttons
-    .cms-video-picker, .cms-image-picker, .cms-page-picker, .cms-section-menu, .cms-style-menu
-      display: inline-block
-      float: left
-      &.open
-        .button.cms-menu-head
-          margin-bottom: 0
-          padding-bottom: 20px
-          height: 56px
-          border-bottom-left-radius: 0
-          border-bottom-right-radius: 0
-          &:hover
-            background-color: $control_bg
-
-  .cms-asset-styler
-    .cms-buttons
-      top: 20px
-      right: 20px
-      a.left
-        
 
 
   &.hero, &.bigpicture
@@ -253,13 +253,9 @@ section
     .block
       position: relative
       background-color: $editable_bg
-      .cms-block-buttons
-        +cms-font-light
-        position: absolute
-        display: none
-        top: 10px
-        right: 10px
-        z-index: 50
+      &:hover
+        .cms-buttons
+          display: block
      
 
 @import lib/section_types
