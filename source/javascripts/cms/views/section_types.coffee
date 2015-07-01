@@ -238,13 +238,20 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
     @_video_viewer?.setSize(size)
 
 
-class CMS.Views.ImageStyler extends CMS.Views.ItemView
+class CMS.Views.AssetStyler extends CMS.Views.ItemView
   template: "images/styler"
   events:
-    "click a.full": () => @trigger "styled", "full"
-    "click a.left": () => @trigger "styled", "left"
-    "click a.right": () => @trigger "styled", "right"
-    "click a.delete": () => @trigger "remove"
+    "click a.right": "setRight"
+    "click a.left": "setLeft"
+    "click a.full": "setFull"
+    "click a.delete": "removeAsset"
+
+  setRight: () => @trigger "styled", "right"
+  setLeft: () => @trigger "styled", "left"
+  setFull: () => @trigger "styled", "full"
+  removeAsset: () =>@trigger "remove"
+
+
 
 
 class CMS.Views.InlineImage extends CMS.Views.Image
@@ -257,7 +264,7 @@ class CMS.Views.InlineImage extends CMS.Views.Image
 
   onRender: () =>
     super
-    @_styler = new CMS.Views.ImageStyler
+    @_styler = new CMS.Views.AssetStyler
       model: @model
       el: @ui.style_menu
     @_styler.render()
@@ -279,15 +286,6 @@ class CMS.Views.InlineImage extends CMS.Views.Image
       @remove()
 
 
-class CMS.Views.VideoStyler extends CMS.Views.ItemView
-  template: "videos/styler"
-  events:
-    "click a.full": () => @trigger "styled", "full"
-    "click a.left": () => @trigger "styled", "left"
-    "click a.right": () => @trigger "styled", "right"
-    "click a.delete": () => @trigger "remove"
-
-
 class CMS.Views.InlineVideo extends CMS.Views.Video
   template: "videos/inline"
   tagName: "figure"
@@ -298,7 +296,7 @@ class CMS.Views.InlineVideo extends CMS.Views.Video
     
   onRender: () =>
     super
-    @_styler = new CMS.Views.VideoStyler
+    @_styler = new CMS.Views.AssetStyler
       model: @model
       el: @ui.style_menu
     @_styler.render()
