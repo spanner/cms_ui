@@ -3,23 +3,23 @@ class CMS.Models.Site extends CMS.Model
   savedAttributes: ["title", "domain", "template", "haml", "sass", "coffee"]
 
   build: =>
-    @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
-    @pages = new CMS.Collections.Pages @get('pages'), site: @, comparator: "path"
     @images = new CMS.Collections.Images @get('images'), site: @
     @videos = new CMS.Collections.Videos @get('videos'), site: @
+    @page_types = new CMS.Collections.PageTypes @get('page_types'), site: @
+    @pages = new CMS.Collections.Pages @get('pages'), site: @, comparator: "path"
     @nav_pages = new CMS.Collections.NavPages
 
   populate: (data) =>
+    @populateImages()
+    @on "change:images", @populateImages
+    @populateVideos()
+    @on "change:videos", @populateVideos
     @page_types.reset(data.page_types)
     @pages.reset(data.pages)
     @populateDates(data)
     @populateCSS(data)
     @populateJS(data)
     @populateHTML(data)
-    @populateImages()
-    @on "change:images", @populateImages
-    @populateVideos()
-    @on "change:videos", @populateVideos
     @populateNavigation()
     @pages.on "change:nav", @populateNavigation
     true

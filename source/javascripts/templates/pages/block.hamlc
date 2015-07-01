@@ -1,3 +1,5 @@
 %span.block
   %span.caption{contenteditable: "true"}
 .cms-buttons
+  %a.button.save.save_page
+    ✓

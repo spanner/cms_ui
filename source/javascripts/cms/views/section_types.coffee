@@ -577,6 +577,9 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
   tagName: "div"
   className: "block"
 
+  events:
+    "click a.save_page": "savePage"
+
   ui:
     controls: ".cms-buttons"
 
@@ -592,6 +595,10 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
       ]
     "span.caption":
       observe: "block_title"
+    "a.save_page":
+      observe: "changed"
+      visible: true
+      visibleFn: "visibleAsInlineBlock"
 
   onRender: =>
     $.bpl ?= @
@@ -611,12 +618,17 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
 
   setImage: (image) =>
     @model.set 'image', image
-    @stickit()
+    @$el.trigger('input')
 
   setPage: (page) =>
     page.setDefaults()
     @model = page
     @stickit()
+    @$el.trigger('input')
+
+  savePage: (e) =>
+    e?.preventDefault()
+    @model.save()
 
 
 class CMS.Views.NoBlockPages extends Backbone.Marionette.ItemView
@@ -650,10 +662,11 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
     @_pages.reset()
     if html = @model.get('built_html')
       site = @model.getSite()
-      # $(html).find('div.block').each (i, page) =>
-      #   if page_id = page.attr('data-page-id')
-      #     if page = site.pages.get(page_id)
-      #       @_pages.add page
+      $(html).find('div.block').each (i, block) =>
+        if page_id = $(block).attr('data-page-id')
+          if page = site.pages.get(page_id)
+            @_pages.add page
+    @renderContent()
 
   renderContent: =>
     @ui.built.empty()
@@ -664,7 +677,7 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
       collection: @_pages
     @_page_blocks.render()
     @_page_blocks.$el.appendTo @$el.find('.built')
-
+    @$el.find('.built').trigger('input')
 
 
 ## Contents block
