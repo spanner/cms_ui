@@ -134,6 +134,11 @@ class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/asideimage"
 
   bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
     "h2.section":
       observe: "title"
     ".section_body":
@@ -153,7 +158,7 @@ class CMS.Views.RenderedBigquoteSection extends CMS.Views.RenderedSectionView
 
   bindings:
     ".quoted":
-      observe: "main_html"
+      observe: "secondary_html"
       updateMethod: "text"
     ".speaker":
       observe: "caption_html"

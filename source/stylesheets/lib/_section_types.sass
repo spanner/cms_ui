@@ -222,9 +222,11 @@ main
     &.asideimage
       aside
         float: right
-        width: 48.5%
+        width: 48%
         min-height: 50px
-        margin: 0 0 16px 60px
+        margin: 0 0 16px 4%
+        figure.image
+          margin: 0
         img, video, iframe
           width: 100%
           height: auto
@@ -242,7 +244,7 @@ main
       &.left
         aside
           float: left
-          margin: 0 60px 16px 0
+          margin: 0 4% 16px 0
       &.full
         aside
           float: none
@@ -257,11 +259,10 @@ main
           +bigtext
 
     &.bigquote
-      margin: 3em 0
       p
         width: 75%
         +bigtext
-        margin: 1.25em auto
+        margin: 1em auto 0.5em auto
 
     &.bigpicture
       position: relative

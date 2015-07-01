@@ -252,8 +252,6 @@ class CMS.Views.AssetStyler extends CMS.Views.ItemView
   removeAsset: () =>@trigger "remove"
 
 
-
-
 class CMS.Views.InlineImage extends CMS.Views.Image
   template: "images/inline"
   tagName: "figure"
