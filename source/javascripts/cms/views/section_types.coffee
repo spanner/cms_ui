@@ -558,6 +558,42 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
     @imagePicker()
 
 
+## Subject pages
+#
+# The remaining section types are for linking to other pages, for which we need an embedded
+# representation that can fetch itself and set up the lazy-properties that we use for linking:
+# precis, link title, image etc are all derived from other content at the point where they are
+# first needed.
+#
+class CMS.Views.EmbeddedPageView extends CMS.Views.ItemView
+
+  # returns a promise that will be resolved when rendering finishes
+  fetchAndRender: =>
+    @_render_promise = $.Deferred()
+    @model.load().then(@renderWhenFetched)
+    @_render_promise
+
+  renderWhenFetched: =>
+    @model.setLazyProperties()
+    @render()
+    if image = @model.get('image')
+      image_viewer = new CMS.Views.Image
+        model: image
+        size: 'half'
+        el: @ui.picture
+      image_viewer.render()
+    @_render_promise.resolve(@el)
+
+
+class CMS.Views.EmbeddedPageList extends CMS.Views.CollectionView
+  tagName: "div"
+
+  onRender: () =>
+    promises = @children.map (child) ->
+      child.fetchAndRender()
+    $.when(promises...).done (results...) =>
+      @trigger "children_rendered", results
+
 
 ## Link blocks and highlights
 #
@@ -565,14 +601,6 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 # in a given style. The link blocks will probably show editable features that bind to the individual page,
 # but the built block in the section view is only built, not bound.
 #
-
-class CMS.Views.EmbeddedPageView extends CMS.Views.ItemView
-
-  onRender: =>
-    @model.setDefaults()
-    @stickit()
-
-
 class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
   template: "pages/block"
   tagName: "div"
@@ -608,28 +636,25 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
 
   onRender: =>
     super
-    unless @_page_picker
-      @_page_picker = new CMS.Views.PagePickerLayout
-        model: @model.getSite()
-      @_page_picker.render()
-      @_page_picker.on 'selected', @setPage
-      @_page_picker.$el.appendTo(@ui.controls)
-    unless @_image_picker
-      @_image_picker = new CMS.Views.ImagePickerLayout
-        model: @model
-      @_image_picker.render()
-      @_image_picker.on 'selected', @setImage
-      @_image_picker.$el.appendTo(@ui.controls)
+    @_page_picker = new CMS.Views.PagePickerLayout
+      model: @model.getSite()
+    @_page_picker.render()
+    @_page_picker.on 'selected', @setPage
+    @_page_picker.$el.appendTo(@ui.controls)
+    @_image_picker = new CMS.Views.ImagePickerLayout
+      model: @model
+    @_image_picker.render()
+    @_image_picker.on 'selected', @setImage
+    @_image_picker.$el.appendTo(@ui.controls)
 
   setImage: (image) =>
     @model.set 'image', image
     @sectionChanged()
 
   setPage: (page) =>
-    page.setDefaults()
     @model = page
-    @stickit()
-    @sectionChanged()
+    @fetchAndRender().done =>
+      @sectionChanged()
 
   saveSubjectPage: (e) =>
     e?.preventDefault()
@@ -643,8 +668,7 @@ class CMS.Views.NoBlockPages extends Backbone.Marionette.ItemView
   template: "pages/none"
 
 
-class CMS.Views.PageLinkBlocks extends CMS.Views.CollectionView
-  tagName: "div"
+class CMS.Views.PageLinkBlocks extends CMS.Views.EmbeddedPageList
   className: "block_pages"
   childView: CMS.Views.BlockPageLink
   childEvents:
@@ -662,6 +686,8 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
     @_pages = new CMS.Collections.Pages
     super
 
+  # All this does is to gather page ids from the old html, then we
+  # build new html using the current values for those pages.
   readBuiltHtml: =>
     @_pages.reset()
     if html = @model.get('built_html')
@@ -679,10 +705,13 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
       @_pages.reset(pages[0..3])
     @_page_blocks = new CMS.Views.PageLinkBlocks
       collection: @_pages
+    @_page_blocks.on "children_rendered", () =>
+      @ui.built.empty()
+      @ui.built.append(@_page_blocks.el)
+      @saveBuiltHtml()
     @_page_blocks.render()
-    @_page_blocks.$el.appendTo @$el.find('.built')
-    @saveBuiltHtml()
-    # NB: never bind activated html. Stickit will replace it with identical unlinked elements.
+    # NB: never bind activated html.
+    # Stickit will replace it with identical unlinked elements.
     @$el.on 'input', @saveBuiltHtml
 
 
@@ -726,20 +755,14 @@ class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
   template: "pages/none"
 
 
-class CMS.Views.PageChildren extends CMS.Views.CollectionView
-  tagName: "div"
+class CMS.Views.PageChildren extends CMS.Views.EmbeddedPageList
   className: "child_pages"
   childView: CMS.Views.ChildPage
   
-  #TODO: pagination.
   initialize: () ->
-    @collection = new CMS.Collections.Pages(@model.childPages())
-  
-  onRender: () =>
-    promises = @children.map (child) ->
-      child.fetchAndStick()
-    $.when(promises...).done (results...) =>
-      @trigger "complete", results
+    pages = _.sortBy @model.childPages(), (model) ->
+      -model.get('created_at')
+    @collection = new CMS.Collections.Pages(pages)
 
 
 class CMS.Views.ContentsStyler extends CMS.Views.ItemView
@@ -785,7 +808,7 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
   renderContent: () =>
     @_children_view = new CMS.Views.PageChildren
       model: @model.get('subject_page') or @model.getPage()
-    @_children_view.on "complete", () =>
+    @_children_view.on "children_rendered", () =>
       @ui.built.empty()
       @ui.built.append(@_children_view.el)
       @saveBuiltHtml()

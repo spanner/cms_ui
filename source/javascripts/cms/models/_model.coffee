@@ -7,7 +7,7 @@
 # 5. populate places received data into attributes and collections
 #
 # Call `model.ready()` to access the readiness promise after construction
-# or call `whenReady(function)` to attach more callbacks. They will
+# or call `whenLoaded(function)` to attach more callbacks. They will
 # fire after population and receive the fetched data as first argument.
 #
 # 6 save
@@ -29,13 +29,13 @@ class CMS.Model extends Backbone.Model
   ready: =>
     @_loaded.promise()
     
-  whenReady: (fn) =>
+  whenLoaded: (fn) =>
     @_loaded.done fn
 
   whenFailed: (fn) =>
     @_loaded.fail fn
 
-  isReady: =>
+  isLoaded: =>
     @_loaded.state() is 'resolved'
 
   build: =>
@@ -43,7 +43,7 @@ class CMS.Model extends Backbone.Model
     # @things = new CMS.Collections.Things
 
   load: =>
-    unless @isReady()
+    unless @isLoaded()
       @fetch(error: @notLoaded).done(@loaded)
     @_loaded.promise()
   

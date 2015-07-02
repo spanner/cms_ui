@@ -98,7 +98,7 @@ class CMS.Views.PageHead extends Backbone.Marionette.ItemView
     "style": "css"
 
   onRender: =>
-    @model.whenReady =>
+    @model.whenLoaded =>
       @$el.append('<style />')
       @$el.append '<link rel="stylesheet" href="/stylesheets/cms-editor.css" type="text/css" />',
       @$el.append '<script src="/javascripts/cms-base.js" type="text/javascript" />',
@@ -110,7 +110,7 @@ class CMS.Views.PageEditorLayout extends Backbone.Marionette.LayoutView
   template: false
 
   onRender: =>
-    @model.whenReady =>
+    @model.whenLoaded =>
       html = @model.getSite()?.get('html')
       iwindow = @el.contentWindow
       doc = iwindow.document

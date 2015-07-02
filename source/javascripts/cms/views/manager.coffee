@@ -470,7 +470,7 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
 
   onRender: =>
     @stickit()
-    @model.whenReady =>
+    @model.whenLoaded =>
       @_site_manager = new CMS.Views.SiteManagerLayout
         collection: @model.sites
       @getRegion('site').show(@_site_manager)
@@ -478,14 +478,14 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
 
   setSite: (site) =>
     site.select()
-    site.whenReady () =>
+    site.whenLoaded () =>
       @_pages_manager = new CMS.Views.PagesManagerLayout
         collection: site.pages
       @getRegion('pages').show(@_pages_manager)
 
   setPage: (page) =>
     page.select()
-    page.whenReady () =>
+    page.whenLoaded () =>
       @_page_manager = new CMS.Views.PageManagerLayout
         model: page
       @getRegion('page').show(@_page_manager)

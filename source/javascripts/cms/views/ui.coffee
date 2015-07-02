@@ -25,16 +25,16 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @siteView()
 
   siteView: (site_slug="", page_path="") =>
-    @model.whenReady () =>
+    @model.whenLoaded () =>
       user = @model.getUser()
       @setUser(user)
       @_barrier.hide()
       # user.load()
-      user.whenReady () =>
+      user.whenLoaded () =>
         if site = user.sites.findWhere(slug: site_slug)
           @setSite(site)
-          site.load() unless site.isReady()
-          site.whenReady () =>
+          site.load() unless site.isLoaded()
+          site.whenLoaded () =>
             @setPage(site, page_path)
 
   setUser: (user) =>

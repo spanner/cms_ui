@@ -62,7 +62,7 @@ class CMS.Views.Header extends Backbone.Marionette.ItemView
   template: false
 
   onRender: () =>
-    @model.whenReady @renderNav
+    @model.whenLoaded @renderNav
 
   renderNav: =>
     # @$el.html @model.get('header')
@@ -76,7 +76,7 @@ class CMS.Views.Footer extends Backbone.Marionette.ItemView
   template: false
 
   onRender: () =>
-    @model.whenReady @renderNav
+    @model.whenLoaded @renderNav
 
   renderNav: =>
     # @$el.html @model.get('footer')
@@ -115,7 +115,7 @@ class CMS.Views.SiteEditorLayout extends Backbone.Marionette.LayoutView
     $.site = @model
     @getRegion('controls').show new CMS.Views.SiteControls
       model: @model
-    @model.whenReady =>
+    @model.whenLoaded =>
       @stickit()
       @showTab()
 

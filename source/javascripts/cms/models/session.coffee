@@ -55,11 +55,11 @@ class CMS.Models.Session extends CMS.Model
     @writeCookie()
     @loaded()
 
-  userIsReady: () =>
-    @_user.isReady()
+  userIsLoaded: () =>
+    @_user.isLoaded()
 
-  whenUserReady: (fn) =>
-    @_user.whenReady(fn)
+  whenUserLoaded: (fn) =>
+    @_user.whenLoaded(fn)
   
   populateUser: (data) =>
     @_user.populate(data)

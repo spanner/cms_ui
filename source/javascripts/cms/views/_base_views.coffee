@@ -77,7 +77,7 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
     
 
 class CMS.Views.CollectionView extends Backbone.Marionette.CollectionView
-  @mixin "collection", "toggle", "bindings"
+  @mixin "logging", "collection", "toggle", "bindings"
 
   show: () =>
     @$el.show()

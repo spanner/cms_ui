@@ -117,10 +117,10 @@ class CMS.Models.Page extends CMS.Model
       depth = matches.length
     depth
 
-  loadAndSetDefaults: () =>
-    @load().done @setDefaults
+  loadAndsetLazyProperties: () =>
+    @load().done @setLazyProperties
 
-  setDefaults: () =>
+  setLazyProperties: () =>
     unless @get('link_title')
       @set('link_title', @get('title'), stickitChange: true)
     unless @get('block_title')

@@ -7,7 +7,7 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
 
   onRender: () =>
     @wait()
-    @model.whenUserReady @goAway
+    @model.whenUserLoaded @goAway
     if @model.token
       @model.once "change:token", @home
     else
@@ -44,4 +44,4 @@ class CMS.Views.SessionLayout extends CMS.Views.LayoutView
   # our standard name for a default action doesn't fit well here.
   home: () =>
     @unwait()
-    @showForm('SessionLoginForm') unless @model.userIsReady()
+    @showForm('SessionLoginForm') unless @model.userIsLoaded()
