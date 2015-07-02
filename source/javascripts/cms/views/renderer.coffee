@@ -73,6 +73,8 @@ class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
 
   onRender: =>
     @stickit()
+    @$el.find('.cms-controls, .cms-buttons').remove()
+    @$el.find('.editable').remove()
 
   typeClass: (section_type) =>
     section_type or 'default'
@@ -207,6 +209,24 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
   onRender: =>
     super
     @imageOrVideo('hero')
+
+
+class CMS.Views.RenderedLinksSection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/links"
+
+  bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
+    ".built":
+      observe: "built_html"
+      updateMethod: "html"
+
+  onRender: () =>
+    super
+    @$el.find('h2.title').remove unless @model.get('title')
 
 
 class CMS.Views.RenderedContentsSection extends CMS.Views.RenderedSectionView

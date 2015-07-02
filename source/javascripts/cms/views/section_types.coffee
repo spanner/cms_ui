@@ -48,8 +48,7 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
 
   saveBuiltHtml: () =>
     if html = @ui.built.html()
-      $(html).find('.cms-control').remove()
-      @model.set 'built_html', html, stickitChange: true
+      @model.set 'built_html', @cleanHtml(html), stickitChange: true
 
   getContentTemplate: () =>
     @getOption('content_template')
@@ -127,7 +126,9 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
     @_cleaner ?= $('<div>')
     @_cleaner.html(html)
     @_cleaner.find('.cms-controls').remove()
+    @_cleaner.find('.cms-buttons').remove()
     @_cleaner.find('.editable').removeClass('editable')
+    @_cleaner.find('.formattable').removeClass('formattable')
     @_cleaner.find('[data-placeholder]').removeAttr('data-placeholder')
     @_cleaner.find('[contenteditable]').removeAttr('contenteditable')
     cleaned = @_cleaner.html()
@@ -578,20 +579,25 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
   className: "block"
 
   events:
-    "click a.save_page": "savePage"
+    "click a.save_page": "saveSubjectPage"
 
   ui:
     controls: ".cms-buttons"
 
-  bindings: 
-    "span.block, a.block":
+  bindings:
+    ":el":
       attributes: [
+        name: "data-page-id"
+        observe: "id"
+      ]
+    "a.block":
+      attributes: [
+        name: "href"
+        observe: "path"
+      ,
         name: "style"
         observe: "image"
         onGet: "assetBackgroundHalfUrl"
-      ,
-        name: "data-page-id"
-        observe: "id"
       ]
     "span.caption":
       observe: "block_title"
@@ -601,7 +607,6 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
       visibleFn: "visibleAsInlineBlock"
 
   onRender: =>
-    $.bpl ?= @
     super
     unless @_page_picker
       @_page_picker = new CMS.Views.PagePickerLayout
@@ -618,17 +623,20 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
 
   setImage: (image) =>
     @model.set 'image', image
-    @$el.trigger('input')
+    @sectionChanged()
 
   setPage: (page) =>
     page.setDefaults()
     @model = page
     @stickit()
-    @$el.trigger('input')
+    @sectionChanged()
 
-  savePage: (e) =>
+  saveSubjectPage: (e) =>
     e?.preventDefault()
     @model.save()
+  
+  sectionChanged: () =>
+    @$el.trigger('input')
 
 
 class CMS.Views.NoBlockPages extends Backbone.Marionette.ItemView
@@ -645,16 +653,12 @@ class CMS.Views.PageLinkBlocks extends CMS.Views.CollectionView
   removePage: (e, page) =>
     @collection.remove(page)
 
-  onRender: () =>
-    $.plb = @
-
 
 class CMS.Views.LinksSection extends CMS.Views.SectionView
   template: "section_types/links"
   content_template: "section_content/link_blocks"
 
   initialize: ->
-    $.s = @
     @_pages = new CMS.Collections.Pages
     super
 
@@ -663,7 +667,7 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
     if html = @model.get('built_html')
       site = @model.getSite()
       $(html).find('div.block').each (i, block) =>
-        if page_id = $(block).attr('data-page-id')
+        if page_id = $(block).data('page-id')
           if page = site.pages.get(page_id)
             @_pages.add page
     @renderContent()
@@ -677,7 +681,9 @@ class CMS.Views.LinksSection extends CMS.Views.SectionView
       collection: @_pages
     @_page_blocks.render()
     @_page_blocks.$el.appendTo @$el.find('.built')
-    @$el.find('.built').trigger('input')
+    @saveBuiltHtml()
+    # NB: never bind activated html. Stickit will replace it with identical unlinked elements.
+    @$el.on 'input', @saveBuiltHtml
 
 
 ## Contents block
@@ -714,7 +720,6 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
         size: 'half'
         el: @ui.picture
       image_viewer.render()
-    
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView

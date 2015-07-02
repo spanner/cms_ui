@@ -83,7 +83,6 @@ class CMS.Model extends Backbone.Model
   belongsTo: (object_attribute, id_attribute, collection) =>
     # turn received object_id into associated object
     if object_id = @get(id_attribute)
-      console.log "belongsTo", object_attribute, object_id, collection.get(object_id), 'in', collection.size()
       @set object_attribute, collection.get(object_id), silent: true
 
     # on any change, turn associated object back into an object_id
