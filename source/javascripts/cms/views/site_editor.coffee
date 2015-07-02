@@ -47,6 +47,10 @@ class CMS.Views.NavLink extends CMS.Views.ItemView
         observe: 'path'
       ]
 
+  events:
+    "click": "stopThat"
+    "dragstart": "stopThat"
+
   onRender: () =>
     @$el.attr "contenteditable", "true"
     @model.set("nav_name", @model.get("title")) unless @model.get("nav_name")

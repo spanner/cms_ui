@@ -608,6 +608,9 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
 
   events:
     "click a.save_page": "saveSubjectPage"
+    "click a.block": "stopThat"
+    "dragstart a.block": "stopThat"
+    "click span.caption": "stopThat"
 
   ui:
     controls: ".cms-buttons"
@@ -815,5 +818,6 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
     @_children_view.render()
 
   setPage: (page) =>
-    super
+    @model.set 'subject_page', page, stickitChange: true
+    @model.set('title', page.get('title')) unless @model.get('title')
     @build()

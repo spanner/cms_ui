@@ -121,17 +121,25 @@ class CMS.Models.Page extends CMS.Model
     @load().done @setLazyProperties
 
   setLazyProperties: () =>
+    # set link title to page title
     unless @get('link_title')
       @set('link_title', @get('title'), stickitChange: true)
+    # set block title to page title
     unless @get('block_title')
       @set('block_title', @get('title'), stickitChange: true)
+    # set precis to truncated form of page introduction or first available text
     unless @get('precis')
       precis = $('<p/>')
       unless intro = @get('introduction')
-        intro = @sections.pluck('main_html')[0]
-      clean_intro = $(intro).text() or intro
-      precis.text(_.prune clean_intro, 380)
-      @set('precis', precis, stickitChange: true)
+        first_useful_section = @sections.find (s) ->
+          not _.isBlank($(s.get('main_html')).text())
+        intro = first_useful_section.get('main_html')
+        # strip html
+        intro = $(intro).text()
+      precis.text(_.prune(intro, 380))
+      console.log "lazy-setting precis to", precis.get(0)
+      @set('precis', precis, stickitChange: true) if precis.text()
+    # set image to first available section image. Should catch heroes.
     unless @get('image')
       image = @sections.pluck('image')[0]
       @set('image', image, stickitChange: true)

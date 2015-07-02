@@ -13,6 +13,13 @@
 # ### View Mixins
 CMS.Mixins.CommonBindings = 
 
+  # useful not-bindings
+
+  stopThat: (e) =>
+    console.log "stopThat!", e.target
+    e.preventDefault()
+    e.stopPropagation()
+
   #visibleFns
   
   visibleAsInlineBlock: ($el, isVisible, options) ->
