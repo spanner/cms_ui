@@ -1,4 +1,5 @@
 .content
+  %h2.editable{data: {placeholder: "Optional header"}}
   .section_body.formattable{data: {placeholder: "Your text here"}}
 .cms-controls
   .cms-buttons

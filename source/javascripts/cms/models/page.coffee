@@ -133,11 +133,10 @@ class CMS.Models.Page extends CMS.Model
       unless intro = @get('introduction')
         first_useful_section = @sections.find (s) ->
           not _.isBlank($(s.get('main_html')).text())
-        intro = first_useful_section.get('main_html')
-        # strip html
-        intro = $(intro).text()
+        if first_useful_section
+          intro = first_useful_section.get('main_html')
+          intro = $(intro).text()
       precis.text(_.prune(intro, 380))
-      console.log "lazy-setting precis to", precis.get(0)
       @set('precis', precis, stickitChange: true) if precis.text()
     # set image to first available section image. Should catch heroes.
     unless @get('image')

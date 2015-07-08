@@ -1,4 +1,5 @@
 .content
+  %h2.editable{data: {placeholder: "Optional header"}}
   %aside
     .picture
     .caption.formattable{data: {placeholder: "Optional marginal text"}}

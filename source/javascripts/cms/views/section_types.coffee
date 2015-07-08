@@ -444,7 +444,7 @@ class CMS.Views.AsidequoteSection extends CMS.Views.SectionView
   template: "section_types/asidequote"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
     ".section_body":
       observe: "main_html"
@@ -483,7 +483,7 @@ class CMS.Views.AsideimageSection extends CMS.Views.SectionView
         name: "class"
         observe: "style"
       ]
-    "h2.section":
+    "h2":
       observe: "title"
     ".section_body":
       observe: "main_html"
@@ -523,6 +523,8 @@ class CMS.Views.OnecolSection extends CMS.Views.SectionView
   tagName: "section"
 
   bindings:
+    "h2":
+      observe: "title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
@@ -728,30 +730,61 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
   template: "pages/child"
   tagName: "div"
   className: "child-page"
+
+  events:
+    "click a.save_page": "saveSubjectPage"
+
   bindings: 
-    "a":
+    ":el":
+      attributes: [
+        name: "data-page-id"
+        observe: "id"
+      ]
+    "a.page":
       attributes: [
         name: "href"
         observe: "path"
       ]
     ".title":
       observe: "link_title"
-      onGet: "cleanText"
     ".precis":
       observe: "precis"
       updateMethod: "html"
+    "a.save_page":
+      observe: "changed"
+      visible: true
+      visibleFn: "visibleAsInlineBlock"
 
   ui:
     picture: ".picture"
+    controls: ".cms-buttons"
 
   onRender: =>
     super
     if image = @model.get('image')
-      image_viewer = new CMS.Views.Image
+      @_image_viewer = new CMS.Views.Image
         model: image
         size: 'half'
         el: @ui.picture
-      image_viewer.render()
+      @_image_viewer.render()
+    @_image_picker = new CMS.Views.ImagePickerLayout
+      model: @model
+    @_image_picker.render()
+    @_image_picker.on 'selected', @setImage
+    @_image_picker.$el.appendTo(@ui.controls)
+
+  setImage: (image) =>
+    @model.set 'image', image
+    @_image_viewer.model = image
+    @_image_viewer.render()
+    @sectionChanged()
+
+  sectionChanged: () =>
+    @$el.trigger('input')
+
+  saveSubjectPage: (e) =>
+    e?.preventDefault()
+    @model.save()
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
@@ -796,9 +829,6 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
         name: "class"
         observe: "style"
       ]
-    ".built":
-      observe: "built_html"
-      updateMethod: "html"
     "h2.title":
       observe: "title"
       updateMethod: "html"
@@ -807,7 +837,10 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
     super
     @pagePicker()
     @_styler.on "refresh", @build
-  
+
+  readBuiltHtml: =>
+    @build()
+
   renderContent: () =>
     @_children_view = new CMS.Views.PageChildren
       model: @model.get('subject_page') or @model.getPage()

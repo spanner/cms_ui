@@ -74,7 +74,8 @@ class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
   onRender: =>
     @stickit()
     @$el.find('.cms-controls, .cms-buttons').remove()
-    @$el.find('.editable').remove()
+    @$el.find('.editable').removeClass('editable')
+    @$el.find('h2').remove() unless @model.get('title')
 
   typeClass: (section_type) =>
     section_type or 'default'
@@ -93,7 +94,7 @@ class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
   tagName: "section"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
     ".section_body":
       observe: "main_html"
@@ -119,7 +120,7 @@ class CMS.Views.RenderedAsidequoteSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/asidequote"
 
   bindings:
-    "h2.section":
+    "h2":
       observe: "title"
     ".section_body":
       observe: "main_html"
@@ -141,7 +142,7 @@ class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
         name: "class"
         observe: "style"
       ]
-    "h2.section":
+    "h2":
       observe: "title"
     ".section_body":
       observe: "main_html"
@@ -171,6 +172,8 @@ class CMS.Views.RenderedOnecolSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/onecol"
 
   bindings:
+    "h2":
+      observe: "title"
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
@@ -244,10 +247,6 @@ class CMS.Views.RenderedContentsSection extends CMS.Views.RenderedSectionView
     "h2.title":
       observe: "title"
       updateMethod: "html"
-
-  onRender: () =>
-    super
-    @$el.find('h2.title').remove unless @model.get('title')
 
 
 class CMS.Views.RenderedCarouselSection extends CMS.Views.RenderedSectionView

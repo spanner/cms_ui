@@ -1,4 +1,5 @@
 .content
+  %h2.editable{data: {placeholder: "Optional header"}}
   %aside.section_aside
     %p.quote
       %span.quoted.editable{data: {placeholder: "Quoted text"}}

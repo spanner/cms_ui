@@ -1,4 +1,5 @@
 .content
+  %h2
   %aside.section_aside
     %p.quote
       %span.quoted

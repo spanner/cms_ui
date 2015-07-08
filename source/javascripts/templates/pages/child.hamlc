@@ -1,7 +1,8 @@
-.picture
-  %a
-    %img
+%a.page.picture
 .summary
   %h2
-    %a.title{contenteditable: "plaintext-only", data: {placeholder: "Link title"}}
+    %a.title.page{contenteditable: "plaintext-only", data: {placeholder: "Link title"}}
   .precis{contenteditable: "true", data: {placeholder: "Summary of page"}}
+.cms-buttons
+  %a.button.save.save_page
+    ✓

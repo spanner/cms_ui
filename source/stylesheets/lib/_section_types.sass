@@ -1,6 +1,9 @@
 blockquote
   +quoted
   margin: 0
+  &+p
+    color: white
+    margin-top: 0
 
 p.quote
   span.quoted
@@ -230,7 +233,7 @@ main
         img, video, iframe
           width: 100%
           height: auto
-          min-height: 300px
+          min-height: 100px
         .caption
           color: $pale
           margin-top: 1em
@@ -253,10 +256,9 @@ main
 
     &.onecol
       .content
-        .section_body
-          width: 75%
+        .section_body, h2
+          width: 50%
           margin: 1.25em auto
-          +bigtext
 
     &.bigquote
       p
