@@ -109,7 +109,7 @@ class CMS.Views.ListedAssetView extends CMS.Views.ItemView
     @model.remove()
 
   popIfNewAndShowing: () =>
-    @clickFileField() if @model.isNew() and not @model.get('file') and not @model.get('remote_url')
+    @clickFileField() if @model.isNew() and not @model.get('file') and not @model.get('remote_url') and not @model.get('is_meant_to_be_empty')
 
   clickFileField: (e) =>
     @ui.filefield.trigger('click')
@@ -220,7 +220,6 @@ class CMS.Views.AssetsListView extends CMS.Views.MenuView
       imported = @collection.add
         site_id: @collection.getSite().id
         remote_url: remote_url
-      console.log "imported", imported
       imported.save().done =>
         @$el.find('a.import').removeClass('waiting')
         @$el.find('input.remote_url').val("")
@@ -279,10 +278,7 @@ class CMS.Views.ImagePickerLayout extends CMS.Views.MenuLayout
   className: "cms-image-picker"
 
   initialize: (data, options={}) ->
-    @collection = @model.getSite().images
-    super
-
-  onRender: =>
+    @collection ?= @model?.getSite().images
     super
 
   onOpen: =>

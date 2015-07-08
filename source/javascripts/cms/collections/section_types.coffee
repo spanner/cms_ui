@@ -11,6 +11,7 @@ class CMS.Collections.SectionTypes extends CMS.Collection
       asidequote: "Text and quote"
       bigquote: "Big quote"
       hero: "Hero"
+      gallery: "Gallery"
       contents: "Contents"
       links: "Link blocks"
 

@@ -24,6 +24,8 @@ class CMS.Views.BlockPageLink extends CMS.Views.EmbeddedPageView
         name: "data-page-id"
         observe: "id"
       ]
+    ".title":
+      observe: "link_title"
     "a.block":
       attributes: [
         name: "href"

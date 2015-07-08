@@ -1,5 +1,5 @@
 class CMS.Models.Image extends CMS.Model
-  savedAttributes: ["file", "file_name", "remote_url"]
+  savedAttributes: ["file", "file_name", "remote_url", "caption"]
 
   initialize: () ->
     @on 'change:file', @getThumb

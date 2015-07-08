@@ -1,0 +1,7 @@
+.content
+  %h2.editable{data: {placeholder: "Optional Heading"}}
+  .built
+.cms-controls
+  .cms-buttons
+    .cms-style-menu
+    .cms-section-menu

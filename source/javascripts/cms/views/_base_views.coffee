@@ -62,7 +62,7 @@ class CMS.Views.MenuView extends Backbone.Marionette.CompositeView
 
   onRender: =>
     console.log "menuview render", @constructor.name
-    @stickit()
+    @stickit() if @model
 
   addItem: =>
     @collection.add({})

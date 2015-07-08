@@ -13,6 +13,9 @@ class CMS.Views.AssetView extends CMS.Views.ItemView
   urlAtSize: (url) =>
     @model.get("#{@_size}_url") ? url
 
+  backgroundAtSize: (url) =>
+    "background-image: url('#{@urlAtSize(url)}')"
+
   setSize: (size) =>
     @_size = size
     @stickit()

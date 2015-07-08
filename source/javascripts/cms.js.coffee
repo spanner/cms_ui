@@ -1,6 +1,7 @@
 #= require hamlcoffee
 #= require lib/_jquery
 #= require lib/_jquery.cookie
+#= require lib/_rangy
 #= require lib/_underscore
 #= require lib/_underscore.string
 #= require lib/_backbone

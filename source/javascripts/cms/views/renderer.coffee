@@ -264,3 +264,20 @@ class CMS.Views.RenderedCarouselSection extends CMS.Views.RenderedSectionView
     ".captions":
       observe: "secondary_html"
       updateMethod: "html"
+
+
+class CMS.Views.RenderedGallerySection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/gallery"
+
+  bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
+    ".built":
+      observe: "built_html"
+      updateMethod: "html"
+    "h2":
+      observe: "title"
+      updateMethod: "html"

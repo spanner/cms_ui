@@ -276,6 +276,19 @@ section
           .cms-menu-body
             right: auto
             left: -80px
-     
+  &.gallery
+    .block
+      position: relative
+      background-color: $editable_bg
+      a.zoom
+        pointer-events: none
+      &:hover
+        .cms-buttons
+          display: block
+          right: auto
+          left: 20px
+          .cms-menu-body
+            right: auto
+            left: -80px
 
 @import lib/section_types

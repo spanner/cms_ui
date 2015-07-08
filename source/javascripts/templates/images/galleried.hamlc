@@ -1,0 +1,9 @@
+%a.zoom
+  %figure.image
+    %figcaption
+.cms-buttons
+  %a.button.delete.delete_image{title: "Remove image"}>
+    x
+  %a.button.add.add_image{title: "Add image"}>
+    \+
+  
