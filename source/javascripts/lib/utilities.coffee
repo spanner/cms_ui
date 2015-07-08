@@ -1,6 +1,6 @@
 jQuery ($) ->
   
-  $.fn.removeIfEmpty = () ->
+  $.fn.removeIfBlank = () ->
     @each ->
       $el = $(@)
       $el.remove() if _.isBlank $el.text()

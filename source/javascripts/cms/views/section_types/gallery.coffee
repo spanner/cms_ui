@@ -53,6 +53,7 @@ class CMS.Views.GalleryImage extends CMS.Views.AssetView
   removeImage: (e) =>
     e?.preventDefault()
     @collection.remove(@model)
+    @sectionChanged()
 
   addImage: (e) =>
     e?.preventDefault()
@@ -60,6 +61,7 @@ class CMS.Views.GalleryImage extends CMS.Views.AssetView
       is_meant_to_be_empty: true
     ,
       at: @collection.indexOf(@model) + 1
+    @sectionChanged()
 
   sectionChanged: () =>
     @$el.trigger('input')
@@ -89,6 +91,9 @@ class CMS.Views.GallerySection extends CMS.Views.SectionView
       ]
     "h2":
       observe: "title"
+      updateMethod: "html"
+    ".section_body":
+      observe: "main_html"
       updateMethod: "html"
 
   initialize: ->

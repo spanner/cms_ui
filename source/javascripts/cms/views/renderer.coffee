@@ -32,7 +32,7 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
       
   onRender: () =>
     @stickit()
-    @$el.find('#standfirst').removeIfEmpty()
+    @$el.find('#standfirst').removeIfBlank()
     @$el.find('.editable, .formattable').removeClass('editable formattable')
 
   template: (data) =>
@@ -77,7 +77,7 @@ class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
     @stickit()
     @$el.find('.cms-controls, .cms-buttons').remove()
     @$el.find('.editable, .formattable').removeClass('editable formattable')
-    @$el.find('h2').removeIfEmpty()
+    @$el.find('h2').removeIfBlank()
 
   typeClass: (section_type) =>
     section_type or 'default'
@@ -156,7 +156,7 @@ class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
 
   onRender: =>
     super
-    @$el.find('.caption').removeIfEmpty()
+    @$el.find('.caption').removeIfBlank()
     @imageOrVideo('half')
 
 
@@ -233,7 +233,7 @@ class CMS.Views.RenderedLinksSection extends CMS.Views.RenderedSectionView
 
   onRender: () =>
     super
-    @$el.find('h2.title').removeIfEmpty()
+    @$el.find('h2.title').removeIfBlank()
 
 
 class CMS.Views.RenderedContentsSection extends CMS.Views.RenderedSectionView
@@ -285,3 +285,10 @@ class CMS.Views.RenderedGallerySection extends CMS.Views.RenderedSectionView
     "h2":
       observe: "title"
       updateMethod: "html"
+    ".section_body":
+      observe: "main_html"
+      updateMethod: "html"
+
+  onRender: () =>
+    super
+    @$el.find('.section_body').removeIfBlank()

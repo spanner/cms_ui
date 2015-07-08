@@ -1,5 +1,6 @@
 .content
   %h2.editable{data: {placeholder: "Optional Heading"}}
+  .section_body.formattable{data: {placeholder: "Optional introduction to gallery"}}
   .built
 .cms-controls
   .cms-buttons
