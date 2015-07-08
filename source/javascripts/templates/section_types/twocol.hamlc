@@ -1,5 +1,5 @@
 .content
-  %h2.editable{data: {placeholder: "Optional header"}}
+  %h2.editable{data: {placeholder: "Optional Heading"}}
   .col.first.formattable{data: {placeholder: "First column of text"}}
   .col.second.formattable{data: {placeholder: "Second column of text"}}
 .cms-controls
