@@ -39,6 +39,25 @@ class CMS.Views.Image extends CMS.Views.AssetView
     @$el.attr('data-image-id', @model.get('id'))
 
 
+
+class CMS.Views.BackgroundImage extends CMS.Views.AssetView
+  template: false
+  tagName: "figure"
+  className: "image"
+
+  bindings:
+    ":el":
+      attributes: [
+        name: "style"
+        observe: "url"
+        onGet: "backgroundAtSize"
+      ]
+
+  onRender: () =>
+    super
+    @$el.attr('data-image-id', @model.get('id'))
+
+
 class CMS.Views.Video extends CMS.Views.AssetView
   template: "videos/video"
   tagName: "figure"
@@ -92,10 +111,16 @@ class CMS.Views.ImageOrVideo extends CMS.Views.ItemView
         size: @_size
       @_video_viewer.render()
       @$el.append(@_video_viewer.el)
-    else if image = @model.get('image')
-      @_image_viewer = new CMS.Views.Image
-        model: image
-        size: @_size
+    else 
+      image = @model.get('image')
+      if @options.background
+        @_image_viewer = new CMS.Views.BackgroundImage
+          model: image
+          size: @_size
+      else
+        @_image_viewer = new CMS.Views.Image
+          model: image
+          size: @_size
       @_image_viewer.render()
       @$el.append(@_image_viewer.el)
 

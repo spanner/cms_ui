@@ -72,7 +72,7 @@ class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
 class CMS.Views.PageChildren extends CMS.Views.EmbeddedPageList
   className: "child_pages"
   childView: CMS.Views.ChildPage
-  
+
   initialize: () ->
     pages = _.sortBy @model.childPages(), (model) ->
       -model.get('created_at')

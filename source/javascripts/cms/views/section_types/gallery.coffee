@@ -113,7 +113,6 @@ class CMS.Views.GallerySection extends CMS.Views.SectionView
     @_image_blocks = new CMS.Views.GalleryImages collection: @_images
     @_image_blocks.render()
     @ui.built.append @_image_blocks.el
-    # no need for load-waiting here: images are loaded with the site.
     @saveBuiltHtml()
     @$el.on 'input', @saveBuiltHtml
 

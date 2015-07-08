@@ -53,12 +53,13 @@ class CMS.Views.SectionView extends CMS.Views.ItemView
   getContentTemplate: () =>
     @getOption('content_template')
 
-  imageOrVideo: (size) =>
+  imageOrVideo: (size, options={}) =>
     @ui.picture.empty()
-    @_image_or_video = new CMS.Views.ImageOrVideo
+    options = _.extend options,
       model: @model
       el: @ui.picture
       size: size
+    @_image_or_video = new CMS.Views.ImageOrVideo options
     @_image_or_video.render()
 
   sectionMenu: =>

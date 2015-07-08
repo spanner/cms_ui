@@ -1,4 +1,9 @@
 jQuery ($) ->
+  
+  $.fn.removeIfEmpty = () ->
+    @each ->
+      $el = $(@)
+      $el.remove() if _.isBlank $el.text()
 
   $.easing.glide = (x, t, b, c, d) ->
     -c * ((t=t / d-1)*t*t*t - 1) + b

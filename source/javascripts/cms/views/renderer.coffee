@@ -32,6 +32,8 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
       
   onRender: () =>
     @stickit()
+    @$el.find('#standfirst').removeIfEmpty()
+    @$el.find('.editable, .formattable').removeClass('editable formattable')
 
   template: (data) =>
     @model.get('page_type')?.get('html') or "<header /><main /><footer />"
@@ -74,19 +76,20 @@ class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
   onRender: =>
     @stickit()
     @$el.find('.cms-controls, .cms-buttons').remove()
-    @$el.find('.editable').removeClass('editable')
-    @$el.find('h2').remove() unless @model.get('title')
+    @$el.find('.editable, .formattable').removeClass('editable formattable')
+    @$el.find('h2').removeIfEmpty()
 
   typeClass: (section_type) =>
     section_type or 'default'
 
-  imageOrVideo: (size) =>
+  imageOrVideo: (size, options={}) =>
     @ui.picture.empty()
-    image_or_video = new CMS.Views.ImageOrVideo
+    options = _.extend options,
       model: @model
       el: @ui.picture
       size: size
-    image_or_video.render()
+    @_image_or_video = new CMS.Views.ImageOrVideo options
+    @_image_or_video.render()
 
 
 class CMS.Views.RenderedDefaultSection extends CMS.Views.RenderedSectionView
@@ -153,6 +156,7 @@ class CMS.Views.RenderedAsideimageSection extends CMS.Views.RenderedSectionView
 
   onRender: =>
     super
+    @$el.find('.caption').removeIfEmpty()
     @imageOrVideo('half')
 
 
@@ -189,7 +193,7 @@ class CMS.Views.RenderedBigpictureSection extends CMS.Views.RenderedSectionView
 
   onRender: =>
     super
-    @imageOrVideo('hero')
+    @imageOrVideo('hero', background: true)
 
 
 class CMS.Views.RenderedGridSection extends CMS.Views.RenderedSectionView
@@ -211,7 +215,7 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
 
   onRender: =>
     super
-    @imageOrVideo('hero')
+    @imageOrVideo('hero', background: true)
 
 
 class CMS.Views.RenderedLinksSection extends CMS.Views.RenderedSectionView
@@ -229,7 +233,7 @@ class CMS.Views.RenderedLinksSection extends CMS.Views.RenderedSectionView
 
   onRender: () =>
     super
-    @$el.find('h2.title').remove unless @model.get('title')
+    @$el.find('h2.title').removeIfEmpty()
 
 
 class CMS.Views.RenderedContentsSection extends CMS.Views.RenderedSectionView

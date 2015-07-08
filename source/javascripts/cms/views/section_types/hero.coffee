@@ -8,6 +8,7 @@ class CMS.Views.HeroSection extends CMS.Views.SectionView
 
   onRender: =>
     super
-    @imageOrVideo('hero')
+    @imageOrVideo('hero', background: true)
     @videoPicker()
     @imagePicker()
+
