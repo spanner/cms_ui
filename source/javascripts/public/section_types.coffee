@@ -1,4 +1,10 @@
-$ ->
-  # This is for the presentation of galleries and other page widgets.
-  # Nothing fancy; probably just jquery DOM manipulation.
-  
+jQuery ($) ->
+
+  $.fn.slider = ->
+    @each ->
+      $(@).find('.images').slick
+        lazyLoad: 'ondemand'
+        infinite: true
+        slidesToShow: 1
+        slidesToScroll: 1
+

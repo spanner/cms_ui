@@ -1,0 +1,4 @@
+%a.button.slides{title: "Show as slideshow"}>
+  S
+%a.button.blocks{title: "Show as blocks"}>
+  B

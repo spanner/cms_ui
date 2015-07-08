@@ -27,7 +27,7 @@
     color: white
     &:hover
       background-color: $red
-  &.video, &.image, &.left, &.full, &.right, &.settings, &.list, &.blocks, &.previews, &.refresh, &.page
+  &.video, &.image, &.left, &.full, &.right, &.settings, &.list, &.blocks, &.slides, &.previews, &.refresh, &.page
     background:
       repeat: no-repeat
       image: image-url('buttonsprite.png')
@@ -35,6 +35,7 @@
     height: 48px
     text-indent: 100px
     overflow: hidden
+    cursor: pointer
   &.image
     background-position: 10px 10px
   &.video
@@ -49,6 +50,8 @@
     background-position: 10px -310px
   &.blocks
     background-position: 10px -374px
+  &.slides
+    background-position: 10px -694px
   &.list
     background-position: 10px -438px
   &.previews
