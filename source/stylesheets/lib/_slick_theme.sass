@@ -3,14 +3,14 @@
 $slick-font-path: "/fonts/" !default
 $slick-font-family: "slick" !default
 $slick-loader-path: "./" !default
-$slick-arrow-color: white !default
+$slick-arrow-color: $yellow !default
 $slick-dot-color: black !default
 $slick-dot-color-active: $slick-dot-color !default
 $slick-prev-character: "←" !default
 $slick-next-character: "→" !default
 $slick-dot-character: "•" !default
 $slick-dot-size: 6px !default
-$slick-opacity-default: 0.75 !default
+$slick-opacity-default: 1 !default
 $slick-opacity-on-hover: 1 !default
 $slick-opacity-not-active: 0.25 !default
 
@@ -30,8 +30,8 @@ $slick-opacity-not-active: 0.25 !default
 
 @font-face
   font-family: "slick"
-  src: url("/fonts/slick.eot")
-  src: url("/fonts/slick.eot?#iefix") format("embedded-opentype"), url("/fonts/slick.woff") format("woff"), url("/fonts/slick.ttf") format("truetype"), url("/fonts/slick.svg#slick") format("svg")
+  src: url("http://ui.cms.dev/fonts/slick.eot")
+  src: url("http://ui.cms.dev/fonts/slick.eot?#iefix") format("embedded-opentype"), url("http://ui.cms.dev/fonts/slick.woff") format("woff"), url("http://ui.cms.dev/fonts/slick.ttf") format("truetype"), url("http://ui.cms.dev/fonts/slick.svg#slick") format("svg")
   font-weight: normal
   font-style: normal
 
@@ -41,24 +41,23 @@ $slick-opacity-not-active: 0.25 !default
 .slick-next
   position: absolute
   display: block
-  height: 400px
-  width: 80px
+  height: 100%
+  width: 90px
+  border-radius: 60px
   line-height: 0px
   font-size: 0px
   cursor: pointer
   background: transparent
   color: transparent
-  top: 50%
-  margin-top: -200px
+  top: 0
+  margin-top: 0
   padding: 0
   border: none
   outline: none
-  &:hover, &:focus
+  &:hover
     outline: none
-    background: transparent
-    color: transparent
     &:before
-      opacity: $slick-opacity-on-hover
+      font-size: 3rem
   &.slick-disabled:before
     opacity: $slick-opacity-not-active
 
@@ -72,12 +71,12 @@ $slick-opacity-not-active: 0.25 !default
   -moz-osx-font-smoothing: grayscale
 
 .slick-prev
-  left: 0
+  left: -90px
   &:before
     content: $slick-prev-character
 
 .slick-next
-  right: 0
+  right: -90px
   &:before
     content: $slick-next-character
 

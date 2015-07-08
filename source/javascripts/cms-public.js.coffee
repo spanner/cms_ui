@@ -3,5 +3,5 @@
 #= require_self
 
 $ ->
-  
+  $('section.slides').slider()
   

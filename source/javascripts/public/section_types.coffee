@@ -2,7 +2,8 @@ jQuery ($) ->
 
   $.fn.slider = ->
     @each ->
-      $(@).find('.images').slick
+      slides = $(@).find('.images')
+      slides.slick
         lazyLoad: 'ondemand'
         infinite: true
         slidesToShow: 1
