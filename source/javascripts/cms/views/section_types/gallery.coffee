@@ -87,13 +87,17 @@ class CMS.Views.GalleryImages extends CMS.Views.CollectionView
   childViewOptions: (model, index) =>
     section: @options.section
     child_index: index
+    collection: @collection
     
   initialize: (options) ->
     @section = options['section']
     @section.on "change:style", @setupSlides
+  
+  onRender: =>
+    @setupSlides() if @section.get('style') is 'slides'
 
   setupSlides: (model, style) =>
-    if style is 'slides'
+    if @section.get('style') is 'slides'
       @$el.slick
         infinite: true
         slidesToShow: 1
