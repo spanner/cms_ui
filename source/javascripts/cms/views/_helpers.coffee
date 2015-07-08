@@ -340,8 +340,6 @@ class CMS.Views.PagePickerLayout extends CMS.Views.MenuLayout
     @close()
 
 
-
-
 class CMS.Views.MediumBig extends MediumEditor.extensions.button
   aria: "big"
   name: "big"
@@ -354,21 +352,21 @@ class CMS.Views.MediumBig extends MediumEditor.extensions.button
   constructor: (iframe) ->
     super
     @_iframe = iframe
-    # @_applier = rangy.createClassApplier(@klass)
+    @_applier = rangy.createClassApplier(@klass)
 
-  # action: (e) =>
-  #   selection = rangy.getSelection(@_iframe)
-  #   @_applier.toggleSelection(selection)
-  #   $(@base.getFocusedElement()).trigger "change"
-  #
-  #   if @button
-  #     nodes = MediumEditor.selection.getSelectedElements(@_iframe)
-  #     if @isAlreadyApplied()
-  #       @setActive()
-  #     else
-  #       @setInactive()
-  #   null
-  #
-  # isAlreadyApplied: (node) =>
-  #   nodes = MediumEditor.selection.getSelectedElements(@_iframe)
-  #   _.filter(nodes, (node) => $(node).hasClass(@klass)).length > 0
+  action: (e) =>
+    selection = rangy.getSelection(@_iframe)
+    @_applier.toggleSelection(selection)
+    $(@base.getFocusedElement()).trigger "change"
+
+    if @button
+      nodes = MediumEditor.selection.getSelectedElements(@_iframe)
+      if @isAlreadyApplied()
+        @setActive()
+      else
+        @setInactive()
+    null
+
+  isAlreadyApplied: (node) =>
+    nodes = MediumEditor.selection.getSelectedElements(@_iframe)
+    _.filter(nodes, (node) => $(node).hasClass(@klass)).length > 0
