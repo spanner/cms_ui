@@ -52,8 +52,7 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
   tagName: "nav"
 
   initialize: ->
-    @collection = new CMS.Collections.Pages
-      @model.pages.where(nav: true)
+    @collection = new CMS.Collections.Pages @model.pages.where(nav: true),
       comparator: "nav_position"
 
   onRender: =>
