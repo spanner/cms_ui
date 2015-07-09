@@ -1,0 +1,6 @@
+%a.button.left{title: "Image to the left of text"}>
+  L
+%a.button.full{title: "Image full width and above text"}>
+  F
+%a.button.right{title: "Image to the right of text"}>
+  R

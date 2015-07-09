@@ -2,7 +2,7 @@
   %h2.editable{data: {placeholder: "Optional Heading"}}
   %aside
     .picture
-    .caption.formattable{data: {placeholder: "Optional marginal text"}}
+    .caption.formattable{data: {placeholder: "Optional caption"}}
   .section_body.formattable{data: {placeholder: "Main body text"}}
 .cms-controls
   .cms-buttons

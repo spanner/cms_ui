@@ -15,7 +15,6 @@ class CMS.Views.AsideimageStyler extends CMS.Views.ItemView
 
 class CMS.Views.AsideimageSection extends CMS.Views.SectionView
   template: "section_types/asideimage"
-  content_template: "section_content/image_aside"
   styleMenuView: CMS.Views.AsideimageStyler
 
   bindings:

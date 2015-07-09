@@ -56,7 +56,7 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
       comparator: "nav_position"
 
   onRender: =>
-    for p in @collection
+    for p in @collection.models
       if p.published()
         a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
         a.attr('href', p.get('path'))
@@ -127,6 +127,11 @@ class CMS.Views.RenderedAsidequoteSection extends CMS.Views.RenderedSectionView
   template: "renderers/section_types/asidequote"
 
   bindings:
+    ":el":
+      attributes: [
+        name: "class"
+        observe: "style"
+      ]
     "h2":
       observe: "title"
     ".section_body":

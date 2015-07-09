@@ -1,6 +1,6 @@
 %a.page.picture
 .summary
-  %h2
+  %h3
     %a.title.page{contenteditable: "plaintext-only", data: {placeholder: "Link title"}}
   .precis{contenteditable: "true", data: {placeholder: "Summary of page"}}
 .cms-buttons
