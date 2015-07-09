@@ -430,10 +430,17 @@ main
         width: 100%
         max-height: 80vh
         overflow: hidden
-        figure.image, figure.video
+        figure.image
           margin: 0
           width: 100%
           height: 80vh
+          background:
+            position: center center
+            repeat: no-repeat
+            size: cover
+        figure.video
+          margin: 0
+          width: 100%
           background:
             position: center center
             repeat: no-repeat
@@ -671,6 +678,12 @@ main
                 .summary
                   width: auto
 
+    section.links
+      .built
+        div.block
+          width: 46%
+          margin: 12px 1.4%
+
     section.asideimage
       &.left, &.right, &.full
         aside
@@ -696,6 +709,17 @@ main
           div.block
             width: 30%
             margin: 12px 1.4%
+
+    section.hero
+      .content
+        h1
+          font-size: 3em
+      &+section.asideimage
+        aside
+          float: right
+          width: 48%
+          margin: 0 0 0 4%
+
 
 @media (max-width: 1024px)
   main
