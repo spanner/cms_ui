@@ -51,8 +51,13 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
   template: false
   tagName: "nav"
 
+  initialize: ->
+    @collection = new CMS.Collections.Pages
+      @model.pages.where(nav: true)
+      comparator: "nav_position"
+
   onRender: =>
-    for p in @model.pages.where(nav: true)
+    for p in @collection
       if p.published()
         a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
         a.attr('href', p.get('path'))

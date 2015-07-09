@@ -130,7 +130,6 @@ class CMS.Models.Site extends CMS.Model
   renderNavigation: () =>
     renderer = new CMS.Views.SiteNavigationRenderer
       model: @
-      collection: @pages
     renderer.rendered()
   
 

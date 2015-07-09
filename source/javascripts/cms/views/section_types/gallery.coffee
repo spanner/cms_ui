@@ -94,7 +94,8 @@ class CMS.Views.GalleryImages extends CMS.Views.CollectionView
     @section.on "change:style", @setupSlides
   
   onRender: =>
-    @setupSlides() if @section.get('style') is 'slides'
+    @_slicked = false
+    @setupSlides()
 
   setupSlides: (model, style) =>
     if @section.get('style') is 'slides'
@@ -105,8 +106,10 @@ class CMS.Views.GalleryImages extends CMS.Views.CollectionView
         initialSlide: 5
       @$el.slick('setPosition')
       @$el.slick('slickNext')
-    else
+      @_slicked = true
+    else if @_slicked
       @$el.slick('unslick')
+      @_slicked = false
 
 
 class CMS.Views.GalleryStyler extends CMS.Views.ItemView
