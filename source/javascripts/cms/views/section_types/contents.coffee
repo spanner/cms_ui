@@ -79,9 +79,10 @@ class CMS.Views.PageChildren extends CMS.Views.EmbeddedPageList
 
   initialize: () ->
     @collection = new CMS.Collections.Pages(@model.childPages())
-    @sortCollection()
+    @sortCollection(@options.style)
 
-  sortCollection: (model, style) =>
+  sortCollection: (style) =>
+    console.log "sortCollection", style
     if style is 'bigtop'
       @collection.comparator = (model) ->
         -model.get('created_at')
@@ -136,12 +137,13 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
   renderContent: () =>
     @_children_view = new CMS.Views.PageChildren
       model: @model.get('subject_page') or @model.getPage()
+      style: @model.get('style')
     @_children_view.on "children_rendered", () =>
       @ui.built.empty()
       @ui.built.append(@_children_view.el)
       @saveBuiltHtml()
     @_children_view.render()
-    @model.on "change:style", @_children_view.sortCollection
+    @model.on "change:style", (model, style) => @_children_view.sortCollection(style)
 
   setPage: (page) =>
     @model.set 'subject_page', page, stickitChange: true
