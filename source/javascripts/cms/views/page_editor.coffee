@@ -64,8 +64,9 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     "h1.pagetitle":
       observe: "title"
     "date":
-      observe: "published_at"
+      observe: "publication_date"
       onGet: "dayMonthYear"
+      onSet: "parseDate"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
@@ -78,12 +79,15 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     @stickit()
 
   dayMonthYear: (date) =>
+    date ?= new Date
     if date
+      date = new Date(date) unless date.getDate
       months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
-    else
-      ""
       
+  parseDate: (string) =>
+    new Date(string)
+
   emptyIfEmpty: (value) =>
     if value
       $html = $(value)

@@ -24,7 +24,7 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
     "h1.pagetitle":
       observe: "title"
     "date":
-      observe: "published_at"
+      observe: "publication_date"
       onGet: "dayMonthYear"
     "#standfirst":
       observe: "introduction"
@@ -40,12 +40,11 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
 
   dayMonthYear: (date) =>
     if date
-      console.log "date is", date
+      date = new Date(date) unless date.getDate
       months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
     else
       ""
-
 
 class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
   template: false

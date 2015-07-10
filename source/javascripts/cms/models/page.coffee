@@ -1,5 +1,5 @@
 class CMS.Models.Page extends CMS.Model
-  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'link_title', 'block_title', 'precis', 'image_id', 'nav', 'nav_name', 'nav_position', 'nav_heading']
+  savedAttributes: ['site_id', 'page_type_id', 'path', 'title', 'introduction', 'link_title', 'block_title', 'precis', 'image_id', 'nav', 'nav_name', 'nav_position', 'nav_heading', 'publication_date']
 
   defaults:
     nav: false
@@ -24,6 +24,7 @@ class CMS.Models.Page extends CMS.Model
   populate: (data) =>
     @sections.reset(data.sections)
     @populateDates(data)
+    @set("publication_date", @get("published_at")) unless @get("publication_date")
     @set "changed", false
     if !@sections.length and @get('page_type')
       for type in @get('page_type').defaultSectionsList()

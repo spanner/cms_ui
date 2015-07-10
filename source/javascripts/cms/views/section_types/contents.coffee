@@ -33,14 +33,17 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
       visible: true
       visibleFn: "visibleAsInlineBlock"
     "date":
-      observe: "published_at"
+      observe: "publication_date"
       onGet: "dayMonthYear"
+      onSet: "parseDate"
 
   ui:
     picture: ".picture"
     controls: ".cms-buttons"
+    date: "date"
 
   onRender: =>
+    @ui.date.attr('contenteditable', "true")
     super
     if image = @model.get('image')
       @_image_viewer = new CMS.Views.Image
@@ -68,13 +71,16 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
     @model.save()
 
   dayMonthYear: (date) =>
-    console.log "dayMonthYear", date
     if date
       date = new Date(date) unless date.getDate
       months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
     else
       "Unpublished"
+
+  parseDate: (string) =>
+    console.log "parseDate", string, new Date(string)
+    new Date(string)
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView
