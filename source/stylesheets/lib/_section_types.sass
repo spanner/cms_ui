@@ -281,7 +281,7 @@ main
       p
         width: 75%
         +bigtext
-        margin: 1em auto 0.5em auto
+        margin: 2.5em auto 2em auto
 
     &.bigpicture
       position: relative
@@ -476,9 +476,9 @@ main
             .picture
               position: relative
               display: inline-block
-              width: 23.2%
+              width: 25%
               min-height: 160px
-              margin-right: 3.6%
+              margin-right: 2%
               vertical-align: top
               img
                 width: 100%
@@ -624,11 +624,14 @@ main
           font-size: 6em
 
 @media (max-width: 768px)
-  main
+  span.bigtext
+    font-size: 1.3em
+    line-height: 1.4
 
+  main
     section.bigquote
       p
-        font-size: 1.4rem
+        font-size: 1.4em
 
     section.contents
       &.blocks
@@ -684,6 +687,12 @@ main
           width: 46%
           margin-right: 6%
 
+    section.bigquote 
+      p
+        font-size: 1.3em
+        line-height: 1.4
+
+
     section.gallery.blocks
       .built
         .images
@@ -691,7 +700,9 @@ main
             width: 30%
             margin: 12px 1.4%
 
-    section.hero
+    section.hero, section.bigpicture
+      .picture figure.image
+        height: 720px
       .content
         h1
           font-size: 3em
@@ -700,7 +711,15 @@ main
           float: right
           width: 48%
           margin: 0 0 0 4%
+          .caption
+            margin: 1em 0 
 
+
+@media (max-height: 768px)
+  main
+    section.hero, section.bigpicture
+      .picture figure.image
+        height: 520px
 
 @media (max-width: 1024px)
   main
