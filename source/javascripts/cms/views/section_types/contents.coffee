@@ -79,8 +79,8 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
       "Unpublished"
 
   parseDate: (string) =>
-    console.log "parseDate", string, new Date(string)
-    new Date(string)
+    date = Date.parse(string)
+    date unless _.isNaN(date)
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView

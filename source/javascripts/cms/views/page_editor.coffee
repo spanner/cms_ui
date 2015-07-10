@@ -57,6 +57,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
   ui:
     title: "h1.pagetitle"
     intro: "#standfirst"
+    date: "date"
     editable: ".editable"
     formattable: ".formattable"
 
@@ -73,6 +74,7 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       onSet: "emptyIfEmpty"
 
   onRender: () =>
+    @ui.date.attr('contenteditable', "true")
     @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
     @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional page introduction')
     $.page = @model
@@ -86,7 +88,8 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
       
   parseDate: (string) =>
-    new Date(string)
+    date = Date.parse(string)
+    date unless _.isNaN(date)
 
   emptyIfEmpty: (value) =>
     if value
