@@ -68,6 +68,10 @@ class CMS.Views.Video extends CMS.Views.AssetView
       observe: "embed_code"
       visible: "untrue"
       attributes: [
+        name: "id"
+        observe: "id"
+        onGet: "videoId"
+      ,
         name: "poster"
         observe: "url"
         onGet: "urlAtSize"
@@ -93,6 +97,8 @@ class CMS.Views.Video extends CMS.Views.AssetView
     super
     @$el.attr('data-video-id', @model.get('id'))
 
+  videoId: (id) =>
+    "video_#{id}"
 
 # Initializes with a size and uses the appropriate url.
 
