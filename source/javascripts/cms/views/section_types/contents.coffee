@@ -43,12 +43,11 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
   onRender: =>
     @ui.date.attr('contenteditable', "true")
     super
-    if image = @model.get('image')
-      @_image_viewer = new CMS.Views.Image
-        model: image
-        size: 'half'
-        el: @ui.picture
-      @_image_viewer.render()
+    @_image_viewer = new CMS.Views.Image
+      model: @model.get('image')
+      size: 'half'
+      el: @ui.picture
+    @_image_viewer.render()
     @_image_picker = new CMS.Views.ImagePickerLayout
       model: @model
     @_image_picker.render()
@@ -79,19 +78,29 @@ class CMS.Views.PageChildren extends CMS.Views.EmbeddedPageList
   childView: CMS.Views.ChildPage
 
   initialize: () ->
-    pages = _.sortBy @model.childPages(), (model) ->
-      -model.get('created_at')
-    @collection = new CMS.Collections.Pages(pages)
+    @collection = new CMS.Collections.Pages(@model.childPages())
+    @sortCollection()
 
-
+  sortCollection: (model, style) =>
+    if style is 'bigtop'
+      @collection.comparator = (model) ->
+        -model.get('created_at')
+    else 
+      @collection.comparator = "title"
+    @collection.sort()
+    
+    
 class CMS.Views.ContentsStyler extends CMS.Views.ItemView
   template: "section_types/contents_styler"
   events:
+    "click a.bigtop": "setBigtop"
     "click a.previews": "setPreview"
     "click a.blocks": "setBlocks"
     "click a.list": "setList"
     "click a.refresh": "refresh"
 
+  setBigtop: () => 
+    @model.set "style", "bigtop", stickitChange: true
   setPreview: () => 
     @model.set "style", "previews", stickitChange: true
   setBlocks: () => 
@@ -132,6 +141,7 @@ class CMS.Views.ContentsSection extends CMS.Views.SectionView
       @ui.built.append(@_children_view.el)
       @saveBuiltHtml()
     @_children_view.render()
+    @model.on "change:style", @_children_view.sortCollection
 
   setPage: (page) =>
     @model.set 'subject_page', page, stickitChange: true

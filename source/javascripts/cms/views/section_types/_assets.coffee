@@ -18,7 +18,7 @@ class CMS.Views.AssetView extends CMS.Views.ItemView
 
   setSize: (size) =>
     @_size = size
-    @stickit()
+    @stickit() if @model
 
 
 class CMS.Views.Image extends CMS.Views.AssetView
@@ -36,7 +36,7 @@ class CMS.Views.Image extends CMS.Views.AssetView
 
   onRender: () =>
     super
-    @$el.attr('data-image-id', @model.get('id'))
+    @$el.attr('data-image-id', @model?.get('id'))
 
 
 

@@ -1,3 +1,5 @@
+%a.button.bigtop{title: "Big main story"}>
+  T
 %a.button.previews{title: "Show as excerpts"}>
   E
 %a.button.blocks{title: "Show as blocks"}>

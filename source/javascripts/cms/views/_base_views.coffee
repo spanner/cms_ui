@@ -90,7 +90,7 @@ class CMS.Views.ItemView extends Backbone.Marionette.ItemView
   @mixin "bindings"
 
   onRender: =>
-    @stickit()
+    @stickit() if @model
 
   log: () =>
     if _cms.logging()

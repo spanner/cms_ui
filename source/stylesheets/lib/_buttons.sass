@@ -27,7 +27,7 @@
     color: white
     &:hover
       background-color: $red
-  &.video, &.image, &.left, &.full, &.right, &.settings, &.list, &.blocks, &.slides, &.previews, &.refresh, &.page
+  &.video, &.image, &.left, &.full, &.right, &.settings, &.list, &.blocks, &.slides, &.previews, &.refresh, &.page, &.bigtop
     background:
       repeat: no-repeat
       image: image-url('buttonsprite.png')
@@ -50,8 +50,6 @@
     background-position: 10px -310px
   &.blocks
     background-position: 10px -374px
-  &.slides
-    background-position: 10px -694px
   &.list
     background-position: 10px -438px
   &.previews
@@ -60,6 +58,10 @@
     background-position: 10px -566px
   &.page
     background-position: 10px -630px
+  &.slides
+    background-position: 10px -694px
+  &.bigtop
+    background-position: 10px -758px
   &.arrowed
     &:before
       content: "\025B8"

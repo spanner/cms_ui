@@ -2,7 +2,7 @@
 .summary
   %h3
     %a.title.page{contenteditable: "plaintext-only", data: {placeholder: "Link title"}}
-  %date.child_page
+  %date.child_page{contenteditable: "plaintext-only", data: {placeholder: "Optional date"}}
   .precis{contenteditable: "true", data: {placeholder: "Summary of page"}}
 .cms-buttons
   %a.button.save.save_page

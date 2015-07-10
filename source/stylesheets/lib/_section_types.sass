@@ -468,7 +468,7 @@ main
           min-width: 100px
 
     &.contents
-      &.previews
+      &.previews, &.bigtop
         .built
           .child-page
             clear: both
@@ -496,16 +496,16 @@ main
               min-height: 160px
               margin: 0
               vertical-align: top
-      &.previews:first-child
+      &.bigtop
         .built
           .child-page
             &:first-child
               .picture
-                width: 48%
+                width: 66%
                 margin-right: 3%
                 margin-bottom: 0.25em
               .summary
-                width: 48%
+                width: 30%
       &.blocks
         .built
           position: relative
@@ -639,7 +639,7 @@ main
           .child-page
             width: 46%
             margin: 12px 1.4%
-      &.previews
+      &.previews, &.bigtop
         .built
           .child-page
             .picture
@@ -652,7 +652,7 @@ main
               display: block
               h3
                 max-width: none
-        &:first-child
+        &.bigtop
           .built
             .child-page
               &:first-child
