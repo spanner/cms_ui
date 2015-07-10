@@ -55,7 +55,7 @@ class CMS.Views.BackgroundImage extends CMS.Views.AssetView
 
   onRender: () =>
     super
-    @$el.attr('data-image-id', @model.get('id'))
+    @$el.attr('data-image-id', @model.get('id')) if @model
 
 
 class CMS.Views.Video extends CMS.Views.AssetView
