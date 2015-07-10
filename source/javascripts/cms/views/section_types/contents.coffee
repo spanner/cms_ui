@@ -32,10 +32,8 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
       observe: "changed"
       visible: true
       visibleFn: "visibleAsInlineBlock"
-    "date":
+    "date.child_page":
       observe: "publication_date"
-      onGet: "dayMonthYear"
-      onSet: "parseDate"
 
   ui:
     picture: ".picture"
@@ -69,18 +67,7 @@ class CMS.Views.ChildPage extends CMS.Views.EmbeddedPageView
   saveSubjectPage: (e) =>
     e?.preventDefault()
     @model.save()
-
-  dayMonthYear: (date) =>
-    if date
-      date = new Date(date) unless date.getDate
-      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
-    else
-      "Unpublished"
-
-  parseDate: (string) =>
-    date = Date.parse(string)
-    date unless _.isNaN(date)
+    @sectionChanged()
 
 
 class CMS.Views.NoChildPages extends Backbone.Marionette.ItemView

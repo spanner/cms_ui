@@ -66,10 +66,10 @@ class CMS.Views.GalleryImage extends CMS.Views.AssetView
 
   addImage: (e) =>
     e?.preventDefault()
-    @collection.add 
+    new_image = @model.collection.add 
       is_meant_to_be_empty: true
-    ,
-      at: @collection.indexOf(@model) + 1
+    @collection.add new_image,
+      at: @model.collection.indexOf(@model) + 1
     @sectionChanged()
 
   sectionChanged: () =>

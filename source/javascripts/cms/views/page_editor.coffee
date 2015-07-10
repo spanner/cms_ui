@@ -66,8 +66,6 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       observe: "title"
     "date":
       observe: "publication_date"
-      onGet: "dayMonthYear"
-      onSet: "parseDate"
     "#standfirst":
       observe: "introduction"
       updateMethod: "html"
@@ -79,17 +77,6 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
     @ui.intro.attr('contenteditable', 'true').attr('data-placeholder', 'Optional page introduction')
     $.page = @model
     @stickit()
-
-  dayMonthYear: (date) =>
-    date ?= new Date
-    if date
-      date = new Date(date) unless date.getDate
-      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
-      
-  parseDate: (string) =>
-    date = Date.parse(string)
-    date unless _.isNaN(date)
 
   emptyIfEmpty: (value) =>
     if value

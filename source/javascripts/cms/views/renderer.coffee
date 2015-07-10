@@ -23,7 +23,7 @@ class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
   bindings:
     "h1.pagetitle":
       observe: "title"
-    "date":
+    "date.page":
       observe: "publication_date"
       onGet: "dayMonthYear"
     "#standfirst":
