@@ -4,4 +4,4 @@
 
 $ ->
   $('section.slides').slider()
-  
+  $('section.gallery.blocks').lightbox_slider()
