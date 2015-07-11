@@ -738,58 +738,49 @@ main
         h1
           font-size: 2.1em
           text-align: center
-    section.standard 
-      .right
-        width: 45%
-      .left
-        width: auto
-    section.blocky 
-      margin: 1em 0
-      .content
-        .block
-          width: 48%
-          margin-right: 4%
-          margin-bottom: 4%
-          &.second, &.fourth
-            margin-right: 0
-    section.bigquote 
-      margin: 3em 0 5em 0
-      .content
-        p
-          margin: 0 10%
-          width: auto
-          font-size: 120%
 
-
-@media (max-width:400px)
-  main
+    section.hero, section.bigpicture
+      .picture figure.image
+        height: 320px
     section.hero
       .content
         h1
           text-align: left
-    section.standard 
-      margin: 1em 0
-      .left
-        width: auto
-        float: none
-        clear: both
-      .right
-        display: none
-    section.blocky 
-      margin: 1em 0
-      .content
-        .block
-          a
-            span.caption
-              font-size: 1rem
+      &+section.asidequote.right
+        aside
+          display: none
+      &+section.asideimage.right
+        aside
+          display: none
+
     section.twocol 
       margin: 1em 0
       .col
         width: auto
         float: none
         clear: both
+
     section.bigquote 
       margin: 1em 0
       .content
         p
           margin: 0
+
+    section.asidequote
+      &.right
+        aside
+          width: 46%
+          margin-left: 6%
+      &.left
+        aside
+          width: 46%
+          margin-right: 6%
+
+    section.links
+      padding-bottom: 0
+      .built
+        div.block
+          width: 46%
+          margin: 12px 1.4%
+          &:last-child
+            margin: 12px 1.4%
