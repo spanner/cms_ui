@@ -1,4 +1,4 @@
-%video{autoplay: false, loop: false, preload: 'metadata', controls: true}
+%video{autoplay: true, loop: false, preload: 'none', controls: true}
   %source
   %img
 .embed
