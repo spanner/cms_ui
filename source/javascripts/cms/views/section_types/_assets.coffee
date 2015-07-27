@@ -39,7 +39,6 @@ class CMS.Views.Image extends CMS.Views.AssetView
     @$el.attr('data-image-id', @model?.get('id'))
 
 
-
 class CMS.Views.BackgroundImage extends CMS.Views.AssetView
   template: false
   tagName: "figure"
@@ -74,7 +73,7 @@ class CMS.Views.Video extends CMS.Views.AssetView
       ,
         name: "poster"
         observe: "url"
-        onGet: "urlAtSize"
+        onGet: "previewUrl"
       ]
     "img":
       attributes: [
@@ -99,6 +98,10 @@ class CMS.Views.Video extends CMS.Views.AssetView
 
   videoId: (id) =>
     "video_#{id}"
+  
+  previewUrl: (url) =>
+    # the largest available image preview
+    @model.get('full_url')
 
 # Initializes with a size and uses the appropriate url.
 
