@@ -16,57 +16,6 @@ class CMS.Views.SectionRenderer extends CMS.Views.ItemView
     "section_#{@model.get('id')}"
 
 
-class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
-  childView: CMS.Views.SectionRenderer
-  childViewContainer: "#sections"
-
-  bindings:
-    "h1.pagetitle":
-      observe: "title"
-    "date.page":
-      observe: "publication_date"
-      onGet: "dayMonthYear"
-    "#standfirst":
-      observe: "introduction"
-      updateMethod: "html"
-      
-  onRender: () =>
-    @stickit()
-    @$el.find('#standfirst').removeIfBlank()
-    @$el.find('.editable, .formattable').removeClass('editable formattable')
-
-  template: (data) =>
-    @model.get('page_type')?.get('html') or "<header /><main /><footer />"
-
-  dayMonthYear: (date) =>
-    if date
-      date = new Date(date) unless date.getDate
-      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
-    else
-      ""
-
-class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
-  template: false
-  tagName: "nav"
-
-  initialize: ->
-    @collection = new CMS.Collections.Pages @model.pages.where(nav: true),
-      comparator: "nav_position"
-
-  onRender: =>
-    for p in @collection.models
-      if p.published()
-        a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
-        a.attr('href', p.get('path'))
-        a.text(p.get('nav_name') or p.get('title'))
-        @$el.append(a)
-  
-  rendered: =>
-    @render()
-    @$el.get(0).outerHTML
-
-
 class CMS.Views.RenderedSectionView extends CMS.Views.ItemView
   tagName: "section"
 
@@ -300,3 +249,70 @@ class CMS.Views.RenderedGallerySection extends CMS.Views.RenderedSectionView
   onRender: () =>
     super
     @$el.find('.section_body').removeIfBlank()
+
+
+class CMS.Views.RenderedEnquirySection extends CMS.Views.RenderedSectionView
+  template: "renderers/section_types/enquiry"
+
+  bindings:
+    "h2.title":
+      observe: "title"
+    ".section_body":
+      observe: "main_html"
+      updateMethod: "html"
+
+  onRender: =>
+    super
+    @$el.find('#enquire').attr 'data-url', _cms.config('enquiry_form_url')
+    @$el.find('.section_body').removeIfBlank()
+
+
+class CMS.Views.PageRenderer extends Backbone.Marionette.CompositeView
+  childView: CMS.Views.SectionRenderer
+  childViewContainer: "#sections"
+
+  bindings:
+    "h1.pagetitle":
+      observe: "title"
+    "date.page":
+      observe: "publication_date"
+      onGet: "dayMonthYear"
+    "#standfirst":
+      observe: "introduction"
+      updateMethod: "html"
+      
+  onRender: () =>
+    @stickit()
+    @$el.find('#standfirst').removeIfBlank()
+    @$el.find('.editable, .formattable').removeClass('editable formattable')
+
+  template: (data) =>
+    @model.get('page_type')?.get('html') or "<header /><main /><footer />"
+
+  dayMonthYear: (date) =>
+    if date
+      date = new Date(date) unless date.getDate
+      months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ')
+    else
+      ""
+
+class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
+  template: false
+  tagName: "nav"
+
+  initialize: ->
+    @collection = new CMS.Collections.Pages @model.pages.where(nav: true),
+      comparator: "nav_position"
+
+  onRender: =>
+    for p in @collection.models
+      if p.published()
+        a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
+        a.attr('href', p.get('path'))
+        a.text(p.get('nav_name') or p.get('title'))
+        @$el.append(a)
+  
+  rendered: =>
+    @render()
+    @$el.get(0).outerHTML

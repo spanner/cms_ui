@@ -1,0 +1,9 @@
+.content
+  %h2.title.editable{data: {placeholder: "Optional heading for enquiry form"}}
+  .section_body.formattable{data: {placeholder: "Optional introduction to enquiry form"}}
+
+  #enquire
+
+.cms-controls
+  .cms-buttons
+    .cms-section-menu

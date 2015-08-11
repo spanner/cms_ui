@@ -141,6 +141,10 @@ a.cms-section-type
     background-position: 0 -768px
     &.selected, &:hover
       background-position: -400px -768px
+  &.enquiry
+    background-position: 0 -832px
+    &.selected, &:hover
+      background-position: -400px -832px
 
 a.button.section-type
   text-indent: 50px
@@ -179,6 +183,8 @@ a.button.section-type
     background-position: 7px -698px
   &.gallery
     background-position: 7px -760px
+  &.enquiry
+    background-position: 7px -824px
 
 main
   section
@@ -195,7 +201,7 @@ main
         position: relative 
       .section_body
         position: relative
-        min-height: 100px
+        min-height: 50px
         max-width: 960px
 
     &.twocol
@@ -789,3 +795,33 @@ main
           margin: 12px 1.4%
           &:last-child
             margin: 12px 1.4%
+
+    section.enquiry
+      max-width: 800px
+      .section_body
+        min-height: 100px
+
+      #confirmation
+        margin-top: 2em
+        overflow: hidden
+        h1.confirmed
+          color: $green
+
+      #enquire
+        margin: 1em 0
+        min-height: 300px
+        p
+          span
+            display: inline-block
+            vertical-align: top
+            width: 48%
+            margin-right: 3.5%
+            &:last-child
+              margin-right: 0
+          &.message
+            textarea
+              width: 99.5%
+              height: 300px
+          &.robot
+            display: none
+    

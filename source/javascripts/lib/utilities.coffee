@@ -23,3 +23,15 @@ jQuery ($) ->
       r = Math.random()*16|0
       v = if c is 'x' then r else r & 0x3 | 0x8
       v.toString 16
+
+  $.fn.enable = ->
+    @each ->
+      disabled_descendants = $(@).find('.disabled')
+      $(@).removeClass('disabled').addClass('enabled').attr('disabled', false).find('input, select, textarea').attr('disabled', false)
+      disabled_descendants.disable()
+      
+  $.fn.disable = ->
+    @each ->
+      enabled_descendants = $(@).find('.enabled')
+      $(@).addClass('disabled').removeClass('enabled').attr('disabled', true).find('input, select, textarea').attr('disabled', true)
+      enabled_descendants.enable()

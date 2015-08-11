@@ -14,6 +14,7 @@ class CMS.Collections.SectionTypes extends CMS.Collection
       gallery: "Gallery"
       contents: "Contents"
       links: "Link blocks"
+      enquiry: "Contact form"
 
     for slug, name of section_types
       @add 

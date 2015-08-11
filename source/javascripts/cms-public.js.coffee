@@ -5,3 +5,5 @@
 $ ->
   $('section.slides').slider()
   $('section.gallery.blocks').lightbox_slider()
+  $('#enquire').enquirer()
+  
