@@ -308,7 +308,7 @@ class CMS.Views.SiteNavigationRenderer extends CMS.Views.ItemView
   onRender: =>
     for p in @collection.models
       if p.published()
-        a = $("<a href=\"#{p.path}\">#{p.nav_name or p.title}</a>")
+        a = $("<a href=\"#{p.path}\" data-pid=\"#{p.id}\">#{p.nav_name or p.title}</a>")
         a.attr('href', p.get('path'))
         a.text(p.get('nav_name') or p.get('title'))
         @$el.append(a)
