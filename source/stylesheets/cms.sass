@@ -195,7 +195,7 @@ h2.menu
   #cms-main
     #cms-manager
       width: auto
-      #pages_manager, #page_manager, #page_controls, #sections_manager
+      #pages_manager, #page_manager, #page_controls, #page_adder, #sections_manager
         display: none
       #site_manager
         a.shelf
@@ -223,7 +223,7 @@ h2.menu
     transition: left 0.5s ease
     &:empty
       display: none
-    #site_manager, #pages_manager, #page_manager, #sections_manager, #page_controls
+    #site_manager, #pages_manager, #page_manager, #sections_manager, #page_controls, #page_adder
       position: relative
       margin: 0
       float: left
@@ -394,7 +394,60 @@ h2.menu
       .cms-menu-body
         height: auto
         display: block
-    
+
+    #page_adder
+      .button
+        a.add_page, a.save
+          display: inline-block
+          vertical-align: top
+          background:
+            repeat: no-repeat
+            image: image-url('buttonsprite.png')
+          width: 32px
+          height: 48px
+          text-indent: 100px
+          overflow: hidden
+          cursor: pointer
+        a.add_page
+          margin-top: -12px
+          margin-left: -16px
+          background-position: 8px -820px
+          &.cancel
+            background-position: 8px -884px
+        .new_page
+          display: inline-block
+          vertical-align: top
+          width: 0
+          overflow: hidden
+          box-sizing: border-box
+          transition: width 1s ease-out
+          span.title
+            display: inline-block
+            vertical-align: top
+            font-weight: bold
+            color: white
+            min-width: 50px
+          span.dir, span.slug
+            display: inline-block
+            vertical-align: top
+            color: $pale
+            font-size: 90%
+            min-width: 50px
+            margin-top: -4px
+          span.slug
+            color: white
+          a.save
+            background-position: 8px -948px
+            margin-top: -12px
+            width: 48px
+            height: 32px
+
+        &.showing
+          background-color: $greenish
+          height: auto
+          .new_page
+            width: auto
+          
 
 #cms-session-barrier
   position: fixed

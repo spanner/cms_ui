@@ -300,6 +300,77 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     @ui.confirmation.stop().text("✓ #{message}").css(display: "inline-block").fadeOut(2000)
 
 
+class CMS.Views.PageAdder extends CMS.Views.ItemView
+  template: "manager/page_adder"
+  className: "button"
+  
+  events:
+    "click a.add_page": "toggleForm"
+    "click a.cancel": "hideForm"
+    "click a.save": "savePage"
+
+  ui:
+    add_button: "a.add_page"
+    form: ".new_page"
+    title: "span.title"
+    save_button: "a.save"
+
+  bindings: 
+    "span.title": 
+      observe: "title"
+    "span.dir": 
+      observe: "dir"
+      onGet: "withTrailingSlash"
+    "span.slug": 
+      observe: "title"
+      onGet: "slugifyTitle"
+    "a.save":
+      observe: "title"
+      visible: "ifTitleSet"
+      visibleFn: "visibleAsInlineBlock"
+
+  initialize: () ->
+    super
+    @model = new Backbone.Model
+      dir: @options.base_path
+      page_type: @options.page_type
+      title: ""
+      slug: ""
+    
+  toggleForm: (e) =>
+    e?.preventDefault()
+    if @$el.hasClass('showing') then @hideForm() else @showForm()
+
+  showForm: (e) =>
+    e?.preventDefault()
+    @$el.addClass('showing')
+    @ui.add_button.addClass('cancel')
+    @ui.title.focus()
+
+  hideForm: (e) =>
+    e?.preventDefault()
+    @$el.removeClass('showing')
+    @ui.add_button.removeClass('cancel')
+  
+  ifTitleSet: (title) =>
+    not _.isBlank title
+  
+  slugifyTitle: (title="") =>
+    title.toLowerCase().replace('&nbsp;', ' ').replace(/\W+/g, '-')
+
+  withTrailingSlash: (dir) =>
+    dir = dir + "/" unless dir.substr(-1) is "/"
+
+  savePage: =>
+    properties = 
+      title: @model.get('title')
+      dir: @model.get('dir')
+      slug: @slugifyTitle(@model.get('title'))
+      page_type: @model.get('page_type')
+    page = @collection.create properties
+    url = "/sites/#{page.getSite().get "slug"}#{page.get('path')}"  
+    _cms.navigate url
+
 class CMS.Views.PageManagerLayout extends CMS.Views.MenuLayout
   template: "manager/page"
   menuView: CMS.Views.PagePropertiesMenu
@@ -467,6 +538,7 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
     page: "#page_manager"
     sections: "#sections_manager"
     controls: "#page_controls"
+    adder: "#page_adder"
 
   onRender: =>
     @stickit()
@@ -497,6 +569,13 @@ class CMS.Views.ManagerLayout extends CMS.Views.LayoutView
       @_page_controls = new CMS.Views.PageControls
         model: page
       @getRegion('controls').show(@_page_controls)
+
+      default_page_type = page.getSite().page_types.findWhere(default: true)
+      @_page_adder = new CMS.Views.PageAdder
+        collection: page.collection
+        base_path: page.get('path')
+        page_type: default_page_type
+      @getRegion('adder').show(@_page_adder)
 
   setSection: (section) =>
     # hash-observation hooks link here how?

@@ -138,49 +138,6 @@ $shelf_text: $coolgrey10
   &:hover
     background-color: $sislight
 
-
-=icon_link($filename, $offset: 0, $hover_offset: -32px)
-  display: inline-block
-  vertical-align: top
-  min-height: 18px
-  padding-left: 18px
-  line-height: 18px
-  background:
-    position: 0 $offset
-    repeat: no-repeat
-    image: image-url($filename)
-  &:hover
-    color: $hover
-    background-position: 0 $offset + $hover_offset
-    opacity: 1
-  &.working
-    color: $pale
-    background:
-      position: 0 0
-      image: image-url('spinner.gif')
-
-=form_icon($filename, $offset: 0, $hover_offset: -32px)
-  display: inline-block
-  vertical-align: top
-  overflow: hidden
-  width: 24px
-  height: 24px
-  text-indent: 50px
-  line-height: 50px
-  background:
-    position: 0 $offset
-    repeat: no-repeat
-    image: image-url($filename)
-  &:hover
-    color: $hover
-    background-position: 0 $offset + $hover_offset
-    opacity: 1
-  &.working
-    color: $pale
-    background:
-      position: 0 0
-      image: image-url('spinner.gif')
-
 =management
   box-sizing: border-box
   display: inline-block
