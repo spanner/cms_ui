@@ -1,6 +1,6 @@
-%a.add_page
+%a.add_page>
   \+
-.new_page
+.new_page>
   %span.title{contenteditable: "plaintext-only", data: {placeholder: "Page title"}}
   %a.save
   %br
