@@ -1,0 +1,518 @@
+@charset "utf-8"
+
+$page: black
+$text: white
+$yellow: #ffd700
+$grey: #878787
+$black: #000000
+$green: #74b87a
+
+$black80: #333333
+$black60: #666666
+$black40: #999999
+$black20: #cccccc
+$yellow80: #ffdf33
+$yellow60: #ffe766
+$yellow40: #ffef99
+$yellow20: #fff7cc
+
+$yellowish: rgba(255,215,0,0.85)
+$blackish: rgba(0,0,0,0.75)
+$whitish: rgba(255,255,255,0.5)
+
+$twitter: #5ea9dd
+
+=glow
+  text-shadow: 0 0 5px white
+  
+=stacked
+  position: relative
+  width: 90%
+  max-width: 1120px
+  margin: 0 auto
+
+=clearfix
+  &:after
+    content: ""
+    display: table
+    clear: both
+
+body
+  font-size: 115%
+  font-family: "DIN Next W01"
+  line-height: 1.6
+  margin: 0
+  padding: 0
+  background-color: $black
+  color: white
+
+p, blockquote
+  margin-top: 0
+  font-weight: lighter
+  span.quoted
+    color: $black60
+  span.speaker
+    color: white
+
+ul
+  list-style: square
+  padding-left: 1em
+
+h1
+  line-height: 1
+  text-transform: uppercase
+
+h1.pagetitle
+  font-weight: lighter
+  font-size: 3.2em
+
+h2
+  line-height: 1.3
+  font-weight: 500
+  letter-spacing: 0.05em
+  text-transform: uppercase
+  font-size: 1.4rem
+
+h4
+  margin-bottom: 0
+h4+p
+  margin-top: 0.25em
+
+h3
+  font-weight: lighter
+  margin-bottom: 0
+  text-transform: uppercase
+h3+p
+  margin-top: 0.25em
+
+img
+  margin: 0
+  padding: 0
+  border: 0
+
+a
+  text-decoration: none
+  color: $yellow
+
+a.twitter, a.facebook, a.youtube
+  display: inline-block
+  width: 24px
+  height: 24px
+  overflow: hidden
+  background:
+    position: top left
+    repeat: no-repeat
+    image: url("/invictus/images/social_sprite.png")
+
+a.twitter
+  background-position: 0 0
+  &:hover
+    background-position: -24px 0
+
+a.facebook
+  background-position: 0 -24px
+  &:hover
+    background-position: -24px -24px
+
+a.youtube
+  background-position: 0 -48px
+  &:hover
+    background-position: -24px -48px
+
+a.twitterbird
+  display: block
+  color: $twitter
+  font-size: 120%
+  height: 32px
+  line-height: 32px
+  overflow: hidden
+  text-indent: 36px
+  background:
+    position: 0 0
+    repeat: no-repeat
+    image: url("/invictus/images/twitterbird.png")
+  &:hover
+    color: white
+    +glow
+    background-position: 0 -32px
+
+a.menu, a.social
+  display: inline-block
+  width: 32px
+  height: 32px
+  overflow: hidden
+  background:
+    position: top left
+    repeat: no-repeat
+    image: url("/invictus/images/link_sprite.png")
+
+a.menu
+  background-position: 0 0
+  &:hover, &.showing
+    background-position: -32px 0
+
+a.social
+  background-position: 0 -32px
+  &:hover, &.showing
+    background-position: -32px -32px
+
+figcaption
+  color: $black40
+  
+#masthead
+  position: fixed
+  z-index: 200
+  top: 0
+  left: 0
+  width: 100%
+  padding: 10px 0 6px 0
+  border-bottom: 1px solid transparent
+  overflow: hidden
+  header
+    +stacked
+    #nav_menu_head
+      display: none
+      float: right
+      margin: 0
+      a
+        display: inline-block
+        margin: 0 0 2px 4px
+    #logo
+      position: relative
+      display: inline-block
+      vertical-align: middle
+      width: 120px
+      height: 50px
+      margin-top: 0
+      margin-right: 26px
+      z-index: 500
+      background:
+        position: top left
+        repeat: no-repeat
+        size: contain
+        image: url('/invictus/images/logo_transparent.png')
+      transition: 
+        property: height width margin 
+        duration: 0.1s 
+        timing-function: ease-out
+    
+    #nav
+      position: relative
+      display: inline-block
+      vertical-align: top
+      padding-top: 2px
+      margin-right: 20px
+      z-index: 400
+      transition: height 0.25s ease-out
+      .section
+        display: inline-block
+        float: left
+        padding: 8px 0 0 16px
+        a.head
+          display: block
+          float: left
+          +clearfix
+          box-sizing: border-box
+          margin: 0
+          margin-right: 24px
+          color: white
+          opacity: 0.9
+          border: 1px solid transparent
+          &.quiet
+            color: $black20
+          &.loud
+            color: $yellow
+            opacity: 1
+          &.showing
+            background-color: rgba(0,0,0,0.75)
+          &:hover
+            color: white
+            opacity: 1
+            +glow
+          &+a.head
+            margin-left: 16px
+        ul.detail
+          position: absolute
+          display: none
+          list-style: none
+          padding: 0
+          margin: 30px 0
+          a
+            color: $black40
+            &:hover
+              color: white
+              +glow
+    .links
+      position: relative
+      float: right
+      margin-top: 0
+      width: 94px
+      a
+        display: inline-block
+        margin: 10px 0 2px 4px
+      .detail
+        position: absolute
+        display: none
+        top: 60px
+        right: 0
+
+  &:hover
+    background-color: $blackish !important
+    border-bottom: 1px solid $whitish !important
+    header
+      #logo
+        position: relative
+        display: inline-block
+        vertical-align: middle
+        width: 180px
+        height: 75px
+        margin-left: -42px
+        margin-top: 16px
+        margin-right: 8px
+        margin-bottom: 14px
+      #nav
+        .section
+          .detail
+            display: block
+      .links
+        .detail
+          display: block
+
+main
+  #top
+    +stacked
+    margin-top: 150px
+  #standfirst
+    font-size: 1.5em
+    line-height: 1.5
+  section
+    margin: 1em 0
+  section.hero
+    margin-top: 0
+    .content
+      h1
+        font-size: 3.4em !important
+  section.enquiry
+    #enquire, #confirmation
+      max-width: 800px
+
+#foot
+  margin-top: 6em
+  margin-bottom: 6em
+  footer
+    +stacked
+    padding-top: 1em
+    border-top: 4px dotted $yellow
+    h3
+      font-weight: normal
+      font-size: 1.7rem
+      margin: 0.5em 0
+      a
+        color: white
+        &:hover
+          color: $yellow
+      span.links
+        position: absolute
+        right: 0
+        top: -50px
+    p.footnote
+      font-size: 0.8rem
+      color: $black40
+      margin: 2em 0
+    .nav
+      margin-top: 1em
+      +clearfix
+      ul
+        position: relative
+        display: inline-block
+        float: left
+        width: 200px
+        margin-right: 32px
+        min-height: 100px
+        padding: 0
+        margin: 0
+        list-style: none
+        li
+          a
+            color: $black20
+            &:hover, &.yellow
+              color: $yellow
+          &.head
+            a
+              color: white
+              &:hover
+                color: $yellow
+
+@media (max-aspect-ratio:4/3)
+  #masthead
+    #logo
+      a.full_logo
+        background-image: url('/invictus/images/logo_transparent.png')
+  main
+    section.hero:first-child
+      margin-top: 105px
+
+@media (max-aspect-ratio:4/3) and (min-height: 720px) and (min-width: 1100px)
+  main
+    section.hero:first-child
+      margin-top: 125px
+
+@media (max-width: 768px)
+  span.bigtext
+    font-size: 1.3rem !important
+  #masthead
+    padding-top: 20px
+    min-height: 58px
+    header
+      #links
+        margin-top: 24px
+  #main
+    #standfirst
+      font-size: 1.3rem
+  #foot
+    footer
+      nav
+        ul
+          width: 33%
+          margin-right: 4%
+          margin-bottom: 4%
+          &.second, &.fourth
+            margin-right: 0
+          &.final
+            float: none
+            width: auto
+
+@media (max-width: 568px)
+  #masthead
+    #links
+      display: none
+      margin-top: 20px
+    #social_menu_head
+      display: inline-block
+
+@media (max-width:400px)
+  main
+    section.hero
+      .content
+        h1
+          font-size: 2em !important
+      
+  #foot
+    footer
+      h3
+        font-size: 1.3rem
+      .nav
+        ul
+          width: 48%
+          margin: 0.5em 0
+
+  #masthead
+    header
+      #nav_menu_head
+        display: block
+      #nav
+        display: none
+        position: fixed
+        top: 0
+        left: 0
+        width: 100%
+        height: auto
+        background-color: black
+        nav
+          position: relative
+          display: block
+          padding: 32px 0 12px 32px
+          a
+            display: block
+            padding: 0.5em 0
+        &.showing
+          display: block
+
+#enquire
+  margin: 1em 0
+  min-height: 300px
+  p
+    span
+      display: inline-block
+      vertical-align: top
+      width: 48%
+      margin-right: 3.5%
+      &:last-child
+        margin-right: 0
+    &.message
+      textarea
+        width: 99.5%
+        height: 200px
+    &.robot
+      display: none
+
+input[type="text"],input[type="email"],input[type="password"], textarea
+  -webkit-appearance: none
+  padding: 12px 16px
+  box-sizing: border-box
+  width: 100%
+  border: none
+  border-radius: 0
+  outline: none
+  font-family: "DIN Next W01"
+  font-weight: lighter
+  font-size: 1.1rem
+  color: $black80
+  background:
+    color: white
+    position: right 10px top 10px
+    repeat: no-repeat
+    image: url('/invictus/images/fieldsprite.png')
+  &::-webkit-input-placeholder
+    color: $black20
+    font-size: 0.8rem
+  &::-moz-placeholder
+    color: $black20
+    font-size: 0.8rem
+  &:-ms-input-placeholder
+    color: $black20
+    font-size: 0.8rem
+  &.placeholder
+    color: $black20
+    font-size: 0.8rem
+  &.valid
+    background-position: right 22px top -82px
+  &.invalid
+    background-position: right 22px top -178px
+  &[disabled]
+    background-color: $black80
+    background-image: none
+  &.waiting
+    background:
+      image: url('/invictus/images/spinner.gif')
+      position: right 3px top 3px
+      repeat: no-repeat
+
+input[type="submit"]
+  -webkit-appearance: none
+  font-weight: lighter
+  font-size: 1rem
+  padding: 12px 16px
+  margin: 0
+  border: none
+  background-color: $green
+  color: white
+  outline: none
+  font-family: "DIN Next W01"
+  font-weight: lighter
+  border: none
+  border-radius: 0
+  &:active
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.75)
+  &.waiting
+    pointer-events: none
+    padding-left: 30px
+    background:
+      color: $black40
+      position: 8px 12px
+      repeat: no-repeat
+      image: url('/invictus/images/spinner_on_grey.gif')
+  &:disabled
+    background-color: $black60
+    color: $black20
+    box-shadow: none
