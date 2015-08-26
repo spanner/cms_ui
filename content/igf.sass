@@ -236,12 +236,13 @@ figcaption
             color: white
             opacity: 1
             +glow
-          &+a.head
-            margin-left: 16px
         ul.detail
           list-style: none
           padding: 0
           margin: 32px 0
+          max-width: 80px
+          li
+            width: 200px
           a
             color: $black40
             &:hover
@@ -351,13 +352,11 @@ main
   span.bigtext
     font-size: 1.3rem !important
   #masthead
-    padding-top: 20px
-    min-height: 58px
     font-size: 1rem
     header
       #nav
         .section
-          padding: 8px 0 0 4px
+          padding: 12px 0 0 4px
       .links
         margin-right: -20px
     &:hover
@@ -416,23 +415,34 @@ main
     header
       #nav_menu_head
         display: block
+        margin: 8px 0
       #nav
-        display: none
-        position: fixed
-        top: 0
-        left: 0
-        width: 100%
-        height: auto
-        background-color: black
-        nav
-          position: relative
-          display: block
-          padding: 32px 0 12px 32px
+        font-size: 1.1rem
+        padding-bottom: 24px
+        .section
+          margin: 0
+          padding: 0
+          clear: both
           a
+            padding: 6px
+          a.head
             display: block
-            padding: 0.5em 0
-        &.showing
-          display: block
+            float: none
+            &+a.head
+              clear: left
+              margin-left: 0
+          ul.detail
+            clear: left
+            padding-left: 12px
+            margin: 0
+            max-width: none
+            li
+              display: inline
+              max-width: none
+              float: none
+              margin: 0
+    &.menu
+      height: auto !important
 
 #enquire
   margin: 1em 0

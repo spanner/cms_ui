@@ -84,6 +84,8 @@ class CMS.Model extends Backbone.Model
     # turn received object_id into associated object
     if object_id = @get(id_attribute)
       @set object_attribute, collection.get(object_id), silent: true
+    else if object = @get(object_attribute)
+      @set id_attribute, object.get('id'), silent: true
 
     # on any change, turn associated object back into an object_id
     @on "change:#{object_attribute}", (me, it, options) =>

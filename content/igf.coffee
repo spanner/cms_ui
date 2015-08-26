@@ -22,10 +22,20 @@ $ ->
       @_y = window.pageYOffset
       @_last_y = @_y
       @_nav_menuing = @_nav_menu_link.is(':visible')
-      $(window).on 'scroll', @setNavProperties
+      if @_nav_menuing
+          # small-screen touch device
+          console.log "phone!"
+          @_nav_menu_link.click @toggleNav
+          $(window).on 'scroll', @setBackground
+
+      else
+        if "ontouchstart" in document.documentElement
+          # large-screen touch device
+          $(window).on 'scroll', @setNavProperties
+        else
+          # normal mousy web browser
+          $(window).on 'scroll', @setBackground
       $(window).on 'resize', @recalculate
-      @_mh.on 'mouseleave', @reset
-      @_nav_menu_link.click @toggleNav
       @recalculate()
 
     recalculate: () =>
@@ -66,7 +76,6 @@ $ ->
       bgd = d if d > bgd
       bgd = 0 if bgd < 0
       bgd = 1 if bgd > 1
-      console.log "bgd", bgd
       @_mh.css
         'height': h
         'border-bottom-color': "rgba(255,255,255,#{bgd / 3})"
@@ -80,6 +89,7 @@ $ ->
         'margin-bottom': 16 * d
 
     setBackground: () =>
+      @_y = window.pageYOffset
       d = Math.abs(@_y / @_t)
       d = 0 if d < 0
       d = 1 if d > 1
@@ -90,6 +100,11 @@ $ ->
     setTimer: () =>
       clearTimeout @_timer if @_timer
       @_timer = setTimeout @reset, 4000
+
+    toggleNav: (e) =>
+      e?.preventDefault()
+      @_mh.toggleClass('menu')
+
 
 
   $('#masthead').masthead()

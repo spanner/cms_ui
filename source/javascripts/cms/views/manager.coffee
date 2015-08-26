@@ -272,6 +272,8 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
 
   ui:
     confirmation: "span.confirmation"
+    save_button: "a.save_page"
+    publish_button: "a.publish_page"
 
   bindings: 
     "a.save_page":
@@ -285,7 +287,9 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
 
   savePage: (e) =>
     e?.preventDefault()
+    @ui.save_button.addClass('waiting')
     @model.save().done () =>
+      @ui.save_button.removeClass('waiting')
       @confirm "saved"
 
   ifPublishable: ([changed, published_at, updated_at]=[]) =>
@@ -293,7 +297,9 @@ class CMS.Views.PageControls extends CMS.Views.ItemView
     
   publishPage: (e) =>
     e?.preventDefault()
+    @ui.publish_button.addClass('waiting')
     @model.publish().done () =>
+      @ui.publish_button.removeClass('waiting')
       @confirm "published"
   
   confirm: (message) =>
@@ -368,6 +374,9 @@ class CMS.Views.PageAdder extends CMS.Views.ItemView
       slug: @slugifyTitle(@model.get('title'))
       page_type: @model.get('page_type')
     page = @collection.create properties
+    
+    debugger
+    
     url = "/sites/#{page.getSite().get "slug"}#{page.get('path')}"  
     _cms.navigate url
 

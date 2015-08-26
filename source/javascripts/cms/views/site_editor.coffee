@@ -7,6 +7,8 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
 
   ui:
     confirmation: "span.confirmation"
+    save_button: "a.save_site"
+    publish_button: "a.publish_site"
 
   bindings: 
     "a.save_site":
@@ -23,12 +25,16 @@ class CMS.Views.SiteControls extends CMS.Views.ItemView
 
   saveSite: (e) =>
     e?.preventDefault()
+    @ui.save_button.addClass('waiting')
     @model.save().done () =>
+      @ui.save_button.removeClass('waiting')
       @confirm "saved"
 
   publishSite: (e) =>
     e?.preventDefault()
+    @ui.publish_button.addClass('waiting')
     @model.publish().done () =>
+      @ui.publish_button.removeClass('waiting')
       @confirm "published"
   
   confirm: (message) =>
