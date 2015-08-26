@@ -14,10 +14,15 @@
   %body
     #masthead
       %header
+        #links.links
+          %a.twitter{href: "https://twitter.com/weareinvictus", target: "_blank"}
+          %a.facebook{href: "https://www.facebook.com/invictuslondon", target: "_blank"}
+          %a.youtube{href: "https://www.youtube.com/user/invictuslondon", target: "_blank"}
+          .detail
+            %a.twitterbird{href: "https://twitter.com/weareinvictus", target: "_blank"} weareinvictus
         #nav_menu_head
           %a.menu{href: "#nav_menu"}
-        #logo
-          %a.full_logo{href: "/"}
+        %a#logo{href: "/"}
         #nav
           .section
             %a.head{href: "/"} Home
@@ -40,13 +45,6 @@
             %a.head{href: "/contact"} Contact
             %ul.detail
               %a{href: "/contact/faq"} FAQ
-
-        #links.links
-          %a.twitter{href: "https://twitter.com/weareinvictus", target: "_blank"}
-          %a.facebook{href: "https://www.facebook.com/invictuslondon", target: "_blank"}
-          %a.youtube{href: "https://www.youtube.com/user/invictuslondon", target: "_blank"}
-          .detail
-            %a.twitterbird{href: "https://twitter.com/weareinvictus", target: "_blank"} weareinvictus
 
     #body
       %main

@@ -12,12 +12,12 @@ class CMS.Config
     logging: false
 
   development:
-    api_url: "http://localhost:9292/api/1/"#"http://api.cms.dev/api/1/"#
+    api_url: "http://api.cms.dev/api/1/"#"http://localhost:9292/api/1/"
     cookie_domain: ""
     cookie_name: "cms_blah"
     published_domain: "cms.dev"
     published_protocol: "http"
-    enquiry_form_url: "http://localhost:9293/enquire"
+    enquiry_form_url: "http://igf.dev/enquire"
     logging: true
 
   constructor: (options={}) ->
