@@ -23,18 +23,15 @@ $ ->
       @_last_y = @_y
       @_nav_menuing = @_nav_menu_link.is(':visible')
       if @_nav_menuing
-          # small-screen touch device
-          console.log "phone!"
-          @_nav_menu_link.click @toggleNav
-          $(window).on 'scroll', @setBackground
-
+        # small-screen touch device
+        @_nav_menu_link.click @toggleNav
+        $(window).on 'scroll', @setBackground
+      else if Modernizr.touch
+        # large-screen touch device
+        $(window).on 'scroll', @setNavProperties
       else
-        if "ontouchstart" in document.documentElement
-          # large-screen touch device
-          $(window).on 'scroll', @setNavProperties
-        else
-          # normal mousy web browser
-          $(window).on 'scroll', @setBackground
+        # normal mousy web browser
+        $(window).on 'scroll', @setBackground
       $(window).on 'resize', @recalculate
       @recalculate()
 
