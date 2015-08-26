@@ -270,12 +270,12 @@ figcaption
         position: relative
         display: inline-block
         vertical-align: middle
-        width: 180px
-        height: 75px
-        margin-left: -42px
-        margin-top: 16px
-        margin-right: 8px
-        margin-bottom: 14px
+        width: 180px !important
+        height: 75px !important
+        margin-left: -42px !important
+        margin-top: 16px !important
+        margin-right: 8px !important
+        margin-bottom: 14px !important
 
 main
   #top
@@ -291,9 +291,6 @@ main
     .content
       h1
         font-size: 3.4em !important
-  section.enquiry
-    #enquire, #confirmation
-      max-width: 800px
 
 #foot
   margin-top: 6em
@@ -401,7 +398,7 @@ main
       .content
         h1
           font-size: 2em !important
-      
+
   #foot
     footer
       h3
@@ -447,6 +444,7 @@ main
 #enquire
   margin: 1em 0
   min-height: 300px
+  max-width: 800px
   p
     span
       display: inline-block
@@ -481,16 +479,16 @@ input[type="text"],input[type="email"],input[type="password"], textarea
     image: url('/invictus/images/fieldsprite.png')
   &::-webkit-input-placeholder
     color: $black20
-    font-size: 0.8rem
+    font-size: 1rem
   &::-moz-placeholder
     color: $black20
-    font-size: 0.8rem
+    font-size: 1rem
   &:-ms-input-placeholder
     color: $black20
-    font-size: 0.8rem
+    font-size: 1rem
   &.placeholder
     color: $black20
-    font-size: 0.8rem
+    font-size: 1rem
   &.valid
     background-position: right 22px top -82px
   &.invalid

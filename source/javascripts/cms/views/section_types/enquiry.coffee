@@ -8,6 +8,9 @@ class CMS.Views.EnquirySection extends CMS.Views.SectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
+    ".instructions":
+      observe: "secondary_html"
+      updateMethod: "html"
 
   onRender: =>
     super

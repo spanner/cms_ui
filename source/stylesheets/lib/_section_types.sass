@@ -113,10 +113,6 @@ a.cms-section-type
     background-position: 0 -320px
     &.selected, &:hover
       background-position: -400px -320px
-  &.carousel
-    background-position: 0 -384px
-    &.selected, &:hover
-      background-position: -400px -384px
   &.video
     background-position: 0 -448px
     &.selected, &:hover
@@ -169,8 +165,6 @@ a.button.section-type
     background-position: 7px -250px
   &.bigquote
     background-position: 7px -314px
-  &.carousel
-    background-position: 7px -378px
   &.video
     background-position: 7px -442px
   &.links
@@ -194,6 +188,7 @@ main
 
     .content
       +central
+      position: relative
       z-index: 20
 
     &.default
@@ -561,54 +556,47 @@ main
                 a:before
                   content: "◼ "
 
-    &.carousel
-      .content
+    &.enquiry
+      position: relative
+      .section_body
+        min-height: 100px
+      aside
         position: absolute
-        bottom: 0
-        left: 0
+        top: 0
         right: 0
-        text-shadow: 0 0 10px rgba(0,0,0,0.4)
-        h2
-          margin: 0
-          padding: 12px 20px
-          font-size: 3.4rem
-          line-height: 1
-          p
-            display: inline
-      .built
-        position: relative
-        width: 960px
-        height: 540px
+        width: 26%
+        min-height: 50px
+        margin: -4px 0 16px 2%
+        color: $pale
+        .instruction
+          min-height: 100px
+        p:first-child
+          margin-top: 0
+
+      #confirmation
+        margin-top: 2em
         overflow: hidden
-        background-color: $green
-        .carousel
-          .image
-            width: 960px
-            height: 540px
-            display: inline-block
-            float: left
-            margin: 0
-            background:
-              repeat: no-repeat
-              position: center center
-              size: cover
-      .captions
-        margin-top: 20px
+        h1.confirmed
+          color: $green
+
+      #enquire
+        margin: 1em 0
+        min-height: 300px
+        width: 72%
         p
-          width: 293px
-          margin: 20px
-          display: inline-block
-          float: left
-          opacity: 0.75
-          transition: opacity 0.3s ease
-          a
-            color: darken($yellow, 10)
-          &:last-child
-            margin-right: 0
-          &:first-child
-            margin-left: 0
-          &.current
-            opacity: 1.0
+          span
+            display: inline-block
+            vertical-align: top
+            width: 48%
+            margin-right: 3.5%
+            &:last-child
+              margin-right: 0
+          &.message
+            textarea
+              width: 99.5%
+              height: 300px
+          &.robot
+            display: none
 
 @media (max-aspect-ratio:1/1)
   main
@@ -753,6 +741,7 @@ main
     section.hero, section.bigpicture
       .picture figure.image
         height: 320px
+
     section.hero
       .content
         h1
@@ -797,31 +786,17 @@ main
             margin: 12px 1.4%
 
     section.enquiry
-      max-width: 800px
-      .section_body
-        min-height: 100px
-
-      #confirmation
-        margin-top: 2em
-        overflow: hidden
-        h1.confirmed
-          color: $green
-
+      aside
+        position: relative
+        width: 100%
+        margin: 1em 0
       #enquire
         margin: 1em 0
         min-height: 300px
+        width: 100%
         p
           span
-            display: inline-block
-            vertical-align: top
-            width: 48%
-            margin-right: 3.5%
-            &:last-child
-              margin-right: 0
-          &.message
-            textarea
-              width: 99.5%
-              height: 300px
-          &.robot
-            display: none
-    
+            display: block
+            width: 100%
+            margin: 1em 0
+

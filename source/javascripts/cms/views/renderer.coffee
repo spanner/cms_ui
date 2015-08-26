@@ -260,6 +260,9 @@ class CMS.Views.RenderedEnquirySection extends CMS.Views.RenderedSectionView
     ".section_body":
       observe: "main_html"
       updateMethod: "html"
+    ".instructions":
+      observe: "secondary_html"
+      updateMethod: "html"
 
   onRender: =>
     super

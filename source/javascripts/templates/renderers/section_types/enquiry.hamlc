@@ -1,7 +1,8 @@
 .content
   %h2.title
   .section_body
-
   #enquire
     %p.waiting
       Please wait: fetching enquiry form.
+  %aside
+    .instructions

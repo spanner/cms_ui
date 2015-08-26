@@ -374,10 +374,7 @@ class CMS.Views.PageAdder extends CMS.Views.ItemView
       slug: @slugifyTitle(@model.get('title'))
       page_type: @model.get('page_type')
     page = @collection.create properties
-    
-    debugger
-    
-    url = "/sites/#{page.getSite().get "slug"}#{page.get('path')}"  
+    url = "/sites/#{page.getSite().get "slug"}#{page.get('path')}"
     _cms.navigate url
 
 class CMS.Views.PageManagerLayout extends CMS.Views.MenuLayout
