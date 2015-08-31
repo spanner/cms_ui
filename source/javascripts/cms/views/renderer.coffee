@@ -173,6 +173,7 @@ class CMS.Views.RenderedHeroSection extends CMS.Views.RenderedSectionView
   onRender: =>
     super
     @imageOrVideo('hero', background: true)
+    @$el.find('h1').removeIfBlank()
 
 
 class CMS.Views.RenderedLinksSection extends CMS.Views.RenderedSectionView

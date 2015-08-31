@@ -6,7 +6,7 @@ $ ->
 
   class Masthead
     constructor: (element) ->
-      @_min = 66
+      @_min = 72
       @_max = 120
       @_travel = @_max - @_min
       @_mh = $(element)
@@ -30,13 +30,14 @@ $ ->
         # large-screen touch device
         $(window).on 'scroll', @setNavProperties
       else
-        # normal mousy web browser
+        # old mousy browser
         $(window).on 'scroll', @setBackground
       $(window).on 'resize', @recalculate
       @recalculate()
 
     recalculate: () =>
-      @_t = $('h1').offset()?.top ? 100
+      @_t = $('h1').offset()?.top ? 300
+      console.log "@_t", @_t
       @setNavProperties()
 
     setNavProperties: (e) =>
@@ -77,13 +78,6 @@ $ ->
         'height': h
         'border-bottom-color': "rgba(255,255,255,#{bgd / 3})"
         'background-color': "rgba(0,0,0,#{bgd * 0.85})"
-      @_logo.css
-        'width': 120 + (60 * d)
-        'height': 50 + (25 * d)
-        'margin-left': -42 * d
-        'margin-top': 16 * d
-        'margin-right': 26 - (10 * d)
-        'margin-bottom': 16 * d
 
     setBackground: () =>
       @_y = window.pageYOffset
