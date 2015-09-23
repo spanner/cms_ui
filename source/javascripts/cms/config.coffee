@@ -8,7 +8,7 @@ class CMS.Config
     cookie_name: "cms_blah"
     published_domain: "cupboard.org"
     published_protocol: "http"
-    enquiry_form_url: "http://igf.spanner.org/enquire"
+    enquiry_form_url: "http://secure.invictusgamesfoundation.org/enquire"
     logging: false
 
   development:
