@@ -3,6 +3,7 @@
   .built
 .cms-controls
   .cms-buttons
-    .cms-style-menu
-    .cms-page-picker
-    .cms-section-menu
+    .construction
+      .cms-style-menu
+      .cms-page-picker
+      .cms-section-menu

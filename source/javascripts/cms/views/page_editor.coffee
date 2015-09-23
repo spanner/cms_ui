@@ -71,6 +71,9 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       updateMethod: "html"
       onSet: "emptyIfEmpty"
 
+  initialize: ->
+    _cms.vent.on "ui.state", @toggleConstruction
+
   onRender: () =>
     @ui.date.attr('contenteditable', "true")
     @ui.title.attr('contenteditable', 'plaintext-only').attr('data-placeholder', 'Page title')
@@ -83,6 +86,9 @@ class CMS.Views.Page extends Backbone.Marionette.CompositeView
       $html = $(value)
       value = "" if _.isBlank($html.text())
     value
+
+  toggleConstruction: (e) =>
+    @$el.toggleClass('constructing')
 
 
 class CMS.Views.PageHead extends Backbone.Marionette.ItemView

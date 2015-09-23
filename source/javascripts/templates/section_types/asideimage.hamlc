@@ -6,7 +6,8 @@
   .section_body.formattable{data: {placeholder: "Main body text"}}
 .cms-controls
   .cms-buttons
-    .cms-style-menu
     .cms-video-picker
     .cms-image-picker
-    .cms-section-menu
+    .construction
+      .cms-style-menu
+      .cms-section-menu

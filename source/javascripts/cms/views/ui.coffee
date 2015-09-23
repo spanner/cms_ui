@@ -10,6 +10,10 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
 
   #todo: user menu inc logout and preferences
 
+  initialize: ->
+    _cms.vent.on "ui.shelve", @toggleShelf
+    _cms.vent.on "ui.state", @toggleQuiet
+
   onRender: =>
     # barrier comes up by default and shows a waiting state. It only remains
     # visible if there is no session yet, or it we route to a management view.
@@ -18,6 +22,7 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
       el: @$el.find('#cms-session-barrier')
     @_barrier.render()
 
+
   sessionView: (action) =>
     @_barrier.show(action)
   
@@ -25,16 +30,16 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
     @siteView()
 
   siteView: (site_slug="", page_path="") =>
-    @model.whenLoaded () =>
+    @model.whenLoaded =>
       user = @model.getUser()
       @setUser(user)
       @_barrier.hide()
       # user.load()
-      user.whenLoaded () =>
+      user.whenLoaded =>
         if site = user.sites.findWhere(slug: site_slug)
           @setSite(site)
           site.load() unless site.isLoaded()
-          site.whenLoaded () =>
+          site.whenLoaded =>
             @setPage(site, page_path)
 
   setUser: (user) =>
@@ -52,15 +57,19 @@ class CMS.Views.UILayout extends CMS.Views.LayoutView
 
   setPage: (site, page_path) =>
     @stopListening site, "change:html change:js"
-
     if page = site.pages.findWhere(path: "/#{page_path}")
       @_manager.setPage(page)
-
       @_editor = new CMS.Views.PageEditorLayout
         model: page
         el: @$el.find('#cms-editor')
       @_editor.render()
-
       @listenTo site, "change:html change:js", () => @setPage(site, page_path)
-
       page.load()
+
+  toggleShelf: (e) =>
+    e?.preventDefault()
+    @$el.toggleClass('shelved')
+
+  toggleQuiet: (e) =>
+    e?.preventDefault()
+    @$el.toggleClass('quiet')

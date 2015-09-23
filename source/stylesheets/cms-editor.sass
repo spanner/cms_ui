@@ -7,18 +7,17 @@
 
 [contenteditable]
   outline: none
-  background:
-    color: $editable_bg
-  &:hover
-    background:
-      color: $editable_over
-  &:focus
-    background:
-      color: transparent
   &:empty:before
     content: attr(data-placeholder)
     display: block
     color: $mid
+
+.construction
+  display: none
+
+.constructing
+  .construction
+    display: inline-block
 
 h3.menu
   color: $control_fg
@@ -98,11 +97,17 @@ ul.assets
   top: 0
   right: 0
 
+
 figure, section
   &:hover, &.open
     .cms-controls
       display: block
-      background-color: $editable_over
+
+main.constructing
+  figure, section
+    &:hover, &.open
+      .cms-controls
+        background-color: $editable_over
 
 .cms-controls
   +cms-font-light
@@ -261,7 +266,6 @@ section
   &.links
     .block
       position: relative
-      background-color: $editable_bg
       &:hover
         .cms-buttons
           display: block
@@ -270,7 +274,6 @@ section
   &.contents
     .child-page
       position: relative
-      background-color: $editable_bg
       &:hover
         .cms-buttons
           display: block
@@ -282,7 +285,6 @@ section
   &.gallery
     .block
       position: relative
-      background-color: $editable_bg
       a.zoom
         pointer-events: none
       &:hover

@@ -4,4 +4,5 @@
   .col.second.formattable{data: {placeholder: "Second column of text"}}
 .cms-controls
   .cms-buttons
-    .cms-section-menu
+    .construction
+      .cms-section-menu

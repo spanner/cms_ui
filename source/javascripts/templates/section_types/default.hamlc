@@ -2,4 +2,5 @@
   .section_body.formattable{data: {placeholder: "Main section text."}}
 .cms-controls
   .cms-buttons
-    .cms-section-menu
+    .construction
+      .cms-section-menu

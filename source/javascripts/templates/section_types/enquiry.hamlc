@@ -7,4 +7,5 @@
 
 .cms-controls
   .cms-buttons
-    .cms-section-menu
+    .construction
+      .cms-section-menu

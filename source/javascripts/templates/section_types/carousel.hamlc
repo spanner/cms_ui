@@ -3,4 +3,5 @@
   %h1.editable{contenteditable: "plaintext-only"}
 .cms-controls
   .cms-buttons
-    .cms-section-menu
+    .construction
+      .cms-section-menu

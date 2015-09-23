@@ -5,4 +5,5 @@
   .cms-buttons
     .cms-video-picker
     .cms-image-picker
-    .cms-section-menu
+    .construction
+      .cms-section-menu

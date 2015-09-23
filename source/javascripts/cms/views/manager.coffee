@@ -513,19 +513,15 @@ class CMS.Views.SiteManagerLayout extends CMS.Views.MenuLayout
         onGet: "siteStatus"
       ]
 
-  showing: =>
-    showing = $('#cms-ui').hasClass('shelved')
-    showing
-
   #TODO handle these through an event listener in the UI layout and set a cookie with interface state.
   #
   toggleUI: (e) =>
     e?.preventDefault()
-    $('#cms-ui').toggleClass('collapsed')
+    _cms.vent.trigger('ui.state')
 
   toggleShelf: (e) =>
     e?.preventDefault()
-    $('#cms-ui').toggleClass('shelved')
+    _cms.vent.trigger('ui.shelve')
 
   siteStatus: ([changed, published_at, updated_at]=[]) =>
     if changed
