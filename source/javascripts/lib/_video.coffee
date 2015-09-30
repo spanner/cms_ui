@@ -1,1 +1,1 @@
-#= require ./video.js
+#= require ./video-5.0.0.js
